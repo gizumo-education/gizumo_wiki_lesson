@@ -12,6 +12,10 @@ import Categories from '@Pages/Categories';
 import CategoriesList from '@Pages/Categories/Lists';
 import CategoriesEdit from '@Pages/Categories/Edit';
 
+// 削除一覧
+import DeleteItems from '@Pages/DeleteItems';
+import DeleteItemsList from '@Pages/DeleteItems/Lists';
+
 // 記事
 import Articles from '@Pages/Articles';
 import ArticleList from '@Pages/Articles/List';
@@ -85,6 +89,17 @@ const router = new VueRouter({
           name: 'categoriesEdit',
           path: ':id',
           component: CategoriesEdit,
+        },
+      ],
+    },
+    {
+      path: '/deleteItems',
+      component: DeleteItems,
+      children: [
+        {
+          name: 'deleteItemsList',
+          path: '',
+          component: DeleteItemsList,
         },
       ],
     },

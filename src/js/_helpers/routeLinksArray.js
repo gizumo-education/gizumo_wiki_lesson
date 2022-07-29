@@ -19,4 +19,9 @@ export default [
     name: 'ユーザー',
     path: '/users',
   },
+  {
+    id: 5,
+    name: '削除済み一覧',
+    path: '/deleteItems',
+  },
 ];

@@ -4,6 +4,7 @@ import {
   auth,
   categories,
   articles,
+  deleteItems,
   users,
 } from './modules';
 
@@ -15,5 +16,6 @@ export default new Vuex.Store({
     categories,
     articles,
     users,
+    deleteItems,
   },
 });
