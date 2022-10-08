@@ -8,12 +8,8 @@
     "build": "vite build",
     "eslint": "eslint --fix 'src/{js,components}/**/*.{js,vue}' --ignore-path .eslintignore",
     "test:watch": "NODE_ENV=test jest --watchAll --coverage",
-    "publish": "pm2 start --image-name dev_Gizumo_wiki",
-    "stop": "pm2 stop dev_Gizumo_wiki",
-    "delete": "pm2 delete dev_Gizumo_wiki",
-    "show": "pm2 show dev_Gizumo_wiki",
-    "list": "pm2 list",
-    "dev:storybook": "start-storybook -c ./tools/.storybook/config/ -p 6006 -s ./public"
+    "dev:storybook": "start-storybook -c ./tools/.storybook/config/ -p 6006 -s ./public",
+    "upgrade-interactive": "npm-check --update"
   },
   "dependencies": {
     "@storybook/addon-storysource": "^5.0.10",
@@ -45,6 +41,7 @@
     "eslint-plugin-vue": "^9.4.0",
     "jest": "^24.7.1",
     "jest-serializer-vue": "^2.0.2",
+    "npm-check": "^6.0.1",
     "power-assert": "^1.6.1",
     "sass": "^1.54.4",
     "storybook-vue-router": "^1.0.3",
