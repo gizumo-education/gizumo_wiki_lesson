@@ -64,7 +64,6 @@ export default {
       commit('initCategory');
     },
     getAllCategories({ commit, rootGetters }) {
-      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
