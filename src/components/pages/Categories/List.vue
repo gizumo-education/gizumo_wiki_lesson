@@ -5,7 +5,7 @@
       :category="targetCategory"
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :disabled="disabled"
+      :disabled="isLoading"
       :access="access"
       @handle-submit="handleSubmit"
       @update-value="uptargetCategory"
@@ -46,7 +46,7 @@ export default {
     deleteCategoryName() {
       return this.$store.state.categories.deleteCategoryName;
     },
-    disabled() {
+    isLoading() {
       return this.$store.state.categories.disabled;
     },
     errorMessage() {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.disabled) return;
+      if (this.isLoading) return;
       this.$store.dispatch('categories/postCategories', this.targetCategory).then(() => {
         this.$store.dispatch('categories/getAllCategories');
       });

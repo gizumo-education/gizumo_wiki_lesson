@@ -3,7 +3,7 @@
     :category-name="categoryName"
     :error-message="errorMessage"
     :done-message="doneMessage"
-    :disabled="disabled"
+    :disabled="isLoading"
     :access="access"
     @edited-name="editedName"
     @update-category="updateCategory"
@@ -23,7 +23,7 @@ export default {
       const { name } = this.$store.state.categories.targetCategory;
       return name;
     },
-    disabled() {
+    isLoading() {
       return this.$store.state.categories.disabled;
     },
     errorMessage() {
@@ -45,7 +45,7 @@ export default {
       this.$store.dispatch('categories/editedName', $event.target.value);
     },
     updateCategory() {
-      if (this.disabled) return;
+      if (this.isLoading) return;
       this.$store.dispatch('categories/updateCategory');
     },
     clearMessage() {

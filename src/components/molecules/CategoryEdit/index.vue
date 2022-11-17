@@ -12,7 +12,7 @@
       カテゴリー一覧へ戻る
     </app-router-link>
 
-    <form class="category-edit__form" @submit.prevent="updateCategory">
+    <form @submit.prevent="updateCategory">
       <app-input
         v-validate="'required'"
         class="category-edit__input"
@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     buttonText() {
-      if (!this.access.create) return '更新権限がありません';
+      if (!this.access.edit) return '更新権限がありません';
       return this.disabled ? '更新中...' : '更新';
     },
   },

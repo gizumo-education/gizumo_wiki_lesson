@@ -29,7 +29,7 @@ export default {
       state.targetCategory = { ...payload };
     },
     editedName(state, payload) {
-      state.targetCategory = { ...state.targetCategory, name: payload.name };
+      state.targetCategory.name = payload;
     },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
@@ -94,45 +94,31 @@ export default {
       });
     },
     editedName({ commit }, name) {
-      commit({
-        type: 'editedName',
-        name,
-      });
+      commit('editedName', name);
     },
     updateCategory({ commit, rootGetters, state }) {
-      return new Promise(resolve => {
-        commit('clearMessage');
+      commit('clearMessage');
+      commit('toggleDisabled');
+      const data = new URLSearchParams();
+      data.append('name', state.targetCategory.name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.targetCategory.id}`,
+        data,
+      }).then(() => {
         commit('toggleDisabled');
-        const data = new URLSearchParams();
-        data.append('id', state.targetCategory.id);
-        data.append('name', state.targetCategory.name);
-        axios(rootGetters['auth/token'])({
-          method: 'PUT',
-          url: `/category/${state.targetCategory.id}`,
-          data,
-        }).then(res => {
-          const payload = {
-            targetCategory: {
-              id: res.data.category.id,
-              name: res.data.category.name,
-            },
-          };
-          commit('updateCategory', payload);
-          commit('toggleDisabled');
-          commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
-          resolve();
-        }).catch(err => {
-          commit('toggleDisabled');
-          commit('failRequest', { message: err.message });
-        });
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(err => {
+        commit('toggleDisabled');
+        commit('failRequest', { message: err.message });
       });
     },
     confirmDeleteCategories({ commit }, { categoryId, categoryName }) {
       commit('confirmDeleteCategories', { categoryId, categoryName });
     },
     deleteCategories({ commit, rootGetters, state }) {
+      commit('clearMessage');
       return new Promise(resolve => {
-        commit('clearMessage');
         const data = new URLSearchParams();
         data.append('id', state.deleteCategoryId);
         axios(rootGetters['auth/token'])({
