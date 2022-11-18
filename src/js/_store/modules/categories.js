@@ -116,8 +116,8 @@ export default {
       commit('confirmDeleteCategories', { categoryId, categoryName });
     },
     deleteCategories({ commit, rootGetters, state }) {
-      commit('clearMessage');
       return new Promise(resolve => {
+        commit('clearMessage');
         const data = new URLSearchParams();
         data.append('id', state.deleteCategoryId);
         axios(rootGetters['auth/token'])({
