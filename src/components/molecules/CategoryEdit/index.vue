@@ -5,44 +5,28 @@
     </div>
     <div class="article-edit__columns">
       <section class="article-edit-editor">
-        <app-heading :level="1">記事の更新</app-heading>
-        <app-heading
-          class="article-edit-editor-title"
-          :level="2"
+        <app-heading :level="1">カテゴリー管理</app-heading>
+        <app-router-link
+          block
+          underline
+          key-color
+          hover-opacity
+          to="/categories"
         >
-          カテゴリーの選択
-        </app-heading>
+          カテゴリー一覧へ戻る
+        </app-router-link>
 
-        <app-heading
-          class="article-edit-editor-title"
-          :level="2"
-        >
-          タイトル・本文の更新
-        </app-heading>
         <div class="article-edit-form">
           <app-input
             v-validate="'required'"
             name="title"
             type="text"
-            placeholder="記事のタイトルを入力してください。"
+            placeholder="カテゴリー名を入力してください。"
             white-bg
-            data-vv-as="記事のタイトル"
+            data-vv-as="カテゴリー"
             :error-messages="errors.collect('title')"
             :value="articleTitle"
-            @update-value="$emit('edited-title', $event)"
-          />
-        </div>
-
-        <div class="article-edit-form">
-          <app-textarea
-            v-validate="'required'"
-            name="content"
-            placeholder="記事の本文をマークダウン記法で入力してください。"
-            white-bg
-            data-vv-as="記事の本文"
-            :error-messages="errors.collect('content')"
-            :value="articleContent"
-            @update-value="$emit('edited-content', $event)"
+            @update-value="$emit('edited-category', $event)"
           />
         </div>
         <app-button
@@ -55,33 +39,38 @@
           {{ buttonText }}
         </app-button>
       </section>
-
-      <article class="article-edit-preview">
-        <app-markdown-preview
-          :markdown-content="markdownContent"
-        />
-      </article>
     </div>
   </div>
 </template>
 
 <script>
 import {
-  Heading, MarkdownPreview, Textarea, Input, Button, Text,
+  Heading, Input, Button, Text, RouterLink,
 } from '@Components/atoms';
 
 export default {
   components: {
     appHeading: Heading,
-    appTextarea: Textarea,
-    appMarkdownPreview: MarkdownPreview,
     appInput: Input,
     appButton: Button,
     appText: Text,
+    appRouterLink: RouterLink,
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    access: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   computed: {
+    buttonText() {
+      if (!this.access.edit) return '更新権限がありません';
+      return this.loading ? '更新中...' : '更新';
+    },
   },
   methods: {
   },
