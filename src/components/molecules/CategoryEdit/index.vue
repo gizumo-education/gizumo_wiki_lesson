@@ -1,10 +1,10 @@
 <template>
-  <div class="article-edit">
-    <div v-if="doneMessage" class="article-edit__notice--update">
+  <div class="category-edit">
+    <div v-if="doneMessage" class="category-edit__notice--update">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
-    <div class="article-edit__columns">
-      <section class="article-edit-editor">
+    <div class="category-edit__columns">
+      <section class="category-edit-editor">
         <app-heading :level="1">カテゴリー管理</app-heading>
         <app-router-link
           block
@@ -16,7 +16,7 @@
           カテゴリー一覧へ戻る
         </app-router-link>
 
-        <div class="article-edit-form">
+        <div class="category-edit-form">
           <app-input
             v-validate="'required'"
             name="title"
@@ -25,12 +25,12 @@
             white-bg
             data-vv-as="カテゴリー"
             :error-messages="errors.collect('title')"
-            :value="articleTitle"
+            :value="categoryName"
             @update-value="$emit('edited-category', $event)"
           />
         </div>
         <app-button
-          class="article-edit-submit"
+          class="category-edit-submit"
           button-type="submit"
           round
           :disabled="!disabled"
@@ -64,6 +64,14 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
+    },
+    categoryId: {
+      type: Number,
+      default: 0,
+    },
+    categoryName: {
+      type: String,
+      default: '',
     },
   },
   computed: {
