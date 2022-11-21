@@ -1,7 +1,7 @@
 <template>
   <app-category-edit
     :access="access"
-    :category="category"
+    :category-name="categoryName"
     @edited-category="editedCategory"
     @handle-submit="handleSubmit"
   />
@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      category: '',
+      categoryName: '',
     };
   },
   computed: {
@@ -27,7 +27,8 @@ export default {
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', {
       id,
-      category: this.category,
+    }).then(() => {
+      this.categoryName = this.$store.state.categories.category.name;
     });
   },
   methods: {

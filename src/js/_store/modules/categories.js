@@ -9,6 +9,7 @@ export default {
     deleteCategoryName: '',
     doneMessage: '',
     errorMessage: '',
+    category: [],
   },
   mutations: {
     toggleLoading(state) {
@@ -19,6 +20,9 @@ export default {
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories;
+    },
+    doneGetCategory(state, category) {
+      state.category = category;
     },
     confirmDeleteCategory(state, { id, name }) {
       state.deleteCategoryId = id;
@@ -43,14 +47,12 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    getCategory({ commit, rootGetters }, { id, category }) {
+    getCategory({ commit, rootGetters }, { id }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${id}`,
       }).then(res => {
-        category = res.data.category.name;
-        console.log(category);
-        console.log(res);
+        commit('doneGetCategory', res.data.category);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
