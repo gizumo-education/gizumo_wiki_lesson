@@ -43,22 +43,22 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/AllCategories');
+    this.$store.dispatch('categories/allCategories');
   },
 };
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
   .category {
     display: flex;
-  }
-  .category-post {
+    &-post {
       width: 30%;
       padding-right: 20px;
       margin-right: 20px;
       border-right: solid 2px #c0c0c0;
     }
-    .category-list {
+    &-list {
       width: 70%;
     }
+  }
 </style>

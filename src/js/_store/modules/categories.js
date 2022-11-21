@@ -8,27 +8,27 @@ export default {
       name: '',
     },
     categories: [],
-    errormessage: '',
+    errorMessage: '',
   },
   mutations: {
-    AllCategories(state, payload) {
+    allCategories(state, payload) {
       state.categories = payload;
     },
-    ErrorRequest(state, message) {
+    errorRequest(state, message) {
       state.errormessage = message;
     },
   },
   actions: {
-    AllCategories({ commit, rootGetters }) {
+    allCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
       }).then(data => {
         const categoryList = data.data.categories.reverse();
-        commit('AllCategories', categoryList);
+        commit('allCategories', categoryList);
       }).catch(err => {
         const errroMesssage = err.message;
-        commit('ErrorRequest', errroMesssage);
+        commit('errorRequest', errroMesssage);
       });
     },
   },
