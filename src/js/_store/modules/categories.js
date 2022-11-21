@@ -43,6 +43,18 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
+    getCategory({ commit, rootGetters }, { id, category }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        category = res.data.category.name;
+        console.log(category);
+        console.log(res);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
     clearMessage({ commit }) {
       commit('clearMessage');
     },
