@@ -2,6 +2,7 @@
   <app-category-edit
     :access="access"
     :category-name="categoryName"
+    :disabled="loading"
     @edited-category="editedCategory"
     @handle-submit="handleSubmit"
   />
@@ -22,6 +23,9 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
   },
   created() {
     const { id } = this.$route.params;
@@ -30,13 +34,15 @@ export default {
     }).then(() => {
       this.categoryName = this.$store.state.categories.category.name;
     });
+    console.log(this.$route.params);
   },
   methods: {
     editedCategory($event) {
-
+      this.categoryName = $event.target.value;
+      console.log(this.categoryName);
     },
     handleSubmit() {
-
+      console.log('submit');
     },
   },
 };

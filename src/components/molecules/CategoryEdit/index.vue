@@ -33,7 +33,7 @@
           class="category-edit-submit"
           button-type="submit"
           round
-          :disabled="!disabled"
+          :disabled="disabled || !access.create"
           @click="handleSubmit"
         >
           {{ buttonText }}
@@ -72,6 +72,10 @@ export default {
     categoryName: {
       type: String,
       default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
