@@ -34,7 +34,7 @@
           button-type="submit"
           round
           :disabled="disabled || !access.create"
-          @click="handleSubmit"
+          @click="$emit('handle-submit', $event)"
         >
           {{ buttonText }}
         </app-button>

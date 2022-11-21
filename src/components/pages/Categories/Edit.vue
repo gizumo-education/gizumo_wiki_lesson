@@ -34,15 +34,12 @@ export default {
     }).then(() => {
       this.categoryName = this.$store.state.categories.category.name;
     });
-    console.log(this.$route.params);
   },
   methods: {
     editedCategory($event) {
       this.categoryName = $event.target.value;
-      console.log(this.categoryName);
     },
     handleSubmit() {
-      console.log('submit');
     },
   },
 };
