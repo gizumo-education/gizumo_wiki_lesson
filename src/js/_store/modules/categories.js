@@ -2,13 +2,11 @@ import axios from '@Helpers/axiosDefault';
 
 export default {
   namespaced: true,
-  state:
-  {
+  state: {
     categoryList: [],
     errorMessage: '',
   },
-  mutations:
-  {
+  mutations: {
     doneGetCategories(state, payload) {
       state.categoryList = [...payload.categories];
     },
