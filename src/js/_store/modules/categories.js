@@ -15,7 +15,7 @@ export default {
       state.categories = payload;
     },
     errorRequest(state, message) {
-      state.errormessage = message;
+      state.errorMessage = message;
     },
   },
   actions: {
