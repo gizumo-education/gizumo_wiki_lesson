@@ -10,7 +10,7 @@ export default {
   mutations:
   {
     doneGetCategories(state, payload) {
-      state.categoryList = { ...payload.categories };
+      state.categoryList = [...payload.categories];
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
