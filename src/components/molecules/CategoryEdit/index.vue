@@ -1,45 +1,46 @@
 <template>
   <div class="category-edit">
-    <div v-if="doneMessage" class="category-edit__notice--update">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
-    <div class="category-edit__columns">
-      <section class="category-edit-editor">
-        <app-heading :level="1">カテゴリー管理</app-heading>
-        <app-router-link
-          block
-          underline
-          key-color
-          hover-opacity
-          to="/categories"
-        >
-          カテゴリー一覧へ戻る
-        </app-router-link>
+    <section class="category-edit-editor">
+      <app-heading :level="1">カテゴリー管理</app-heading>
+      <app-router-link
+        block
+        underline
+        key-color
+        hover-opacity
+        to="/categories"
+      >
+        カテゴリー一覧へ戻る
+      </app-router-link>
 
-        <div class="category-edit-form">
-          <app-input
-            v-validate="'required'"
-            name="title"
-            type="text"
-            placeholder="カテゴリー名を入力してください。"
-            white-bg
-            data-vv-as="カテゴリー"
-            :error-messages="errors.collect('title')"
-            :value="categoryName"
-            @update-value="$emit('edited-category', $event)"
-          />
-        </div>
-        <app-button
-          class="category-edit-submit"
-          button-type="submit"
-          round
-          :disabled="disabled || !access.create"
-          @click="$emit('handle-submit', $event)"
-        >
-          {{ buttonText }}
-        </app-button>
-      </section>
-    </div>
+      <div class="category-edit-form">
+        <app-input
+          v-validate="'required'"
+          name="title"
+          type="text"
+          placeholder="カテゴリー名を入力してください。"
+          white-bg
+          data-vv-as="カテゴリー"
+          :error-messages="errors.collect('title')"
+          :value="categoryName"
+          @update-value="$emit('edited-category', $event)"
+        />
+      </div>
+      <app-button
+        class="category-edit-submit"
+        button-type="submit"
+        round
+        :disabled="disabled || !access.create"
+        @click="$emit('handle-submit', $event)"
+      >
+        {{ buttonText }}
+      </app-button>
+      <div v-if="errorMessage" class="category-management-post__notice">
+        <app-text bg-error>{{ errorMessage }}</app-text>
+      </div>
+      <div v-if="doneMessage" class="category-management-post__notice">
+        <app-text bg-success>{{ doneMessage }}</app-text>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -70,6 +71,14 @@ export default {
       default: 0,
     },
     categoryName: {
+      type: String,
+      default: '',
+    },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
+    doneMessage: {
       type: String,
       default: '',
     },

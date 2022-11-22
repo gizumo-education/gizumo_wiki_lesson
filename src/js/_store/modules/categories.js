@@ -78,14 +78,17 @@ export default {
       });
     },
     updateCategory({ commit, rootGetters }, category) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${category.id}`,
         data: category,
       }).then(() => {
-
+        commit('displayDoneMessage', { message: 'カテゴリー名を変更しました' });
+        commit('toggleLoading');
       }).catch(err => {
         commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
     confirmDeleteCategory({ commit }, { id, name }) {

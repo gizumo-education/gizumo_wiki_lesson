@@ -3,6 +3,8 @@
     :access="access"
     :category-name="categoryName"
     :disabled="loading"
+    :done-message="doneMessage"
+    :error-message="errorMessage"
     @edited-category="editedCategory"
     @handle-submit="handleSubmit"
   />
@@ -26,6 +28,12 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     const { id } = this.$route.params;
@@ -45,18 +53,6 @@ export default {
       this.$store.dispatch('categories/updateCategory', {
         id,
         name: this.categoryName,
-      });
-    },
-    editUser() {
-      this.$store.dispatch('users/editUser', {
-        id: this.user.id,
-        /* eslint-disable-next-line no-irregular-whitespace */
-        full_name: this.user.fullName.replace(/(　)+/, ' ').trim(),
-        /* eslint-disable-next-line no-irregular-whitespace */
-        account_name: this.user.accountName.replace(/( |　)+/, '').trim(),
-        /* eslint-disable-next-line no-irregular-whitespace */
-        email: this.user.email.replace(/( |　)+/, '').trim(),
-        role_id: this.roleList.find(role => role.value === this.user.role).id,
       });
     },
   },
