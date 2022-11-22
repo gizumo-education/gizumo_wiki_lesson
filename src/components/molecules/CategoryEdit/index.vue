@@ -14,12 +14,12 @@
       </app-router-link>
       <app-input
         v-validate="'required'"
-        name="title"
+        name="category"
         type="text"
         placeholder="カテゴリー名を入力してください。"
         white-bg
         data-vv-as="カテゴリー"
-        :error-messages="errors.collect('title')"
+        :error-messages="errors.collect('category')"
         :value="categoryName"
         @update-value="$emit('edited-category', $event)"
       />
