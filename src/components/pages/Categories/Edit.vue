@@ -7,6 +7,7 @@
     :error-message="errorMessage"
     @edited-category="editedCategory"
     @handle-submit="handleSubmit"
+    @clear-message="clearMessage"
   />
 </template>
 <script>
@@ -34,7 +35,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/clearMessage');
+    this.clearMessage();
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', {
       id,
@@ -46,12 +47,14 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/clearMessage');
       const { id } = this.$route.params;
       this.$store.dispatch('categories/updateCategory', {
         id,
         name: this.$store.state.categories.category.name,
       });
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
