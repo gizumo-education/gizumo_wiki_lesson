@@ -9,7 +9,10 @@ export default {
     deleteCategoryName: '',
     doneMessage: '',
     errorMessage: '',
-    category: [],
+    category: {
+      id: null,
+      name: '',
+    },
   },
   mutations: {
     toggleLoading(state) {
@@ -23,6 +26,9 @@ export default {
     },
     doneGetCategory(state, category) {
       state.category = category;
+    },
+    editedCategory(state, name) {
+      state.category.name = name;
     },
     confirmDeleteCategory(state, { id, name }) {
       state.deleteCategoryId = id;
@@ -76,6 +82,9 @@ export default {
           commit('toggleLoading');
         });
       });
+    },
+    editedCategory({ commit }, name) {
+      commit('editedCategory', name);
     },
     updateCategory({ commit, rootGetters }, category) {
       commit('toggleLoading');

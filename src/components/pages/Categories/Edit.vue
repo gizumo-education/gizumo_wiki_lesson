@@ -16,11 +16,6 @@ export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  data() {
-    return {
-      categoryName: '',
-    };
-  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
@@ -34,19 +29,20 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    categoryName() {
+      return this.$store.state.categories.category.name;
+    },
   },
   created() {
     this.$store.dispatch('categories/clearMessage');
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', {
       id,
-    }).then(() => {
-      this.categoryName = this.$store.state.categories.category.name;
     });
   },
   methods: {
     editedCategory($event) {
-      this.categoryName = $event.target.value;
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;
@@ -54,7 +50,7 @@ export default {
       const { id } = this.$route.params;
       this.$store.dispatch('categories/updateCategory', {
         id,
-        name: this.categoryName,
+        name: this.$store.state.categories.category.name,
       });
     },
   },
