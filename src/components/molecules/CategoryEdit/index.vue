@@ -8,25 +8,23 @@
         key-color
         hover-opacity
         to="/categories"
+        class="category-management-edit__back"
       >
         カテゴリー一覧へ戻る
       </app-router-link>
-
-      <div class="category-edit-form">
-        <app-input
-          v-validate="'required'"
-          name="title"
-          type="text"
-          placeholder="カテゴリー名を入力してください。"
-          white-bg
-          data-vv-as="カテゴリー"
-          :error-messages="errors.collect('title')"
-          :value="categoryName"
-          @update-value="$emit('edited-category', $event)"
-        />
-      </div>
+      <app-input
+        v-validate="'required'"
+        name="title"
+        type="text"
+        placeholder="カテゴリー名を入力してください。"
+        white-bg
+        data-vv-as="カテゴリー"
+        :error-messages="errors.collect('title')"
+        :value="categoryName"
+        @update-value="$emit('edited-category', $event)"
+      />
       <app-button
-        class="category-edit-submit"
+        class="category-management-edit__submit"
         button-type="submit"
         round
         :disabled="disabled || !access.create"
@@ -34,10 +32,10 @@
       >
         {{ buttonText }}
       </app-button>
-      <div v-if="errorMessage" class="category-management-post__notice">
+      <div v-if="errorMessage" class="category-management-edit__notice">
         <app-text bg-error>{{ errorMessage }}</app-text>
       </div>
-      <div v-if="doneMessage" class="category-management-post__notice">
+      <div v-if="doneMessage" class="category-management-edit__notice">
         <app-text bg-success>{{ doneMessage }}</app-text>
       </div>
     </section>
@@ -99,4 +97,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.category-management-edit {
+  &__submit {
+    margin-top: 16px;
+  }
+  &__back {
+    margin-top: 16px;
+  }
+  &__notice {
+    margin-top: 16px;
+  }
+}
 </style>
