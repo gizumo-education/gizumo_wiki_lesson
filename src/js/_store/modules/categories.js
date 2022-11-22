@@ -77,6 +77,17 @@ export default {
         });
       });
     },
+    updateCategory({ commit, rootGetters }, category) {
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${category.id}`,
+        data: category,
+      }).then(() => {
+
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
     confirmDeleteCategory({ commit }, { id, name }) {
       commit('confirmDeleteCategory', { id, name });
     },
