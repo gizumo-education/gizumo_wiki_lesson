@@ -36,6 +36,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch('categories/clearMessage');
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', {
       id,
@@ -49,6 +50,7 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
+      this.$store.dispatch('categories/clearMessage');
       const { id } = this.$route.params;
       this.$store.dispatch('categories/updateCategory', {
         id,
