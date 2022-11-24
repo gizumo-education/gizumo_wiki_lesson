@@ -1,6 +1,9 @@
 <template>
   <div class="category-list">
-    <table class="category-list__table">
+    <table
+      v-if="categories.length"
+      class="category-list__table"
+    >
       <thead class="category-list__table__head">
         <tr>
           <th
@@ -16,7 +19,9 @@
       <transition-group name="fade" tag="tbody" class="category-list__table__body">
         <tr v-for="category in categories" :key="category.id">
           <td>
-            <app-text tag="span">
+            <app-text
+              class="article-list__title"
+            >
               {{ category.name }}
             </app-text>
           </td>
@@ -49,11 +54,19 @@
               @click="openModal(category.id, category.name)"
             >
               削除
+              {{ buttonText }}
             </app-button>
           </td>
         </tr>
       </transition-group>
     </table>
+    <p
+      v-else
+      class="categories-empty"
+    >
+      カテゴリーは何も登録されていません。
+    </p>
+
     <app-modal>
       <div class="category-list__modal">
         <app-text
@@ -74,7 +87,7 @@
           class="category-list__modal__button"
           bg-danger
           round
-          @click="handleClick"
+          @click="$emit('handle-click')"
         >
           削除する
         </app-button>
@@ -175,5 +188,15 @@ export default {
   &__button {
     margin-top: 48px;
   }
+}
+
+.categories-empty {
+  text-align: center;
+  margin-top: 5px;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  transition: all 0.5s;
+  height: 100vh;
 }
 </style>
