@@ -14,9 +14,6 @@ export default {
       name: '',
     },
   },
-  getters: {
-    category: state => state.category,
-  },
   mutations: {
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -91,10 +88,11 @@ export default {
     },
     updateCategory({ commit, rootGetters }) {
       commit('toggleLoading');
+      console.log(this.state.categories.category.id);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${rootGetters['categories/category'].id}`,
-        data: rootGetters['categories/category'],
+        url: `/category/${this.state.categories.category.id}`,
+        data: this.state.categories.category,
       }).then(() => {
         commit('displayDoneMessage', { message: 'カテゴリー名を変更しました' });
         commit('toggleLoading');
