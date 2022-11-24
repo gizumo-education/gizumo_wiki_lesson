@@ -30,6 +30,10 @@ export default {
     editedCategory(state, name) {
       state.category.name = name;
     },
+    initializeCategory(state) {
+      state.category.name = '';
+      state.category.id = null;
+    },
     confirmDeleteCategory(state, { id, name }) {
       state.deleteCategoryId = id;
       state.deleteCategoryName = name;
@@ -85,6 +89,9 @@ export default {
     },
     editedCategory({ commit }, name) {
       commit('editedCategory', name);
+    },
+    initializeCategory({ commit }) {
+      commit('initializeCategory');
     },
     updateCategory({ commit, rootGetters }) {
       commit('toggleLoading');

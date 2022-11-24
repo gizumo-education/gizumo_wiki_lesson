@@ -40,6 +40,9 @@ export default {
       id: this.$route.params.id,
     });
   },
+  beforeDestroy() {
+    this.$store.dispatch('categories/initializeCategory');
+  },
   methods: {
     editedCategory($event) {
       this.$store.dispatch('categories/editedCategory', $event.target.value);
