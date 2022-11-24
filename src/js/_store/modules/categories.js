@@ -88,7 +88,6 @@ export default {
     },
     updateCategory({ commit, rootGetters }) {
       commit('toggleLoading');
-      console.log(this.state.categories.category.id);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${this.state.categories.category.id}`,
