@@ -46,10 +46,7 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory', {
-        id: this.$store.state.categories.category.id,
-        name: this.$store.state.categories.category.name,
-      });
+      this.$store.dispatch('categories/updateCategory');
     },
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
