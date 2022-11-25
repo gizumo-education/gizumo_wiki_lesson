@@ -91,11 +91,10 @@ export default {
     },
     handleClick() {
       this.clearMessage();
-      this.$store.dispatch('categories/deleteCategory', {
-        id: this.deleteCategoryId,
-      }).then(() => {
-        this.$store.dispatch('categories/getAllCategories');
-      });
+      this.$store.dispatch('categories/deleteCategory', this.deleteCategoryId)
+        .then(() => {
+          this.$store.dispatch('categories/getAllCategories');
+        });
       this.toggleModal();
     },
   },

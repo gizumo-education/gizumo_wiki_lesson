@@ -9,6 +9,10 @@ export default {
     deleteCategoryName: '',
     doneMessage: '',
     errorMessage: '',
+    category: {
+      id: null,
+      name: '',
+    },
   },
   mutations: {
     toggleLoading(state) {
@@ -19,6 +23,16 @@ export default {
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories;
+    },
+    doneGetCategory(state, category) {
+      state.category = category;
+    },
+    editedCategory(state, name) {
+      state.category.name = name;
+    },
+    initializeCategory(state) {
+      state.category.name = '';
+      state.category.id = null;
     },
     confirmDeleteCategory(state, { id, name }) {
       state.deleteCategoryId = id;
@@ -43,6 +57,16 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
+    getCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        commit('doneGetCategory', res.data.category);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
     clearMessage({ commit }) {
       commit('clearMessage');
     },
@@ -63,10 +87,30 @@ export default {
         });
       });
     },
+    editedCategory({ commit }, name) {
+      commit('editedCategory', name);
+    },
+    initializeCategory({ commit }) {
+      commit('initializeCategory');
+    },
+    updateCategory({ commit, rootGetters, state }) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.category.id}`,
+        data: state.category,
+      }).then(() => {
+        commit('displayDoneMessage', { message: 'カテゴリー名を変更しました' });
+        commit('toggleLoading');
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+        commit('toggleLoading');
+      });
+    },
     confirmDeleteCategory({ commit }, { id, name }) {
       commit('confirmDeleteCategory', { id, name });
     },
-    deleteCategory({ commit, rootGetters }, { id }) {
+    deleteCategory({ commit, rootGetters }, id) {
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
