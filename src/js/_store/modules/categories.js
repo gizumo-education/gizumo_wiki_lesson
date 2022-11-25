@@ -93,12 +93,12 @@ export default {
     initializeCategory({ commit }) {
       commit('initializeCategory');
     },
-    updateCategory({ commit, rootGetters }) {
+    updateCategory({ commit, rootGetters, state }) {
       commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${this.state.categories.category.id}`,
-        data: this.state.categories.category,
+        url: `/category/${state.category.id}`,
+        data: state.category,
       }).then(() => {
         commit('displayDoneMessage', { message: 'カテゴリー名を変更しました' });
         commit('toggleLoading');
