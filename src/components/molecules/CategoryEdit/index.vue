@@ -54,10 +54,6 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    loading: {
-      type: Boolean,
-      default: false,
-    },
     access: {
       type: Object,
       default: () => ({}),
