@@ -27,7 +27,7 @@
       class="category-management-edit__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
+      :disabled="disabled || !access.edit"
     >
       {{ buttonText }}
     </app-button>
