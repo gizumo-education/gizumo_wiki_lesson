@@ -36,9 +36,7 @@ export default {
   },
   created() {
     this.clearMessage();
-    this.$store.dispatch('categories/getCategory', {
-      id: this.$route.params.id,
-    });
+    this.$store.dispatch('categories/getCategory', this.$route.params.id);
   },
   beforeDestroy() {
     this.$store.dispatch('categories/initializeCategory');

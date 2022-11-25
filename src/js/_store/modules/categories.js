@@ -57,7 +57,7 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    getCategory({ commit, rootGetters }, { id }) {
+    getCategory({ commit, rootGetters }, id) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${id}`,
@@ -110,7 +110,7 @@ export default {
     confirmDeleteCategory({ commit }, { id, name }) {
       commit('confirmDeleteCategory', { id, name });
     },
-    deleteCategory({ commit, rootGetters }, { id }) {
+    deleteCategory({ commit, rootGetters }, id) {
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
