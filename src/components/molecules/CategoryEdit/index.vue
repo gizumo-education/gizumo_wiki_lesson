@@ -60,7 +60,7 @@ export default {
     },
     categoryName: {
       type: String,
-      default: '',
+      required: true,
     },
     errorMessage: {
       type: String,
