@@ -18,7 +18,7 @@
       type="text"
       placeholder="カテゴリー名を入力してください。"
       white-bg
-      data-vv-as="カテゴリー"
+      data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
       :value="categoryName"
       @update-value="$emit('edited-category', $event)"
