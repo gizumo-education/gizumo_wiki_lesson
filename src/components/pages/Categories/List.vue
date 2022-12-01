@@ -3,10 +3,10 @@
     <app-category-post
       class="category-post"
       :access="access"
+      :category="targetCategory"
       :done-message="doneMessage"
       :error-message="errorMessage"
-      :category="category"
-      :disabled="disabled"
+      :disabled="isLoading"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
       @clear-message="clearMessage"
@@ -31,13 +31,11 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      targetCategory: '',
     };
   },
   computed: {
-    category() {
-      return this.$store.state.categories.targetCategories;
-    },
-    disabled() {
+    isLoading() {
       return this.$store.state.categories.isLoading;
     },
     categories() {
@@ -57,11 +55,11 @@ export default {
     this.$store.dispatch('categories/allCategories');
   },
   methods: {
-    updateValue($event) {
-      this.$store.dispatch('categories/addTargetCategories', $event.target.value);
+    updateValue(event) {
+      this.targetCategory = event.target.value;
     },
     handleSubmit() {
-      this.$store.dispatch('categories/createCategory').then(() => {
+      this.$store.dispatch('categories/createCategory', this.targetCategory).then(() => {
         this.$store.dispatch('categories/allCategories');
       });
     },

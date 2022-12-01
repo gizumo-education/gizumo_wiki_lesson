@@ -4,28 +4,21 @@ export default {
   namespaced: true,
   state: {
     categories: [],
-    targetCategories: '',
     errorMessage: '',
     doneMessage: '',
     isLoading: false,
-  },
-  getters: {
-    targetCategories: state => state.targetCategories,
   },
   mutations: {
     allCategories(state, payload) {
       state.categories = payload;
     },
-    addTargetCategories(state, name) {
-      state.targetCategories = name;
-    },
     toggleLoading(state) {
       state.isLoading = !state.isLoading;
     },
-    doneMessage(state) {
-      state.doneMessage = 'カテゴリー名を登録しました';
+    doneMessage(state, { message }) {
+      state.doneMessage = message;
     },
-    errorRequest(state, message) {
+    errorMessage(state, message) {
       state.errorMessage = message;
     },
     clearMessage(state) {
@@ -43,29 +36,26 @@ export default {
         commit('allCategories', categoryList);
       }).catch(err => {
         const errroMesssage = err.message;
-        commit('errorRequest', errroMesssage);
+        commit('errorMessage', errroMesssage);
       });
     },
-    addTargetCategories({ commit }, name) {
-      commit('addTargetCategories', name);
-    },
-    createCategory({ commit, rootGetters }) {
+    createCategory({ commit, rootGetters }, targetCategory) {
       return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
-        const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategories']);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
-          data,
+          data: {
+            name: targetCategory,
+          },
         }).then(() => {
           commit('toggleLoading');
-          commit('doneMessage');
+          commit('doneMessage', { message: 'カテゴリー名を登録しました' });
           resolve();
         }).catch(err => {
           commit('toggleLoading');
-          commit('errorRequest', { message: err.message });
+          commit('errorMessage', err.message);
         });
       });
     },
