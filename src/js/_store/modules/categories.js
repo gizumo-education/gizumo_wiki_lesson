@@ -3,19 +3,33 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    category: {
-      id: null,
-      name: '',
-    },
     categories: [],
     errorMessage: '',
+    doneMessage: '',
+    deleteCategoryId: null,
+    deleteCategoryName: '',
+    isLoading: false,
   },
   mutations: {
     allCategories(state, payload) {
       state.categories = payload;
     },
-    errorRequest(state, message) {
+    toggleLoading(state) {
+      state.isLoading = !state.isLoading;
+    },
+    doneMessage(state, { message }) {
+      state.doneMessage = message;
+    },
+    errorMessage(state, message) {
       state.errorMessage = message;
+    },
+    modalDeleteCategory(state, { categoryId, categoryName }) {
+      state.deleteCategoryId = categoryId;
+      state.deleteCategoryName = categoryName;
+    },
+    clearMessage(state) {
+      state.errorMessage = '';
+      state.doneMessage = '';
     },
   },
   actions: {
@@ -28,7 +42,50 @@ export default {
         commit('allCategories', categoryList);
       }).catch(err => {
         const errroMesssage = err.message;
-        commit('errorRequest', errroMesssage);
+        commit('errorMessage', errroMesssage);
+      });
+    },
+    createCategory({ commit, rootGetters }, targetCategory) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        commit('toggleLoading');
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data: {
+            name: targetCategory,
+          },
+        }).then(() => {
+          commit('toggleLoading');
+          commit('doneMessage', { message: 'カテゴリー名を登録しました' });
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('errorMessage', err.message);
+        });
+      });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
+    modalDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('modalDeleteCategory', { categoryId, categoryName });
+    },
+    deleteCategory({ commit, rootGetters, state }) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        const data = new URLSearchParams();
+        data.append('id', state.deleteCategoryId);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${state.deleteCategoryId}`,
+          data,
+        }).then(() => {
+          commit('doneMessage', { message: 'カテゴリーを削除しました' });
+          resolve();
+        }).catch(err => {
+          commit('errorMessage', err.message);
+        });
       });
     },
   },

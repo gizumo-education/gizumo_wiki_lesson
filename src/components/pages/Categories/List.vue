@@ -2,35 +2,46 @@
   <div class="category">
     <app-category-post
       class="category-post"
-      :category="category"
       :access="access"
+      :category="targetCategory"
+      :done-message="doneMessage"
       :error-message="errorMessage"
+      :disabled="isLoading"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
+      @clear-message="clearMessage"
     />
     <app-category-list
       class="category-list"
       :categories="categories"
+      :delete-category-name="deleteCategoryName"
       :theads="theads"
       :access="access"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
+      targetCategory: '',
     };
   },
   computed: {
-    category() {
-      return this.$store.state.category;
+    isLoading() {
+      return this.$store.state.categories.isLoading;
     },
     categories() {
       return this.$store.state.categories.categories;
@@ -38,12 +49,45 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
     },
   },
   created() {
     this.$store.dispatch('categories/allCategories');
+  },
+  methods: {
+    updateValue(event) {
+      this.targetCategory = event.target.value;
+    },
+    handleSubmit() {
+      if (this.isLoading) return;
+      this.$store.dispatch('categories/createCategory', this.targetCategory).then(() => {
+        this.$store.dispatch('categories/allCategories');
+      });
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    openModal(categoryId, categoryName) {
+      this.$store.dispatch('categories/modalDeleteCategory', {
+        categoryId,
+        categoryName,
+      });
+      this.toggleModal();
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory').then(() => {
+        this.$store.dispatch('categories/allCategories');
+      });
+      this.toggleModal();
+    },
   },
 };
 </script>
