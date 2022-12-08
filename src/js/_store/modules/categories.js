@@ -7,7 +7,7 @@ export default {
     errorMessage: '',
     doneMessage: '',
     deleteCategoryId: null,
-    deleteCategoryName: '',
+    deleteCategoryName: '', 
     isLoading: false,
   },
   mutations: {
@@ -87,6 +87,29 @@ export default {
           commit('errorMessage', err.message);
         });
       });
+    },
+    createCategory({ commit, rootGetters }, targetCategory) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        commit('toggleLoading');
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data: {
+            name: targetCategory,
+          },
+        }).then(() => {
+          commit('toggleLoading');
+          commit('doneMessage', { message: 'カテゴリー名を登録しました' });
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('errorMessage', err.message);
+        });
+      });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };
