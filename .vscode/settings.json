@@ -1,3 +1,5 @@
 {
-  "liveServer.settings.root": "/dist"
+  "liveServer.settings.root": "/dist",
+  "jest.jestCommandLine": "npm run test --",
+  "jest.autoRun": { "watch": true }
 }
