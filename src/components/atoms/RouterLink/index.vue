@@ -14,7 +14,7 @@ export default {
   props: {
     to: {
       type: [String, Object],
-      default: '',
+      required: true,
     },
     activeClass: {
       type: String,

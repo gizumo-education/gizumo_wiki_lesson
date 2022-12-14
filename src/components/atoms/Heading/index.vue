@@ -59,11 +59,6 @@ export default {
   padding: 0 20px 4px 20px;
   border-bottom: 6px double $theme-color;
 }
-.heading--tertiary {}
-.heading--quaternary {}
-.heading--quinary {}
-.heading--senary {}
-
 .header__title {
   font-size: 20px;
   color: #fff;

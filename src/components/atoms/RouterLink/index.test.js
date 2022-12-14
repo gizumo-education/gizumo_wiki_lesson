@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { RouterLink } from '@Components/atoms';
 
@@ -18,39 +17,38 @@ const factory = (propsData, slots) => {
 
 describe('Router Link', () => {
   let wrapper;
-  beforeEach(() => {
-    wrapper = factory(null, {
-      default: '<span>router link</span>',
+  beforeAll(() => {
+    wrapper = factory({
+      to: '/test'
+    }, {
+      default: 'リンクテキスト',
     });
   });
 
   it('is a Vue instance', () => {
-    assert.equal(wrapper.isVueInstance(), true);
+    expect(wrapper.vm).toBeTruthy();
   });
 
   it('is a anchor tag', () => {
-    assert.equal(wrapper.contains(RouterLinkStub), true);
+    expect(wrapper.findComponent(RouterLinkStub).exists()).toBe(true);
   });
 
   it('has a only "router-link" class', () => {
-    assert.equal(wrapper.classes(), 'router-link');
+    expect(wrapper.classes()).toContain('router-link');
   });
 
-  it('has default attributes', () => {
-    assert.equal(wrapper.props().to, '');
-    assert.equal(wrapper.props().activeClass, '');
-    assert.equal(wrapper.props().exactActiveClass, '');
+  it('has a props attributes', () => {
+    expect(wrapper.findComponent(RouterLinkStub).props().to).toBe('/test');
   });
 
   it('has text as slot', () => {
-    assert.equal(wrapper.contains('span'), true);
-    assert.equal(wrapper.find('span').text(), 'router link');
+    expect(wrapper.text()).toBe('リンクテキスト');
   });
 });
 
 describe('Router Link with props', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory({
       to: '/path',
       activeClass: 'active',
@@ -66,19 +64,18 @@ describe('Router Link with props', () => {
   });
 
   it('has props attributes', () => {
-    assert.equal(wrapper.props().to, '/path');
-    assert.equal(wrapper.props().activeClass, 'active');
-    assert.equal(wrapper.props().exactActiveClass, 'exact-active');
+    expect(wrapper.findComponent(RouterLinkStub).props().to).toBe('/path');
+    expect(wrapper.findComponent(RouterLinkStub).props().activeClass).toBe('active');
+    expect(wrapper.findComponent(RouterLinkStub).props().exactActiveClass).toBe('exact-active');
   });
 
-  it('has a "router-link" class & props classes', () => {
-    assert.deepEqual(wrapper.classes(), [
+  it('has a given classes', () => {
+    expect(wrapper.classes()).toEqual([
       'router-link',
       'router-link--block',
       'router-link--large',
       'router-link--small',
       'router-link--underline',
-      'router-link--key-color',
       'router-link--white',
       'router-link--round',
     ]);

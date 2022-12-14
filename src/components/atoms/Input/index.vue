@@ -6,6 +6,7 @@
       :type="type"
       :placeholder="placeholder"
       :value="value"
+      :required="required"
       @input="$emit('update-value', $event)"
     >
 

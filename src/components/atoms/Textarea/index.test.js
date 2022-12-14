@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { shallowMount } from '@vue/test-utils';
 import { Textarea } from '@Components/atoms';
 
@@ -12,36 +11,32 @@ const factory = (propsData) => {
 
 describe('Textarea', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory();
   });
 
   it('is a Vue instance', () => {
-    assert.equal(wrapper.isVueInstance(), true);
-  });
-
-  it('is a textarea tag', () => {
-    assert.equal(wrapper.is('textarea'), true);
+    expect(wrapper.vm).toBeTruthy();
   });
 
   it('has a default value', () => {
-    assert.equal(wrapper.element.value, '');
+    expect(wrapper.find('textarea').element.value).toBe('');
   });
 
   it('has a default attributes', () => {
-    assert.equal(wrapper.attributes('name'), 'inputName');
-    assert.equal(wrapper.attributes('placeholder'), '入力してください');
-    assert.equal(wrapper.attributes('required'), 'required');
+    expect(wrapper.find('textarea').attributes().name).toBe('inputName');
+    expect(wrapper.find('textarea').attributes().placeholder).toBe('入力してください');
+    expect(wrapper.find('textarea').attributes().required).toBe('required');
   });
 
-  it('has only "input" class', () => {
-    assert.equal(wrapper.classes(), 'textarea');
+  it('has only "textarea" class', () => {
+    expect(wrapper.find('textarea').classes()).toContain('textarea');
   });
 });
 
 describe('Input with props', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory({
       name: 'testTextarea',
       placeholder: 'テスト',
@@ -52,24 +47,27 @@ describe('Input with props', () => {
   });
 
   it('has a props value', () => {
-    assert.equal(wrapper.element.value, 'テスト');
+    expect(wrapper.find('textarea').element.value).toBe('テスト');
   });
 
   it('has props attributes', () => {
-    assert.equal(wrapper.attributes('name'), 'testTextarea');
-    assert.equal(wrapper.attributes('placeholder'), 'テスト');
-    assert.equal(wrapper.attributes('required'), undefined);
+    expect(wrapper.find('textarea').attributes().name).toBe('testTextarea');
+    expect(wrapper.find('textarea').attributes().placeholder).toBe('テスト');
+    expect(wrapper.find('textarea').attributes()).not.toHaveProperty('required');
   });
 
-  it('has props classes', () => {
-    assert.deepEqual(wrapper.classes(), [
+  it('has a given classes', () => {
+    expect(wrapper.find('textarea').classes()).toEqual([
       'textarea',
       'textarea--white-bg',
     ]);
   });
 
-  it('has emitted "input" event when textarea value was changed', () => {
-    wrapper.trigger('input');
-    assert.ok(wrapper.emitted().updateValue);
+  it('has emitted "textarea" event when textarea value was changed', () => {
+    wrapper.find('textarea').setValue('emitイベント発火');
+
+    expect(wrapper.emitted('update-value')).toBeTruthy();
+    expect(wrapper.emitted('update-value').length).toBe(1);
+    expect(wrapper.emitted('update-value')[0][0].target.value).toBe('emitイベント発火');
   });
 });

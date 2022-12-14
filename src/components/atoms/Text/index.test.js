@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { shallowMount } from '@vue/test-utils';
 import { Text } from '@Components/atoms';
 
@@ -15,41 +14,53 @@ const factory = (propsData, slots) => {
 
 describe('Text', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory(null, {
-      default: '<span>This is Text Component</span>'
+      default: 'ダミーテキスト'
     });
   });
 
   it('is a Vue instance', () => {
-    assert.equal(wrapper.isVueInstance(), true);
+    expect(wrapper.vm).toBeTruthy();
   });
 
   it('is a paragraph tag', () => {
-    assert.equal(wrapper.is('p'), true);
+    expect(wrapper.element.tagName).toBe('P');
   });
 
   it('has only "text" class', () => {
-    assert.equal(wrapper.classes(), 'text');
+    expect(wrapper.classes()).toContain('text');
   });
 
-  it('has slot handed as text', () => {
-    assert.equal(wrapper.contains('span'), true);
-    assert.equal(wrapper.find('span').text(), 'This is Text Component');
+  it('has text as slot', () => {
+    expect(wrapper.text()).toBe('ダミーテキスト');
   });
 });
 
 describe('Text with props', () => {
   let wrapper;
-  beforeEach(() => {
-    wrapper = factory({
-      error: true,
-      exLarge: true,
-    });
+  beforeAll(() => {
+    wrapper = factory(
+      {
+        tag: 'div',
+        error: true,
+        exLarge: true,
+      },
+      { default: '<span>spanテキスト</span>' }
+    );
   });
 
-  it('has a "text" class & classes of props handed', () => {
-    assert.deepEqual(wrapper.classes(), [
+  it('is a div tag', () => {
+    expect(wrapper.element.tagName).toBe('DIV');
+  });
+
+  it('has text as slot', () => {
+    expect(wrapper.find('span')).toBeTruthy();
+    expect(wrapper.find('span').text()).toBe('spanテキスト');
+  });
+
+  it('has a given classes', () => {
+    expect(wrapper.classes()).toEqual([
       'text',
       'text--error',
       'text--ex-large',

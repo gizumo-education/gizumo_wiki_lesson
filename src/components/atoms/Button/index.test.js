@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { shallowMount } from '@vue/test-utils';
 import { Button } from '@Components/atoms';
 
@@ -15,42 +14,39 @@ const factory = (propsData, slots) => {
 
 describe('Button', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory(null, {
-      default: '<span>This is Button Component</span>'
+      default: 'テストボタン'
     });
   });
 
   it('is a Vue instance', () => {
-    assert.equal(wrapper.isVueInstance(), true);
-  });
-
-  it('is a button tag', () => {
-    assert.equal(wrapper.is('button'), true);
+    expect(wrapper.vm).toBeTruthy();
   });
 
   it('has a default attribute', () => {
-    assert.equal(wrapper.attributes('type'), 'button');
+    expect(wrapper.attributes().type).toBe('button');
+    expect(wrapper.attributes()).not.toHaveProperty('disabled');
   });
 
   it('has only "button" class', () => {
-    assert.equal(wrapper.classes(), 'button');
+    expect(wrapper.classes()).toContain('button');
   });
 
   it('has slot handed as text', () => {
-    assert.equal(wrapper.contains('span'), true);
-    assert.equal(wrapper.find('span').text(), 'This is Button Component');
+    expect(wrapper.text()).toBe('テストボタン');
   });
 
   it('has emitted "click" event when button was clicked', () => {
     wrapper.trigger('click');
-    assert.ok(wrapper.emitted().click);
+    expect(wrapper.emitted('click')).toBeTruthy();
+    expect(wrapper.emitted('click').length).toBe(1);
   });
 });
 
 describe('Button with props', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory({
       buttonType: 'submit',
       block: true,
@@ -59,11 +55,12 @@ describe('Button with props', () => {
   });
 
   it('has a props attribute', () => {
-    assert.equal(wrapper.attributes('type'), 'submit');
+    expect(wrapper.attributes().type).toBe('submit');
+    expect(wrapper.attributes().disabled).toBe('disabled');
   });
 
-  it('has a "button" class & classes of props handed', () => {
-    assert.deepEqual(wrapper.classes(), [
+  it('has a given classes', () => {
+    expect(wrapper.classes()).toEqual([
       'button',
       'button--block',
       'button--disabled',
