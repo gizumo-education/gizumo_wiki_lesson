@@ -23,7 +23,7 @@ export default {
     errorMessage(state, message) {
       state.errorMessage = message;
     },
-    modalDeleteCategory(state, { categoryId, categoryName }) {
+    confirmDeleteCategory(state, { categoryId, categoryName }) {
       state.deleteCategoryId = categoryId;
       state.deleteCategoryName = categoryName;
     },
@@ -68,8 +68,8 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    modalDeleteCategory({ commit }, { categoryId, categoryName }) {
-      commit('modalDeleteCategory', { categoryId, categoryName });
+    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('confirmDeleteCategory', { categoryId, categoryName });
     },
     deleteCategory({ commit, rootGetters, state }) {
       return new Promise(resolve => {

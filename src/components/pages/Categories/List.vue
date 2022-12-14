@@ -76,7 +76,7 @@ export default {
       this.$store.dispatch('categories/clearMessage');
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/modalDeleteCategory', {
+      this.$store.dispatch('categories/confirmDeleteCategory', {
         categoryId,
         categoryName,
       });
