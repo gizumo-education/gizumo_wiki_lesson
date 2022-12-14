@@ -21,7 +21,7 @@ export default (({ mode }) => {
       }),
       checker({
         eslint: {
-          lintCommand: `eslint "${rootDirPath}/src/{js,components}/**/*.{js,vue}" --ignore-path ${rootDirPath}/.eslintignore`,
+          lintCommand: `eslint "${rootDirPath}/src/{js,components}/**/*.{js,vue}"`,
         },
       }),
     ],

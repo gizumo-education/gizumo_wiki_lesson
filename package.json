@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "eslint": "eslint --fix 'src/{js,components}/**/*.{js,vue}' --ignore-path .eslintignore",
+    "eslint": "eslint --fix 'src/{js,components}/**/*.{js,vue}'",
     "test": "jest",
     "dev:storybook": "start-storybook -c ./tools/.storybook/config/ -p 6006 -s ./public",
     "upgrade-interactive": "npm-check --update"
@@ -38,7 +38,7 @@
     "@vue/vue2-jest": "^28.1.0",
     "autoprefixer": "^9.4.7",
     "babel-jest": "^29.1.2",
-    "eslint": "^8.23.0",
+    "eslint": "^8.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.26.0",
