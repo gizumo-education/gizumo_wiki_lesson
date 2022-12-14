@@ -7,10 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "eslint": "eslint --fix 'src/{js,components}/**/*.{js,vue}' --ignore-path .eslintignore",
-    "test:watch": "NODE_ENV=test jest --watchAll --coverage",
+    "test": "jest",
     "dev:storybook": "start-storybook -c ./tools/.storybook/config/ -p 6006 -s ./public",
-    "upgrade-interactive": "npm-check --update",
-    "test": "jest"
+    "upgrade-interactive": "npm-check --update"
   },
   "dependencies": {
     "@storybook/addon-storysource": "^5.0.10",
