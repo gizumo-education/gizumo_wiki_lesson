@@ -81,6 +81,72 @@
         削除
       </app-button>
     </app-modal>
+    <pagination-group>
+      <app-button
+        v-if="targetMeta.current_page === targetMeta.from"
+        small
+        hover-opacity
+        disabled
+      >
+        {{ targetMeta.from }}
+      </app-button>
+      <app-button
+        v-else
+        small
+        hover-opacity
+      >
+        {{ targetMeta.from }}
+      </app-button>
+      <span
+        class="pagination-item-dots"
+      >
+        …
+      </span>
+      <div v-for="n in 5" :key="(n)">
+        <app-button
+          v-if="(((targetMeta.current_page - 3) + n) == targetMeta.current_page)"
+          small
+          hover-opacity
+          disabled
+          class="pagination-item"
+        >
+          {{ (targetMeta.current_page - 3) + n }}
+        </app-button>
+
+        <app-button
+          v-else
+          v-show="(((targetMeta.current_page - 3) + n) >= targetMeta.from
+            && ((targetMeta.current_page - 3) + n) <= targetMeta.last_page)"
+          small
+          hover-opacity
+          class="pagination-item"
+        >
+          {{ (targetMeta.current_page - 3) + n }}
+        </app-button>
+      </div>
+      <span
+        class="pagination-item-dots"
+      >
+        …
+      </span>
+      <app-button
+        v-if="targetMeta.current_page === targetMeta.last_page"
+        small
+        hover-opacity
+        disabled
+        class="pagination-item"
+      >
+        {{ targetMeta.last_page }}
+      </app-button>
+      <app-button
+        v-else
+        small
+        hover-opacity
+        class="pagination-item"
+      >
+        {{ targetMeta.last_page }}
+      </app-button>
+    </pagination-group>
   </div>
 </template>
 
@@ -107,6 +173,10 @@ export default {
       default: '',
     },
     targetArray: {
+      type: Array,
+      default: () => [],
+    },
+    targetMeta: {
       type: Array,
       default: () => [],
     },
@@ -168,6 +238,19 @@ export default {
     }
     &__notice--create {
       margin-bottom: 16px;
+    }
+    pagination-group {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .pagination-item {
+      margin-left: 16px;
+      &-dots {
+        @extend .pagination-item;
+        color: gray;
+      }
     }
   }
 </style>

@@ -3,6 +3,7 @@
     <app-article-list
       :title="title"
       :target-array="articlesList"
+      :target-meta="articlesMeta"
       :done-message="doneMessage"
       :access="access"
       border-gray
@@ -33,6 +34,9 @@ export default {
   computed: {
     articlesList() {
       return this.$store.state.articles.articleList;
+    },
+    articlesMeta() {
+      return this.$store.state.articles.articleMeta;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
@@ -81,6 +85,9 @@ export default {
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');
+        // console.log(this.$store.state.articles.articleList);
+        // console.log(this.$store.state.articles.articleLinks);
+        // console.log(this.$store.state.articles.articleMeta);
       }
     },
   },
