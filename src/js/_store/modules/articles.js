@@ -24,6 +24,17 @@ export default {
       },
     },
     articleList: [],
+    articleLinks: {
+      first: '',
+      last: '',
+      next: '',
+      prev: '',
+    },
+    articleMeta: {
+      current_page: null,
+      from: null,
+      last_page: null,
+    },
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -85,6 +96,15 @@ export default {
     },
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
+
+      state.articleLinks.first = payload.links.first;
+      state.articleLinks.last = payload.links.last;
+      state.articleLinks.next = payload.links.next;
+      state.articleLinks.prevent = payload.links.prev;
+
+      state.articleMeta.current_page = payload.meta.current_page;
+      state.articleMeta.from = payload.meta.from;
+      state.articleMeta.last_page = payload.meta.last_page;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -127,6 +147,8 @@ export default {
       }).then(res => {
         const payload = {
           articles: res.data.articles,
+          links: res.data.links,
+          meta: res.data.meta,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {
