@@ -91,8 +91,8 @@ export default {
         // console.log(this.$store.state.articles.articleMeta);
       }
     },
-    paginationClick() {
-      this.$store.dispatch('articles/getAllArticles');
+    paginationClick(pageNum) {
+      this.$store.dispatch('articles/getAllArticles', pageNum);
       // console.log(this.$store.state.articles.articleMeta);
     },
   },

@@ -215,8 +215,8 @@ export default {
       if (!this.access.delete) return;
       this.$emit('open-modal', articleId);
     },
-    paginationClick() {
-      this.$emit('pagination-click');
+    paginationClick(pageNum) {
+      this.$emit('pagination-click', pageNum);
     },
   },
 };

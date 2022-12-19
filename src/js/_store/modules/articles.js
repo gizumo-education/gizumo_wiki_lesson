@@ -31,9 +31,9 @@ export default {
       prev: '',
     },
     articleMeta: {
-      current_page: 2,
+      current_page: 1,
       from: 1,
-      last_page: 5,
+      last_page: 1,
     },
     deleteArticleId: null,
     loading: false,
@@ -140,10 +140,10 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
+    getAllArticles({ commit, rootGetters }, pageNum) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: `/article?page=${5}`,
+        url: `/article?page=${pageNum}`,
       }).then(res => {
         const payload = {
           articles: res.data.articles,
