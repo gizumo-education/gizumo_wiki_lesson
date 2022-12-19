@@ -81,21 +81,24 @@
         削除
       </app-button>
     </app-modal>
-    <pagination-group>
+    <div
+      class="pagination"
+    >
       <app-button
-        v-if="targetMeta.current_page === targetMeta.from"
+        v-if="(targetMeta.current_page === 1)"
         small
         hover-opacity
         disabled
       >
-        {{ targetMeta.from }}
+        1
       </app-button>
       <app-button
         v-else
         small
         hover-opacity
+        @click="paginationClick(1)"
       >
-        {{ targetMeta.from }}
+        1
       </app-button>
       <span
         class="pagination-item-dots"
@@ -115,11 +118,12 @@
 
         <app-button
           v-else
-          v-show="(((targetMeta.current_page - 3) + n) >= targetMeta.from
+          v-show="(((targetMeta.current_page - 3) + n) >= 1
             && ((targetMeta.current_page - 3) + n) <= targetMeta.last_page)"
           small
           hover-opacity
           class="pagination-item"
+          @click="paginationClick((targetMeta.current_page - 3) + n)"
         >
           {{ (targetMeta.current_page - 3) + n }}
         </app-button>
@@ -143,10 +147,11 @@
         small
         hover-opacity
         class="pagination-item"
+        @click="paginationClick(targetMeta.last_page)"
       >
         {{ targetMeta.last_page }}
       </app-button>
-    </pagination-group>
+    </div>
   </div>
 </template>
 
@@ -177,8 +182,8 @@ export default {
       default: () => [],
     },
     targetMeta: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
     borderGray: {
       type: Boolean,
@@ -210,6 +215,9 @@ export default {
       if (!this.access.delete) return;
       this.$emit('open-modal', articleId);
     },
+    paginationClick() {
+      this.$emit('pagination-click');
+    },
   },
 };
 </script>
@@ -239,7 +247,7 @@ export default {
     &__notice--create {
       margin-bottom: 16px;
     }
-    pagination-group {
+    .pagination {
       margin-top: 16px;
       display: flex;
       justify-content: center;

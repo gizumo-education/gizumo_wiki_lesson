@@ -9,6 +9,7 @@
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
+      @pagination-click="paginationClick"
     />
   </div>
 </template>
@@ -89,6 +90,10 @@ export default {
         // console.log(this.$store.state.articles.articleLinks);
         // console.log(this.$store.state.articles.articleMeta);
       }
+    },
+    paginationClick() {
+      this.$store.dispatch('articles/getAllArticles');
+      // console.log(this.$store.state.articles.articleMeta);
     },
   },
 };
