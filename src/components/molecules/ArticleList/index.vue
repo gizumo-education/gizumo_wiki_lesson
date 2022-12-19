@@ -107,6 +107,17 @@
       </span>
       <div v-for="n in 5" :key="(n)">
         <app-button
+          v-if="(targetMeta.display_page + (n - 1) === targetMeta.current_page)"
+          small
+          hover-opacity
+          class="pagination-item"
+          disabled
+          @click="paginationClick(targetMeta.display_page + (n - 1))"
+        >
+          {{ targetMeta.display_page + (n - 1) }}
+        </app-button>
+        <app-button
+          v-if="(targetMeta.display_page + (n - 1) !== targetMeta.current_page)"
           small
           hover-opacity
           class="pagination-item"
