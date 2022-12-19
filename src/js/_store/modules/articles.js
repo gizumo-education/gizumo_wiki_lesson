@@ -32,8 +32,8 @@ export default {
     },
     articleMeta: {
       current_page: 1,
-      from: 1,
       last_page: 1,
+      display_page: 1,
     },
     deleteArticleId: null,
     loading: false,
@@ -103,8 +103,10 @@ export default {
       state.articleLinks.prevent = payload.links.prev;
 
       state.articleMeta.current_page = payload.meta.current_page;
-      state.articleMeta.from = payload.meta.from;
       state.articleMeta.last_page = payload.meta.last_page;
+    },
+    getPaginationStart(state, startPage) {
+      state.articleMeta.display_page = startPage;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -151,6 +153,13 @@ export default {
           meta: res.data.meta,
         };
         commit('doneGetAllArticles', payload);
+        if (res.data.meta.current_page <= 4) {
+          commit('getPaginationStart', 2);
+        } else if (res.data.meta.current_page >= res.data.meta.last_page - 3) {
+          commit('getPaginationStart', res.data.meta.last_page - 5);
+        } else {
+          commit('getPaginationStart', res.data.meta.current_page - 2);
+        }
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
