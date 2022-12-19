@@ -107,7 +107,9 @@
       </span>
       <div v-for="n in 5" :key="(n)">
         <app-button
-          v-if="(((targetMeta.current_page - 3) + n) == targetMeta.current_page)"
+          v-if="(((targetMeta.current_page - 3) + n) == targetMeta.current_page
+            && targetMeta.current_page !== 1
+            && targetMeta.current_page !== targetMeta.last_page)"
           small
           hover-opacity
           disabled
@@ -118,8 +120,8 @@
 
         <app-button
           v-else
-          v-show="(((targetMeta.current_page - 3) + n) >= 1
-            && ((targetMeta.current_page - 3) + n) <= targetMeta.last_page)"
+          v-show="(((targetMeta.current_page - 3) + n) > 1
+            && ((targetMeta.current_page - 3) + n) < targetMeta.last_page)"
           small
           hover-opacity
           class="pagination-item"
