@@ -51,6 +51,9 @@ export default {
     },
   },
   created() {
+    if (!this.$route.query.page) {
+      this.$router.push({ query: { page: 1 } });
+    }
     this.fetchArticles();
   },
   methods: {
@@ -73,10 +76,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch(
-          'articles/getAllArticles',
-          (this.$route.query.page ? this.$route.query.page : 1),
-        );
+        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
     fetchArticles() {

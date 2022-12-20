@@ -51,6 +51,7 @@
       small
       hover-opacity
       disabled
+      class="pagination-item"
     >
       {{ targetMeta.last_page }}
     </app-button>
@@ -58,6 +59,7 @@
       v-else
       small
       hover-opacity
+      class="pagination-item"
       @click="paginationClick(targetMeta.last_page)"
     >
       {{ targetMeta.last_page }}
