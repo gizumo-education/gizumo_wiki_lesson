@@ -90,7 +90,7 @@ export default {
     },
     paginationClick(pageNum) {
       this.$router.push({ query: { page: pageNum } });
-      this.$store.dispatch('articles/getAllArticles', pageNum);
+      this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
     },
   },
 };

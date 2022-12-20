@@ -24,12 +24,6 @@ export default {
       },
     },
     articleList: [],
-    articleLinks: {
-      first: '',
-      last: '',
-      next: '',
-      prev: '',
-    },
     articleMeta: {
       current_page: 1,
       last_page: 1,
@@ -96,14 +90,7 @@ export default {
     },
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
-
-      state.articleLinks.first = payload.links.first;
-      state.articleLinks.last = payload.links.last;
-      state.articleLinks.next = payload.links.next;
-      state.articleLinks.prevent = payload.links.prev;
-
-      state.articleMeta.current_page = payload.meta.current_page;
-      state.articleMeta.last_page = payload.meta.last_page;
+      state.articleMeta = { ...payload.meta };
     },
     getPaginationStart(state, startPage) {
       state.articleMeta.display_page = startPage;
@@ -155,8 +142,8 @@ export default {
         commit('doneGetAllArticles', payload);
         if (res.data.meta.current_page <= 4) {
           commit('getPaginationStart', 2);
-        } else if (res.data.meta.current_page >= res.data.meta.last_page - 3) {
-          commit('getPaginationStart', res.data.meta.last_page - 5);
+        // } else if (res.data.meta.current_page >= res.data.meta.last_page - 3) {
+        // commit('getPaginationStart', res.data.meta.last_page - 5);
         } else {
           commit('getPaginationStart', res.data.meta.current_page - 2);
         }
