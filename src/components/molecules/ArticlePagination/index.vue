@@ -23,12 +23,11 @@
     >
       …
     </span>
-    <div v-for="n in 5" :key="(n)">
+    <div v-for="n in 5" :key="(n)" class="pagination-item">
       <app-button
         v-if="(buttonPage + (n - 1) === targetMeta.current_page)"
         small
         hover-opacity
-        class="pagination-item"
         disabled
       >
         {{ buttonPage + (n - 1) }}
@@ -37,7 +36,6 @@
         v-if="(buttonPage + (n - 1) !== targetMeta.current_page)"
         small
         hover-opacity
-        class="pagination-item"
         @click="paginationClick(buttonPage + (n - 1))"
       >
         {{ buttonPage + (n - 1) }}
@@ -53,7 +51,6 @@
       small
       hover-opacity
       disabled
-      class="pagination-item"
     >
       {{ targetMeta.last_page }}
     </app-button>
@@ -61,7 +58,6 @@
       v-else
       small
       hover-opacity
-      class="pagination-item"
       @click="paginationClick(targetMeta.last_page)"
     >
       {{ targetMeta.last_page }}
@@ -86,7 +82,7 @@ export default {
   },
   data() {
     return {
-      buttonPage: 1,
+      buttonPage: 2,
     };
   },
   computed: {
