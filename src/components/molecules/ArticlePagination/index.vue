@@ -25,22 +25,22 @@
     </span>
     <div v-for="n in 5" :key="(n)">
       <app-button
-        v-if="(targetMeta.display_page + (n - 1) === targetMeta.current_page)"
+        v-if="(buttonPage + (n - 1) === targetMeta.current_page)"
         small
         hover-opacity
         class="pagination-item"
         disabled
       >
-        {{ targetMeta.display_page + (n - 1) }}
+        {{ buttonPage + (n - 1) }}
       </app-button>
       <app-button
-        v-if="(targetMeta.display_page + (n - 1) !== targetMeta.current_page)"
+        v-if="(buttonPage + (n - 1) !== targetMeta.current_page)"
         small
         hover-opacity
         class="pagination-item"
-        @click="paginationClick(targetMeta.display_page + (n - 1))"
+        @click="paginationClick(buttonPage + (n - 1))"
       >
-        {{ targetMeta.display_page + (n - 1) }}
+        {{ buttonPage + (n - 1) }}
       </app-button>
     </div>
     <span
@@ -84,11 +84,23 @@ export default {
       default: () => {},
     },
   },
+  data() {
+    return {
+      buttonPage: 1,
+    };
+  },
   computed: {
   },
   methods: {
     paginationClick(pageNum) {
       this.$emit('pagination-click', pageNum);
+      if (pageNum <= 4) {
+        this.buttonPage = 2;
+      } else if (pageNum >= this.targetMeta.last_page - 3) {
+        this.buttonPage = this.targetMeta.last_page - 5;
+      } else {
+        this.buttonPage = pageNum - 2;
+      }
     },
   },
 };

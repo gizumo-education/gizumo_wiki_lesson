@@ -3,7 +3,6 @@
     <app-article-list
       :title="title"
       :target-array="articlesList"
-      :target-meta="articlesMeta"
       :done-message="doneMessage"
       :access="access"
       border-gray
