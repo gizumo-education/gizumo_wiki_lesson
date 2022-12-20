@@ -9,18 +9,22 @@
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
+    />
+    <app-article-pagination
+      :target-meta="articlesMeta"
       @pagination-click="paginationClick"
     />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, ArticlePagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appArticlePagination: ArticlePagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -70,7 +74,10 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
+        this.$store.dispatch(
+          'articles/getAllArticles',
+          (this.$route.query.page ? this.$route.query.page : 1),
+        );
       }
     },
     fetchArticles() {
@@ -88,7 +95,10 @@ export default {
       } else if (this.pageNum) {
         this.$store.dispatch('articles/getAllArticles', this.pageNum);
       } else {
-        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
+        this.$store.dispatch(
+          'articles/getAllArticles',
+          (this.$route.query.page ? this.$route.query.page : 1),
+        );
       }
     },
     paginationClick(pageNum) {
