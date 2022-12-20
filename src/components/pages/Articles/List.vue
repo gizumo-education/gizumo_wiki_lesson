@@ -69,7 +69,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
     fetchArticles() {
@@ -85,15 +85,12 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
-        // console.log(this.$store.state.articles.articleList);
-        // console.log(this.$store.state.articles.articleLinks);
-        // console.log(this.$store.state.articles.articleMeta);
+        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
     paginationClick(pageNum) {
+      this.$router.push({ query: { page: pageNum } });
       this.$store.dispatch('articles/getAllArticles', pageNum);
-      // console.log(this.$store.state.articles.articleMeta);
     },
   },
 };

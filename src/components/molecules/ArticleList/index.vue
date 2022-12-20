@@ -112,7 +112,6 @@
           hover-opacity
           class="pagination-item"
           disabled
-          @click="paginationClick(targetMeta.display_page + (n - 1))"
         >
           {{ targetMeta.display_page + (n - 1) }}
         </app-button>
