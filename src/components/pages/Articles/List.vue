@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       title: 'すべて',
+      pageNum: null,
     };
   },
   computed: {
@@ -84,13 +85,15 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
+      } else if (this.pageNum) {
+        this.$store.dispatch('articles/getAllArticles', this.pageNum);
       } else {
         this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
     paginationClick(pageNum) {
+      this.pageNum = pageNum;
       this.$router.push({ query: { page: pageNum } });
-      this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
     },
   },
 };

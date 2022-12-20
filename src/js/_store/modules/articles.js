@@ -142,8 +142,8 @@ export default {
         commit('doneGetAllArticles', payload);
         if (res.data.meta.current_page <= 4) {
           commit('getPaginationStart', 2);
-        // } else if (res.data.meta.current_page >= res.data.meta.last_page - 3) {
-        // commit('getPaginationStart', res.data.meta.last_page - 5);
+        } else if (res.data.meta.current_page >= res.data.meta.last_page - 3) {
+          commit('getPaginationStart', res.data.meta.last_page - 5);
         } else {
           commit('getPaginationStart', res.data.meta.current_page - 2);
         }
