@@ -9,16 +9,21 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-pagination
+      :target-meta="articlesMeta"
+      @pagination-click="paginationClick"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -28,11 +33,15 @@ export default {
   data() {
     return {
       title: 'すべて',
+      pageNum: null,
     };
   },
   computed: {
     articlesList() {
       return this.$store.state.articles.articleList;
+    },
+    articlesMeta() {
+      return this.$store.state.articles.articleMeta;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
@@ -42,6 +51,9 @@ export default {
     },
   },
   created() {
+    if (!this.$route.query.page) {
+      this.$router.push({ query: { page: 1 } });
+    }
     this.fetchArticles();
   },
   methods: {
@@ -64,7 +76,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
     fetchArticles() {
@@ -79,9 +91,18 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
+      } else if (this.pageNum) {
+        this.$store.dispatch('articles/getAllArticles', this.pageNum);
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch(
+          'articles/getAllArticles',
+          (this.$route.query.page ? this.$route.query.page : 1),
+        );
       }
+    },
+    paginationClick(pageNum) {
+      this.pageNum = pageNum;
+      this.$router.push({ query: { page: pageNum } });
     },
   },
 };

@@ -110,6 +110,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    targetMeta: {
+      type: Object,
+      default: () => {},
+    },
     borderGray: {
       type: Boolean,
       default: false,
