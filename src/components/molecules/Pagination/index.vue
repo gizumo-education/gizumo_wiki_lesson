@@ -15,7 +15,12 @@
     >
       …
     </span>
-    <div v-for="n in 5" :key="n" class="pagination-item">
+    <div
+      v-for="n in 5"
+      v-show="(buttonPage + n <= targetMeta.last_page)"
+      :key="n"
+      class="pagination-item"
+    >
       <app-button
         small
         hover-opacity
