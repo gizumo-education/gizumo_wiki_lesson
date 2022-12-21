@@ -3,17 +3,9 @@
     class="pagination"
   >
     <app-button
-      v-if="(targetMeta.current_page === 1)"
       small
       hover-opacity
-      disabled
-    >
-      1
-    </app-button>
-    <app-button
-      v-else
-      small
-      hover-opacity
+      :disabled="1 === targetMeta.current_page ? true : false"
       @click="paginationClick(1)"
     >
       1
@@ -25,17 +17,9 @@
     </span>
     <div v-for="n in 5" :key="(n)" class="pagination-item">
       <app-button
-        v-if="(buttonPage + (n - 1) === targetMeta.current_page)"
         small
         hover-opacity
-        disabled
-      >
-        {{ buttonPage + (n - 1) }}
-      </app-button>
-      <app-button
-        v-if="(buttonPage + (n - 1) !== targetMeta.current_page)"
-        small
-        hover-opacity
+        :disabled="buttonPage + n - 1 === targetMeta.current_page ? true : false"
         @click="paginationClick(buttonPage + (n - 1))"
       >
         {{ buttonPage + (n - 1) }}
@@ -47,19 +31,10 @@
       …
     </span>
     <app-button
-      v-if="targetMeta.current_page === targetMeta.last_page"
-      small
-      hover-opacity
-      disabled
-      class="pagination-item"
-    >
-      {{ targetMeta.last_page }}
-    </app-button>
-    <app-button
-      v-else
       small
       hover-opacity
       class="pagination-item"
+      :disabled="targetMeta.last_page === targetMeta.current_page ? true : false"
       @click="paginationClick(targetMeta.last_page)"
     >
       {{ targetMeta.last_page }}
