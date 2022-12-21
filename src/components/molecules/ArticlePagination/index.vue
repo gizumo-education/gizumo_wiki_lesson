@@ -62,8 +62,6 @@ export default {
       buttonPage: 2,
     };
   },
-  computed: {
-  },
   methods: {
     paginationClick(pageNum) {
       this.$emit('pagination-click', pageNum);
