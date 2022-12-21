@@ -5,7 +5,7 @@
     <app-button
       small
       hover-opacity
-      :disabled="1 === targetMeta.current_page ? true : false"
+      :disabled="1 === targetMeta.current_page"
       @click="paginationClick(1)"
     >
       1
@@ -24,7 +24,7 @@
       <app-button
         small
         hover-opacity
-        :disabled="buttonPage + n - 1 === targetMeta.current_page ? true : false"
+        :disabled="buttonPage + n - 1 === targetMeta.current_page"
         @click="paginationClick(buttonPage + (n - 1))"
       >
         {{ buttonPage + (n - 1) }}
@@ -39,7 +39,7 @@
       small
       hover-opacity
       class="pagination-item"
-      :disabled="targetMeta.last_page === targetMeta.current_page ? true : false"
+      :disabled="targetMeta.last_page === targetMeta.current_page"
       @click="paginationClick(targetMeta.last_page)"
     >
       {{ targetMeta.last_page }}
