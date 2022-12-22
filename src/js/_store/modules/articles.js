@@ -91,9 +91,8 @@ export default {
       state.articleList = [...payload.articles];
       state.articleMeta = { ...payload.meta };
     },
-    doneGetTrashed(state, payload) {
-      console.log(payload);
-      state.articleList = [...payload.articles];
+    doneGetTrashed(state, articles) {
+      state.articleList = [...articles];
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
