@@ -91,6 +91,10 @@ export default {
       state.articleList = [...payload.articles];
       state.articleMeta = { ...payload.meta };
     },
+    doneGetTrashed(state, payload) {
+      console.log(payload);
+      state.articleList = [...payload.articles];
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -168,20 +172,13 @@ export default {
         });
       });
     },
-    getArticleTrashed({ commit, rootGetters }) {
+    getTrashed({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
           url: '/article/trashed',
         }).then(res => {
-          const payload = {
-            article: {
-              id: res.data.title,
-              title: res.data.content,
-              created_at: res.data.created_at,
-            },
-          };
-          commit('doneGetArticle', payload);
+          commit('doneGetTrashed', res.data.articles);
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });

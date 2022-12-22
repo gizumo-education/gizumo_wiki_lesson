@@ -6,7 +6,6 @@
       :done-message="doneMessage"
       :access="access"
       border-gray
-      @open-modal="openModal"
       @handle-click="handleClick"
     />
   </div>
@@ -46,16 +45,9 @@ export default {
     },
   },
   created() {
-    if (!this.$route.query.page) {
-      this.$router.push({ query: { page: 1 } });
-    }
-    this.fetchArticles();
+    this.fetchTrashed();
   },
   methods: {
-    openModal(articleId) {
-      this.$store.dispatch('articles/confirmDeleteArticle', articleId);
-      this.toggleModal();
-    },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
       this.toggleModal();
@@ -74,26 +66,9 @@ export default {
         this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
-    fetchArticles() {
-      if (this.$route.query.category) {
-        const { category } = this.$route.query;
-        this.title = category;
-        this.$store.dispatch('articles/filteredArticles', category)
-          .then(() => {
-            if (this.$store.state.articles.articleList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          }).catch(() => {
-            // console.log(err);
-          });
-      } else if (this.pageNum) {
-        this.$store.dispatch('articles/getAllArticles', this.pageNum);
-      } else {
-        this.$store.dispatch(
-          'articles/getAllArticles',
-          (this.$route.query.page ? this.$route.query.page : 1),
-        );
-      }
+    fetchTrashed() {
+      this.$store.dispatch('articles/getTrashed');
+      console.log(this.$store.state.articles.articleList);
     },
     paginationClick(pageNum) {
       this.pageNum = pageNum;
