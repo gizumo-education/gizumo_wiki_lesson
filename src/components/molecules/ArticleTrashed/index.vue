@@ -51,17 +51,17 @@
         <app-text
           class="article-trashed__title"
         >
-          {{ article.title }}
+          {{ articleListTitle(article.title) }}
         </app-text>
         <app-text
           class="article-trashed__content"
         >
-          {{ article.content }}
+          {{ articleListContent(article.content) }}
         </app-text>
         <app-text
           class="article-trashed__date"
         >
-          {{ articleDate(article.created_at) }}
+          {{ articleListDate(article.created_at) }}
         </app-text>
       </app-list-item>
     </transition-group>
@@ -137,7 +137,19 @@ export default {
     },
   },
   methods: {
-    articleDate(date) {
+    articleListTitle(title) {
+      if (title.length > 30) {
+        return `${title.substr(0, 30)}...`;
+      }
+      return title;
+    },
+    articleListContent(content) {
+      if (content.length > 30) {
+        return `${content.substr(0, 30)}...`;
+      }
+      return content;
+    },
+    articleListDate(date) {
       const ymdDate = new Date(date).toLocaleDateString();
       return ymdDate.replaceAll('/', '-');
     },
