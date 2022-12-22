@@ -61,7 +61,7 @@
         <app-text
           class="article-trashed__date"
         >
-          {{ article.created_at }}
+          {{ articleDate(article.created_at) }}
         </app-text>
       </app-list-item>
     </transition-group>
@@ -137,9 +137,9 @@ export default {
     },
   },
   methods: {
-    openModal(articleId) {
-      if (!this.access.delete) return;
-      this.$emit('open-modal', articleId);
+    articleDate(date) {
+      const ymdDate = new Date(date).toLocaleDateString();
+      return ymdDate.replaceAll('/', '-');
     },
   },
 };
