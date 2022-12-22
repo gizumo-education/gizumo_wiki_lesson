@@ -17,13 +17,19 @@
       全ての記事一覧へ戻る
     </app-router-link>
     <div class="article-trashed__list-header">
-      <app-text>
+      <app-text
+        class="article-trashed__title"
+      >
         タイトル
       </app-text>
-      <app-text>
+      <app-text
+        class="article-trashed__content"
+      >
         本文
       </app-text>
-      <app-text>
+      <app-text
+        class="article-trashed__date"
+      >
         作成日
       </app-text>
     </div>
@@ -48,14 +54,14 @@
           {{ article.title }}
         </app-text>
         <app-text
-          class="article-trashed__title"
+          class="article-trashed__content"
         >
-          内容
+          {{ article.content }}
         </app-text>
         <app-text
-          class="article-trashed__title"
+          class="article-trashed__date"
         >
-          作成日
+          {{ article.created_at }}
         </app-text>
       </app-list-item>
     </transition-group>
@@ -147,21 +153,25 @@ export default {
       }
     }
     &__list-header {
+      color: $theme-color;
+      font-weight: $bold;
+      margin-top: 16px;
+      padding: 10px;
       display: flex;
+      justify-content: space-between;
+      border-bottom: solid 1px $separator-color;
     }
     .fade-enter, .fade-leave-to {
       opacity: 0;
     }
     &__title {
-      width: 60%;
+      width: 40%;
     }
-    &__create-link {
-      margin-top: 16px;
+    &__content {
+      width: 50%;
     }
-    &__links {
-      *:not(first-child) {
-        margin-left: 16px;
-      }
+    &__date {
+      width: 10%;
     }
     &__notice--create {
       margin-bottom: 16px;

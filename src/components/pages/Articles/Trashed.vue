@@ -68,7 +68,6 @@ export default {
     },
     fetchTrashed() {
       this.$store.dispatch('articles/getTrashed');
-      console.log(this.$store.state.articles.articleList);
     },
     paginationClick(pageNum) {
       this.pageNum = pageNum;
