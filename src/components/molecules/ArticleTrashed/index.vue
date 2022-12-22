@@ -173,6 +173,9 @@ export default {
     &__date {
       width: 10%;
     }
+    &__create-link {
+      margin-top: 16px;
+    }
     &__notice--create {
       margin-bottom: 16px;
     }
