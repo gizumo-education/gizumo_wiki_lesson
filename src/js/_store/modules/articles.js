@@ -168,6 +168,27 @@ export default {
         });
       });
     },
+    getArticleTrashed({ commit, rootGetters }) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/article/trashed',
+        }).then(res => {
+          const payload = {
+            article: {
+              id: res.data.title,
+              title: res.data.content,
+              created_at: res.data.created_at,
+            },
+          };
+          commit('doneGetArticle', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
     editedTitle({ commit }, title) {
       commit({
         type: 'editedTitle',

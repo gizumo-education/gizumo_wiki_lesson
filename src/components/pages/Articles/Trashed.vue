@@ -1,6 +1,6 @@
 <template>
   <div class="articles">
-    <app-article-list
+    <app-article-trashed
       :title="title"
       :target-array="articlesList"
       :done-message="doneMessage"
@@ -9,21 +9,16 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <app-pagination
-      :target-meta="articlesMeta"
-      @pagination-click="paginationClick"
-    />
   </div>
 </template>
 
 <script>
-import { ArticleList, Pagination } from '@Components/molecules';
+import { ArticleTrashed } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
-    appArticleList: ArticleList,
-    appPagination: Pagination,
+    appArticleTrashed: ArticleTrashed,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -32,7 +27,7 @@ export default {
   },
   data() {
     return {
-      title: 'すべて',
+      title: '削除済記事',
       pageNum: null,
     };
   },
