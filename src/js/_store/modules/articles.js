@@ -172,7 +172,7 @@ export default {
       });
     },
     getTrashed({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
+      new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
           url: '/article/trashed',
