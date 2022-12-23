@@ -111,8 +111,11 @@ export default {
       };
     },
     articleListDate() {
+      const options = {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+      };
       return date => {
-        const ymdDate = new Date(date).toLocaleDateString();
+        const ymdDate = new Date(date).toLocaleDateString('ja-JP', options);
         return ymdDate.replaceAll('/', '-');
       };
     },
