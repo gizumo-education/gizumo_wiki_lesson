@@ -53,8 +53,9 @@ export default {
   created() {
     if (!this.$route.query.page) {
       this.$router.push({ query: { page: 1 } });
+    } else {
+      this.fetchArticles();
     }
-    this.fetchArticles();
   },
   methods: {
     openModal(articleId) {
