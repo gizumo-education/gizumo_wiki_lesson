@@ -87,7 +87,7 @@ export default {
     },
     title: {
       type: String,
-      default: 'すべて',
+      default: '削除済記事',
     },
   },
   computed: {
