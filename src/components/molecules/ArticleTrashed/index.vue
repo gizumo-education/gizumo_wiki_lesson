@@ -97,7 +97,7 @@ export default {
     articleListTitle() {
       return title => {
         if (title.length > 30) {
-          return `${title.substr(0, 30)}...`;
+          return `${title.substring(0, 30)}...`;
         }
         return title;
       };
@@ -105,7 +105,7 @@ export default {
     articleListContent() {
       return content => {
         if (content.length > 30) {
-          return `${content.substr(0, 30)}...`;
+          return `${content.substring(0, 30)}...`;
         }
         return content;
       };
