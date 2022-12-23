@@ -164,9 +164,6 @@ export default {
   .article-list {
     &__articles {
       margin-top: 16px;
-      .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-      }
     }
     .fade-enter, .fade-leave-to {
       opacity: 0;

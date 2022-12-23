@@ -118,11 +118,6 @@ export default {
 
 <style lang="scss" scoped>
   .article-trashed {
-    &__articles {
-      .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-      }
-    }
     &__list-header {
       color: $theme-color;
       font-weight: $bold;
