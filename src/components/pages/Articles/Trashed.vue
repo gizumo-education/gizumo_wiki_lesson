@@ -1,7 +1,6 @@
 <template>
   <div class="articles">
     <app-article-trashed
-      :title="title"
       :target-array="articlesList"
     />
   </div>
@@ -13,11 +12,6 @@ import { ArticleTrashed } from '@Components/molecules';
 export default {
   components: {
     appArticleTrashed: ArticleTrashed,
-  },
-  data() {
-    return {
-      title: '削除済記事',
-    };
   },
   computed: {
     articlesList() {

@@ -1,6 +1,6 @@
 <template>
   <div class="article-trashed">
-    <app-heading :level="1">{{ articleTitle }}</app-heading>
+    <app-heading :level="1">削除済記事一覧</app-heading>
     <app-router-link
       to="/articles"
       key-color
@@ -83,17 +83,10 @@ export default {
   props: {
     targetArray: {
       type: Array,
-      default: () => [],
-    },
-    title: {
-      type: String,
-      default: '削除済記事',
+      required: true,
     },
   },
   computed: {
-    articleTitle() {
-      return `${this.title}一覧`;
-    },
     articleListTitle() {
       return title => {
         if (title.length > 30) {
