@@ -1,8 +1,5 @@
 <template>
   <div class="article-trashed">
-    <div v-if="doneMessage" class="article-trashed__notice--create">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
     <app-heading :level="1">{{ articleTitle }}</app-heading>
     <app-router-link
       to="/articles"
@@ -65,19 +62,6 @@
         </app-text>
       </app-list-item>
     </transition-group>
-    <app-modal>
-      <app-text
-        ex-large
-      >
-        本当に削除しますか?
-      </app-text>
-      <app-button
-        bg-danger
-        @click="$emit('handle-click')"
-      >
-        削除
-      </app-button>
-    </app-modal>
   </div>
 </template>
 
@@ -86,7 +70,6 @@ import {
   Heading,
   ListItem,
   RouterLink,
-  Button,
   Text,
 } from '@Components/atoms';
 
@@ -95,45 +78,21 @@ export default {
     appHeading: Heading,
     appListItem: ListItem,
     appRouterLink: RouterLink,
-    appButton: Button,
     appText: Text,
   },
   props: {
-    className: {
-      type: String,
-      default: '',
-    },
     targetArray: {
       type: Array,
       default: () => [],
-    },
-    targetMeta: {
-      type: Object,
-      default: () => {},
-    },
-    borderGray: {
-      type: Boolean,
-      default: false,
     },
     title: {
       type: String,
       default: 'すべて',
     },
-    doneMessage: {
-      type: String,
-      default: '',
-    },
-    access: {
-      type: Object,
-      default: () => ({}),
-    },
   },
   computed: {
     articleTitle() {
       return `${this.title}一覧`;
-    },
-    buttonText() {
-      return this.access.delete ? '削除' : '削除権限がありません';
     },
     articleListTitle() {
       return title => {
