@@ -18,17 +18,17 @@
     </app-router-link>
     <div class="article-trashed__list-header">
       <app-text
-        class="article-trashed__title"
+        class="article-trashed__title article-trashed__list-header-item"
       >
         タイトル
       </app-text>
       <app-text
-        class="article-trashed__content"
+        class="article-trashed__content article-trashed__list-header-item"
       >
         本文
       </app-text>
       <app-text
-        class="article-trashed__date"
+        class="article-trashed__date article-trashed__list-header-item"
       >
         作成日
       </app-text>
@@ -176,6 +176,9 @@ export default {
       display: flex;
       justify-content: space-between;
       border-bottom: solid 1px $separator-color;
+      &-item {
+        margin-left: 10px;
+      }
     }
     .fade-enter, .fade-leave-to {
       opacity: 0;
