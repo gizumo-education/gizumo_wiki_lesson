@@ -172,17 +172,13 @@ export default {
       });
     },
     getTrashed({ commit, rootGetters }) {
-      new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/article/trashed',
-        }).then(res => {
-          commit('doneGetTrashed', res.data.articles);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject();
-        });
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        commit('doneGetTrashed', res.data.articles);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     editedTitle({ commit }, title) {
