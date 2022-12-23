@@ -135,23 +135,27 @@ export default {
     buttonText() {
       return this.access.delete ? '削除' : '削除権限がありません';
     },
-  },
-  methods: {
-    articleListTitle(title) {
-      if (title.length > 30) {
-        return `${title.substr(0, 30)}...`;
-      }
-      return title;
+    articleListTitle() {
+      return title => {
+        if (title.length > 30) {
+          return `${title.substr(0, 30)}...`;
+        }
+        return title;
+      };
     },
-    articleListContent(content) {
-      if (content.length > 30) {
-        return `${content.substr(0, 30)}...`;
-      }
-      return content;
+    articleListContent() {
+      return content => {
+        if (content.length > 30) {
+          return `${content.substr(0, 30)}...`;
+        }
+        return content;
+      };
     },
-    articleListDate(date) {
-      const ymdDate = new Date(date).toLocaleDateString();
-      return ymdDate.replaceAll('/', '-');
+    articleListDate() {
+      return date => {
+        const ymdDate = new Date(date).toLocaleDateString();
+        return ymdDate.replaceAll('/', '-');
+      };
     },
   },
 };
