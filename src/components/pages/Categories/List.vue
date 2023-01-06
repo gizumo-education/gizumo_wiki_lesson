@@ -3,6 +3,11 @@
     <app-category-post
       class="categories-post"
       :access="access"
+      :category="newCategory"
+      :done-message="doneMessage"
+      :error-message="errorMessage"
+      @update-value="newCategory = $event.target.value"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="categories-list"
@@ -23,11 +28,18 @@ export default {
   data() {
     return {
       title: 'すべて',
+      newCategory: '',
     };
   },
   computed: {
     categoryList() {
       return this.$store.state.categories.categoryList;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -35,6 +47,11 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    handleSubmit() {
+      this.$store.dispatch('categories/postCategory', this.newCategory);
+    },
   },
 };
 </script>
