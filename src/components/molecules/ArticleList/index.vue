@@ -16,6 +16,18 @@
     >
       新しいドキュメントを作る
     </app-router-link>
+    <app-router-link
+      to="articles/trashed"
+      key-color
+      white
+      bg-lightgreen
+      small
+      round
+      hover-opacity
+      class="article-list__create-link-trashed"
+    >
+      削除済記事一覧へ移動する
+    </app-router-link>
     <transition-group
       class="article-list__articles"
       name="fade"
@@ -152,9 +164,6 @@ export default {
   .article-list {
     &__articles {
       margin-top: 16px;
-      .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-      }
     }
     .fade-enter, .fade-leave-to {
       opacity: 0;
@@ -164,6 +173,9 @@ export default {
     }
     &__create-link {
       margin-top: 16px;
+      &-trashed {
+        margin-left: 16px;
+      }
     }
     &__links {
       *:not(first-child) {

@@ -15,6 +15,7 @@ import CategoryEdit from '@Pages/Categories/Edit.vue';
 // 記事
 import Articles from '@Pages/Articles/index.vue';
 import ArticleList from '@Pages/Articles/List.vue';
+import ArticleTrashed from '@Pages/Articles/Trashed.vue';
 import ArticleDetail from '@Pages/Articles/Detail.vue';
 import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
@@ -110,6 +111,11 @@ const router = new VueRouter({
               next();
             }
           },
+        },
+        {
+          name: 'articleTrashed',
+          path: 'trashed',
+          component: ArticleTrashed,
         },
         {
           name: 'articlePost',

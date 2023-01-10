@@ -91,6 +91,9 @@ export default {
       state.articleList = [...payload.articles];
       state.articleMeta = { ...payload.meta };
     },
+    doneGetTrashed(state, articles) {
+      state.articleList = [...articles];
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -166,6 +169,16 @@ export default {
           commit('failRequest', { message: err.message });
           reject();
         });
+      });
+    },
+    getTrashed({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        commit('doneGetTrashed', res.data.articles);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     editedTitle({ commit }, title) {
