@@ -7,6 +7,7 @@ export default {
     postCategories: '',
     doneMessage: '',
     errorMessage: '',
+    loading: false,
   },
   mutations: {
     doneGetCategories(state, payload) {

@@ -6,6 +6,7 @@
       :category="newCategory"
       :done-message="doneMessage"
       :error-message="errorMessage"
+      :disabled="disabled"
       @update-value="newCategory = $event.target.value"
       @handle-submit="handleSubmit"
     />
@@ -40,6 +41,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    disabled() {
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];
