@@ -41,10 +41,12 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters, dispatch }, newCategory) {
+    postCategory({ commit, rootGetters }, newCategory) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
         commit('toggleLoading');
+        resolve();
+
         const data = new URLSearchParams();
         data.append('name', newCategory);
         axios(rootGetters['auth/token'])({
@@ -54,8 +56,6 @@ export default {
         }).then(() => {
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          resolve();
-          dispatch('getAllCategories');
         }).catch(err => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });

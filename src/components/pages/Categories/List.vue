@@ -7,7 +7,7 @@
       :done-message="doneMessage"
       :error-message="errorMessage"
       :disabled="disabled"
-      @update-value="newCategory = $event.target.value"
+      @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
     <app-category-list
@@ -54,7 +54,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$store.dispatch('categories/postCategory', this.newCategory);
+      this.$store.dispatch('categories/postCategory', this.newCategory)
+        .then(() => {
+          this.$store.dispatch('categories/getAllCategories');
+        });
+    },
+    updateValue(updateValue) {
+      this.newCategory = updateValue.target.value;
     },
   },
 };
