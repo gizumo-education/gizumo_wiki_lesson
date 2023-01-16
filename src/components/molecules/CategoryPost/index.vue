@@ -46,11 +46,11 @@ export default {
       type: String,
       default: '',
     },
-    doneMessage: {
+    errorMessage: {
       type: String,
       default: '',
     },
-    errorMessage: {
+    doneMessage: {
       type: String,
       default: '',
     },
