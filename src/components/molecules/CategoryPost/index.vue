@@ -7,7 +7,6 @@
       type="text"
       placeholder="追加するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
-      :done-mesage="doneMessage"
       :error-messages="errors.collect('category')"
       :value="category"
       @update-value="$emit('update-value', $event)"

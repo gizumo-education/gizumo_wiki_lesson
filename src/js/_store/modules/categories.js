@@ -4,7 +4,6 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    postCategories: '',
     doneMessage: '',
     errorMessage: '',
     loading: false,
@@ -46,7 +45,6 @@ export default {
         commit('clearMessage');
         commit('toggleLoading');
         resolve();
-
         const data = new URLSearchParams();
         data.append('name', newCategory);
         axios(rootGetters['auth/token'])({
