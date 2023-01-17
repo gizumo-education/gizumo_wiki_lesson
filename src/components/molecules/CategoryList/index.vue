@@ -54,7 +54,6 @@
               @click="openModal(category.id, category.name)"
             >
               削除
-              {{ buttonText }}
             </app-button>
           </td>
         </tr>
