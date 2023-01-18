@@ -1,33 +1,35 @@
 <template>
-  <form @submit.prevent="addCategory">
-    <app-heading :level="1">カテゴリー管理</app-heading>
-    <app-input
-      v-validate="'required'"
-      name="category"
-      type="text"
-      placeholder="追加するカテゴリー名を入力してください"
-      data-vv-as="カテゴリー名"
-      :error-messages="errors.collect('category')"
-      :value="category"
-      @update-value="$emit('update-value', $event)"
-    />
-    <app-button
-      class="category-management-post__submit"
-      button-type="submit"
-      round
-      :disabled="disabled || !access.create"
-    >
-      {{ buttonText }}
-    </app-button>
+  <div class="category-management-post">
+    <form @submit.prevent="addCategory">
+      <app-heading :level="1">カテゴリー管理</app-heading>
+      <app-input
+        v-validate="'required'"
+        name="category"
+        type="text"
+        placeholder="追加するカテゴリー名を入力してください"
+        data-vv-as="カテゴリー名"
+        :error-messages="errors.collect('category')"
+        :value="category"
+        @update-value="$emit('update-value', $event)"
+      />
+      <app-button
+        class="category-management-post__submit"
+        button-type="submit"
+        round
+        :disabled="disabled || !access.create"
+      >
+        {{ buttonText }}
+      </app-button>
 
-    <div v-if="errorMessage" class="category-management-post__notice">
-      <app-text bg-error>{{ errorMessage }}</app-text>
-    </div>
+      <div v-if="errorMessage" class="category-management-post__notice">
+        <app-text bg-error>{{ errorMessage }}</app-text>
+      </div>
 
-    <div v-if="doneMessage" class="category-management-post__notice">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
-  </form>
+      <div v-if="doneMessage" class="category-management-post__notice">
+        <app-text bg-success>{{ doneMessage }}</app-text>
+      </div>
+    </form>
+  </div>
 </template>
 <script>
 import {
@@ -64,6 +66,10 @@ export default {
     },
   },
   computed: {
+    articleTitle() {
+      const { title } = this.$store.state.articles.targetArticle;
+      return title;
+    },
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
       return this.disabled ? '作成中...' : '作成';
@@ -82,6 +88,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category-management-post {
+  padding-right: 2%;
+  width: 50%;
+  border-right: 1px solid #ccc;
+  height: 100%;
   &__input {
     margin-top: 16px;
   }
@@ -92,4 +102,11 @@ export default {
     margin-top: 16px;
   }
 }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 </style>
