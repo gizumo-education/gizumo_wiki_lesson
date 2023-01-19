@@ -3,6 +3,12 @@
     <app-category-post
       class="categories-post"
       :access="access"
+      :value="category"
+      :done-message="doneMessage"
+      :category="categoryName"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
+      @clear-message="clearMessage"
     />
     <app-category-list
       class="categories-list"
@@ -23,6 +29,9 @@ export default {
   },
   data() {
     return {
+      category: {
+        name: '',
+      },
       theads: ['カテゴリー名'],
     };
   },
@@ -33,13 +42,35 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    categoryName() {
+      return this.category.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.fetchCategories();
   },
   methods: {
+    emptyInput() {
+      return {
+        name: '',
+      };
+    },
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
+    },
+    updateValue($event) {
+      this.category.name = $event.target.value;
+    },
+    handleSubmit() {
+      const inputName = this.category.name;
+      this.$store.dispatch('categories/postCategory', inputName);
+      this.category = this.emptyInput();
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
