@@ -1,35 +1,33 @@
 <template>
-  <div>
-    <form @submit.prevent="addCategory">
-      <app-heading :level="1">カテゴリー管理</app-heading>
-      <app-input
-        v-validate="'required'"
-        name="category"
-        type="text"
-        placeholder="追加するカテゴリー名を入力してください"
-        data-vv-as="カテゴリー名"
-        :error-messages="errors.collect('category')"
-        :value="category"
-        @update-value="$emit('update-value', $event)"
-      />
-      <app-button
-        class="category-management-post__submit"
-        button-type="submit"
-        round
-        :disabled="disabled || !access.create"
-      >
-        {{ buttonText }}
-      </app-button>
+  <form @submit.prevent="addCategory">
+    <app-heading :level="1">カテゴリー管理</app-heading>
+    <app-input
+      v-validate="'required'"
+      name="category"
+      type="text"
+      placeholder="追加するカテゴリー名を入力してください"
+      data-vv-as="カテゴリー名"
+      :error-messages="errors.collect('category')"
+      :value="category"
+      @update-value="$emit('update-value', $event)"
+    />
+    <app-button
+      class="category-management-post__submit"
+      button-type="submit"
+      round
+      :disabled="disabled || !access.create"
+    >
+      {{ buttonText }}
+    </app-button>
 
-      <div v-if="errorMessage" class="category-management-post__notice">
-        <app-text bg-error>{{ errorMessage }}</app-text>
-      </div>
+    <div v-if="errorMessage" class="category-management-post__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
 
-      <div v-if="doneMessage" class="category-management-post__notice">
-        <app-text bg-success>{{ doneMessage }}</app-text>
-      </div>
-    </form>
-  </div>
+    <div v-if="doneMessage" class="category-management-post__notice">
+      <app-text bg-success>{{ doneMessage }}</app-text>
+    </div>
+  </form>
 </template>
 <script>
 import {
