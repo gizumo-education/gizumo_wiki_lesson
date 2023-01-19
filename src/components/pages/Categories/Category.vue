@@ -47,8 +47,6 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
-  methods: {
-  },
 };
 </script>
 

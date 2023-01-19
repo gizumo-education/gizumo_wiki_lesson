@@ -3,23 +3,13 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    targetCategory: [{
-      id: '',
-      name: '',
-    }],
     categoryList: [],
     doneMessage: '',
     errorMessage: '',
   },
-  getters: {
-  },
   mutations: {
-    doneGetCategory(state, payload) {
-      state.targetCategory = { ...state.targetCategory, ...payload.category };
-    },
     doneGetAllCategories(state, { categories }) {
       state.categoryList = categories;
-      state.loading = false;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;

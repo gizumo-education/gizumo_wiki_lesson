@@ -132,6 +132,8 @@ export default {
 <style lang="scss" scoped>
 .category-list {
   padding: 10px 0 20px;
+  height: 100%;
+  overflow: scroll;
   &__table {
     width: 100%;
     text-align: left;
@@ -169,7 +171,6 @@ export default {
     margin-top: 16px;
     font-size: 16px;
     color: $theme-color;
-    display: flex;
   }
   &__button {
     margin-top: 48px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="category-management-post">
+  <div>
     <form @submit.prevent="addCategory">
       <app-heading :level="1">カテゴリー管理</app-heading>
       <app-input
@@ -84,8 +84,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category-management-post {
-  padding-right: 2%;
-  height: 100%;
   &__input {
     margin-top: 16px;
   }
@@ -95,12 +93,6 @@ export default {
   &__notice {
     margin-top: 16px;
   }
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
 }
 
 </style>
