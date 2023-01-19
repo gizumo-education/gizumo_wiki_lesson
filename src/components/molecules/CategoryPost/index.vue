@@ -66,10 +66,6 @@ export default {
     },
   },
   computed: {
-    articleTitle() {
-      const { title } = this.$store.state.articles.targetArticle;
-      return title;
-    },
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
       return this.disabled ? '作成中...' : '作成';
@@ -89,8 +85,6 @@ export default {
 <style lang="scss" scoped>
 .category-management-post {
   padding-right: 2%;
-  width: 50%;
-  border-right: 1px solid #ccc;
   height: 100%;
   &__input {
     margin-top: 16px;
