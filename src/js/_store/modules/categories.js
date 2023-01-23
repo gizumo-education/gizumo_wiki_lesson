@@ -18,11 +18,17 @@ export default {
     postCategory(state, payload) {
       state.categoriesList.unshift(payload);
     },
+    errorMessage(state, payload) {
+      state.errorMessage = payload.message;
+    },
     clearMessage(state) {
       state.errorMessage = '';
     },
-    displayDoneMessage(state, payload) {
-      state.doneMessage = payload;
+    displayDoneMessage(state, payload = { message: 'カテゴリー名作成完了しました。' }) {
+      state.doneMessage = payload.message;
+    },
+    errorAlreadyMessage(state, payload = { message: '既に登録済みのカテゴリー名です。' }) {
+      state.errorMessage = payload.message;
     },
   },
   actions: {
@@ -39,7 +45,7 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }, inputName) {
+    postCategory({ dispatch, commit, rootGetters }, inputName) {
       const data = new URLSearchParams();
       data.append('name', inputName);
       axios(rootGetters['auth/token'])({
@@ -47,17 +53,18 @@ export default {
         url: '/category',
         data,
       }).then(res => {
-        console.log(res); //eslint-disable-line
         const resName = {
           name: res.data.category.name,
           id: res.data.category.id,
         };
         commit('postCategory', resName);
-        const messageDone = '完了しました';
-        commit('displayDoneMessage', messageDone);
-        this.$store.dispatch('doneGetAllCategories');
+        commit('displayDoneMessage');
+        dispatch('getAllCategories');
+        setTimeout(() => {
+          commit('displayDoneMessage', { message: '' });
+        }, 3000);
       }).catch(err => {
-        commit('failRequest', { message: err.message });
+        commit('errorMessage', { message: err.message });
       });
     },
     clearMessage({ commit }) {
