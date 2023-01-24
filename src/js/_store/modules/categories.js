@@ -24,11 +24,8 @@ export default {
     clearMessage(state) {
       state.errorMessage = '';
     },
-    displayDoneMessage(state, payload = { message: 'カテゴリー名作成完了しました。' }) {
+    displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
-    },
-    errorAlreadyMessage(state, payload = { message: '既に登録済みのカテゴリー名です。' }) {
-      state.errorMessage = payload.message;
     },
   },
   actions: {
@@ -58,7 +55,7 @@ export default {
           id: res.data.category.id,
         };
         commit('postCategory', resName);
-        commit('displayDoneMessage');
+        commit('displayDoneMessage', { message: 'カテゴリー名作成完了しました。' });
         dispatch('getAllCategories');
         setTimeout(() => {
           commit('displayDoneMessage', { message: '' });
