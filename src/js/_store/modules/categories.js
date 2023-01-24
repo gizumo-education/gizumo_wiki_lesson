@@ -6,6 +6,7 @@ export default {
     categoriesList: [],
     errorMessage: '',
     doneMessage: '',
+    disabled: false,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -27,6 +28,9 @@ export default {
     displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
     },
+    disabled(state) {
+      state.disabled = !state.disabled;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -45,6 +49,7 @@ export default {
     postCategory({ dispatch, commit, rootGetters }, inputName) {
       const data = new URLSearchParams();
       data.append('name', inputName);
+      commit('disabled');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
@@ -60,8 +65,10 @@ export default {
         setTimeout(() => {
           commit('displayDoneMessage', { message: '' });
         }, 3000);
+        commit('disabled');
       }).catch(err => {
         commit('errorMessage', { message: err.message });
+        commit('disabled');
       });
     },
     clearMessage({ commit }) {
