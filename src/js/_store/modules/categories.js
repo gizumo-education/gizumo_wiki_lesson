@@ -11,14 +11,12 @@ export default {
   mutations: {
     doneGetAllCategories(state, { categories }) {
       state.categoryList = categories;
-      state.loading = false;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
     createCategory(state, payload) {
       state.categoryList.unshift(payload);
-      state.loading = false;
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
     clearMessage(state) {
