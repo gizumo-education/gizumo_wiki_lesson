@@ -17,7 +17,9 @@ export default {
     },
     createCategory(state, payload) {
       state.categoryList.unshift(payload);
-      state.doneMessage = '新規カテゴリーの追加が完了しました。';
+    },
+    displayDoneMessage(state, payload) {
+      state.doneMessage = payload.message;
     },
     clearMessage(state) {
       state.doneMessage = '';
@@ -55,6 +57,7 @@ export default {
           id: response.data.category.id,
         };
         commit('createCategory', responseCategory);
+        commit('displayDoneMessage', { message: '新規カテゴリーの追加が完了しました。' });
       }).catch(err => {
         commit('failRequest', { message: err.message });
         commit('toggleLoading');
