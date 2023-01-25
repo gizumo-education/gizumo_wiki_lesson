@@ -8,11 +8,6 @@ export default {
     errorMessage: '',
     loading: false,
   },
-  getters: {
-    transformedCategories(state) {
-      return state.categoryList;
-    },
-  },
   mutations: {
     doneGetAllCategories(state, { categories }) {
       state.categoryList = categories;
@@ -21,7 +16,8 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
-    doneCreateCategory(state) {
+    createCategory(state, payload) {
+      state.categoryList.unshift(payload);
       state.loading = false;
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
@@ -29,11 +25,8 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    displayDoneMessage(state, payload = { message: '成功しました' }) {
-      state.doneMessage = payload.message;
-    },
-    applyRequest(state) {
-      state.loading = true;
+    toggleLoading(state) {
+      state.loading = !state.loading;
     },
   },
   actions: {
@@ -49,21 +42,24 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }, category) {
-      commit('applyRequest');
-
-      return new Promise(resolve => {
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data: category,
-        }).then(response => {
-          if (response.data.code === 0) throw new Error(response.data.message);
-          commit('doneCreateCategory');
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-        });
+    postCategory({ commit, rootGetters }, targetCategoryName) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', targetCategoryName);
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(response => {
+        commit('toggleLoading');
+        const responseCategory = {
+          name: response.data.category.name,
+          id: response.data.category.id,
+        };
+        commit('createCategory', responseCategory);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
     clearMessage({ commit }) {

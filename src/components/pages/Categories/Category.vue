@@ -1,18 +1,18 @@
 <template>
   <div class="category-page">
-    <div class="category-page__columns">
+    <div class="category-page__post">
       <app-category-post
         :error-message="errorMessage"
         :done-message="doneMessage"
         :access="access"
-        :disabled="loading ? true : false"
+        :disabled="loading"
         :category="categoryName"
         @update-value="updateValue"
         @handle-submit="handleSubmit"
         @clear-message="clearMessage"
       />
     </div>
-    <div class="category-page__columns">
+    <div class="category-page__list">
       <app-category-list
         :theads="theads"
         :categories="categoriesList"
@@ -61,13 +61,9 @@ export default {
       this.categoryName = $event.target.value;
     },
     handleSubmit() {
-      this.$store.dispatch('categories/postCategory', {
-        name: this.categoryName.trim(),
-      }).then(() => {
-        this.$router.push('/categories');
-        this.categoryName = '';
-        this.$store.dispatch('categories/getAllCategories');
-      });
+      const targetCategoryName = this.categoryName;
+      this.$store.dispatch('categories/postCategory', targetCategoryName);
+      this.categoryName = '';
     },
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
@@ -80,12 +76,16 @@ export default {
 .category-page {
   display: flex;
   height: 100%;
-  &__columns {
+  &__post {
     width: 50%;
-    &:first-child {
-      border-right: 1px solid #ccc;
-      padding-right: 2%;
-    }
+    border-right: 1px solid #ccc;
+    padding-right: 2%;
+  }
+  &__list {
+    margin-left: 2%;
+    width: 48%;
+    overflow-y: scroll;
+    background-color: #fff;
   }
 }
 
