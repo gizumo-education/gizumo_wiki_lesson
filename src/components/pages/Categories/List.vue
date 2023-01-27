@@ -37,7 +37,6 @@ export default {
   mixins: [Mixins],
   data() {
     return {
-      id: '',
       name: '',
       theads: ['カテゴリー名'],
     };
@@ -91,7 +90,7 @@ export default {
       this.toggleModal();
     },
     handleClick() {
-      const { categoryDeleteId } = this.id;
+      const categoryDeleteId = this.$store.state.categories.deleteCategoryId;
       this.$store.dispatch('categories/deleteCategory', categoryDeleteId);
       this.toggleModal();
     },

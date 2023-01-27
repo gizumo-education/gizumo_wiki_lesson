@@ -8,7 +8,7 @@ export default {
     doneMessage: '',
     disabled: false,
     deleteCategoryName: '',
-    deleteCategoryId: '',
+    deleteCategoryId: null,
   },
   getters: {
     deleteCategoryName: state => state.deleteCategoryName,
@@ -87,16 +87,14 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDelCategory({ commit }, confirmCategoryName) {
-      commit('confirmDeleteCategory', confirmCategoryName);
+    confirmDelCategory({ commit }, confirmCategoryId) {
+      commit('confirmDeleteCategory', confirmCategoryId);
     },
-    deleteCategory({ dispatch, commit, rootGetters }, categoryName) {
-      const data = new URLSearchParams();
-      data.append('name', categoryName);
+    deleteCategory({ dispatch, commit, rootGetters }, deleteCategoryId) {
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
-        data,
+        url: `/category/${deleteCategoryId}`,
+        deleteCategoryId,
       }).then(() => {
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
