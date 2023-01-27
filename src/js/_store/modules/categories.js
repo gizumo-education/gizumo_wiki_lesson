@@ -9,9 +9,6 @@ export default {
     loading: false,
     deleteCategoryId: null,
   },
-  getters: {
-    deleteCategoryId: state => state.deleteCategoryId,
-  },
   mutations: {
     doneGetAllCategories(state, { categories }) {
       state.categoryList = categories;
