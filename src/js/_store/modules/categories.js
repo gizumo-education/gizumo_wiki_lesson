@@ -87,8 +87,8 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDelCategory({ commit }, confirmCategoryId) {
-      commit('confirmDeleteCategory', confirmCategoryId);
+    confirmDelCategory({ commit }, categoryIdNameData) {
+      commit('confirmDeleteCategory', categoryIdNameData);
     },
     deleteCategory({ dispatch, commit, rootGetters }, deleteCategoryId) {
       axios(rootGetters['auth/token'])({
