@@ -158,7 +158,7 @@ export default {
     margin-top: 20px;
   }
   &__button {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 }
 </style>
