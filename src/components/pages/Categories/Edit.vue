@@ -1,14 +1,13 @@
 <template>
   <app-category-edit
-    :category-id="categoryId"
     :category-name="categoryName"
-    :loading="loading"
+    :disabled="loading"
     :done-message="doneMessage"
+    :error-message="errorMessage"
     :access="access"
-    @selected-article-category="selectedArticleCategory"
-    @edited-title="editedTitle"
-    @edited-content="editedContent"
+    @edited-category="editedCategory"
     @handle-submit="handleSubmit"
+    @clear-message="clearMessage"
   />
 </template>
 
@@ -19,65 +18,37 @@ export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  data() {
-    return {
-      categoryName: '',
-      content: '',
-    };
-  },
   computed: {
-    articleId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
-      return id;
-    },
-    targetCategoryName() {
-      const { title } = this.$store.state.articles.targetArticle;
-      return title;
-    },
-    articleContent() {
-      const { content } = this.$store.state.articles.targetArticle;
-      return content;
-    },
-    markdownContent() {
-      return `# ${this.articleTitle}\n${this.articleContent}`;
-    },
-    currentCategoryName() {
-      const { name } = this.$store.state.articles.targetArticle.category;
-      return name;
-    },
-    categoryList() {
-      const { categoryList } = this.$store.state.categories;
-      return categoryList;
-    },
     loading() {
-      return this.$store.state.articles.loading;
+      return this.$store.state.categories.loading;
     },
     doneMessage() {
-      return this.$store.state.articles.doneMessage;
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
     },
+    categoryName() {
+      return this.$store.state.categories.category.name;
+    },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
-    this.$store.dispatch('articles/getArticleDetail', parseInt(this.articleId, 10));
+    this.$store.dispatch('categories/clearMessage');
+    this.$store.dispatch('categories/getTargetCategory', this.$route.params.id);
   },
   methods: {
-    editedTitle($event) {
-      this.$store.dispatch('articles/editedTitle', $event.target.value);
-    },
-    editedContent($event) {
-      this.$store.dispatch('articles/editedContent', $event.target.value);
+    editedCategory($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('articles/updateArticle');
+      this.$store.dispatch('categories/updateCategory');
     },
-    selectedArticleCategory($event) {
-      const categoryName = $event.target.value;
-      this.$store.dispatch('articles/selectedArticleCategory', categoryName);
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
