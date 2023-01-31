@@ -59,7 +59,7 @@ export default {
   props: {
     categoryName: {
       type: String,
-      default: 'true',
+      required: true,
     },
     doneMessage: {
       type: String,
