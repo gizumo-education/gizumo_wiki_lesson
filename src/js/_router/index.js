@@ -27,6 +27,10 @@ import UserCreate from '@Pages/Users/Create.vue';
 import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
+// カテゴリー
+import Category from '@Pages/Categories/index.vue';
+import Categories from '@Pages/Categories/Category.vue';
+
 import Store from '../_store';
 
 Vue.use(VueRouter);
@@ -66,6 +70,17 @@ const router = new VueRouter({
       name: 'profile',
       path: '/profile',
       component: Profile,
+    },
+    {
+      path: '/category',
+      component: Category,
+      children: [
+        {
+          name: 'categories',
+          path: '',
+          component: Categories,
+        },
+      ],
     },
     {
       path: '/articles',
