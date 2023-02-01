@@ -80,9 +80,11 @@ export default {
       this.deleteCategoryName = categoryName;
     },
     handleClick() {
-      this.$store.dispatch('categories/deleteCategory');
+      this.$store.dispatch('categories/deleteCategory')
+        .then(() => {
+          this.$store.dispatch('categories/getAllCategories');
+        });
       this.toggleModal();
-      this.$store.dispatch('categories/getAllCategories');
     },
   },
 };
