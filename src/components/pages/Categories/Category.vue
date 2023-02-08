@@ -1,11 +1,11 @@
 <template>
-  <div class="articles">
+  <div class="category">
     <app-category-post
-      class="form"
+      class="category-form"
       :access="access"
     />
     <app-category-list
-      class="list"
+      class="category-list"
       :categories="categories"
     />
   </div>
@@ -24,24 +24,23 @@ export default {
       return this.$store.getters['auth/access'];
     },
     categories() {
-      return this.$store.state.categories.CategoriesList;
+      return this.$store.state.categories.categoriesList;
     },
   },
   created() {
     this.$store.dispatch('categories/getAllLists');
-    // console.log('a');
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.articles {
+.category {
   display:flex;
 }
-.form {
+.category-form {
   flex-basis:30%;
 }
-.list {
+.category-list {
   flex-basis:70%;
 }
 </style>
