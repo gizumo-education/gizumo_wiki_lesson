@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import {
   auth, articles, users,
 } from './modules';
+import categories from './modules/categories';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -11,5 +12,6 @@ export default new Vuex.Store({
     auth,
     articles,
     users,
+    categories,
   },
 });
