@@ -12,7 +12,7 @@ export default {
       state.categoryList = categories.reverse();
     },
     failRequest(state, { message }) {
-      state.errorMessage = `${message}が発生しています。ご確認の上、再度お試しください。`;
+      state.errorMessage = `${message} : ご確認の上、再度お試しください。`;
     },
   },
   actions: {
