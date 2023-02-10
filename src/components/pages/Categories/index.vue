@@ -1,12 +1,12 @@
 <template>
   <div class="categories">
     <app-category-post
-      class="categories-item"
+      class="categories-input"
       :error-message="errorMessage"
       :access="access"
     />
     <app-category-list
-      class="categories-item"
+      class="categories-list"
       :access="access"
       :categories="categoryList"
       :theads="theads"
@@ -51,17 +51,13 @@ export default {
   display: flex;
   flex-direction: row;
 
-  &-item:first-child {
+  &-input {
     width: 35%;
-    overflow: hidden;
   }
 
-  &-item:last-child {
+  &-list {
     width: 65%;
-    overflow: hidden;
-
-  }
-  &-item + .categories-item{
+    overflow:hidden;
     border-left: 2px solid #e3e3e3;
     margin-left: 20px;
     padding-left: 20px;
