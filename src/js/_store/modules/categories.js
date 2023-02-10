@@ -4,7 +4,6 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    deleteCategoryId: null,
     doneMessage: '',
     errorMessage: '',
   },
