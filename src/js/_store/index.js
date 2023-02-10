@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {
-  auth, articles, users,
+  auth, articles, users, categories,
 } from './modules';
-import categories from './modules/categories';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
