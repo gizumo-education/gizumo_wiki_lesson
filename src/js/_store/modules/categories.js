@@ -22,8 +22,7 @@ export default {
         url: '/category',
       }).then(res => {
         if (res.data.code === 0) throw new Error(res.data.message);
-        const categories = res.data.categories.map(data => data);
-        commit('doneGetAllCategories', categories);
+        commit('doneGetAllCategories', res.data.categories);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
