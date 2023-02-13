@@ -3,7 +3,11 @@
     <app-category-post
       class="categories-input"
       :error-message="errorMessage"
+      :done-message="doneMessage"
       :access="access"
+      :category="changeCategory"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-list
       class="categories-list"
@@ -13,7 +17,6 @@
     />
   </div>
 </template>
-
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
 
@@ -40,9 +43,21 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
+    changeCategory() {
+      return this.$store.state.categories.targetCategory.name;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
+    updateValue(data) {
+      this.$store.dispatch('categories/updateValue', data);
+    },
   },
 };
 </script>
