@@ -85,6 +85,7 @@ export default {
     },
     updateValue({ commit }, data) {
       commit('updateValue', data);
+      commit('clearMessage');
     },
   },
 };
