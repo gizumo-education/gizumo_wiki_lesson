@@ -56,7 +56,7 @@ export default {
       this.$store.dispatch('categories/postCategory');
     },
     updateValue(data) {
-      this.$store.dispatch('categories/updateValue', data);
+      this.$store.dispatch('categories/updateValue', data.target.value);
     },
   },
 };
