@@ -5,7 +5,7 @@
       :error-message="errorMessage"
       :done-message="doneMessage"
       :access="access"
-      :category="changeCategory"
+      :category="categoryName"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
@@ -43,7 +43,7 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
-    changeCategory() {
+    categoryName() {
       return this.$store.state.categories.targetCategory.name;
     },
   },
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.loading) return;
+      if (this.$store.state.categories.loading) return;
       this.$store.dispatch('categories/postCategory');
     },
     updateValue(data) {
