@@ -56,7 +56,7 @@ export default {
         commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategory'].name);
+        data.append('name', this.getters['categories/targetCategory'].name);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
