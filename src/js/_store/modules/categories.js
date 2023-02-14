@@ -64,18 +64,10 @@ export default {
         }).then(() => {
           commit('toggleLoading');
           commit('clearMessage');
-          axios(rootGetters['auth/token'])({
-            method: 'GET',
-            url: '/category',
-          }).then(res => {
-            if (res.data.code === 0) throw new Error(res.data.message);
-            commit('doneGetAllCategories', res.data.categories);
-            commit('clearValue');
-            commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-            resolve();
-          }).catch(err => {
-            commit('failRequest', { message: err.message });
-          });
+          commit('clearValue');
+          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          this.dispatch('categories/getAllCategories');
+          resolve();
         }).catch(err => {
           commit('toggleLoading');
           reject();
