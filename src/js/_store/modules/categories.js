@@ -62,16 +62,16 @@ export default {
           url: '/category',
           data,
         }).then(() => {
-          commit('toggleLoading');
           commit('clearMessage');
           commit('clearValue');
+          commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           this.dispatch('categories/getAllCategories');
           resolve();
         }).catch(err => {
           commit('toggleLoading');
-          reject();
           commit('failRequest', { message: err.message });
+          reject();
         });
       });
     },
