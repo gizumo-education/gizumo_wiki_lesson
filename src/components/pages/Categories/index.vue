@@ -4,6 +4,7 @@
       class="categories-input"
       :error-message="errorMessage"
       :done-message="doneMessage"
+      :disabled="loadingStatus"
       :access="access"
       :category="categoryName"
       @handle-submit="handleSubmit"
@@ -49,6 +50,9 @@ export default {
     },
     categoryName() {
       return this.$data.targetCategory.name;
+    },
+    loadingStatus() {
+      return this.$store.state.categories.loading;
     },
   },
   created() {
