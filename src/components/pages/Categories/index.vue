@@ -6,7 +6,7 @@
       :done-message="doneMessage"
       :disabled="loadingStatus"
       :access="access"
-      :category="categoryName"
+      :category="$data.targetCategory.name"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
@@ -47,9 +47,6 @@ export default {
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
-    },
-    categoryName() {
-      return this.$data.targetCategory.name;
     },
     loadingStatus() {
       return this.$store.state.categories.loading;
