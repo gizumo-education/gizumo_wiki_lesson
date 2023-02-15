@@ -4,10 +4,6 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    targetCategory: {
-      id: null,
-      name: '',
-    },
     loading: false,
     doneMessage: '',
     errorMessage: '',
@@ -29,15 +25,6 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
-    updateValue(state, data) {
-      state.targetCategory.name = data;
-    },
-    clearValue(state) {
-      state.targetCategory.name = '';
-    },
-  },
-  getters: {
-    targetCategory: state => state.targetCategory,
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -51,19 +38,18 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }) {
+    postCategory({ commit, rootGetters }, payload) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
-        data.append('name', this.getters['categories/targetCategory'].name);
+        data.append('name', payload);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
         }).then(() => {
           commit('clearMessage');
-          commit('clearValue');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           this.dispatch('categories/getAllCategories');
@@ -74,10 +60,6 @@ export default {
           reject();
         });
       });
-    },
-    updateValue({ commit }, data) {
-      commit('updateValue', data);
-      commit('clearMessage');
     },
   },
 };

@@ -9,6 +9,7 @@
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
+
     <app-category-list
       class="categories-list"
       :access="access"
@@ -28,6 +29,9 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      targetCategory: {
+        name: '',
+      },
     };
   },
   computed: {
@@ -44,7 +48,7 @@ export default {
       return this.$store.state.categories.doneMessage;
     },
     categoryName() {
-      return this.$store.state.categories.targetCategory.name;
+      return this.$data.targetCategory.name;
     },
   },
   created() {
@@ -53,12 +57,20 @@ export default {
   methods: {
     handleSubmit() {
       if (this.$store.state.categories.loading) return;
-      this.$store.dispatch('categories/postCategory');
+      const categoryName = this.targetCategory.name;
+      this.$store.dispatch('categories/postCategory', categoryName)
+        .then(() => {
+          this.targetCategory.name = '';
+        })
+        .catch(() => {
+          this.targetCategory.name = categoryName;
+        });
     },
-    updateValue(data) {
-      this.$store.dispatch('categories/updateValue', data.target.value);
+    updateValue(event) {
+      this.targetCategory.name = event.target.value;
     },
   },
+
 };
 </script>
 <style lang="scss" scoped>
