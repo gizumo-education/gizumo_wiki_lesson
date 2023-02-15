@@ -65,9 +65,6 @@ export default {
       this.$store.dispatch('categories/postCategory', categoryName)
         .then(() => {
           this.targetCategory.name = '';
-        })
-        .catch(() => {
-          this.targetCategory.name = categoryName;
         });
     },
     updateValue(event) {
