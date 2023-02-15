@@ -3,8 +3,14 @@
     <app-category-post
       class="categories-input"
       :error-message="errorMessage"
+      :done-message="doneMessage"
+      :disabled="loadingStatus"
       :access="access"
+      :category="$data.targetCategory.name"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
+
     <app-category-list
       class="categories-list"
       :access="access"
@@ -13,7 +19,6 @@
     />
   </div>
 </template>
-
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
 
@@ -25,6 +30,9 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      targetCategory: {
+        name: '',
+      },
     };
   },
   computed: {
@@ -40,10 +48,27 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
+    loadingStatus() {
+      return this.$store.state.categories.loading;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
+  methods: {
+    handleSubmit() {
+      if (this.$store.state.categories.loading) return;
+      const categoryName = this.targetCategory.name;
+      this.$store.dispatch('categories/postCategory', categoryName)
+        .then(() => {
+          this.targetCategory.name = '';
+        });
+    },
+    updateValue(event) {
+      this.targetCategory.name = event.target.value;
+    },
+  },
+
 };
 </script>
 <style lang="scss" scoped>

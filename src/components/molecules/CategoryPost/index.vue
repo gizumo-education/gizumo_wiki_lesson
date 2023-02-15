@@ -7,8 +7,8 @@
       type="text"
       placeholder="追加するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
-      :error-messages="errors.collect('category')"
       :value="category"
+      :error-messages="errors.collect('category')"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
@@ -44,7 +44,7 @@ export default {
   props: {
     category: {
       type: String,
-      default: '',
+      required: true,
     },
     errorMessage: {
       type: String,
