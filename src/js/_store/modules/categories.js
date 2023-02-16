@@ -5,7 +5,6 @@ export default {
   state: {
     categoryList: [],
     loading: false,
-    deleteLoading: false,
 
     doneMessage: '',
     errorMessage: '',
