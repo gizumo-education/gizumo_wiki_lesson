@@ -90,7 +90,6 @@ export default {
       }
     },
     openModal(articleId) {
-      // console.log(this);
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
     },
