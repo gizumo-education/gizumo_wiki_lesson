@@ -1,5 +1,6 @@
 <template>
   <div class="category-list">
+    <app-text theme-color bold>カテゴリー名</app-text>
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
@@ -131,7 +132,7 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px;
+  padding: 10px 10px 20px;
   height: 100%;
   overflow: scroll;
   &__table {
@@ -150,6 +151,10 @@ export default {
       td {
         padding: 10px;
         vertical-align: middle;
+
+        &:first-child{
+          width: 40%;
+        }
         &.is-disabled {
           color: $disabled-color;
           font-size: 12px;

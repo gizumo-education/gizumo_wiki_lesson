@@ -60,7 +60,7 @@ export default {
     },
     access: {
       type: Object,
-      default: () => ({}),
+      default: () => ({ }),
     },
   },
   computed: {
