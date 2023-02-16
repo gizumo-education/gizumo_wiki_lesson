@@ -98,7 +98,7 @@ export default {
     theads: {
       type: Array,
       default() {
-        return [];
+        return ['カテゴリー名'];
       },
     },
     categories: {
