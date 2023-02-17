@@ -16,7 +16,7 @@ import ArticlePost from '@Pages/Articles/Post.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
-import Main from '@Pages/Categories/Main.vue';
+import Category from '@Pages/Categories/Category.vue';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
@@ -118,7 +118,7 @@ const router = new VueRouter({
         {
           name: 'categoryMain',
           path: '',
-          component: Main,
+          component: Category,
         },
       ],
     },

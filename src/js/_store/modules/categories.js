@@ -5,7 +5,6 @@ export default {
   state: {
     categoryList: [],
     errorMessage: '',
-    loading: false,
   },
 
   mutations: {

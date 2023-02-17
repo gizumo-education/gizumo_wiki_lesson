@@ -1,10 +1,7 @@
 <template>
   <div class="category__main">
     <div class="category__main__post">
-      <app-category-post
-        :category="category"
-        :error-message="errorMessage"
-      />
+      <app-category-post />
     </div>
     <div class="category__main__list">
       <app-category-list
