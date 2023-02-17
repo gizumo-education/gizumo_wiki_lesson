@@ -25,7 +25,7 @@ import UserCreate from '@Pages/Users/Create.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
-import CategoryList from '@Pages/Categories/List.vue';
+import CategoryList from '@Pages/Categories/Category.vue';
 
 // パスワード
 import PasswordInit from '@Pages/Password/init.vue';

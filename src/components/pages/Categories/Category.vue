@@ -3,11 +3,13 @@
     <div class="category-post-pages">
       <app-category-post
         :access="access"
+        :error-message="errorMessage"
       />
     </div>
     <div class="category-list-pages">
       <app-category-list
         :categories="categoryList"
+        :theads="theads"
         :access="access"
       />
     </div>
@@ -22,9 +24,17 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
+  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     categoryList() {
       return this.$store.state.categories.categoryList;
