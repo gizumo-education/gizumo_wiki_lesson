@@ -20,9 +20,6 @@
               {{ category.name }}
             </app-text>
           </td>
-          <div v-if="errorMessage" class="category-list__modal__notice">
-            <app-text bg-error>{{ errorMessage }}</app-text>
-          </div>
           <td>
             <app-router-link
               underline
@@ -181,9 +178,6 @@ export default {
   }
   &__button {
     margin-top: 48px;
-  }
-  &__notice {
-    margin-top: 20px;
   }
 }
 </style>
