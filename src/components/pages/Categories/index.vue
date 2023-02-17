@@ -6,7 +6,7 @@
       :done-message="doneMessage"
       :disabled="loadingStatus"
       :access="access"
-      :category="$data.targetCategory.name"
+      :category="targetCategory.name"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
@@ -16,7 +16,7 @@
       :access="access"
       :categories="categoryList"
       :theads="theads"
-      :delete-category-name="$data.deleteCategory.name"
+      :delete-category-name="deleteCategory.name"
       :error-message="listErrorMessage"
       :done-message="listDoneMessage"
       @handle-click="handleClick"
@@ -85,7 +85,7 @@ export default {
       this.targetCategory.name = event.target.value;
     },
     handleClick() {
-      const categoryId = this.$data.deleteCategory.id;
+      const categoryId = this.deleteCategory.id;
       this.$store.dispatch('categories/deleteCategory', categoryId)
         .then(() => {
           this.toggleModal();
@@ -96,8 +96,8 @@ export default {
     },
     openModal(id, name) {
       this.toggleModal();
-      this.$data.deleteCategory.id = id;
-      this.$data.deleteCategory.name = name;
+      this.deleteCategory.id = id;
+      this.deleteCategory.name = name;
     },
   },
 
