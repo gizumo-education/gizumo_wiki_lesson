@@ -1,6 +1,5 @@
 <template>
   <div class="category-list">
-    <!-- <app-text theme-color bold>カテゴリー名</app-text> -->
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
@@ -151,10 +150,6 @@ export default {
       td {
         padding: 10px;
         vertical-align: middle;
-
-        &:first-child{
-          width: 40%;
-        }
         &.is-disabled {
           color: $disabled-color;
           font-size: 12px;
