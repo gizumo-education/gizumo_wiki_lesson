@@ -6,7 +6,7 @@
       :done-message="doneMessage"
       :disabled="loadingStatus"
       :access="access"
-      :category="$data.targetCategory.name"
+      :category="targetCategory.name"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
@@ -16,21 +16,32 @@
       :access="access"
       :categories="categoryList"
       :theads="theads"
+      :delete-category-name="deleteCategory.name"
+      :error-message="listErrorMessage"
+      :done-message="listDoneMessage"
+      @handle-click="handleClick"
+      @open-modal="openModal"
     />
   </div>
 </template>
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
       targetCategory: {
+        name: '',
+      },
+      deleteCategory: {
+        id: '',
         name: '',
       },
     };
@@ -47,6 +58,12 @@ export default {
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    listErrorMessage() {
+      return this.$store.state.categories.listErrorMessage;
+    },
+    listDoneMessage() {
+      return this.$store.state.categories.listDoneMessage;
     },
     loadingStatus() {
       return this.$store.state.categories.loading;
@@ -66,6 +83,21 @@ export default {
     },
     updateValue(event) {
       this.targetCategory.name = event.target.value;
+    },
+    handleClick() {
+      const categoryId = this.deleteCategory.id;
+      this.$store.dispatch('categories/deleteCategory', categoryId)
+        .then(() => {
+          this.toggleModal();
+        })
+        .catch(() => {
+          this.toggleModal();
+        });
+    },
+    openModal(id, name) {
+      this.toggleModal();
+      this.deleteCategory.id = id;
+      this.deleteCategory.name = name;
     },
   },
 

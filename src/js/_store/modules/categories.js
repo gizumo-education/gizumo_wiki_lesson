@@ -7,6 +7,8 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    listDoneMessage: '',
+    listErrorMessage: '',
   },
   mutations: {
     doneGetAllCategories(state, categories) {
@@ -21,9 +23,17 @@ export default {
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+      state.listDoneMessage = '';
+      state.listErrorMessage = '';
     },
     toggleLoading(state) {
       state.loading = !state.loading;
+    },
+    doneDeleteCategory(state) {
+      state.listDoneMessage = 'カテゴリーの削除が完了しました。';
+    },
+    listFailRequest(state, { message }) {
+      state.listErrorMessage = `${message} ご確認の上、再度お試しください。`;
     },
   },
   actions: {
@@ -38,7 +48,7 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }, payload) {
+    postCategory({ commit, dispatch, rootGetters }, payload) {
       return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
@@ -52,11 +62,30 @@ export default {
           commit('clearMessage');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          this.dispatch('categories/getAllCategories');
+          dispatch('getAllCategories');
           resolve();
         }).catch(err => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
+        });
+      });
+    },
+
+    deleteCategory({ commit, dispatch, rootGetters }, id) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${id}`,
+        }).then(response => {
+          if (response.data.code === 0) throw new Error(response.data.message);
+          commit('clearMessage');
+          commit('doneDeleteCategory');
+          dispatch('getAllCategories');
+          resolve();
+        }).catch(err => {
+          commit('listFailRequest', { message: err.message });
+          reject();
         });
       });
     },
