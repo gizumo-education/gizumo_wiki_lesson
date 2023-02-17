@@ -5,6 +5,7 @@
       :access="access"
     />
     <app-category-list
+      :theads="theads"
       :categories="categoryList"
       class="category__list"
       :access="access"
@@ -20,6 +21,11 @@ export default {
   components: {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
+  },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
   },
   computed: {
     categoryList() {
