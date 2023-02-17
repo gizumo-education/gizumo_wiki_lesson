@@ -48,7 +48,7 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }, payload) {
+    postCategory({ commit, dispatch, rootGetters }, payload) {
       return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
@@ -62,7 +62,7 @@ export default {
           commit('clearMessage');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          this.dispatch('categories/getAllCategories');
+          dispatch('getAllCategories');
           resolve();
         }).catch(err => {
           commit('toggleLoading');
@@ -71,7 +71,7 @@ export default {
       });
     },
 
-    deleteCategory({ commit, rootGetters }, id) {
+    deleteCategory({ commit, dispatch, rootGetters }, id) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
         axios(rootGetters['auth/token'])({
@@ -81,7 +81,7 @@ export default {
           if (response.data.code === 0) throw new Error(response.data.message);
           commit('clearMessage');
           commit('doneDeleteCategory');
-          this.dispatch('categories/getAllCategories');
+          dispatch('getAllCategories');
           resolve();
         }).catch(err => {
           commit('listFailRequest', { message: err.message });
