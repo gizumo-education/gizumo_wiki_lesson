@@ -27,11 +27,6 @@ export default {
   },
   mixins: [Mixins],
 
-  // beforeRouteUpdate(to, from, next) {
-  //   this.$store.dispatch('categories/getAllCategories');
-  //   next();
-  // },
-
   data() {
     return {
       theads: ['カテゴリー名'],
