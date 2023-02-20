@@ -54,6 +54,12 @@
         </tr>
       </transition-group>
     </table>
+    <p
+      v-if="categories.length===0"
+      class="no-category__text"
+    >
+      カテゴリーがありません。
+    </p>
     <app-modal>
       <div class="category-list__modal">
         <app-text
@@ -175,5 +181,10 @@ export default {
   &__button {
     margin-top: 48px;
   }
+}
+
+.no-category__text {
+  text-align: center;
+  font-size: 15px;
 }
 </style>
