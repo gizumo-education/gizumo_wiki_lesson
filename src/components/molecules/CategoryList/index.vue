@@ -42,6 +42,7 @@
               underline
               hover-opacity
               :to="`/categories/${category.id}`"
+              @click="$emit('get-category-name', category.name)"
             >
               更新
             </app-router-link>

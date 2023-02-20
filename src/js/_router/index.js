@@ -14,8 +14,10 @@ import ArticleDetail from '@Pages/Articles/Detail.vue';
 import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
 
-// ↓追加↓ カテゴリ
+// カテゴリ
 import Categories from '@Pages/Categories/index.vue';
+import CategoryManagement from '@Pages/Categories/Management.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
@@ -112,9 +114,20 @@ const router = new VueRouter({
     },
     // ↓追加↓ カテゴリ
     {
-      name: 'categories',
       path: '/categories',
       component: Categories,
+      children: [
+        {
+          name: 'category',
+          path: '',
+          component: CategoryManagement,
+        },
+        {
+          name: 'categoryEdit',
+          path: ':id',
+          component: CategoryEdit,
+        },
+      ],
     },
     {
       path: '/users',
