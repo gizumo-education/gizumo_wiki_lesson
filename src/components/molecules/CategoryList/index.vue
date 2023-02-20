@@ -95,6 +95,10 @@ export default {
     appText: Text,
   },
   props: {
+    errorMessage: {
+      type: String,
+      default: '',
+    },
     theads: {
       type: Array,
       default() {
