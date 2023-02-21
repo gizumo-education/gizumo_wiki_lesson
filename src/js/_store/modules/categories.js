@@ -4,37 +4,40 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    loading: false,
+    targetCategory: {
+      name: '',
+    },
+    isloading: false,
     doneMessage: '',
     errorMessage: '',
-    listDoneMessage: '',
-    listErrorMessage: '',
+  },
+  getters: {
+    targetCategory: state => state.targetCategory,
   },
   mutations: {
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
     },
-    failRequest(state, { message }) {
-      state.errorMessage = `${message} ご確認の上、再度お試しください。`;
+    toggleLoading(state) {
+      state.isloading = !state.isloading;
     },
-    displayDoneMessage(state, payload = { message: '成功しました' }) {
-      state.doneMessage = payload.message;
+    editedTitle(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload };
     },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
-      state.listDoneMessage = '';
-      state.listErrorMessage = '';
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
+    failRequest(state, { message }) {
+      state.errorMessage = `${message} ご確認の上、再度お試しください。`;
     },
-    doneDeleteCategory(state) {
-      state.listDoneMessage = 'カテゴリーの削除が完了しました。';
+    displayDoneMessage(state, payload) {
+      state.doneMessage = `${payload}が完了しました。`;
     },
-    listFailRequest(state, { message }) {
-      state.listErrorMessage = `${message} ご確認の上、再度お試しください。`;
+    reflectCategory(state, payload) {
+      state.targetCategory.name = payload;
     },
+
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -61,7 +64,7 @@ export default {
         }).then(() => {
           commit('clearMessage');
           commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          commit('displayDoneMessage', 'カテゴリーの作成');
           dispatch('getAllCategories');
           resolve();
         }).catch(err => {
@@ -70,7 +73,6 @@ export default {
         });
       });
     },
-
     deleteCategory({ commit, dispatch, rootGetters }, id) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
@@ -80,14 +82,53 @@ export default {
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           commit('clearMessage');
-          commit('doneDeleteCategory');
+          commit('displayDoneMessage', 'カテゴリーの削除');
           dispatch('getAllCategories');
           resolve();
         }).catch(err => {
-          commit('listFailRequest', { message: err.message });
+          commit('failRequest', { message: err.message });
           reject();
         });
       });
+    },
+    updateCategory({ commit, rootGetters }, id) {
+      return new Promise(() => {
+        commit('clearMessage');
+        commit('toggleLoading');
+        const data = new URLSearchParams();
+        data.append('id', id);
+        data.append('name', rootGetters['categories/targetCategory'].name);
+        axios(rootGetters['auth/token'])({
+          method: 'PUT',
+          url: `/category/${id}`,
+          data,
+        }).then(() => {
+          commit('clearMessage');
+          commit('toggleLoading');
+          commit('displayDoneMessage', 'カテゴリーの更新');
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
+        });
+      });
+    },
+    reflectCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        if (res.data.code === 0) throw new Error(res.data.message);
+        const categoryName = res.data.category.name;
+        commit('reflectCategory', categoryName);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editedTitle({ commit }, title) {
+      commit('editedTitle', title);
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };
