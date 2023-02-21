@@ -1693,6 +1693,37 @@ paths:
                     type: "string"
                     example: "教育"
   '/category/{id}':
+    get:
+      tags:
+        - "Category"
+      summary: "カテゴリー詳細取得"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          description: "認証トークン"
+          required: true
+          type: "string"
+        - name: "id"
+          in: path
+          description: "詳細取得するカテゴリーデータのID"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              category:
+                properties:
+                  id:
+                    type: "integer"
+                    example: 1
+                  name:
+                    type: "string"
+                    example: "教育"
     put:
       tags:
         - "Category"
