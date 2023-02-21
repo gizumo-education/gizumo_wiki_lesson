@@ -1,7 +1,15 @@
 <template>
   <div class="category__main">
     <div class="category__main__post">
-      <app-category-post />
+      <app-category-post
+        :category="category"
+        :error-message="errorMessage"
+        :done-message="doneMessage"
+        :access="access"
+        @update-value="updateValue"
+        @handle-submit="postCategory"
+        @clear-message="clearMessage"
+      />
     </div>
     <div class="category__main__list">
       <app-category-list
@@ -41,10 +49,26 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
 
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+
+  methods: {
+    updateValue(event) {
+      this.category = event.target.value;
+    },
+    postCategory() {
+      this.$store.dispatch('categories/postCategory', this.category);
+      this.category = '';
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
   },
 };
 </script>
