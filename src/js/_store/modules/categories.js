@@ -24,9 +24,17 @@ export default {
       state.categoryList.unshift(newCategory);
       state.doneMessage = 'カテゴリーを作成しました。';
     },
+    doneDeleteCategory(state, deletedCategoryId) {
+      const deleteIndex = state.categoryList.findIndex(v => v.id === deletedCategoryId);
+      state.categoryList.splice(deleteIndex, 1);
+      state.doneMessage = 'カテゴリーを削除しました。';
+    },
   },
 
   actions: {
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -58,8 +66,15 @@ export default {
         commit('failRequest', err);
       });
     },
-    clearMessage({ commit }) {
-      commit('clearMessage');
+    deleteCategory({ commit, rootGetters }, deleteCategoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${deleteCategoryId}`,
+      }).then(res => {
+        commit('doneDeleteCategory', res.data.category.id);
+      }).catch(err => {
+        commit('failRequest', err);
+      });
     },
   },
 };
