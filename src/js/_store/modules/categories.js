@@ -14,11 +14,7 @@ export default {
       state.errorMessage = '';
     },
     showDoneMessage(state, target) {
-      if (target === 'post') {
-        state.doneMessage = 'カテゴリーを作成しました。';
-      } else if (target === 'delete') {
-        state.doneMessage = 'カテゴリーを削除しました。';
-      }
+      state.doneMessage = `カテゴリーを${target}しました。`;
     },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
@@ -67,7 +63,7 @@ export default {
           name: res.data.category.name,
         };
         commit('donePostCategory', newCategory);
-        commit('showDoneMessage', 'post');
+        commit('showDoneMessage', '作成');
       }).catch(err => {
         commit('failRequest', err);
       });
@@ -78,7 +74,7 @@ export default {
         url: `/category/${deleteCategoryId}`,
       }).then(res => {
         commit('doneDeleteCategory', res.data.category.id);
-        commit('showDoneMessage', 'delete');
+        commit('showDoneMessage', '削除');
       }).catch(err => {
         commit('failRequest', err);
       });
