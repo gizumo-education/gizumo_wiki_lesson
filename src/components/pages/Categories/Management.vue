@@ -67,7 +67,7 @@ export default {
       return this.$store.state.categories.listDoneMessage;
     },
     loadingStatus() {
-      return this.$store.state.categories.loading;
+      return this.$store.state.categories.isloading;
     },
   },
   created() {
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.$store.state.categories.loading) return;
+      if (this.$store.state.categories.isloading) return;
       const categoryName = this.targetCategory.name;
       this.$store.dispatch('categories/postCategory', categoryName)
         .then(() => {

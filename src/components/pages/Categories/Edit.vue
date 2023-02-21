@@ -28,7 +28,7 @@ export default {
       return title;
     },
     loading() {
-      return this.$store.state.categories.loading;
+      return this.$store.state.categories.isloading;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.loading) return;
+      if (this.isloading) return;
       let { id } = this.$route.params;
       id = parseInt(id, 10);
       this.$store.dispatch('categories/updateCategory', id);

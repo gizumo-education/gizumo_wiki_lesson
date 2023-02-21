@@ -7,7 +7,7 @@ export default {
     targetCategory: {
       name: '',
     },
-    loading: false,
+    isloading: false,
     doneMessage: '',
     errorMessage: '',
   },
@@ -19,7 +19,7 @@ export default {
       state.categoryList = categories.reverse();
     },
     toggleLoading(state) {
-      state.loading = !state.loading;
+      state.isloading = !state.isloading;
     },
     editedTitle(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload };
