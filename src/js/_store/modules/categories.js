@@ -13,6 +13,9 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    showDeleteMessage(state) {
+      state.doneMessage = 'カテゴリーを削除しました。';
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
@@ -27,7 +30,6 @@ export default {
     doneDeleteCategory(state, deletedCategoryId) {
       const deleteIndex = state.categoryList.findIndex(v => v.id === deletedCategoryId);
       state.categoryList.splice(deleteIndex, 1);
-      state.doneMessage = 'カテゴリーを削除しました。';
     },
   },
 
@@ -72,6 +74,7 @@ export default {
         url: `/category/${deleteCategoryId}`,
       }).then(res => {
         commit('doneDeleteCategory', res.data.category.id);
+        commit('showDeleteMessage');
       }).catch(err => {
         commit('failRequest', err);
       });
