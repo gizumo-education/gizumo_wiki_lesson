@@ -4,7 +4,7 @@
       class="categories-input"
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :disabled="loading ? true : false"
+      :disabled="loading"
       :access="access"
       :category="targetCategory.name"
       @handle-submit="handleSubmit"
