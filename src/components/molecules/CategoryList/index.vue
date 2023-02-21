@@ -1,11 +1,5 @@
 <template>
   <div class="category-list">
-    <div v-if="errorMessage" class="category-list__notice">
-      <app-text bg-error>{{ errorMessage }}</app-text>
-    </div>
-    <div v-if="doneMessage" class="category-list__notice--create">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
@@ -120,14 +114,6 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
-    },
-    errorMessage: {
-      type: String,
-      default: '',
-    },
-    doneMessage: {
-      type: String,
-      default: '',
     },
   },
   methods: {

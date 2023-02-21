@@ -5,16 +5,11 @@ export default {
   state: {
     categoryList: [],
     targetCategory: {
-      id: '',
       name: '',
     },
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    listDoneMessage: '',
-    listErrorMessage: '',
-    updateErrorMessage: '',
-    updateDoneMessage: '',
   },
   getters: {
     targetCategory: state => state.targetCategory,
@@ -32,32 +27,17 @@ export default {
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
-      state.listDoneMessage = '';
-      state.listErrorMessage = '';
-      state.updateDoneMessage = '';
-      state.updateErrorMessage = '';
-    },
-    displayDoneMessage(state, payload = { message: '成功しました' }) {
-      state.doneMessage = payload.message;
-    },
-    doneDeleteCategory(state) {
-      state.listDoneMessage = 'カテゴリーの削除が完了しました。';
-    },
-    doneUpdateCategory(state) {
-      state.updateDoneMessage = 'カテゴリーの更新が完了しました。';
     },
     failRequest(state, { message }) {
       state.errorMessage = `${message} ご確認の上、再度お試しください。`;
     },
-    listFailRequest(state, { message }) {
-      state.listErrorMessage = `${message} ご確認の上、再度お試しください。`;
-    },
-    updateFailRequest(state, { message }) {
-      state.updateErrorMessage = `${message} ご確認の上、再度お試しください。`;
+    displayDoneMessage(state, payload) {
+      state.doneMessage = `${payload}が完了しました。`;
     },
     reflectCategory(state, payload) {
       state.targetCategory.name = payload;
     },
+
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -84,7 +64,7 @@ export default {
         }).then(() => {
           commit('clearMessage');
           commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          commit('displayDoneMessage', 'カテゴリーの作成');
           dispatch('getAllCategories');
           resolve();
         }).catch(err => {
@@ -102,11 +82,11 @@ export default {
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           commit('clearMessage');
-          commit('doneDeleteCategory');
+          commit('displayDoneMessage', 'カテゴリーの削除');
           dispatch('getAllCategories');
           resolve();
         }).catch(err => {
-          commit('listFailRequest', { message: err.message });
+          commit('failRequest', { message: err.message });
           reject();
         });
       });
@@ -125,18 +105,12 @@ export default {
         }).then(() => {
           commit('clearMessage');
           commit('toggleLoading');
-          commit('doneUpdateCategory');
+          commit('displayDoneMessage', 'カテゴリーの更新');
         }).catch(err => {
           commit('toggleLoading');
-          commit('updateFailRequest', { message: err.message });
+          commit('failRequest', { message: err.message });
         });
       });
-    },
-    editedTitle({ commit }, title) {
-      commit('editedTitle', title);
-    },
-    clearMessage({ commit }) {
-      commit('clearMessage');
     },
     reflectCategory({ commit, rootGetters }, id) {
       axios(rootGetters['auth/token'])({
@@ -149,6 +123,12 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+    },
+    editedTitle({ commit }, title) {
+      commit('editedTitle', title);
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };

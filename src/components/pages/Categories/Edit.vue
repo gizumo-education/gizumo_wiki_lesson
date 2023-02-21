@@ -31,10 +31,10 @@ export default {
       return this.$store.state.categories.loading;
     },
     errorMessage() {
-      return this.$store.state.categories.updateErrorMessage;
+      return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
-      return this.$store.state.categories.updateDoneMessage;
+      return this.$store.state.categories.doneMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
