@@ -1,6 +1,5 @@
 <template>
   <app-category-edit
-    :category-id="categoryId"
     :category-title="categoryTitle"
     :loading="loading"
     :error-message="errorMessage"
@@ -24,11 +23,6 @@ export default {
     };
   },
   computed: {
-    categoryId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
-      return id;
-    },
     categoryTitle() {
       const title = this.$store.state.categories.targetCategory.name;
       return title;

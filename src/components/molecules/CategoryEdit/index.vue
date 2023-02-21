@@ -61,23 +61,9 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     categoryTitle: {
       type: String,
       default: '',
-    },
-    categoryList: {
-      type: Array,
-      default: () => [],
-    },
-    categories: {
-      type: Array,
-      default() {
-        return [];
-      },
     },
     loading: {
       type: Boolean,
