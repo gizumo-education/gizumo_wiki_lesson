@@ -59,8 +59,8 @@ export default {
   },
 
   methods: {
-    updateValue($event) {
-      this.category = $event.target.value;
+    updateValue(event) {
+      this.category = event.target.value;
     },
     postCategory() {
       this.$store.dispatch('categories/postCategory', this.category);

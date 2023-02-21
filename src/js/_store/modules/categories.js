@@ -38,7 +38,7 @@ export default {
         commit('doneGetAllCategories', payload);
         commit('clearMessage');
       }).catch(err => {
-        commit('failRequest', { message: err.message });
+        commit('failRequest', err);
       });
     },
     postCategory({ commit, rootGetters }, category) {
@@ -55,7 +55,7 @@ export default {
         };
         commit('donePostCategory', newCategory);
       }).catch(err => {
-        commit('failRequest', { message: err.message });
+        commit('failRequest', err);
       });
     },
     clearMessage({ commit }) {
