@@ -4,7 +4,7 @@
       class="categories-input"
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :disabled="loadingStatus"
+      :disabled="loading ? true : false"
       :access="access"
       :category="targetCategory.name"
       @handle-submit="handleSubmit"
@@ -66,7 +66,7 @@ export default {
     listDoneMessage() {
       return this.$store.state.categories.listDoneMessage;
     },
-    loadingStatus() {
+    loading() {
       return this.$store.state.categories.isloading;
     },
   },
