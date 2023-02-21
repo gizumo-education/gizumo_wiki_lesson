@@ -141,11 +141,10 @@ export default {
     reflectCategory({ commit, rootGetters }, id) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/category',
+        url: `/category/${id}`,
       }).then(res => {
         if (res.data.code === 0) throw new Error(res.data.message);
-        const target = res.data.categories.filter(category => category.id === id);
-        const categoryName = target[0].name;
+        const categoryName = res.data.category.name;
         commit('reflectCategory', categoryName);
       }).catch(err => {
         commit('failRequest', { message: err.message });
