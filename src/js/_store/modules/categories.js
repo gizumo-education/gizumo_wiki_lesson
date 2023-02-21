@@ -42,7 +42,7 @@ export default {
       });
     },
     postCategory({ commit, rootGetters }, payload) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
@@ -58,7 +58,6 @@ export default {
         }).catch(err => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },
