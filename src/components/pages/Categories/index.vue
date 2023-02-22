@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.$store.state.categories.loading) return;
+      if (this.loading) return;
       const categoryName = this.targetCategory.name;
       this.$store.dispatch('categories/postCategory', categoryName)
         .then(() => {

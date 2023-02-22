@@ -16,7 +16,6 @@
       button-type="submit"
       round
       :disabled="disabled || !access.create"
-      @click="handleSubmit"
     >
       {{ buttonText }}
     </app-button>
@@ -47,10 +46,6 @@ export default {
       type: String,
       default: '',
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
     errorMessage: {
       type: String,
       default: '',
@@ -78,12 +73,6 @@ export default {
     addCategory() {
       if (!this.access.create) return;
       this.$emit('clear-message');
-      this.$validator.validate().then(valid => {
-        if (valid) this.$emit('handle-submit');
-      });
-    },
-    handleSubmit() {
-      if (!this.access.create) return;
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
