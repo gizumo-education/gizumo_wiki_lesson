@@ -40,12 +40,12 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }, doneMessage) {
+    postCategory({ commit, rootGetters }, categoryList) {
       return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
-        data.append('name', doneMessage);
+        data.append('name', categoryList);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
