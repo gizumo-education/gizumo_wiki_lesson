@@ -22,8 +22,8 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
-    displayDoneMessage(state, categoryList = { message: '成功しました' }) {
-      state.doneMessage = categoryList.message;
+    displayDoneMessage(state, doneMessage = { message: '成功しました' }) {
+      state.doneMessage = doneMessage.message;
     },
   },
   actions: {
@@ -40,17 +40,18 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }, categoryList) {
+    postCategory({ commit, rootGetters }, doneMessage) {
       return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
-        data.append('name', categoryList);
+        data.append('name', doneMessage);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
         }).then(() => {
+          commit('clearMessage');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: '新規カテゴリーを作成しました' });
           resolve();
