@@ -3,6 +3,10 @@
     <app-category-post
       class="category-form"
       :access="access"
+      :category="categoryName"
+      :done-message="completeMessage"
+      @handle-submit="addCategory"
+      @update-value="categoryName = $event.target.value"
     />
     <app-category-list
       class="category-list"
@@ -19,6 +23,11 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  data() {
+    return {
+      categoryName: '',
+    };
+  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
@@ -26,9 +35,19 @@ export default {
     categories() {
       return this.$store.state.categories.categoriesList;
     },
+    // categories() のような形でcomputedを追加メッセージ
+    completeMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllLists');
+  },
+  methods: {
+    addCategory() {
+      this.$store.dispatch('categories/getCategoryName', this.categoryName);
+      this.categoryName = '';
+    },
   },
 };
 </script>
