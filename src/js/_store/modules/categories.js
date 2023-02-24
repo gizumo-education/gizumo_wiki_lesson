@@ -3,11 +3,11 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    loading: false,
+    isLoading: false,
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
-    category: {
+    categoryName: {
       id: null,
       name: '',
     },
@@ -23,13 +23,14 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
     applyRequest(state) {
-      state.loading = true;
+      state.isLoading = true;
+    },
+    reversalLoading(state) {
+      state.isLoading = false;
     },
     doneCreateCategory(state) {
-      state.loading = false;
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
   },
@@ -48,25 +49,27 @@ export default {
           id: data.id,
           name: data.name,
         }));
+        commit('reversalLoading');
         commit('doneGetAllCategories', { categories });
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
     },
     // カテゴリー新規作成
-    createCategory({ commit, rootGetters }, category) {
+    createCategory({ commit, rootGetters }, categoryName) {
       commit('applyRequest');
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
-          data: category,
+          data: categoryName,
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           commit('doneCreateCategory');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
+          commit('reversalLoading');
         });
       });
     },
