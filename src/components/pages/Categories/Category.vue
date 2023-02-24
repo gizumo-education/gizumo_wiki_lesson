@@ -6,8 +6,8 @@
         :error-message="errorMessage"
         :done-message="doneMessage"
         :category="targetCategory.name"
-        :disabled="loading ? true : false"
-        @update-value="$event =>targetCategory.name = $event.target.value"
+        :disabled="loading"
+        @update-value="targetCategory.name = $event.target.value"
         @clear-message="clearMessage"
         @handle-submit="createCategory"
       />
