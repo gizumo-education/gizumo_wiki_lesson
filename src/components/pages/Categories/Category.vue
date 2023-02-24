@@ -65,10 +65,10 @@ export default {
     createCategory() {
       if (this.loading) return;
       this.$store.dispatch('categories/createCategory', {
-        /* eslint-disable-next-line no-irregular-whitespace */
-        name: this.targetCategory.name.replace(/( |　)+/, '').trim(),
+        name: this.targetCategory.name,
       }).then(() => {
-        this.$router.go();
+        this.targetCategory.name = null;
+        this.$store.dispatch('categories/getAllCategories');
       });
     },
   },
