@@ -1,18 +1,26 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form @submit.prevent="handleSubmit">
     <app-heading :level="1">カテゴリー管理</app-heading>
+    <div class="category-edit__back">
+      <app-router-link
+        class="category-edit__back__link"
+        to="/categories"
+      >
+        カテゴリー一覧に戻る
+      </app-router-link>
+    </div>
     <app-input
       v-validate="'required'"
       name="category"
       type="text"
-      placeholder="追加するカテゴリー名を入力してください"
+      placeholder="新しいカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
       :value="category"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
-      class="category-management-post__submit"
+      class="category-management-edit__submit"
       button-type="submit"
       round
       :disabled="disabled || !access.create"
@@ -20,18 +28,18 @@
       {{ buttonText }}
     </app-button>
 
-    <div v-if="errorMessage" class="category-management-post__notice">
+    <div v-if="errorMessage" class="category-management-edit__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
 
-    <div v-if="doneMessage" class="category-management-post__notice">
+    <div v-if="doneMessage" class="category-management-edit__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
   </form>
 </template>
 <script>
 import {
-  Heading, Input, Button, Text,
+  Heading, Input, Button, Text, RouterLink,
 } from '@Components/atoms';
 
 export default {
@@ -40,6 +48,7 @@ export default {
     appInput: Input,
     appButton: Button,
     appText: Text,
+    appRouterLink: RouterLink,
   },
   props: {
     category: {
@@ -65,13 +74,14 @@ export default {
   },
   computed: {
     buttonText() {
-      if (!this.access.create) return '作成権限がありません';
-      return this.disabled ? '作成中...' : '作成';
+      if (!this.access.create) return '更新権限がありません';
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {
-    addCategory() {
+    handleSubmit() {
       if (!this.access.create) return;
+      this.$emit('clear-message');
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
@@ -80,7 +90,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.category-management-post {
+.category-management-edit {
   &__input {
     margin-top: 16px;
   }
@@ -89,6 +99,15 @@ export default {
   }
   &__notice {
     margin-top: 16px;
+  }
+}
+.category-edit {
+  &__back {
+    margin-top: 20px;
+
+    &__link {
+      text-decoration: underline;
+    }
   }
 }
 </style>
