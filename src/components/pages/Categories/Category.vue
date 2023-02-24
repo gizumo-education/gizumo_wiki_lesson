@@ -8,7 +8,6 @@
         :access="access"
         @update-value="updateValue"
         @handle-submit="postCategory"
-        @clear-message="clearMessage"
       />
     </div>
     <div class="category__main__list">
@@ -62,7 +61,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('categories/getAllCategories');
+    // this.$store.dispatch('categories/getAllCategories');
   },
 
   methods: {
@@ -72,9 +71,6 @@ export default {
     postCategory() {
       this.$store.dispatch('categories/postCategory', this.category);
       this.category = '';
-    },
-    clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
     },
     openModal(categoryId, categoryName) {
       this.deleteCategory = {

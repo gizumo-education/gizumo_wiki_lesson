@@ -17,6 +17,7 @@ import ArticlePost from '@Pages/Articles/Post.vue';
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import Category from '@Pages/Categories/Category.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
@@ -119,6 +120,21 @@ const router = new VueRouter({
           name: 'categoryMain',
           path: '',
           component: Category,
+          beforeEnter(to, from, next) {
+            const isEdit = from.name === 'categoryEdit';
+            if (isEdit) {
+              next();
+            } else {
+              Store.dispatch('categories/getAllCategories');
+              Store.dispatch('categories/clearMessage');
+              next();
+            }
+          },
+        },
+        {
+          name: 'categoryEdit',
+          path: ':id',
+          component: CategoryEdit,
         },
       ],
     },

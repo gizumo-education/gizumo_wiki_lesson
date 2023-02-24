@@ -6,12 +6,20 @@ export default {
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
+    loading: false,
+    editTargetCategory: {
+      id: '',
+      name: '',
+    },
   },
 
   mutations: {
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
     },
     showDoneMessage(state, target) {
       state.doneMessage = `カテゴリーを${target}しました。`;
@@ -30,6 +38,13 @@ export default {
       const deleteIndex = state.categoryList.findIndex(v => v.id === deletedCategoryId);
       state.categoryList.splice(deleteIndex, 1);
     },
+    doneSetTarget(state, target) {
+      state.editTargetCategory = target;
+    },
+    doneEditCategory(state, editedCategory) {
+      const editedIndex = state.categoryList.findIndex(v => v.id === editedCategory.id);
+      state.categoryList.splice(editedIndex, 1, editedCategory);
+    },
   },
 
   actions: {
@@ -37,6 +52,7 @@ export default {
       commit('clearMessage');
     },
     getAllCategories({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
@@ -45,18 +61,16 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
-        commit('clearMessage');
       }).catch(err => {
         commit('failRequest', err);
       });
     },
-    postCategory({ commit, rootGetters }, category) {
-      const data = new FormData();
-      data.append('name', category);
+    postCategory({ commit, rootGetters }, categoryName) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
-        data,
+        data: { name: categoryName },
       }).then(res => {
         const newCategory = {
           id: res.data.category.id,
@@ -69,12 +83,43 @@ export default {
       });
     },
     deleteCategory({ commit, rootGetters }, deleteCategoryId) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${deleteCategoryId}`,
       }).then(res => {
         commit('doneDeleteCategory', res.data.category.id);
         commit('showDoneMessage', '削除');
+      }).catch(err => {
+        commit('failRequest', err);
+      });
+    },
+    editCategory({ commit, rootGetters }, updated) {
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${updated.id}`,
+        data: { name: updated.name },
+      }).then(res => {
+        const editedCategory = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneEditCategory', editedCategory);
+        commit('showDoneMessage', '変更');
+      }).catch(err => {
+        commit('failRequest', err);
+      });
+    },
+    setTargetCategory({ commit, rootGetters }, targetId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${targetId}`,
+      }).then(res => {
+        const targetCategory = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneSetTarget', targetCategory);
       }).catch(err => {
         commit('failRequest', err);
       });
