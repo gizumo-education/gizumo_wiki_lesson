@@ -7,10 +7,6 @@ export default {
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
-    categoryName: {
-      id: null,
-      name: '',
-    },
   },
 
   mutations: {
@@ -24,11 +20,8 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
-    applyRequest(state) {
-      state.isLoading = true;
-    },
-    reversalLoading(state) {
-      state.isLoading = false;
+    toggleLoading(state) {
+      state.isLoading = !state.isLoading;
     },
     doneCreateCategory(state) {
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
@@ -40,6 +33,7 @@ export default {
     },
     // カテゴリー全件取得
     getAllCategories({ commit, rootGetters }) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
@@ -49,27 +43,29 @@ export default {
           id: data.id,
           name: data.name,
         }));
-        commit('reversalLoading');
+        commit('toggleLoading');
         commit('doneGetAllCategories', { categories });
       }).catch(err => {
+        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
     },
     // カテゴリー新規作成
     createCategory({ commit, rootGetters }, categoryName) {
-      commit('applyRequest');
+      commit('toggleLoading');
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data: categoryName,
         }).then(response => {
+          commit('toggleLoading');
           if (response.data.code === 0) throw new Error(response.data.message);
           commit('doneCreateCategory');
           resolve();
         }).catch(err => {
+          commit('toggleLoading');
           commit('failRequest', { message: err.message });
-          commit('reversalLoading');
         });
       });
     },

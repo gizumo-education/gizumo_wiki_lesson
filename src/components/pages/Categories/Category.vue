@@ -6,7 +6,7 @@
         :error-message="errorMessage"
         :done-message="doneMessage"
         :category="targetCategory.name"
-        :disabled="loading"
+        :disabled="isLoading"
         @update-value="targetCategory.name = $event.target.value"
         @clear-message="clearMessage"
         @handle-submit="createCategory"
@@ -39,8 +39,8 @@ export default {
     };
   },
   computed: {
-    loading() {
-      return this.$store.state.categories.loading;
+    isLoading() {
+      return this.$store.state.categories.isLoading;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -63,7 +63,7 @@ export default {
       this.$store.dispatch('categories/clearMessage');
     },
     createCategory() {
-      if (this.loading) return;
+      if (this.isLoading) return;
       this.$store.dispatch('categories/createCategory', {
         name: this.targetCategory.name,
       }).then(() => {
