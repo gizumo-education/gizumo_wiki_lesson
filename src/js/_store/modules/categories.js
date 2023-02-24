@@ -23,6 +23,7 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+      state.loading = false;
     },
     applyRequest(state) {
       state.loading = true;
