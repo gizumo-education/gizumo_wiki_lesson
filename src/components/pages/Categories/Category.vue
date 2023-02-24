@@ -6,6 +6,7 @@
         :error-message="errorMessage"
         :done-message="doneMessage"
         :category="targetCategory.name"
+        :disabled="loading ? true : false"
         @update-value="$event =>targetCategory.name = $event.target.value"
         @clear-message="clearMessage"
         @handle-submit="createCategory"
@@ -14,7 +15,6 @@
     <div class="category-list-pages">
       <app-category-list
         :categories="categoryList"
-        class="category__list"
         :theads="theads"
         :access="access"
       />
@@ -39,6 +39,9 @@ export default {
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -64,6 +67,8 @@ export default {
       this.$store.dispatch('categories/createCategory', {
         /* eslint-disable-next-line no-irregular-whitespace */
         name: this.targetCategory.name.replace(/( |　)+/, '').trim(),
+      }).then(() => {
+        this.$router.go();
       });
     },
   },

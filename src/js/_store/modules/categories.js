@@ -65,7 +65,7 @@ export default {
           commit('doneCreateCategory');
           resolve();
         }).catch(err => {
-          commit('failRequest', { message: err.response.data.message });
+          commit('failRequest', { message: err.message });
         });
       });
     },
