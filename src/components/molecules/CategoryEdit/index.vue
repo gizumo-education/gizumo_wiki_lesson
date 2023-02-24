@@ -27,12 +27,12 @@
     >
       {{ buttonText }}
     </app-button>
-
   </form>
 </template>
+
 <script>
 import {
-  Heading, Input, Button, Text, RouterLink,
+  Heading, Input, Button, RouterLink,
 } from '@Components/atoms';
 
 export default {
@@ -40,7 +40,6 @@ export default {
     appHeading: Heading,
     appInput: Input,
     appButton: Button,
-    appText: Text,
     appRouterLink: RouterLink,
   },
   props: {
@@ -74,6 +73,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .category-management-edit {
   &__input {

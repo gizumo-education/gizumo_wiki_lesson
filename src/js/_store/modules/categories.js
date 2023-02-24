@@ -41,6 +41,10 @@ export default {
     doneSetTarget(state, target) {
       state.editTargetCategory = target;
     },
+    doneEditCategory(state, editedCategory) {
+      const editedIndex = state.categoryList.findIndex(v => v.id === editedCategory.id);
+      state.categoryList.splice(editedIndex, 1, editedCategory);
+    },
   },
 
   actions: {
@@ -95,7 +99,12 @@ export default {
         method: 'PUT',
         url: `/category/${updated.id}`,
         data: { name: updated.name },
-      }).then(() => {
+      }).then(res => {
+        const editedCategory = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneEditCategory', editedCategory);
         commit('showDoneMessage', '変更');
       }).catch(err => {
         commit('failRequest', err);

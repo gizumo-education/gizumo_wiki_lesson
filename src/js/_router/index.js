@@ -125,6 +125,7 @@ const router = new VueRouter({
             if (isEdit) {
               next();
             } else {
+              Store.dispatch('categories/getAllCategories');
               Store.dispatch('categories/clearMessage');
               next();
             }
