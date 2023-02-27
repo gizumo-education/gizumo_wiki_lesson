@@ -4,6 +4,12 @@
       <app-category-post
         :access="access"
         :error-message="errorMessage"
+        :done-message="doneMessage"
+        :category="targetCategory.name"
+        :disabled="isLoading"
+        @update-value="targetCategory.name = $event.target.value"
+        @clear-message="clearMessage"
+        @handle-submit="createCategory"
       />
     </div>
     <div class="category-list-pages">
@@ -27,14 +33,23 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      targetCategory: {
+        name: '',
+      },
     };
   },
   computed: {
+    isLoading() {
+      return this.$store.state.categories.isLoading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
     categoryList() {
       return this.$store.state.categories.categoryList;
@@ -42,6 +57,20 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    createCategory() {
+      if (this.isLoading) return;
+      this.$store.dispatch('categories/createCategory', {
+        name: this.targetCategory.name,
+      }).then(() => {
+        this.targetCategory.name = null;
+        this.$store.dispatch('categories/getAllCategories');
+      });
+    },
   },
 };
 </script>
