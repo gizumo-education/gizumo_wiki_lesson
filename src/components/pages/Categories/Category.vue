@@ -5,6 +5,7 @@
       :access="access"
       :category="categoryName"
       :done-message="completeMessage"
+      :disabled="callLoading"
       @handle-submit="addCategory"
       @update-value="categoryName = $event.target.value"
     />
@@ -38,6 +39,10 @@ export default {
     // categories() のような形でcomputedを追加メッセージ
     completeMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    // loading呼ぶ categories.jsのstateからloadingもってくる
+    callLoading() {
+      return this.$store.state.categories.loading;
     },
   },
   created() {
