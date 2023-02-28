@@ -33,11 +33,7 @@ export default {
       delete: true,
     },
     tHeads: ['カテゴリー名'],
-    categories: [
-      { id: 0, name: 'みかん' },
-      { id: 1, name: 'りんごid1' },
-      { id: 2, name: 'ぱいなっぷるid2' },
-    ],
+    categories: [],
   },
   getters: {
     transformedArticles(state) {
@@ -99,6 +95,9 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
     },
+    doneGetAllCategories(state, payload) {
+      state.categories = [...payload.categories];
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -132,7 +131,24 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
+    // 自作だよ
+    // axios(rootGetters['auth/token'])は関数を返すよそれを即実行しているよ
+    getAllCategories({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/category',
+      })
+        .then(res => {
+          // console.log(res);
+          const payload = { categories: res.data.categories.reverse() };
+          commit('doneGetAllCategories', payload);
+        })
+        .catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+    },
     getAllArticles({ commit, rootGetters }) {
+      // console.log(axios(rootGetters['auth/token']));
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article',

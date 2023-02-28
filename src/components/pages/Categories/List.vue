@@ -1,7 +1,7 @@
 <template>
   <div class="category-area">
     <app-category-post
-      :category="'XXXCategory'"
+      :category="''"
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
@@ -39,6 +39,9 @@ export default {
     categories() {
       return this.$store.state.articles.categories;
     },
+  },
+  created() {
+    this.$store.dispatch('articles/getAllCategories');
   },
 };
 </script>
