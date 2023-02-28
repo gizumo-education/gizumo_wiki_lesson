@@ -12,7 +12,6 @@
       :delete-category-name="デリートカテゴリーネーム"
       :access="access"
     />
-    <p>{{ getCategoriesFull() }}</p>
   </div>
 </template>
 
@@ -44,11 +43,6 @@ export default {
     },
     errorMessage() {
       return this.$store.state.errorMessage;
-    },
-  },
-  methods: {
-    getCategoriesFull() {
-      return this.$store.dispatch('articles/getCategoriesFull');
     },
   },
 };
