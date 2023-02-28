@@ -1,7 +1,7 @@
 <template>
   <div class="category-area">
     <app-category-post
-      :category="XXXCategory"
+      :category="'XXXCategory'"
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
@@ -9,7 +9,7 @@
     <app-category-list
       :theads="tHeads"
       :categories="categories"
-      :delete-category-name="デリートカテゴリーネーム"
+      :delete-category-name="'デリートカテゴリーネーム'"
       :access="access"
     />
   </div>
@@ -23,26 +23,35 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
-  data() {
-    return {
-      access: {
-        create: true,
-        delete: true,
-      },
-      tHeads: ['カテゴリー名'],
-      categories: [
-        { id: 0, name: 'みかん' },
-        { id: 1, name: 'りんごid1' },
-        { id: 2, name: 'ぱいなっぷるid2' },
-      ],
-    };
-  },
+  // data() {
+  //   return {
+  //     access: {
+  //       create: true,
+  //       delete: true,
+  //     },
+  //     tHeads: ['カテゴリー名'],
+  //     categories: [
+  //       { id: 0, name: 'みかん' },
+  //       { id: 1, name: 'りんごid1' },
+  //       { id: 2, name: 'ぱいなっぷるid2' },
+  //     ],
+  //   };
+  // },
   computed: {
     doneMessage() {
       return this.$store.state.doneMessage;
     },
     errorMessage() {
       return this.$store.state.errorMessage;
+    },
+    access() {
+      return this.$store.state.access;
+    },
+    tHeads() {
+      return this.$store.state.tHeads;
+    },
+    categories() {
+      return this.$store.state.categories;
     },
   },
 };
