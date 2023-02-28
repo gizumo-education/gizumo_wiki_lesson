@@ -39,19 +39,19 @@ export default {
   // },
   computed: {
     doneMessage() {
-      return this.$store.state.doneMessage;
+      return this.$store.state.articles.doneMessage;
     },
     errorMessage() {
-      return this.$store.state.errorMessage;
+      return this.$store.state.articles.errorMessage;
     },
     access() {
-      return this.$store.state.access;
+      return this.$store.getters['auth/access'];
     },
     tHeads() {
-      return this.$store.state.tHeads;
+      return this.$store.state.articles.tHeads;
     },
     categories() {
-      return this.$store.state.categories;
+      return this.$store.state.articles.categories;
     },
   },
 };
