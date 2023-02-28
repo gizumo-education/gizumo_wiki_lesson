@@ -91,6 +91,7 @@ export default {
   justify-content: space-around;
   &__post{
     width: 30%;
+    padding-right: 20px;
   }
   &__list{
     width: 70%;
