@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="category-area">
     <app-category-post
       :category="カテゴリー名_Categories_Listvueにあります"
       :error-message="エラーメッセージProps"
@@ -27,9 +27,9 @@ export default {
     return {
       access: {
         create: true,
-        delete: false,
+        delete: true,
       },
-      tHeads: ['みかん', 'みかん', 'みかん'],
+      tHeads: ['カテゴリー名'],
       categories: [
         { id: 0, name: 'みかん' },
         { id: 1, name: 'りんごid1' },
@@ -40,4 +40,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.category-area {
+  display: flex;
+  & > div {
+    width: 60%;
+  }
+  & > form {
+    width: 40%;
+  }
+}
+</style>
