@@ -61,5 +61,21 @@ export default {
         });
       });
     },
+    deleteCategory({ dispatch, commit, rootGetters }, deleteCategoryId) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${deleteCategoryId}`,
+        }).then(() => {
+          commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+          dispatch('getAllCategories');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
   },
 };
