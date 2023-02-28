@@ -23,20 +23,6 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
-  // data() {
-  //   return {
-  //     access: {
-  //       create: true,
-  //       delete: true,
-  //     },
-  //     tHeads: ['カテゴリー名'],
-  //     categories: [
-  //       { id: 0, name: 'みかん' },
-  //       { id: 1, name: 'りんごid1' },
-  //       { id: 2, name: 'ぱいなっぷるid2' },
-  //     ],
-  //   };
-  // },
   computed: {
     doneMessage() {
       return this.$store.state.articles.doneMessage;
