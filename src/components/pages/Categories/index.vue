@@ -40,6 +40,7 @@ export default {
         name: '',
       },
       deleteCategoryName: '',
+      deleteCategoryId: null,
     };
   },
   computed: {
@@ -74,11 +75,11 @@ export default {
     },
     openModal(categoryId, categoryName) {
       this.deleteCategoryName = categoryName;
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);
+      this.deleteCategoryId = categoryId;
       this.toggleModal();
     },
     handleClick() {
-      this.$store.dispatch('categories/deleteCategory');
+      this.$store.dispatch('categories/deleteCategory', this.deleteCategoryId);
       this.toggleModal();
     },
   },
