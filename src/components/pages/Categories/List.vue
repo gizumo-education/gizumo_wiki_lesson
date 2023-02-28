@@ -1,9 +1,9 @@
 <template>
   <div>
     <app-category-post
-      :category="category"
-      :error-message="errorMessage"
-      :done-message="doneMessage"
+      :category="カテゴリー名_Categories_Listvueにあります"
+      :error-message="エラーメッセージProps"
+      :done-message="ダンメッセージProps"
       :access="access"
     />
     <app-category-list />
@@ -20,9 +20,6 @@ export default {
   },
   data() {
     return {
-      category: 'カテゴリー名',
-      errorMessage: 'エラーメッセージProps',
-      doneMessage: 'ダンメッセージProps,',
       access: {
         create: true,
       },
