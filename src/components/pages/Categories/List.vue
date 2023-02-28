@@ -44,10 +44,10 @@ export default {
 .category-area {
   display: flex;
   & > div {
-    width: 60%;
+    width: 70%;
   }
   & > form {
-    width: 40%;
+    width: 30%;
   }
 }
 </style>
