@@ -137,7 +137,7 @@ const router = new VueRouter({
       ],
     },
     {
-      name: 'categories',
+      name: '',
       path: '/categories',
       component: Categories,
       children: [
