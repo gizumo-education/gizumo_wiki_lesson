@@ -6,7 +6,12 @@
       :done-message="ダンメッセージProps"
       :access="access"
     />
-    <app-category-list />
+    <app-category-list
+      :theads="tHeads"
+      :categories="categories"
+      :delete-category-name="デリートカテゴリーネーム"
+      :access="access"
+    />
   </div>
 </template>
 
@@ -22,7 +27,14 @@ export default {
     return {
       access: {
         create: true,
+        delete: false,
       },
+      tHeads: ['みかん', 'みかん', 'みかん'],
+      categories: [
+        { id: 0, name: 'みかん' },
+        { id: 1, name: 'りんごid1' },
+        { id: 2, name: 'ぱいなっぷるid2' },
+      ],
     };
   },
 };
