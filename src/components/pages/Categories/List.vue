@@ -1,9 +1,9 @@
 <template>
   <div class="category-area">
     <app-category-post
-      :category="カテゴリー名_Categories_Listvueにあります"
-      :error-message="エラーメッセージProps"
-      :done-message="ダンメッセージProps"
+      :category="XXXCategory"
+      :done-message="doneMessage"
+      :error-message="errorMessage"
       :access="access"
     />
     <app-category-list
@@ -12,6 +12,7 @@
       :delete-category-name="デリートカテゴリーネーム"
       :access="access"
     />
+    <p>{{ getCategoriesFull() }}</p>
   </div>
 </template>
 
@@ -36,6 +37,19 @@ export default {
         { id: 2, name: 'ぱいなっぷるid2' },
       ],
     };
+  },
+  computed: {
+    doneMessage() {
+      return this.$store.state.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.errorMessage;
+    },
+  },
+  methods: {
+    getCategoriesFull() {
+      return this.$store.dispatch('articles/getCategoriesFull');
+    },
   },
 };
 </script>
