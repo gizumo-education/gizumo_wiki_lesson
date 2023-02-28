@@ -1,13 +1,17 @@
 <template>
-  <app-category-list />
+  <div>
+    <app-category-list />
+    <app-category-post />
+  </div>
 </template>
 
 <script>
-import { CategoryList } from '@Components/molecules';
+import { CategoryList, CategoryPost } from '@Components/molecules';
 
 export default {
   components: {
     appCategoryList: CategoryList,
+    appCategoryPost: CategoryPost,
   },
 };
 </script>
