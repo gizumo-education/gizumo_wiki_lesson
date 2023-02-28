@@ -29,6 +29,7 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 
 // カテゴリ一覧ページ
 import Categories from '@Pages/Categories/index.vue';
+import CategoriesTest from '@Pages/Categories/Test.vue';
 
 // Vuexの読み込み？
 import Store from '../_store';
@@ -138,6 +139,9 @@ const router = new VueRouter({
       name: 'categories',
       path: '/categories',
       component: Categories,
+      children: [
+        { name: 'categoriesTest', path: '', component: CategoriesTest },
+      ],
     },
     {
       name: 'notfound',
