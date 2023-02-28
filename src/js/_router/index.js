@@ -135,17 +135,17 @@ const router = new VueRouter({
       ],
     },
     {
+      name: 'categories',
+      path: '/categories',
+      component: Categories,
+    },
+    {
       name: 'notfound',
       path: '/*',
       component: NotFound,
       meta: {
         isPublic: true,
       },
-    },
-    {
-      name: 'categories',
-      path: '/categories',
-      component: Categories,
     },
   ],
 });
