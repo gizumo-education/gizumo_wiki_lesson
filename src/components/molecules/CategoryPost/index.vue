@@ -8,7 +8,7 @@
       placeholder="追加するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
-      :value="category"
+      :value="inputValue"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
@@ -42,7 +42,7 @@ export default {
     appText: Text,
   },
   props: {
-    category: {
+    inputValue: {
       type: String,
       required: true,
     },

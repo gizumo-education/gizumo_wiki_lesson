@@ -1,21 +1,18 @@
-import axios from 'axios';
+import axios from '@Helpers/axiosDefault';
 
 export default {
   namespaced: true,
   state: {
     doneMessage: '',
     errorMessage: '',
-    categoryPostInputValue: '',
-    tHeads: ['カテゴリー名'],
+    inputValue: '',
+    tHeads: ['カテゴリー名'], // 仮
     categories: [],
   },
   getters: {},
   mutations: {
     doneGetAllCategories(state, payload) {
-      if (typeof payload.categories === 'object') {
-        payload.categories.reverse();
-      }
-      state.categories = [...payload.categories];
+      state.categories = [...payload.categories.reverse()];
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -27,6 +24,7 @@ export default {
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
