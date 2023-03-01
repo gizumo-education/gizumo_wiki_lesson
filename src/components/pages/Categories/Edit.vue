@@ -1,5 +1,6 @@
 <template>
   <app-category-edit
+    :loading="loading"
     :access="access"
   />
 </template>

@@ -52,6 +52,22 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
+    category: {
+      type: String,
+      default: '',
+    },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
+    doneMessage: {
+      type: String,
+      default: '',
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     access: {
       type: Object,
       default: () => ({}),
