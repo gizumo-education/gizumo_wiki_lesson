@@ -61,9 +61,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-form {
-  padding-right: 15px;
-}
 .category-area {
   display: flex;
   & > div {
@@ -71,6 +68,7 @@ form {
   }
   & > form {
     width: 30%;
+    padding-right: 15px;
   }
 }
 </style>
