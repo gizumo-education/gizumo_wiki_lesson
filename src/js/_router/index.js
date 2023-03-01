@@ -29,7 +29,7 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 
 // カテゴリ一覧ページ
 import Categories from '@Pages/Categories/index.vue';
-import CategoriesList from '@Pages/Categories/List.vue';
+import CategoriesPostList from '@Pages/Categories/PostList.vue';
 
 // Vuexの読み込み
 import Store from '../_store';
@@ -141,7 +141,7 @@ const router = new VueRouter({
       component: Categories,
       children: [
         // { name: 'categoriesPost', path: '', component: CategoriesPost },
-        { name: 'categoriesList', path: '', component: CategoriesList },
+        { name: 'categoriesList', path: '', component: CategoriesPostList },
       ],
     },
     {
