@@ -26,28 +26,31 @@ export default {
   },
   computed: {
     doneMessage() {
-      return this.$store.state.articles.doneMessage;
+      return this.$store.state.categories.doneMessage;
     },
     errorMessage() {
-      return this.$store.state.articles.errorMessage;
+      return this.$store.state.categories.errorMessage;
     },
     category() {
-      return this.$store.state.articles.categoryPostInputValue;
+      return this.$store.state.categories.categoryPostInputValue;
     },
     access() {
       return this.$store.getters['auth/access'];
     },
     tHeads() {
-      return this.$store.state.articles.tHeads;
+      return this.$store.state.categories.tHeads;
     },
     categories() {
-      return this.$store.state.articles.categories;
+      return this.$store.state.categories.categories;
     },
   },
   created() {
-    this.$store.dispatch('articles/getAllCategories');
+    this.fetchCategories();
   },
   methods: {
+    fetchCategories() {
+      this.$store.dispatch('categories/getAllCategories');
+    },
     openModal() {
       // console.log('openModal Called');
     },

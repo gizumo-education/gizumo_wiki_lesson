@@ -28,13 +28,6 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    categoryPostInputValue: '',
-    access: {
-      create: true,
-      delete: true,
-    },
-    tHeads: ['カテゴリー名'],
-    categories: [],
   },
   getters: {
     transformedArticles(state) {
@@ -96,12 +89,6 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
     },
-    doneGetAllCategories(state, payload) {
-      if (typeof payload.categories === 'object') {
-        payload.categories.reverse();
-      }
-      state.categories = [...payload.categories];
-    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -134,22 +121,6 @@ export default {
   actions: {
     initPostArticle({ commit }) {
       commit('initPostArticle');
-    },
-    // 自作だよ
-    // axios(rootGetters['auth/token'])は使い回せる関数（インスタンスだよ）を返すよそれを即実行しているよ
-    getAllCategories({ commit, rootGetters }) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: '/category',
-      })
-        .then(res => {
-          // console.log(res);
-          const payload = { categories: res.data.categories };
-          commit('doneGetAllCategories', payload);
-        })
-        .catch(err => {
-          commit('failRequest', { message: err.message });
-        });
     },
     getAllArticles({ commit, rootGetters }) {
       // console.log(axios(rootGetters['auth/token']));
