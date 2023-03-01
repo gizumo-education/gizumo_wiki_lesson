@@ -3,18 +3,17 @@
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
-          <th v-for="(thead, index) in theads" :key="index">
+          <th
+            v-for="(thead, index) in theads"
+            :key="index"
+          >
             <app-text tag="span" theme-color bold>
               {{ thead }}
             </app-text>
           </th>
         </tr>
       </thead>
-      <transition-group
-        name="fade"
-        tag="tbody"
-        class="category-list__table__body"
-      >
+      <transition-group name="fade" tag="tbody" class="category-list__table__body">
         <tr v-for="category in categories" :key="category.id">
           <td>
             <app-text tag="span">
@@ -57,10 +56,18 @@
     </table>
     <app-modal>
       <div class="category-list__modal">
-        <app-text class="category-list__modal__title" ex-large tag="p">
+        <app-text
+          class="category-list__modal__title"
+          ex-large
+          tag="p"
+        >
           下記のカテゴリーを削除しますか?
         </app-text>
-        <app-text class="category-list__modal__name" theme-color tag="p">
+        <app-text
+          class="category-list__modal__name"
+          theme-color
+          tag="p"
+        >
           {{ deleteCategoryName }}
         </app-text>
         <app-button
@@ -77,7 +84,9 @@
 </template>
 
 <script>
-import { RouterLink, Button, Text } from '@Components/atoms';
+import {
+  RouterLink, Button, Text,
+} from '@Components/atoms';
 
 export default {
   components: {
@@ -122,8 +131,7 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px 15px;
-  border-left: 2px solid #eaeaea;
+  padding: 10px 0 20px;
   height: 100%;
   overflow: scroll;
   &__table {
@@ -147,12 +155,10 @@ export default {
           font-size: 12px;
         }
       }
-      .fade-enter-active,
-      .fade-leave-active {
-        transition: opacity 0.5s;
+      .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
       }
-      .fade-enter,
-      .fade-leave-to {
+      .fade-enter, .fade-leave-to {
         opacity: 0;
       }
     }
