@@ -133,7 +133,7 @@ export default {
       commit('initPostArticle');
     },
     // 自作だよ
-    // axios(rootGetters['auth/token'])は関数を返すよそれを即実行しているよ
+    // axios(rootGetters['auth/token'])は使い回せる関数（インスタンスだよ）を返すよそれを即実行しているよ
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
