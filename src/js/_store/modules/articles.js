@@ -97,6 +97,9 @@ export default {
       state.articleList = [...payload.articles];
     },
     doneGetAllCategories(state, payload) {
+      if (typeof payload.categories === 'object') {
+        payload.categories.reverse();
+      }
       state.categories = [...payload.categories];
     },
     failRequest(state, { message }) {
@@ -141,7 +144,7 @@ export default {
       })
         .then(res => {
           // console.log(res);
-          const payload = { categories: res.data.categories.reverse() };
+          const payload = { categories: res.data.categories };
           commit('doneGetAllCategories', payload);
         })
         .catch(err => {
