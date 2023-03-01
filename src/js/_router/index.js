@@ -29,10 +29,9 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 
 // カテゴリ一覧ページ
 import Categories from '@Pages/Categories/index.vue';
-// import CategoriesPost from '@Pages/Categories/Post.vue';
 import CategoriesList from '@Pages/Categories/List.vue';
 
-// Vuexの読み込み？
+// Vuexの読み込み
 import Store from '../_store';
 
 Vue.use(VueRouter);
