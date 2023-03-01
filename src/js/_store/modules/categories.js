@@ -5,7 +5,7 @@ export default {
   state: {
     doneMessage: '',
     errorMessage: '',
-    inputValue: '',
+    category: '',
     tHeads: ['カテゴリー名'], // 仮
     categories: [],
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="category-area">
     <app-category-post
-      :input-value="inputValue"
+      :category="category"
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
@@ -31,8 +31,8 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
-    inputValue() {
-      return this.$store.state.categories.inputValue;
+    category() {
+      return this.$store.state.categories.category;
     },
     access() {
       return this.$store.getters['auth/access'];
