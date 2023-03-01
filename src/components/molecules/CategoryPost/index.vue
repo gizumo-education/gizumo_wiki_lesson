@@ -81,10 +81,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
-form {
-  padding-right: 15px;
-}
 .category-management-post {
   &__input {
     margin-top: 16px;
