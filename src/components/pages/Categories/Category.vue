@@ -5,8 +5,8 @@
       :access="access"
       :category="categoryName"
       :done-message="completeMessage"
-      :not-done-message="incompleteMessage"
-      :disabled="callLoading"
+      :error-message="incompleteMessage"
+      :disabled="loading"
       @handle-submit="addCategory"
       @update-value="categoryName = $event.target.value"
     />
@@ -43,10 +43,10 @@ export default {
     },
     // カテゴリーが追加できませんでした、メッセージ
     incompleteMessage() {
-      return this.$store.state.categories.notDoneMessage;
+      return this.$store.state.categories.errorMessage;
     },
     // loading呼ぶ categories.jsのstateからloadingもってくる
-    callLoading() {
+    loading() {
       return this.$store.state.categories.loading;
     },
   },
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     addCategory() {
-      this.$store.dispatch('categories/getCategoryName', this.categoryName);
+      this.$store.dispatch('categories/postCategory', this.categoryName);
       this.categoryName = '';
     },
   },

@@ -6,31 +6,31 @@ export default {
     categoriesList: [],
     // メッセージをベタ書き
     doneMessage: '',
-    notDoneMessage: '',
+    errorMessage: '',
     loading: false,
   },
   mutations: {
     getAllLists(state, res) {
       state.categoriesList = res.categories.reverse();
     },
-    getCategoryName(state, res) {
+    postCategory(state, res) {
       state.categoryPost = res.categories;
     },
     successMessage(state) {
       state.doneMessage = 'カテゴリーが追加されました';
     },
     incompleteMessage(state) {
-      state.notDoneMessage = 'カテゴリーが追加できませんでした';
+      state.errorMessage = 'カテゴリーが追加できませんでした';
     },
     emptySuccessMessage(state) {
       state.doneMessage = '';
     },
     emptyIncompleteMessage(state) {
-      state.notDoneMessage = '';
+      state.errorMessage = '';
     },
     changeLoading(state) {
       // 反転させる方法で
-      state.loading = (state.loading === 1) ? 0 : 1;
+      state.loading = !state.loading;
     },
   },
   actions: {
@@ -47,8 +47,8 @@ export default {
         commit('getAllLists', { message: err.message });
       });
     },
-    getCategoryName({ commit, rootGetters, dispatch }, categoryName) {
-      console.log(categoryName);
+    postCategory({ commit, rootGetters, dispatch }, categoryName) {
+      // console.log(categoryName);
       // 真偽値を反転させる
       commit('changeLoading');
       axios(rootGetters['auth/token'])({
@@ -67,12 +67,12 @@ export default {
         const payload = {
           addCategory: res.data.categories,
         };
-        commit('getCategoryName', payload);
+        commit('postCategory', payload);
       }).catch(err => {
         commit('changeLoading');
         commit('emptySuccessMessage');
         commit('incompleteMessage');
-        commit('getCategoryName', { message: err.message });
+        commit('postCategory', { message: err.message });
       });
     },
   },

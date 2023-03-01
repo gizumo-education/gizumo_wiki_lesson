@@ -47,6 +47,9 @@ export default {
     loading() {
       return this.$store.state.articles.loading;
     },
+    // errorMessage() {
+    //   return this.$store.state.articles.errorMessage;
+    // },
     access() {
       return this.$store.getters['auth/access'];
     },

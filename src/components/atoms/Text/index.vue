@@ -84,7 +84,6 @@ export default {
   display:inline-block;
   padding: 5px 20px;
   color: #fff;
-  // border-left: 8px solid $theme-color;
   background-color: $theme-color;
   font-size: 13px;
 }
@@ -92,10 +91,11 @@ export default {
   color: $error-color;
 }
 .text--bg-error {
-  padding: 10px 15px;
+  display:inline-block;
+  padding: 5px 20px;
   color: #fff;
-  border-left: 8px solid $error-color;
   background-color: $error-color;
+  font-size: 13px;
 }
 .text--ex-large {
   font-size: 24px;
