@@ -11,6 +11,7 @@
       :categories="categories"
       :delete-category-name="'未実装（20230301現在）'"
       :access="access"
+      @open-modal="openModal"
     />
   </div>
 </template>
@@ -45,6 +46,11 @@ export default {
   },
   created() {
     this.$store.dispatch('articles/getAllCategories');
+  },
+  methods: {
+    openModal() {
+      // console.log('openModal Called');
+    },
   },
 };
 </script>
