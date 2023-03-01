@@ -81,10 +81,12 @@ export default {
   color: $theme-color;
 }
 .text--bg-success {
-  padding: 10px 15px;
+  display:inline-block;
+  padding: 5px 20px;
   color: #fff;
-  border-left: 8px solid $theme-color;
+  // border-left: 8px solid $theme-color;
   background-color: $theme-color;
+  font-size: 13px;
 }
 .text--error {
   color: $error-color;

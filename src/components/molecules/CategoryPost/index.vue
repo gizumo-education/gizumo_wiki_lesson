@@ -27,6 +27,10 @@
     <div v-if="doneMessage" class="category-management-post__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
+
+    <div v-if="notDoneMessage" class="category-management-post__notice">
+      <app-text bg-success>{{ notDoneMessage }}</app-text>
+    </div>
   </form>
 </template>
 <script>
@@ -51,6 +55,10 @@ export default {
       default: '',
     },
     doneMessage: {
+      type: String,
+      default: '',
+    },
+    notDoneMessage: {
       type: String,
       default: '',
     },

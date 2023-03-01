@@ -6,6 +6,7 @@ export default {
     categoriesList: [],
     // メッセージをベタ書き
     doneMessage: '',
+    notDoneMessage: '',
     loading: false,
   },
   mutations: {
@@ -18,8 +19,14 @@ export default {
     successMessage(state) {
       state.doneMessage = 'カテゴリーが追加されました';
     },
-    errorMessage(state) {
-      state.doneMessage = 'カテゴリーが追加できませんでした';
+    incompleteMessage(state) {
+      state.notDoneMessage = 'カテゴリーが追加できませんでした';
+    },
+    emptySuccessMessage(state) {
+      state.doneMessage = '';
+    },
+    emptyIncompleteMessage(state) {
+      state.notDoneMessage = '';
     },
     changeLoading(state) {
       // 反転させる方法で
@@ -53,6 +60,7 @@ export default {
       }).then(res => {
         // 真偽値を反転させる
         commit('changeLoading');
+        commit('emptyIncompleteMessage');
         commit('successMessage');
         // 通信が成功したら、実行したい処理をここに記述しないと、リロードしないと処理が実行されないということになる
         dispatch('getAllLists');
@@ -61,10 +69,11 @@ export default {
         };
         commit('getCategoryName', payload);
       }).catch(err => {
-        commit('errorMessage');
+        commit('changeLoading');
+        commit('emptySuccessMessage');
+        commit('incompleteMessage');
         commit('getCategoryName', { message: err.message });
       });
     },
-
   },
 };
