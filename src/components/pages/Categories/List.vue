@@ -7,7 +7,7 @@
       :access="access"
     />
     <app-category-list
-      :theads="tHeads"
+      :theads="theads"
       :categories="categories"
       :delete-category-name="'未実装（20230301現在）'"
       :access="access"
@@ -24,6 +24,11 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
+  },
   computed: {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
@@ -36,9 +41,6 @@ export default {
     },
     access() {
       return this.$store.getters['auth/access'];
-    },
-    tHeads() {
-      return this.$store.state.categories.tHeads;
     },
     categories() {
       return this.$store.state.categories.categories;

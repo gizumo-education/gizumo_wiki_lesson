@@ -6,7 +6,6 @@ export default {
     doneMessage: '',
     errorMessage: '',
     category: '',
-    tHeads: ['カテゴリー名'], // 仮
     categories: [],
   },
   getters: {},
