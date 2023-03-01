@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "eslint": "eslint --fix 'src/{js,components}/**/*.{js,vue}'",
+    "eslint": "eslint --fix \"src/{js,components}/**/*.{js,vue}\"",
     "test:watch": "NODE_ENV=test jest --watchAll --coverage",
     "publish": "pm2 start --image-name dev_Gizumo_wiki",
     "stop": "pm2 stop dev_Gizumo_wiki",
