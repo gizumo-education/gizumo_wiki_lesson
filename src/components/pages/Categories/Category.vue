@@ -35,10 +35,6 @@ export default {
     appCategoryList: CategoryList,
   },
   mixins: [Mixins],
-  // beforeRouteUpdate(to, from, next) {
-  // this.fetchCategory();
-  // next();
-  // },
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -68,7 +64,7 @@ export default {
       return this.$store.state.categories.categoryList;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
+      return this.deleteCategory.name;
     },
   },
   created() {
@@ -90,7 +86,6 @@ export default {
     openModal(categoryId, categoryName) {
       this.deleteCategory.id = categoryId;
       this.deleteCategory.name = categoryName;
-      this.$store.dispatch('categories/modalCategory', { categoryId, categoryName });
       this.toggleModal();
     },
     handleClick() {

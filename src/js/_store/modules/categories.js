@@ -6,8 +6,6 @@ export default {
     isLoading: false,
     errorMessage: '',
     doneMessage: '',
-    deleteCategoryId: null,
-    deleteCategoryName: '',
     categoryList: [],
   },
 
@@ -21,9 +19,6 @@ export default {
     },
     toggleLoading(state) {
       state.isLoading = !state.isLoading;
-    },
-    doneCreateCategory(state) {
-      state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
     modalDeleteCategory(state, { categoryId, categoryName }) {
       state.deleteCategoryId = categoryId;
@@ -73,7 +68,7 @@ export default {
         }).then(response => {
           commit('toggleLoading');
           if (response.data.code === 0) throw new Error(response.data.message);
-          commit('doneCreateCategory');
+          commit('displayDoneMessage', { message: '新規カテゴリーの追加が完了しました' });
           resolve();
         }).catch(err => {
           commit('toggleLoading');
