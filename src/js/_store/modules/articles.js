@@ -28,6 +28,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    categoryPostInputValue: '',
     access: {
       create: true,
       delete: true,

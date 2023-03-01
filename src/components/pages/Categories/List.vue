@@ -1,7 +1,7 @@
 <template>
   <div class="category-area">
     <app-category-post
-      :category="''"
+      :category="category"
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
@@ -9,7 +9,7 @@
     <app-category-list
       :theads="tHeads"
       :categories="categories"
-      :delete-category-name="'デリートカテゴリーネーム'"
+      :delete-category-name="'未実装（20230301現在）'"
       :access="access"
     />
   </div>
@@ -29,6 +29,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.articles.errorMessage;
+    },
+    category() {
+      return this.$store.state.articles.categoryPostInputValue;
     },
     access() {
       return this.$store.getters['auth/access'];
