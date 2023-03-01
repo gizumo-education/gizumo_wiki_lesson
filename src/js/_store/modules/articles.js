@@ -28,6 +28,17 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    access: {
+      create: true,
+      delete: true,
+    },
+    tHeads: ['カテゴリー名'],
+    categoriesList: [
+      { id: 0, name: 'みかん' },
+      { id: 1, name: 'りんごid1' },
+      { id: 2, name: 'ぱいなっぷるid2' },
+    ],
+    inputValueCategoryPost: '',
   },
   getters: {
     transformedArticles(state) {
