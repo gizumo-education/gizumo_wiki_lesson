@@ -26,6 +26,7 @@ import UserCreate from '@Pages/Users/Create.vue';
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import CategoryList from '@Pages/Categories/Category.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 
 // パスワード
 import PasswordInit from '@Pages/Password/init.vue';
@@ -79,6 +80,11 @@ const router = new VueRouter({
           name: 'allCategories',
           path: '',
           component: CategoryList,
+        },
+        {
+          name: 'categoryEdit',
+          path: ':id/edit',
+          component: CategoryEdit,
         },
       ],
     },
