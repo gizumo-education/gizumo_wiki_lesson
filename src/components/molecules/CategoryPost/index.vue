@@ -54,10 +54,6 @@ export default {
       type: String,
       default: '',
     },
-    notDoneMessage: {
-      type: String,
-      default: '',
-    },
     // これがtrueになると、作成中になる
     disabled: {
       type: Boolean,

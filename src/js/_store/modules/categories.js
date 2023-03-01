@@ -48,7 +48,6 @@ export default {
       });
     },
     postCategory({ commit, rootGetters, dispatch }, categoryName) {
-      // console.log(categoryName);
       // 真偽値を反転させる
       commit('changeLoading');
       axios(rootGetters['auth/token'])({
