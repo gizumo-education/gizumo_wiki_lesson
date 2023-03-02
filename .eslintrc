@@ -4,7 +4,11 @@
     "browser": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "airbnb-base", "plugin:vue/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:vue/recommended"
+  ],
   "settings": {
     "import/resolver": {
       "alias": {
@@ -28,16 +32,13 @@
     "no-new": "off",
     "no-console": "error",
     "no-control-regex": "off",
-    "max-len": [
-      "error",
-      {
-        "code": 90,
-        "ignoreComments": true,
-        "ignoreTrailingComments": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreUrls": true
-      }
-    ],
+    "max-len": ["error", {
+      "code": 90,
+      "ignoreComments": true,
+      "ignoreTrailingComments": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreUrls": true
+    }],
     "no-irregular-whitespace": [
       "error",
       {

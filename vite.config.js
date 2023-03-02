@@ -3,7 +3,7 @@ import { createVuePlugin } from 'vite-plugin-vue2';
 import legacy from '@vitejs/plugin-legacy';
 import checker from 'vite-plugin-checker';
 
-export default ({ mode }) => {
+export default (({ mode }) => {
   const rootDirPath = process.cwd();
   const env = loadEnv(mode, `${rootDirPath}/env`, '');
 
@@ -27,7 +27,7 @@ export default ({ mode }) => {
     ],
     resolve: {
       alias: {
-        vue$: 'vue/dist/vue.esm.js',
+        'vue$': 'vue/dist/vue.esm.js',
         '@Components': `${__dirname}/src/components`,
         '@Helpers': `${__dirname}/src/js/_helpers`,
         '@Pages': `${__dirname}/src/components/pages`,
@@ -36,12 +36,12 @@ export default ({ mode }) => {
     },
     css: {
       postcss: {
-        // eslint-disable-next-line global-require
-        plugins: [require('autoprefixer')],
+        plugins: [
+          require('autoprefixer'),
+        ],
       },
       preprocessorOptions: {
         scss: {
-          // eslint-disable-next-line quotes
           additionalData: `@use '@Styles/scss/_utils/_utils.scss' as *;`,
         },
       },
@@ -55,4 +55,4 @@ export default ({ mode }) => {
       MY_SESSION_STORAGE_KEY: JSON.stringify(env.MY_SESSION_STORAGE_KEY),
     },
   });
-};
+});
