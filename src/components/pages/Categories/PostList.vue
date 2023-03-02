@@ -9,7 +9,6 @@
     <app-category-list
       :theads="theads"
       :categories="categories"
-      :delete-category-name="'未実装（20230301現在）'"
       :access="access"
     />
   </div>
