@@ -5,7 +5,6 @@ dist/
 
 .Trash-*
 .DS_Store
-.prettierrc
 
 npm-debug.log*
 yarn-debug.log*
