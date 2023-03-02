@@ -27,6 +27,11 @@ import UserCreate from '@Pages/Users/Create.vue';
 import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
+// カテゴリ一覧ページ
+import Categories from '@Pages/Categories/index.vue';
+import CategoriesPostList from '@Pages/Categories/PostList.vue';
+
+// Vuexの読み込み
 import Store from '../_store';
 
 Vue.use(VueRouter);
@@ -126,6 +131,13 @@ const router = new VueRouter({
           path: ':id',
           component: UserDetail,
         },
+      ],
+    },
+    {
+      path: '/categories',
+      component: Categories,
+      children: [
+        { name: 'categoriesPostList', path: '', component: CategoriesPostList },
       ],
     },
     {
