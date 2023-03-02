@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form @submit.prevent="editCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
       class="category-all-link"
@@ -13,10 +13,10 @@
       v-validate="'required'"
       name="categoryName"
       type="text"
-      placeholder=""
+      placeholder="カテゴリー名"
       data-vv-as="カテゴリー名"
+      :value="editTargetCategoryName"
       :error-messages="errors.collect('categoryName')"
-      :value="category.categoryName"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
@@ -51,10 +51,6 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    category: {
-      type: String,
-      default: '',
-    },
     errorMessage: {
       type: String,
       default: '',
@@ -71,6 +67,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    editTargetCategoryName: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     buttonText() {
@@ -79,9 +79,6 @@ export default {
     },
   },
   methods: {
-    updateValue($event) {
-      this.$emit('update-value', $event.target);
-    },
     editCategory() {
       if (!this.access.edit) return;
       this.$emit('clear-message');

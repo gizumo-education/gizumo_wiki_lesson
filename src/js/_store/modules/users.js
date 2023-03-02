@@ -67,6 +67,7 @@ export default {
     },
     updateValue({ commit }, target) {
       commit('updateValue', target);
+      console.log('updateValue', target);
     },
 
     // ユーザー全件取得

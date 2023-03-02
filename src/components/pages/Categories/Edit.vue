@@ -1,8 +1,14 @@
 <template>
   <app-category-edit
-    :loading="loading"
+    :error-message="errorMessage"
+    :done-message="doneMessage"
+    :edit-target-category-name="editTargetCategory.name"
+    :loading="loading ? true : false"
     :access="access"
-    @edited-Name="editedName"
+    @clear-message="clearMessage"
+    @edited-category="editedCategory"
+    @edit-category="editCategory"
+    @update-value="editedCategory"
   />
 </template>
 
@@ -15,63 +21,54 @@ export default {
   },
   data() {
     return {
-      title: '',
-      content: '',
+      editTargetCategory: {
+        id: '',
+        name: '',
+      },
     };
   },
   computed: {
-    articleId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
-      return id;
-    },
-    articleTitle() {
-      const { title } = this.$store.state.articles.targetArticle;
-      return title;
-    },
-    articleContent() {
-      const { content } = this.$store.state.articles.targetArticle;
-      return content;
-    },
-    markdownContent() {
-      return `# ${this.articleTitle}\n${this.articleContent}`;
-    },
-    currentCategoryName() {
-      const { name } = this.$store.state.articles.targetArticle.category;
-      return name;
-    },
-    categoryList() {
-      const { categoryList } = this.$store.state.categories;
-      return categoryList;
-    },
-    loading() {
-      return this.$store.state.categories.loading;
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
-    this.$store.dispatch('articles/getArticleDetail', parseInt(this.articleId, 10));
+    const { id } = this.$route.params;
+    console.log(id);
+    this.$store.dispatch('categories/getCategory', { id });
+    this.editTargetCategory={id, name: this.$store.state.categories.category.name};
+    console.log(this.editTargetCategory);
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
-    editedName($event) {
-      this.$store.dispatch('categories/editedName', $event.target.value);
+    editedCategory($event) {
+      console.log($event.target.value);
+      this.editTargetCategory.name=$event.target.value;
+      // this.$store.dispatch('categories/editedCategory', $event.target.value);
     },
-    editedContent($event) {
-      this.$store.dispatch('articles/editedContent', $event.target.value);
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
-    handleSubmit() {
-      if (this.loading) return;
-      this.$store.dispatch('articles/updateArticle');
-    },
-    selectedArticleCategory($event) {
-      const categoryName = $event.target.value;
-      this.$store.dispatch('articles/selectedArticleCategory', categoryName);
+    // updateValue(target) {
+    //   console.log(target.target.value);
+    //   if (!this.loading) this.$store.dispatch('categories/updateValue', $event.target.value);
+    // },
+    editCategory() {
+      console.log(this.editTargetCategory.name);
+      this.$store.dispatch('categories/editCategory', {
+        id: this.editTargetCategory.id,
+        /* eslint-disable-next-line no-irregular-whitespace */
+        name: this.editTargetCategory.name.replace(/(　)+/, ' ').trim(),
+      });
     },
   },
 };
