@@ -7,6 +7,9 @@ export default {
     errorMessage: '',
     doneMessage: '',
     categoryList: [],
+    targetCategory: {
+      name: '',
+    },
   },
 
   mutations: {
@@ -32,6 +35,9 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+    },
+    editedTitle(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
   },
   actions: {

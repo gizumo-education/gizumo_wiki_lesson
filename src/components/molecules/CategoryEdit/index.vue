@@ -2,22 +2,21 @@
   <form @submit.prevent="addCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
+      class="category-all-link"
       to="/categories"
       round
-      bg-theme-color
-      white
-      small
+      underline
     >
       カテゴリー一覧へ戻る
     </app-router-link>
     <app-input
       v-validate="'required'"
-      name="category"
+      name="categoryName"
       type="text"
-      placeholder="追加するカテゴリー名を入力してください"
+      placeholder=""
       data-vv-as="カテゴリー名"
-      :error-messages="errors.collect('category')"
-      :value="category"
+      :error-messages="errors.collect('categoryName')"
+      :value="category.categoryName"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
@@ -64,7 +63,7 @@ export default {
       type: String,
       default: '',
     },
-    loading: {
+    disabled: {
       type: Boolean,
       default: false,
     },
@@ -76,17 +75,18 @@ export default {
   computed: {
     buttonText() {
       if (!this.access.edit) return '更新権限がありません';
-      return this.loading ? '更新中...' : '更新';
-    },
-    disabled() {
-      return this.access.edit && !this.loading;
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {
-    handleSubmit() {
+    updateValue($event) {
+      this.$emit('update-value', $event.target);
+    },
+    editCategory() {
       if (!this.access.edit) return;
+      this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('handle-submit');
+        if (valid) this.$emit('edit-category');
       });
     },
   },
@@ -103,5 +103,8 @@ export default {
   &__notice {
     margin-top: 16px;
   }
+}
+.category-all-link {
+  margin-top: 16px;
 }
 </style>

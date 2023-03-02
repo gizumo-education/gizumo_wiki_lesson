@@ -2,6 +2,7 @@
   <app-category-edit
     :loading="loading"
     :access="access"
+    @edited-Name="editedName"
   />
 </template>
 
@@ -58,8 +59,8 @@ export default {
     this.$store.dispatch('articles/getArticleDetail', parseInt(this.articleId, 10));
   },
   methods: {
-    editedTitle($event) {
-      this.$store.dispatch('articles/editedTitle', $event.target.value);
+    editedName($event) {
+      this.$store.dispatch('categories/editedName', $event.target.value);
     },
     editedContent($event) {
       this.$store.dispatch('articles/editedContent', $event.target.value);
