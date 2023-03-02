@@ -28,17 +28,6 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    access: {
-      create: true,
-      delete: true,
-    },
-    tHeads: ['カテゴリー名'],
-    categoriesList: [
-      { id: 0, name: 'みかん' },
-      { id: 1, name: 'りんごid1' },
-      { id: 2, name: 'ぱいなっぷるid2' },
-    ],
-    inputValueCategoryPost: '',
   },
   getters: {
     transformedArticles(state) {
@@ -134,7 +123,6 @@ export default {
       commit('initPostArticle');
     },
     getAllArticles({ commit, rootGetters }) {
-      // console.log(axios(rootGetters['auth/token']));
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article',
