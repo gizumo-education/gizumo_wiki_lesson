@@ -16,15 +16,15 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
+    successRequest(state, payload) {
+      state.doneMessage = payload;
+    },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    updateValue() {
-      console.log('updateValue called');
-    },
-    handleSubmit() {
-      console.log('handleSubmit called');
+    updateValue(state, payload) {
+      state.category = payload;
     },
   },
   actions: {
@@ -45,11 +45,24 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    updateValue({ commit }) {
-      commit('updateValue');
+    updateValue({ commit }, payload) {
+      commit('updateValue', payload);
     },
-    handleSubmit({ commit }) {
-      commit('handleSubmit');
+    handleSubmit({
+      commit, dispatch, state, rootGetters,
+    }) {
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data: { name: state.category },
+      })
+        .then(() => {
+          dispatch('getAllCategories');
+          commit('successRequest', '新カテゴリーを作成！');
+        })
+        .catch(err => {
+          commit('failRequest', err);
+        });
     },
   },
 };
