@@ -120,7 +120,7 @@ export default {
       });
     },
     // カテゴリー1件取得
-    getCategory({ commit, rootGetters }, { id }) {
+    getCategoryDetail({ commit, rootGetters }, { id }) {
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'GET',

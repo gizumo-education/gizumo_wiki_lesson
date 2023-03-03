@@ -42,7 +42,7 @@ export default {
   },
   created() {
     const { id } = this.$route.params;
-    this.$store.dispatch('categories/getCategory', { id }).then(() => {
+    this.$store.dispatch('categories/getCategoryDetail', { id }).then(() => {
       this.editTargetCategory = { id, name: this.$store.state.categories.category.name };
       this.$store.dispatch('categories/clearMessage');
     });
