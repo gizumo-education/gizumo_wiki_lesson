@@ -20,6 +20,10 @@ export default {
       state.errorMessage = '';
       state.doneMessage = '';
     },
+    editCategoryClearMessage(state) {
+      state.editCategoryErrorMessage = '';
+      state.editCategoryDoneMessage = '';
+    },
     doneGetAllCategories(state, { categories }) {
       state.categoryList = categories.reverse();
     },
@@ -64,6 +68,9 @@ export default {
   actions: {
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    editCategoryClearMessage({ commit }) {
+      commit('editCategoryClearMessage');
     },
     // カテゴリー全件取得
     getAllCategories({ commit, rootGetters }) {
