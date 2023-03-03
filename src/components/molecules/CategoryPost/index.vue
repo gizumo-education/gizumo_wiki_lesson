@@ -73,6 +73,7 @@ export default {
     addCategory() {
       if (!this.access.create) return;
       this.$emit('clear-message');
+      console.log(this.$validator);
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });

@@ -20,6 +20,12 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    updateValue() {
+      console.log('updateValue called');
+    },
+    handleSubmit() {
+      console.log('handleSubmit called');
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -38,6 +44,12 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    updateValue({ commit }) {
+      commit('updateValue');
+    },
+    handleSubmit({ commit }) {
+      commit('handleSubmit');
     },
   },
 };
