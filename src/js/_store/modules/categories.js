@@ -26,8 +26,8 @@ export default {
     editedCategory(state, payload) {
       state.category = { ...state.category, title: payload.title };
     },
-    doneGetCategory(state, { category }) {
-      state.category = { ...state.category, ...category };
+    doneGetCategory(state, payload) {
+      state.category.name = payload;
       state.loading = false;
     },
     toggleLoading(state) {
@@ -120,19 +120,15 @@ export default {
       });
     },
     // カテゴリー1件取得
-    getCategoryDetail({ commit, rootGetters }, { id }) {
+    getCategoryDetail({ commit, rootGetters }, id) {
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
           url: `/category/${id}`,
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
-          const data = response.data.category;
-          const category = {
-            id: data.id,
-            name: data.name,
-          };
-          commit('doneGetCategory', { category });
+          const categoryName = response.data.category.name;
+          commit('doneGetCategory', categoryName);
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
