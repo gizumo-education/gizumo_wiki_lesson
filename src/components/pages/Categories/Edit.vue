@@ -23,8 +23,6 @@ export default {
     return {
       title: '',
       content: '',
-      editCategoryyName: '',
-      editCategoryId: null,
     };
   },
   computed: {
