@@ -29,7 +29,10 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
+import CategoryList from '@Pages/Categories/List.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 
+// Store
 import Store from '../_store';
 
 Vue.use(VueRouter);
@@ -56,9 +59,20 @@ const router = new VueRouter({
       component: Home,
     },
     {
-      name: 'categories',
       path: '/categories',
       component: Categories,
+      children: [
+        {
+          name: 'categoryList',
+          path: '',
+          component: CategoryList,
+        },
+        {
+          name: 'categoryEdit',
+          path: ':id/edit',
+          component: CategoryEdit,
+        },
+      ],
     },
     {
       name: 'passwordInit',

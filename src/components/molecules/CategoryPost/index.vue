@@ -69,6 +69,9 @@ export default {
       return this.disabled ? '作成中...' : '作成';
     },
   },
+  created() {
+    this.$store.dispatch('categories/clearMessage');
+  },
   methods: {
     addCategory() {
       if (!this.access.create) return;

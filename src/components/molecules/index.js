@@ -8,6 +8,7 @@ import UserCreate from './UserCreate/index.vue';
 import UserTable from './UserTable/index.vue';
 import UserDetail from './UserDetail/index.vue';
 import UserList from './UserList/index.vue';
+import CategoryEdit from './CategoryEdit/index.vue';
 import CategoryPost from './CategoryPost/index.vue';
 import CategoryList from './CategoryList/index.vue';
 import ArticleEdit from './ArticleEdit/index.vue';
@@ -27,6 +28,7 @@ export {
   UserTable,
   UserDetail,
   UserList,
+  CategoryEdit,
   CategoryPost,
   CategoryList,
   ArticleEdit,
