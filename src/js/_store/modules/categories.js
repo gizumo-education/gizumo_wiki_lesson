@@ -67,7 +67,6 @@ export default {
     },
     // カテゴリー全件取得
     getAllCategories({ commit, rootGetters }) {
-      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
@@ -77,10 +76,8 @@ export default {
           id: data.id,
           name: data.name,
         }));
-        commit('toggleLoading');
         commit('doneGetAllCategories', { categories });
       }).catch(err => {
-        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
     },
