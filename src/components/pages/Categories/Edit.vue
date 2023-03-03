@@ -8,7 +8,6 @@
     @edited-category-name="editedCategoryName"
     @update-category="updateCategory"
     @handle-submit="handleSubmit"
-    @clear-message="clearMessage"
   />
 </template>
 
@@ -53,9 +52,9 @@ export default {
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {
-    clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
-    },
+    // clearMessage() {
+    //   this.$store.dispatch('categories/clearMessage');
+    // },
     editedCategoryName($event) {
       this.$store.dispatch('categories/editedCategoryName', $event.target.value);
     },
