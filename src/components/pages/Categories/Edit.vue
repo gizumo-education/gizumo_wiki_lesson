@@ -7,7 +7,6 @@
     :done-message="doneMessage"
     :access="access"
     @edited-category-name="editedCategoryName"
-    @update-category="updateCategory"
     @handle-submit="handleSubmit"
   />
 </template>
@@ -56,10 +55,6 @@ export default {
   methods: {
     editedCategoryName($event) {
       this.$store.dispatch('categories/editedCategoryName', $event.target.value);
-    },
-    updateCategory() {
-      if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory');
     },
     handleSubmit() {
       if (this.loading) return;
