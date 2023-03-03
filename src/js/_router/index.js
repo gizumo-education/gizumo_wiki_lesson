@@ -29,7 +29,7 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
-import CategoryList from '@Pages/Categories/List.vue';
+import CategoryList from '@Pages/Categories/Category.vue';
 import CategoryEdit from '@Pages/Categories/Edit.vue';
 
 // Store
