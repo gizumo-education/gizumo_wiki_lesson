@@ -28,12 +28,12 @@
       {{ buttonText }}
     </app-button>
 
-    <div v-if="errorMessage" class="category-management-post__notice">
-      <app-text bg-error>{{ errorMessage }}</app-text>
+    <div v-if="editCategoryErrorMessage" class="category-management-post__notice">
+      <app-text bg-error>{{ editCategoryErrorMessage }}</app-text>
     </div>
 
-    <div v-if="doneMessage" class="category-management-post__notice">
-      <app-text bg-success>{{ doneMessage }}</app-text>
+    <div v-if="editCategoryDoneMessage" class="category-management-post__notice">
+      <app-text bg-success>{{ editCategoryDoneMessage }}</app-text>
     </div>
   </form>
 </template>
@@ -51,11 +51,11 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    errorMessage: {
+    editCategoryErrorMessage: {
       type: String,
       default: '',
     },
-    doneMessage: {
+    editCategoryDoneMessage: {
       type: String,
       default: '',
     },

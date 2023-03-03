@@ -23,7 +23,6 @@
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text
         bg-error
-        :error-message="clearMessage"
       >
         {{ errorMessage }}
       </app-text>
@@ -32,7 +31,6 @@
     <div v-if="doneMessage" class="category-management-post__notice">
       <app-text
         bg-success
-        :done-message="clearMessage"
       >
         {{ doneMessage }}
       </app-text>
@@ -77,9 +75,6 @@ export default {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
       return this.disabled ? '作成中...' : '作成';
-    },
-    clearMessage() {
-      return this.$store.dispatch('categories/clearMessage');
     },
   },
   methods: {

@@ -6,6 +6,8 @@ export default {
     isLoading: false,
     errorMessage: '',
     doneMessage: '',
+    editCategoryDoneMessage: '',
+    editCategoryErrorMessage: '',
     categoryList: [],
     category: {
       id: null,
@@ -41,7 +43,10 @@ export default {
     doneEditCategory(state, { category }) {
       state.category = { ...state.category, ...category };
       state.isLoading = false;
-      state.doneMessage = 'カテゴリーの更新が完了しました。';
+      state.editCategoryDoneMessage = 'カテゴリーの更新が完了しました。';
+    },
+    editFailRequest(state, { message }) {
+      state.editCategoryErrorMessage = message;
     },
     loadingFalse(state) {
       state.isLoading = false;
@@ -133,7 +138,6 @@ export default {
           commit('doneGetCategory', { category });
           resolve();
         }).catch(err => {
-          commit('loadingFalse');
           commit('failRequest', { message: err.message });
         });
       });
@@ -153,7 +157,6 @@ export default {
         };
         commit('doneEditCategory', { editedCategory });
       }).catch(err => {
-        commit('loadingFalse');
         commit('failRequest', { message: err.message });
       });
     },

@@ -1,9 +1,9 @@
 <template>
   <app-category-edit
-    :error-message="errorMessage"
-    :done-message="doneMessage"
+    :edit-category-error-message="editCategoryErrorMessage"
+    :edit-category-done-message="editCategoryDoneMessage"
     :edit-target-category-name="editTargetCategory.name"
-    :disabled="loading ? true : false"
+    :disabled="isLoading"
     :access="access"
     @edited-category="editedCategory"
     @edit-category="editCategory"
@@ -27,13 +27,13 @@ export default {
     };
   },
   computed: {
-    errorMessage() {
-      return this.$store.state.categories.errorMessage;
+    editCategoryErrorMessage() {
+      return this.$store.state.categories.editCategoryErrorMessage;
     },
-    doneMessage() {
-      return this.$store.state.categories.doneMessage;
+    editCategoryDoneMessage() {
+      return this.$store.state.categories.editCategoryDoneMessage;
     },
-    loading() {
+    isLoading() {
       return this.$store.state.categories.isLoading;
     },
     access() {
@@ -51,9 +51,6 @@ export default {
     editedCategory($event) {
       this.editTargetCategory.name = $event.target.value;
     },
-    // clearMessage() {
-    //   this.$store.dispatch('categories/clearMessage');
-    // },
     editCategory() {
       this.$store.dispatch('categories/editCategory', {
         id: this.editTargetCategory.id,
