@@ -91,12 +91,12 @@ export default {
   justify-content: space-around;
   &__post{
     width: 30%;
-    padding-right: 20px;
+    padding-right: 10px;
   }
   &__list{
     width: 70%;
     border-left: 2px solid #eaeaea;
-    padding-left: 20px;
+    padding-left: 10px;
   }
 }
 </style>

@@ -32,10 +32,8 @@
           </td>
           <td>
             <app-router-link
-              white
-              bg-lightgreen
-              small
-              round
+              theme-color
+              underline
               hover-opacity
               :to="`/categories/${category.id}/edit`"
             >
@@ -133,7 +131,6 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 10px 20px;
   height: 100%;
   overflow: scroll;
   &__table {
