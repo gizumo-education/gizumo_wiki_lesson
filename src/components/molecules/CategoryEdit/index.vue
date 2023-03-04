@@ -14,10 +14,7 @@
         </app-router-link>
       </div>
       <div class="category-name-edit-form">
-<<<<<<< HEAD
-=======
         <form @submit.prevent="handleSubmit">
->>>>>>> b920dc39b8a033d3d80abd1af2fb8c255554a567
           <app-input
             v-validate="'required'"
             name="categoryName"
@@ -103,10 +100,6 @@ export default {
   methods: {
     handleSubmit() {
       if (!this.access.edit) return;
-<<<<<<< HEAD
-=======
-      this.$emit('clear-message');
->>>>>>> b920dc39b8a033d3d80abd1af2fb8c255554a567
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
