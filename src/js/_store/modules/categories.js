@@ -11,7 +11,7 @@ export default {
   getters: {},
   mutations: {
     doneGetAllCategories(state, payload) {
-      state.categories = [...payload.categories.reverse()];
+      state.categories = payload;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -35,7 +35,7 @@ export default {
         url: '/category',
       })
         .then(res => {
-          const payload = { categories: res.data.categories };
+          const payload = res.data.categories.reverse();
           commit('doneGetAllCategories', payload);
         })
         .catch(err => {
