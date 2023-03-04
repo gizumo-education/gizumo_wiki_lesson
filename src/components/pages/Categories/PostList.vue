@@ -47,7 +47,7 @@ export default {
       return this.$store.state.categories.categories;
     },
   },
-  created() {
+  mounted() {
     this.fetchCategories();
   },
   methods: {
