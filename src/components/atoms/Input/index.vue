@@ -72,7 +72,7 @@ export default {
   margin-top: 5px;
   padding: 10px;
   width: 100%;
-  font-size: 15px;
+  font-size: 16px;
   border-bottom: 1px solid $separator-color;
   transition: all .5s;
   &:focus {
