@@ -14,7 +14,6 @@
         </app-router-link>
       </div>
       <div class="category-name-edit-form">
-        <form @submit.prevent="updateCategory">
           <app-input
             v-validate="'required'"
             name="categoryName"
@@ -102,13 +101,6 @@ export default {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
-      });
-    },
-    updateCategory() {
-      if (!this.access.edit) return;
-      this.$emit('clear-message');
-      this.$validator.validate().then(valid => {
-        if (valid) this.$emit('update-category');
       });
     },
   },
