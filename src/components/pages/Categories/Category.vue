@@ -91,11 +91,11 @@ export default {
   display: flex;
   justify-content: space-around;
   &__post{
-    width: 30%;
+    width: 35%;
     padding-right: 10px;
   }
   &__list{
-    width: 70%;
+    width: 65%;
     border-left: 2px solid #eaeaea;
     padding-left: 10px;
   }

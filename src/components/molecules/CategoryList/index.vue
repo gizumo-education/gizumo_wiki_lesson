@@ -32,6 +32,7 @@
           </td>
           <td>
             <app-router-link
+              class="category-list__table__body__button"
               theme-color
               underline
               hover-opacity
@@ -42,6 +43,7 @@
           </td>
           <td>
             <app-button
+              class="category-list__table__body__button"
               bg-danger
               small
               round
@@ -153,6 +155,9 @@ export default {
           color: $disabled-color;
           font-size: 12px;
         }
+      }
+      &__button{
+        white-space: nowrap;
       }
       .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
