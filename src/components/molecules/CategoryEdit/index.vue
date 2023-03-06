@@ -1,45 +1,45 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form @submit.prevent="editCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
+    <app-router-link
+      class="category-all-link"
+      to="/categories"
+      round
+      underline
+    >
+      カテゴリー一覧へ戻る
+    </app-router-link>
     <app-input
       v-validate="'required'"
-      name="category"
+      name="categoryName"
       type="text"
-      placeholder="追加するカテゴリー名を入力してください"
+      placeholder="カテゴリー名"
       data-vv-as="カテゴリー名"
-      :error-messages="errors.collect('category')"
-      :value="category"
+      :value="category.name"
+      :error-messages="errors.collect('categoryName')"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
       class="category-management-post__submit"
       button-type="submit"
+      :disabled="disabled || !access.edit"
       round
-      :disabled="disabled || !access.create"
     >
       {{ buttonText }}
     </app-button>
 
-    <div v-if="errorMessage" class="category-management-post__notice">
-      <app-text
-        bg-error
-      >
-        {{ errorMessage }}
-      </app-text>
+    <div v-if="editCategoryErrorMessage" class="category-management-post__notice">
+      <app-text bg-error>{{ editCategoryErrorMessage }}</app-text>
     </div>
 
-    <div v-if="doneMessage" class="category-management-post__notice">
-      <app-text
-        bg-success
-      >
-        {{ doneMessage }}
-      </app-text>
+    <div v-if="editCategoryDoneMessage" class="category-management-post__notice">
+      <app-text bg-success>{{ editCategoryDoneMessage }}</app-text>
     </div>
   </form>
 </template>
 <script>
 import {
-  Heading, Input, Button, Text,
+  Heading, Input, Button, Text, RouterLink,
 } from '@Components/atoms';
 
 export default {
@@ -48,17 +48,14 @@ export default {
     appInput: Input,
     appButton: Button,
     appText: Text,
+    appRouterLink: RouterLink,
   },
   props: {
-    category: {
+    editCategoryErrorMessage: {
       type: String,
       default: '',
     },
-    errorMessage: {
-      type: String,
-      default: '',
-    },
-    doneMessage: {
+    editCategoryDoneMessage: {
       type: String,
       default: '',
     },
@@ -70,19 +67,23 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    category: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   computed: {
     buttonText() {
-      if (!this.access.create) return '作成権限がありません';
-      return this.disabled ? '作成中...' : '作成';
+      if (!this.access.edit) return '更新権限がありません';
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {
-    addCategory() {
-      if (!this.access.create) return;
+    editCategory() {
+      if (!this.access.edit) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('handle-submit');
+        if (valid) this.$emit('edit-category');
       });
     },
   },
@@ -99,5 +100,8 @@ export default {
   &__notice {
     margin-top: 16px;
   }
+}
+.category-all-link {
+  margin-top: 16px;
 }
 </style>
