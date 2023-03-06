@@ -20,9 +20,8 @@ export default {
   },
   computed: {
     categoryId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
-      return id;
+      const { id } = this.$route.params;
+      return parseInt(id, 10);
     },
     categoryName() {
       const { name } = this.$store.state.categories.targetCategory;
