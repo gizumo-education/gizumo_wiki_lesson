@@ -99,7 +99,6 @@ export default {
     },
     // 選択したカテゴリーを取得
     getCategoryName({ commit, rootGetters }, categoryId) {
-      // console.log(categoryId)
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${categoryId}`,

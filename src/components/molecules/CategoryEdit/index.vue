@@ -63,10 +63,6 @@ export default {
     appText: Text,
   },
   props: {
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     categoryName: {
       type: String,
       default: '',

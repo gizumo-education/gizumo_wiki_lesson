@@ -18,12 +18,6 @@ export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  data() {
-    return {
-      title: '',
-      content: '',
-    };
-  },
   computed: {
     categoryId() {
       let { id } = this.$route.params;
@@ -48,7 +42,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
     this.$store.dispatch('categories/getCategoryName', parseInt(this.categoryId, 10));
     this.$store.dispatch('categories/clearMessage');
   },
