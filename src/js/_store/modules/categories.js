@@ -32,7 +32,6 @@ export default {
     },
     doneGetCategory(state, payload) {
       state.category.name = payload;
-      state.loading = false;
     },
     toggleLoading(state) {
       state.isLoading = !state.isLoading;
@@ -46,17 +45,10 @@ export default {
     },
     doneEditCategory(state, { category }) {
       state.category = { ...state.category, ...category };
-      state.isLoading = false;
       state.editCategoryDoneMessage = 'カテゴリーの更新が完了しました。';
     },
     editFailRequest(state, { message }) {
       state.editCategoryErrorMessage = message;
-    },
-    loadingFalse(state) {
-      state.isLoading = false;
-    },
-    applyRequest(state) {
-      state.isLoading = true;
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -128,6 +120,7 @@ export default {
     },
     // カテゴリー1件取得
     getCategoryDetail({ commit, rootGetters }, id) {
+      commit('toggleLoading');
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
@@ -135,16 +128,18 @@ export default {
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           const categoryName = response.data.category.name;
+          commit('toggleLoading');
           commit('doneGetCategory', categoryName);
           resolve();
         }).catch(err => {
+          commit('toggleLoading');
           commit('failRequest', { message: err.message });
         });
       });
     },
     // カテゴリー更新
     editCategory({ commit, rootGetters }, category) {
-      commit('applyRequest');
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${category.id}`,
@@ -155,8 +150,10 @@ export default {
           id: response.data.category.id,
           name: response.data.category.name,
         };
+        commit('toggleLoading');
         commit('doneEditCategory', { editedCategory });
       }).catch(err => {
+        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
     },
