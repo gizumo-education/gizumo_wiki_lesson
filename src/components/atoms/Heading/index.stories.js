@@ -17,7 +17,7 @@ storiesOf('ATOMS|Heading', module)
 .addDecorator(withKnobs)
 .add('default', () => {
   return {
-    template: `<app-heading 
+    template: `<app-heading
                 :level="level"
                 :class-name="className"
               >

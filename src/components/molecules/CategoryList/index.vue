@@ -134,6 +134,9 @@ export default {
   padding: 10px 0 20px;
   height: 100%;
   overflow: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
   &__table {
     width: 100%;
     text-align: left;
