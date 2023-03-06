@@ -15,7 +15,7 @@
       type="text"
       placeholder="カテゴリー名"
       data-vv-as="カテゴリー名"
-      :value="editTargetCategoryName"
+      :value="category.name"
       :error-messages="errors.collect('categoryName')"
       @update-value="$emit('update-value', $event)"
     />
@@ -67,10 +67,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    editTargetCategoryName: {
-      type: String,
-      default: '',
+    category: {
+      type: Object,
+      default: () => ({}),
     },
+    // editTargetCategoryName: {
+    //   type: String,
+    //   default: '',
+    // },
   },
   computed: {
     buttonText() {

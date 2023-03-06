@@ -30,8 +30,8 @@ export default {
     editedCategory(state, payload) {
       state.category = { ...state.category, title: payload.title };
     },
-    doneGetCategory(state, payload) {
-      state.category.name = payload;
+    doneGetCategory(state, categoryName) {
+      state.category.name = categoryName;
     },
     toggleLoading(state) {
       state.isLoading = !state.isLoading;
@@ -43,7 +43,7 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
-    doneEditCategory(state, { category }) {
+    doneEditCategory(state, category) {
       state.category = { ...state.category, ...category };
       state.editCategoryDoneMessage = 'カテゴリーの更新が完了しました。';
     },
@@ -151,7 +151,7 @@ export default {
           name: response.data.category.name,
         };
         commit('toggleLoading');
-        commit('doneEditCategory', { editedCategory });
+        commit('doneEditCategory', editedCategory);
       }).catch(err => {
         commit('toggleLoading');
         commit('failRequest', { message: err.message });

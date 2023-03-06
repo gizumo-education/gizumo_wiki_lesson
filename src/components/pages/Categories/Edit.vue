@@ -2,8 +2,8 @@
   <app-category-edit
     :edit-category-error-message="editCategoryErrorMessage"
     :edit-category-done-message="editCategoryDoneMessage"
-    :edit-target-category-name="editTargetCategory.name"
     :disabled="isLoading"
+    :category="category"
     :access="access"
     @edited-category="editedCategory"
     @edit-category="editCategory"
@@ -21,7 +21,6 @@ export default {
   data() {
     return {
       editTargetCategory: {
-        id: '',
         name: '',
       },
     };
@@ -39,11 +38,13 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    category() {
+      return this.$store.state.categories.category;
+    },
   },
   created() {
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategoryDetail', id).then(() => {
-      this.editTargetCategory = { id, name: this.$store.state.categories.category.name };
       this.$store.dispatch('categories/editCategoryClearMessage');
     });
   },
@@ -52,10 +53,10 @@ export default {
       this.editTargetCategory.name = $event.target.value;
     },
     editCategory() {
+      const { id } = this.$route.params;
       this.$store.dispatch('categories/editCategory', {
-        id: this.editTargetCategory.id,
-        /* eslint-disable-next-line no-irregular-whitespace */
-        name: this.editTargetCategory.name.replace(/(　)+/, ' ').trim(),
+        id,
+        name: this.editTargetCategory.name,
       });
     },
   },
