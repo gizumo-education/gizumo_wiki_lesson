@@ -85,9 +85,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category-management-post {
-  &__input {
-    margin-top: 16px;
-  }
   &__submit {
     margin-top: 16px;
   }
