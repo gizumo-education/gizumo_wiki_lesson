@@ -65,7 +65,7 @@ export default {
   props: {
     categoryName: {
       type: String,
-      default: '',
+      required: true,
     },
     errorMessage: {
       type: String,
