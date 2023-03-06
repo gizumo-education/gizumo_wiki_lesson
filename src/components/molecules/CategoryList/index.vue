@@ -32,16 +32,18 @@
           </td>
           <td>
             <app-router-link
+              class="category-list__table__body__button"
               theme-color
               underline
               hover-opacity
-              :to="`/categories/${category.id}`"
+              :to="`/categories/${category.id}/edit`"
             >
               更新
             </app-router-link>
           </td>
           <td>
             <app-button
+              class="category-list__table__body__button"
               bg-danger
               small
               round
@@ -131,7 +133,6 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 10px 20px;
   height: 100%;
   overflow: scroll;
   &__table {
@@ -154,6 +155,9 @@ export default {
           color: $disabled-color;
           font-size: 12px;
         }
+      }
+      &__button{
+        white-space: nowrap;
       }
       .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
