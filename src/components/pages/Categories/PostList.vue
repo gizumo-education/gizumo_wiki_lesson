@@ -5,6 +5,9 @@
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
+      @clear-message="clearMessage"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :theads="theads"
@@ -50,6 +53,15 @@ export default {
   methods: {
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue(event) {
+      this.$store.dispatch('categories/updateValue', event.target.value);
+    },
+    handleSubmit() {
+      this.$store.dispatch('categories/handleSubmit');
     },
   },
 };

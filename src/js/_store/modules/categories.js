@@ -11,14 +11,20 @@ export default {
   getters: {},
   mutations: {
     doneGetAllCategories(state, payload) {
-      state.categories = [...payload.categories.reverse()];
+      state.categories = payload;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
+    successRequest(state, payload) {
+      state.doneMessage = payload;
+    },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+    },
+    updateValue(state, payload) {
+      state.category = payload;
     },
   },
   actions: {
@@ -29,7 +35,7 @@ export default {
         url: '/category',
       })
         .then(res => {
-          const payload = { categories: res.data.categories };
+          const payload = res.data.categories.reverse();
           commit('doneGetAllCategories', payload);
         })
         .catch(err => {
@@ -38,6 +44,25 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    updateValue({ commit }, payload) {
+      commit('updateValue', payload);
+    },
+    handleSubmit({
+      commit, dispatch, state, rootGetters,
+    }) {
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data: { name: state.category },
+      })
+        .then(() => {
+          dispatch('getAllCategories');
+          commit('successRequest', '新カテゴリーを作成！');
+        })
+        .catch(err => {
+          commit('failRequest', err);
+        });
     },
   },
 };
