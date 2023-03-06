@@ -71,10 +71,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    // editTargetCategoryName: {
-    //   type: String,
-    //   default: '',
-    // },
   },
   computed: {
     buttonText() {
