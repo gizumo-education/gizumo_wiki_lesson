@@ -7,6 +7,7 @@ export default {
     errorMessage: '',
     category: '',
     categories: [],
+    deleteCategoryName: '',
   },
   getters: {},
   mutations: {
@@ -25,6 +26,9 @@ export default {
     },
     updateValue(state, payload) {
       state.category = payload;
+    },
+    getDeleteCategoryName(state, payload) {
+      state.deleteCategoryName = payload;
     },
   },
   actions: {
@@ -63,6 +67,12 @@ export default {
         .catch(err => {
           commit('failRequest', err);
         });
+    },
+    getDeleteCategoryName({ commit }, payload) {
+      commit('getDeleteCategoryName', payload);
+    },
+    deleteCategory({ commit }, payload) {
+
     },
   },
 };
