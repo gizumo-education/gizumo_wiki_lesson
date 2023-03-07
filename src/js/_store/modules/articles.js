@@ -240,6 +240,7 @@ export default {
     confirmDeleteArticle({ commit }, articleId) {
       commit('confirmDeleteArticle', { articleId });
     },
+    // 記事の削除する処理
     deleteArticle({ commit, rootGetters }) {
       commit('clearMessage');
       const data = new URLSearchParams();

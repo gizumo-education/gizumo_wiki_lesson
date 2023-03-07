@@ -117,12 +117,17 @@ export default {
     },
   },
   methods: {
+    // ここでは子から親にイベントと引数を渡すことだけしているので、
+    // やりたい処理は親であるCategory.vueで記述する
     openModal(categoryId, categoryName) {
       if (!this.access.delete) return;
+      console.log(categoryName);
       this.$emit('open-modal', categoryId, categoryName);
     },
     handleClick() {
+      console.log('モーダル内のカテゴリー削除ボタンクリックできた');
       if (!this.access.delete) return;
+      // ここをクリックすると削除APIが実行される
       this.$emit('handle-click');
     },
   },

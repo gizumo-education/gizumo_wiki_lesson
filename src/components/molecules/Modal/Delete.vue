@@ -9,7 +9,7 @@
             disabled
             block
             pointer
-            @click="closeModal"
+            @click="$emit('handle-click')"
           >
             戻る
           </app-button>
