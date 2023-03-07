@@ -73,7 +73,10 @@ export default {
     },
     openModal(categoryId, categoryName) {
       // eslint-disable-next-line max-len
-      this.$store.dispatch('categories/selectCategory', { id: categoryId, name: categoryName });
+      this.$store.dispatch('categories/selectCategory', {
+        id: categoryId,
+        name: categoryName,
+      });
       this.toggleModal();
     },
     handleClick() {

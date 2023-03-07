@@ -85,7 +85,12 @@ export default {
       })
         .then(res => {
           dispatch('getAllCategories');
-          if (res) commit('successRequest', `カテゴリーを削除しました（${res.data.category.name}）`);
+          if (res) {
+            commit(
+              'successRequest',
+              `カテゴリーを削除しました（${res.data.category.name}）`,
+            );
+          }
         })
         .catch(err => {
           commit('failRequest', err);
