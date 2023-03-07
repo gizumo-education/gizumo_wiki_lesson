@@ -24,6 +24,9 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    cleanValue(state) {
+      state.category = '';
+    },
     updateValue(state, payload) {
       state.category = payload;
     },
@@ -63,6 +66,7 @@ export default {
         .then(() => {
           dispatch('getAllCategories');
           commit('successRequest', '新カテゴリーを作成！');
+          commit('cleanValue');
         })
         .catch(err => {
           commit('failRequest', err);
@@ -77,7 +81,7 @@ export default {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${state.selectedCategory.categoryId}`,
+        url: `/category/${state.selectedCategory.id}`,
       })
         .then(res => {
           dispatch('getAllCategories');
