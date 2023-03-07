@@ -53,7 +53,6 @@ export default {
       });
     },
     postCategory({ commit, rootGetters, dispatch }, categoryName) {
-      // 真偽値を反転させる
       commit('clearMessage');
       commit('changeLoading');
       axios(rootGetters['auth/token'])({
@@ -78,7 +77,7 @@ export default {
         commit('postCategory', { message: err.message });
       });
     },
-    deleteCategory({ commit, rootGetters, dispatch },categoryId) {
+    deleteCategory({ commit, rootGetters, dispatch }, categoryId) {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
@@ -87,7 +86,7 @@ export default {
         dispatch('getAllLists');
         commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
       }).catch(err => {
-        commit('failDelete');
+        commit('failDelete', err);
       });
     },
   },

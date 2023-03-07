@@ -54,7 +54,6 @@ export default {
       type: String,
       default: '',
     },
-    // これがtrueになると、作成中になる
     disabled: {
       type: Boolean,
       default: false,
@@ -72,7 +71,6 @@ export default {
   },
   methods: {
     addCategory() {
-      console.log('作成ボタン押せた');
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
