@@ -7,7 +7,7 @@ export default {
     errorMessage: '',
     category: '',
     categories: [],
-    deleteCategory: {},
+    selectedCategory: {},
   },
   getters: {},
   mutations: {
@@ -27,8 +27,8 @@ export default {
     updateValue(state, payload) {
       state.category = payload;
     },
-    setDeleteCategory(state, payload) {
-      state.deleteCategory = { ...payload };
+    selectCategory(state, payload) {
+      state.selectedCategory = { ...payload };
     },
   },
   actions: {
@@ -68,14 +68,16 @@ export default {
           commit('failRequest', err);
         });
     },
-    setDeleteCategory({ commit }, payload) {
-      commit('setDeleteCategory', payload);
+    selectCategory({ commit }, payload) {
+      commit('selectCategory', payload);
     },
-    deleteCategory({ commit, state, rootGetters, dispatch }) {
+    deleteCategory({
+      commit, state, rootGetters, dispatch,
+    }) {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${state.deleteCategory.categoryId}`,
+        url: `/category/${state.selectedCategory.categoryId}`,
       })
         .then(res => {
           dispatch('getAllCategories');

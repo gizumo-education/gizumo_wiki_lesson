@@ -52,7 +52,7 @@ export default {
       return this.$store.state.categories.categories;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategory.categoryName;
+      return this.$store.state.categories.selectedCategory.categoryName;
     },
   },
   created() {
@@ -72,7 +72,8 @@ export default {
       this.$store.dispatch('categories/handleSubmit');
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/setDeleteCategory', { categoryId, categoryName });
+      // eslint-disable-next-line max-len
+      this.$store.dispatch('categories/selectCategory', { categoryId, categoryName });
       this.toggleModal();
     },
     handleClick() {
