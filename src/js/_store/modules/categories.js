@@ -88,7 +88,7 @@ export default {
           if (res) {
             commit(
               'successRequest',
-              `カテゴリーを削除しました（${res.data.category.name}）`,
+              'カテゴリーを削除しました',
             );
           }
         })
