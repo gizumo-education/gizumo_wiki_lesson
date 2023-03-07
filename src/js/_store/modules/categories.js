@@ -7,7 +7,7 @@ export default {
     errorMessage: '',
     category: '',
     categories: [],
-    deleteCategoryName: '',
+    deleteCategory: {},
   },
   getters: {},
   mutations: {
@@ -27,8 +27,8 @@ export default {
     updateValue(state, payload) {
       state.category = payload;
     },
-    getDeleteCategoryName(state, payload) {
-      state.deleteCategoryName = payload;
+    setDeleteCategory(state, payload) {
+      state.deleteCategory = { ...payload };
     },
   },
   actions: {
@@ -68,11 +68,22 @@ export default {
           commit('failRequest', err);
         });
     },
-    getDeleteCategoryName({ commit }, payload) {
-      commit('getDeleteCategoryName', payload);
+    setDeleteCategory({ commit }, payload) {
+      commit('setDeleteCategory', payload);
     },
-    deleteCategory({ commit }, payload) {
-
+    deleteCategory({ commit, state, rootGetters, dispatch }) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${state.deleteCategory.categoryId}`,
+      })
+        .then(res => {
+          dispatch('getAllCategories');
+          if (res) commit('successRequest', `カテゴリーを削除しました（${res.data.category.name}）`);
+        })
+        .catch(err => {
+          commit('failRequest', err);
+        });
     },
   },
 };

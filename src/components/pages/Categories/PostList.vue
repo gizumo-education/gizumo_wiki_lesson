@@ -52,7 +52,7 @@ export default {
       return this.$store.state.categories.categories;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
+      return this.$store.state.categories.deleteCategory.categoryName;
     },
   },
   created() {
@@ -72,7 +72,7 @@ export default {
       this.$store.dispatch('categories/handleSubmit');
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/getDeleteCategoryName', categoryName);
+      this.$store.dispatch('categories/setDeleteCategory', { categoryId, categoryName });
       this.toggleModal();
     },
     handleClick() {
