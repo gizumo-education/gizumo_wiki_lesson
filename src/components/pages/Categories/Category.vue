@@ -46,15 +46,12 @@ export default {
     categories() {
       return this.$store.state.categories.categoriesList;
     },
-    // categories() のような形でcomputedを追加メッセージ
     completeMessage() {
       return this.$store.state.categories.doneMessage;
     },
-    // カテゴリーが追加できませんでした、メッセージ
     incompleteMessage() {
       return this.$store.state.categories.errorMessage;
     },
-    // loading呼ぶ categories.jsのstateからloadingもってくる
     loading() {
       return this.$store.state.categories.loading;
     },
@@ -67,26 +64,14 @@ export default {
       this.$store.dispatch('categories/postCategory', this.categoryName);
       this.categoryName = '';
     },
-    // モーダルを開く処理をかくmixinを使う→import Mixins from '@Helpers/mixins';とmixins: [Mixins]
-    // pagesのList.vueから処理の中身持ってきた
     openModal(id, name) {
-      console.log('モーダル表示した');
       this.toggleModal();
-      // CategoryListのopenModal(categoryId, categoryName) {...の部分の
-      // categoryNameをnameでとってきて表示させている
       this.deleteCategoryName = name;
-      // このidで、削除したいカテゴリーのidをとってきているのでhandleClick()内のcategoryIdにidを代入して
-      // handleClick()の処理で取得したIdのカテゴリーを削除できるようにする
       this.categoryId = id;
     },
-    // モーダル内の削除ボタンをクリック↓
     handleClick() {
-      console.log('モーダル内の削除ボタン押せた');
-      console.log(this.categoryId);
       this.toggleModal();
-      // 以下APIを実行する処理を記述
       this.$store.dispatch('categories/deleteCategory', this.categoryId);
-      
     },
   },
 };
