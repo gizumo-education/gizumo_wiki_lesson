@@ -1,5 +1,4 @@
 import axios from '@Helpers/axiosDefault';
-// import Cookies from 'js-cookie';
 
 export default {
   namespaced: true,

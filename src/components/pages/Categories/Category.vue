@@ -10,24 +10,33 @@
       @handle-submit="addCategory"
       @update-value="categoryName = $event.target.value"
     />
+    <!-- @エミットを受け取る＝行いたい処理 -->
     <app-category-list
       class="category-list"
+      :access="access"
       :categories="categories"
+      :delete-category-name="deleteCategoryName"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
 
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  mixins: [Mixins],
   data() {
     return {
       categoryName: '',
+      deleteCategoryName: '',
+      categoryId: null,
     };
   },
   computed: {
@@ -37,15 +46,12 @@ export default {
     categories() {
       return this.$store.state.categories.categoriesList;
     },
-    // categories() のような形でcomputedを追加メッセージ
     completeMessage() {
       return this.$store.state.categories.doneMessage;
     },
-    // カテゴリーが追加できませんでした、メッセージ
     incompleteMessage() {
       return this.$store.state.categories.errorMessage;
     },
-    // loading呼ぶ categories.jsのstateからloadingもってくる
     loading() {
       return this.$store.state.categories.loading;
     },
@@ -57,6 +63,15 @@ export default {
     addCategory() {
       this.$store.dispatch('categories/postCategory', this.categoryName);
       this.categoryName = '';
+    },
+    openModal(id, name) {
+      this.toggleModal();
+      this.deleteCategoryName = name;
+      this.categoryId = id;
+    },
+    handleClick() {
+      this.toggleModal();
+      this.$store.dispatch('categories/deleteCategory', this.categoryId);
     },
   },
 };
