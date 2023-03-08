@@ -89,7 +89,6 @@ export default {
         this.$SmoothScroll(target.scrollToY);
       }
     },
-    // モーダルを開く関数
     openModal(articleId) {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();

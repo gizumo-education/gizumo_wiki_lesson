@@ -36,7 +36,7 @@ export default {
     return {
       categoryName: '',
       deleteCategoryName: '',
-      categoryId: '',
+      categoryId: null,
     };
   },
   computed: {

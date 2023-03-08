@@ -1,5 +1,4 @@
 import axios from '@Helpers/axiosDefault';
-// import Cookies from 'js-cookie';
 
 export default {
   namespaced: true,
@@ -84,7 +83,7 @@ export default {
         url: `/category/${categoryId}`,
       }).then(() => {
         dispatch('getAllLists');
-        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
       }).catch(err => {
         commit('failDelete', err);
       });
