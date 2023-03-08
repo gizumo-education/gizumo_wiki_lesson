@@ -7,6 +7,7 @@ export default {
     errorMessage: '',
     category: '',
     categories: [],
+    selectedCategory: {},
   },
   getters: {},
   mutations: {
@@ -23,8 +24,14 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    cleanValue(state) {
+      state.category = '';
+    },
     updateValue(state, payload) {
       state.category = payload;
+    },
+    selectCategory(state, payload) {
+      state.selectedCategory = { ...payload };
     },
   },
   actions: {
@@ -59,6 +66,29 @@ export default {
         .then(() => {
           dispatch('getAllCategories');
           commit('successRequest', '新カテゴリーを作成！');
+          commit('cleanValue');
+        })
+        .catch(err => {
+          commit('failRequest', err);
+        });
+    },
+    selectCategory({ commit }, payload) {
+      commit('selectCategory', payload);
+    },
+    deleteCategory({
+      commit, state, rootGetters, dispatch,
+    }) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${state.selectedCategory.id}`,
+      })
+        .then(() => {
+          dispatch('getAllCategories');
+          commit(
+            'successRequest',
+            'カテゴリーを削除しました',
+          );
         })
         .catch(err => {
           commit('failRequest', err);
