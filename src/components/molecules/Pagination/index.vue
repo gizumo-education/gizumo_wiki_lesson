@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pagination">
     <p class="page-text">
       全 {{ articleTotal }} 件中 {{ (pageNum-1)*30+1 }} 〜 {{ pageNum*30 }} 件を表示
     </p>
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     pageTotal: {
@@ -112,12 +111,14 @@ export default {
       default: 1,
     },
   },
-
 };
 </script>
 
 <style lang="scss" scoped>
 
+.pagination {
+  margin-top: 20px;
+}
 .page-text {
   font-size: 14px;
 }
