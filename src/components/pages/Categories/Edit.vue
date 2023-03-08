@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>動的ルーティング</p>
     <app-category-edit />
   </div>
 </template>
