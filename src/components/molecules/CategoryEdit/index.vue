@@ -12,9 +12,9 @@
       カテゴリー一覧へ戻る
     </app-router-link>
     <app-text class="category-edit__category-name">
-      ここにカテゴリー名表示
+      表示→{{ selectedCategoryName }}
     </app-text>
-    <app-button class="category-edit__update-button" round @click="test">
+    <app-button class="category-edit__update-button" round>
       更新
     </app-button>
   </div>
@@ -32,9 +32,13 @@ export default {
     appRouterLink: RouterLink,
     appText: Text,
   },
-  created() {},
-  methods: {
-    test: () => console.log('テスト'),
+  computed: {
+    selectedCategoryName() {
+      return this.$store.state.categories.selectedCategory.name;
+    },
+  },
+  created() {
+    this.$store.dispatch('categories/getCategoryDetail', this.$route);
   },
 };
 </script>

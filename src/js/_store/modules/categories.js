@@ -85,10 +85,20 @@ export default {
       })
         .then(() => {
           dispatch('getAllCategories');
-          commit(
-            'successRequest',
-            'カテゴリーを削除しました',
-          );
+          commit('successRequest', 'カテゴリーを削除しました');
+        })
+        .catch(err => {
+          commit('failRequest', err);
+        });
+    },
+    getCategoryDetail({ commit, rootGetters }, payload) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${payload.params.id}`,
+      })
+        .then(res => {
+          commit('selectCategory', res.data.category);
         })
         .catch(err => {
           commit('failRequest', err);
