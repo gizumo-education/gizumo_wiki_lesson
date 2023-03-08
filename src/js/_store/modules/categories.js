@@ -13,6 +13,7 @@ export default {
   },
   getters: {
     targetCategory: state => state.targetCategory,
+    categoryList: state => state.categoryList,
   },
   mutations: {
     doneGetAllCategories(state, categories) {
@@ -37,7 +38,6 @@ export default {
     reflectCategory(state, payload) {
       state.targetCategory.name = payload;
     },
-
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {

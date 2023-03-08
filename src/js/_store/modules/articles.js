@@ -241,18 +241,21 @@ export default {
       commit('confirmDeleteArticle', { articleId });
     },
     deleteArticle({ commit, rootGetters }) {
-      commit('clearMessage');
-      const data = new URLSearchParams();
-      data.append('id', rootGetters['articles/deleteArticleId']);
-      axios(rootGetters['auth/token'])({
-        method: 'DELETE',
-        url: `/article/${rootGetters['articles/deleteArticleId']}`,
-        data,
-      }).then(() => {
-        commit('doneDeleteArticle');
-        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise(resolve => {
+        commit('clearMessage');
+        const data = new URLSearchParams();
+        data.append('id', rootGetters['articles/deleteArticleId']);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/article/${rootGetters['articles/deleteArticleId']}`,
+          data,
+        }).then(() => {
+          commit('doneDeleteArticle');
+          commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
       });
     },
     postArticle({ commit, rootGetters }) {

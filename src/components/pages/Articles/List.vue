@@ -50,7 +50,10 @@ export default {
       this.toggleModal();
     },
     handleClick() {
-      this.$store.dispatch('articles/deleteArticle');
+      this.$store.dispatch('articles/deleteArticle')
+        .then(() => {
+          this.$store.dispatch('articles/getAllArticles');
+        });
       this.toggleModal();
       if (this.$route.query.category) {
         const { category } = this.$route.query;
