@@ -88,9 +88,8 @@ export default {
     },
     fetchArticles() {
       const params = this.$route.query.page;
-      if (params) {
-        this.$store.dispatch('articles/getPageArticles', params);
-      } else if (this.$route.query.category) {
+      if (params);
+      else if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
         this.$store.dispatch('articles/filteredArticles', category)
