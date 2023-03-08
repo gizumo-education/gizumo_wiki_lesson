@@ -1,5 +1,8 @@
 <template>
   <div>
+    <p class="page-text">
+      全 {{ articleTotal }} 件中 {{ (pageNum-1)*30+1 }} 〜 {{ pageNum*30 }} 件を表示
+    </p>
     <ul
       class="page-list"
     >
@@ -104,6 +107,10 @@ export default {
       type: Number,
       default: 1,
     },
+    articleTotal: {
+      type: Number,
+      default: 1,
+    },
   },
 
 };
@@ -111,7 +118,11 @@ export default {
 
 <style lang="scss" scoped>
 
+.page-text {
+  font-size: 14px;
+}
 .page-list {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 

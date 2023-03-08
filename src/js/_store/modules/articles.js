@@ -26,6 +26,7 @@ export default {
     articleList: [],
     pageTotal: null,
     pageNum: null,
+    articleTotal: null,
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -88,12 +89,14 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
       state.pageTotal = payload.pageTotal;
+      state.articleTotal = payload.articleTotal;
       state.pageNum = 1;
     },
     doneGetPageArticles(state, payload) {
       state.articleList = [...payload.articles];
       state.pageTotal = payload.pageTotal;
       state.pageNum = payload.pageNum;
+      state.articleTotal = payload.articleTotal;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -137,6 +140,7 @@ export default {
         const payload = {
           articles: res.data.articles,
           pageTotal: res.data.meta.last_page,
+          articleTotal: res.data.meta.total,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {
@@ -152,6 +156,7 @@ export default {
           articles: res.data.articles,
           pageTotal: res.data.meta.last_page,
           pageNum: res.data.meta.current_page,
+          articleTotal: res.data.meta.total,
         };
         commit('doneGetPageArticles', payload);
       }).catch(err => {

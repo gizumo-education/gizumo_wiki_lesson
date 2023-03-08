@@ -72,6 +72,7 @@
       class="article-list__page"
       :page-total="pageTotal"
       :page-num="pageNum"
+      :article-total="articleTotal"
       @page-load="$emit('page-load')"
     />
     <app-modal>
@@ -139,6 +140,10 @@ export default {
       default: 1,
     },
     pageNum: {
+      type: Number,
+      default: 1,
+    },
+    articleTotal: {
       type: Number,
       default: 1,
     },

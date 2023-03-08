@@ -5,6 +5,7 @@
       :target-array="articlesList"
       :page-total="pageTotal"
       :page-num="pageNum"
+      :article-total="articleTotal"
       :done-message="doneMessage"
       :access="access"
       border-gray
@@ -42,6 +43,9 @@ export default {
     },
     pageNum() {
       return this.$store.state.articles.pageNum;
+    },
+    articleTotal() {
+      return this.$store.state.articles.articleTotal;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
