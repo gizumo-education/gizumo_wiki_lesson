@@ -83,14 +83,12 @@ export default {
         method: 'DELETE',
         url: `/category/${state.selectedCategory.id}`,
       })
-        .then(res => {
+        .then(() => {
           dispatch('getAllCategories');
-          if (res) {
-            commit(
-              'successRequest',
-              'カテゴリーを削除しました',
-            );
-          }
+          commit(
+            'successRequest',
+            'カテゴリーを削除しました',
+          );
         })
         .catch(err => {
           commit('failRequest', err);

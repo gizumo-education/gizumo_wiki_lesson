@@ -72,7 +72,6 @@ export default {
       this.$store.dispatch('categories/handleSubmit');
     },
     openModal(categoryId, categoryName) {
-      // eslint-disable-next-line max-len
       this.$store.dispatch('categories/selectCategory', {
         id: categoryId,
         name: categoryName,
