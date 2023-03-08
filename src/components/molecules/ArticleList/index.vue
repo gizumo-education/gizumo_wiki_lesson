@@ -68,6 +68,12 @@
         </div>
       </app-list-item>
     </transition-group>
+    <app-pagination
+      class="article-list__page"
+      :page-total="pageTotal"
+      :page-num="pageNum"
+      @page-load="$emit('page-load')"
+    />
     <app-modal>
       <app-text
         ex-large
@@ -91,6 +97,7 @@ import {
   RouterLink,
   Button,
   Text,
+  Pagination,
 } from '@Components/atoms';
 
 export default {
@@ -100,6 +107,7 @@ export default {
     appRouterLink: RouterLink,
     appButton: Button,
     appText: Text,
+    appPagination: Pagination,
   },
   props: {
     className: {
@@ -125,6 +133,14 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
+    },
+    pageTotal: {
+      type: Number,
+      default: 1,
+    },
+    pageNum: {
+      type: Number,
+      default: 1,
     },
   },
   computed: {
@@ -152,6 +168,11 @@ export default {
         transition: opacity .5s;
       }
     }
+
+    &__page {
+      margin-top: 20px;
+    }
+
     .fade-enter, .fade-leave-to {
       opacity: 0;
     }

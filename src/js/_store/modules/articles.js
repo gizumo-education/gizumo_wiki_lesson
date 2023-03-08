@@ -24,6 +24,8 @@ export default {
       },
     },
     articleList: [],
+    pageTotal: null,
+    pageNum: null,
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -85,6 +87,13 @@ export default {
     },
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
+      state.pageTotal = payload.pageTotal;
+      state.pageNum = 1;
+    },
+    doneGetPageArticles(state, payload) {
+      state.articleList = [...payload.articles];
+      state.pageTotal = payload.pageTotal;
+      state.pageNum = payload.pageNum;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -127,8 +136,24 @@ export default {
       }).then(res => {
         const payload = {
           articles: res.data.articles,
+          pageTotal: res.data.meta.last_page,
         };
         commit('doneGetAllArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getPageArticles({ commit, rootGetters }, pageNum) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/article?page=${pageNum}`,
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+          pageTotal: res.data.meta.last_page,
+          pageNum: res.data.meta.current_page,
+        };
+        commit('doneGetPageArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

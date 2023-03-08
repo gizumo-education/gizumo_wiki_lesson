@@ -3,11 +3,14 @@
     <app-article-list
       :title="title"
       :target-array="articlesList"
+      :page-total="pageTotal"
+      :page-num="pageNum"
       :done-message="doneMessage"
       :access="access"
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
+      @page-load="pageLoad"
     />
   </div>
 </template>
@@ -33,6 +36,12 @@ export default {
   computed: {
     articlesList() {
       return this.$store.state.articles.articleList;
+    },
+    pageTotal() {
+      return this.$store.state.articles.pageTotal;
+    },
+    pageNum() {
+      return this.$store.state.articles.pageNum;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
@@ -68,7 +77,10 @@ export default {
       }
     },
     fetchArticles() {
-      if (this.$route.query.category) {
+      const params = this.$route.query.page;
+      if (params) {
+        this.$store.dispatch('articles/getPageArticles', params);
+      } else if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
         this.$store.dispatch('articles/filteredArticles', category)
@@ -81,6 +93,12 @@ export default {
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');
+      }
+    },
+    pageLoad() {
+      const params = this.$route.query.page;
+      if (params) {
+        this.$store.dispatch('articles/getPageArticles', params);
       }
     },
   },
