@@ -11,7 +11,7 @@
 |props|type|デフォルト|指定できる値|説明|
 |---|---|---|---|
 |buttonType|String|`button`|---|buttonタグのtype属性の値をバインディングします|
-|desplay|Boolean|false|`true` or `false`|---|
+|display|Boolean|false|`true` or `false`|---|
 |round|Boolean|false|`true` or `false`|---|
 
 ### 種別の変更

@@ -49,7 +49,7 @@ export default {
     },
     bgWhite: {
       type: Boolean,
-      defualt: false,
+      default: false,
     },
     pointer: {
       type: Boolean,
