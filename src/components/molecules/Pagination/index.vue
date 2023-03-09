@@ -16,7 +16,6 @@
         <router-link
           to="articles"
           class="page-list__link"
-          @click.native="$emit('page-load')"
         >
           1
         </router-link>
@@ -34,7 +33,6 @@
         <router-link
           :to="`articles?page=${pageNum-2}`"
           class="page-list__link"
-          @click.native="$emit('page-load')"
         >
           {{ pageNum-2 }}
         </router-link>
@@ -46,7 +44,6 @@
         <router-link
           :to="`articles?page=${pageNum-1}`"
           class="page-list__link"
-          @click.native="$emit('page-load')"
         >
           {{ pageNum-1 }}
         </router-link>
@@ -59,7 +56,6 @@
         <router-link
           :to="`articles?page=${pageNum+1}`"
           class="page-list__link"
-          @click.native="$emit('page-load')"
         >
           {{ pageNum+1 }}
         </router-link>
@@ -71,7 +67,6 @@
         <router-link
           :to="`articles?page=${pageNum+2}`"
           class="page-list__link"
-          @click.native="$emit('page-load')"
         >
           {{ pageNum+2 }}
         </router-link>
@@ -89,7 +84,6 @@
         <router-link
           :to="`articles?page=${pageTotal}`"
           class="page-list__link"
-          @click.native="$emit('page-load')"
         >
           {{ pageTotal }}
         </router-link>
