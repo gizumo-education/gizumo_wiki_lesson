@@ -23,12 +23,18 @@
     >
       更新
     </app-button>
+    <div v-if="errorMessage" class="category-management-post__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
+    <div v-if="doneMessage" class="category-management-post__notice">
+      <app-text bg-success>{{ doneMessage }}</app-text>
+    </div>
   </div>
 </template>
 
 <script>
 import {
-  Button, Heading, RouterLink, Input,
+  Button, Heading, RouterLink, Input, Text,
 } from '@Components/atoms';
 
 export default {
@@ -37,6 +43,17 @@ export default {
     appHeading: Heading,
     appRouterLink: RouterLink,
     appInput: Input,
+    appText: Text,
+  },
+  props: {
+    errorMessage: {
+      type: String,
+      default: '',
+    },
+    doneMessage: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     selectedCategoryName() {
@@ -55,5 +72,10 @@ export default {
 }
 .category-edit__update-button {
   margin-top: 16px;
+}
+.category-management-post {
+  &__notice {
+    margin-top: 16px;
+  }
 }
 </style>

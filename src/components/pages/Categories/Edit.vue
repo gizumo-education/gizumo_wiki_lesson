@@ -1,8 +1,12 @@
 <template>
-  <app-category-edit
-    @update-value="updateValue"
-    @click="updateCategoryNameAPI"
-  />
+  <div>
+    <app-category-edit
+      :error-message="errorMessage"
+      :done-message="doneMessage"
+      @update-value="updateValue"
+      @click="updateCategoryNameAPI"
+    />
+  </div>
 </template>
 
 <script>
@@ -11,6 +15,14 @@ import { CategoryEdit } from '@Components/molecules';
 export default {
   components: {
     appCategoryEdit: CategoryEdit,
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   methods: {
     updateValue(event) {

@@ -116,7 +116,7 @@ export default {
         url: `/category/${state.selectedCategory.id}`,
         data: { name: state.selectedCategory.name },
       })
-        .then(() => commit('successRequest', '成功'))
+        .then(() => commit('successRequest', 'カテゴリー名を更新しました！'))
         .catch(err => commit('failRequest', err));
     },
   },
