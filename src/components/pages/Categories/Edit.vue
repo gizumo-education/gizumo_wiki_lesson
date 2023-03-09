@@ -1,5 +1,8 @@
 <template>
-  <app-category-edit @update-value="updateCategoryName" />
+  <app-category-edit
+    @update-value="updateValue"
+    @click="updateCategoryNameAPI"
+  />
 </template>
 
 <script>
@@ -10,8 +13,12 @@ export default {
     appCategoryEdit: CategoryEdit,
   },
   methods: {
-    updateCategoryName(event) {
+    updateValue(event) {
+      // 注意！呼んでいるのは"updateCategoryName"です！！！！
       this.$store.dispatch('categories/updateCategoryName', event.target.value);
+    },
+    updateCategoryNameAPI() {
+      this.$store.dispatch('categories/updateCategoryNameAPI');
     },
   },
 };

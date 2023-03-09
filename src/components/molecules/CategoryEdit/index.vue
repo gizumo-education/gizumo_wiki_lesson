@@ -16,7 +16,11 @@
       required
       @update-value="$emit('update-value', $event)"
     />
-    <app-button class="category-edit__update-button" round>
+    <app-button
+      class="category-edit__update-button"
+      round
+      @click="$emit('click', $event)"
+    >
       更新
     </app-button>
   </div>

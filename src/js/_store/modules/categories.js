@@ -110,5 +110,14 @@ export default {
     updateCategoryName({ commit }, payload) {
       commit('updateCategoryName', payload);
     },
+    updateCategoryNameAPI({ commit, state, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.selectedCategory.id}`,
+        data: { name: state.selectedCategory.name },
+      })
+        .then(() => commit('successRequest', '成功'))
+        .catch(err => commit('failRequest', err));
+    },
   },
 };
