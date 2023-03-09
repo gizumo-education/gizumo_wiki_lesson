@@ -3,9 +3,9 @@
     <app-category-edit
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :value="currentCategoryName"
+      :target-category-name="targetCategoryName"
       @update-value="updateValue"
-      @click="updateCategoryNameAPI"
+      @click="updateCategoryName"
     />
   </div>
 </template>
@@ -18,21 +18,31 @@ export default {
     appCategoryEdit: CategoryEdit,
   },
   computed: {
-    currentCategoryName() {},
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
+    targetCategoryName() {
+      return this.$store.state.categories.targetCategory.name;
+    },
+  },
+  created() {
+    this.$store.dispatch('categories/getCategoryDetails', this.$route);
+  },
+  destroyed() {
+    this.$store.dispatch('categories/inputTargetCategoryName', '');
   },
   methods: {
     updateValue(event) {
-      // 注意！呼んでいるのは"updateCategoryName"です！！！！
-      this.$store.dispatch('categories/updateCategoryName', event.target.value);
+      this.$store.dispatch(
+        'categories/inputTargetCategoryName',
+        event.target.value,
+      );
     },
-    updateCategoryNameAPI() {
-      this.$store.dispatch('categories/updateCategoryNameAPI');
+    updateCategoryName() {
+      this.$store.dispatch('categories/updateTargetCategoryName');
     },
   },
 };

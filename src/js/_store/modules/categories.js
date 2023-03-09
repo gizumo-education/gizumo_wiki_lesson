@@ -7,7 +7,7 @@ export default {
     errorMessage: '',
     category: '',
     categories: [],
-    selectedCategory: {},
+    targetCategory: {},
   },
   getters: {},
   mutations: {
@@ -31,10 +31,10 @@ export default {
       state.category = payload;
     },
     selectCategory(state, payload) {
-      state.selectedCategory = { ...payload };
+      state.targetCategory = { ...payload };
     },
-    updateCategoryName(state, payload) {
-      state.selectedCategory.name = payload;
+    inputTargetCategoryName(state, payload) {
+      state.targetCategory.name = payload;
     },
   },
   actions: {
@@ -84,7 +84,7 @@ export default {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${state.selectedCategory.id}`,
+        url: `/category/${state.targetCategory.id}`,
       })
         .then(() => {
           dispatch('getAllCategories');
@@ -94,7 +94,7 @@ export default {
           commit('failRequest', err);
         });
     },
-    getCategoryDetail({ commit, rootGetters }, payload) {
+    getCategoryDetails({ commit, rootGetters }, payload) {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -107,14 +107,14 @@ export default {
           commit('failRequest', err);
         });
     },
-    updateCategoryName({ commit }, payload) {
-      commit('updateCategoryName', payload);
+    inputTargetCategoryName({ commit }, payload) {
+      commit('inputTargetCategoryName', payload);
     },
-    updateCategoryNameAPI({ commit, state, rootGetters }) {
+    updateTargetCategoryName({ commit, state, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${state.selectedCategory.id}`,
-        data: { name: state.selectedCategory.name },
+        url: `/category/${state.targetCategory.id}`,
+        data: { name: state.targetCategory.name },
       })
         .then(() => commit('successRequest', 'カテゴリー名を更新しました！'))
         .catch(err => commit('failRequest', err));

@@ -12,7 +12,7 @@
       カテゴリー一覧へ戻る
     </app-router-link>
     <app-input
-      :value="selectedCategoryName"
+      :value="targetCategoryName"
       required
       @update-value="$emit('update-value', $event)"
     />
@@ -54,15 +54,12 @@ export default {
       type: String,
       default: '',
     },
-  },
-  computed: {
-    selectedCategoryName() {
-      return this.$store.state.categories.selectedCategory.name;
+    targetCategoryName: {
+      type: String,
+      default: '',
     },
   },
-  created() {
-    this.$store.dispatch('categories/getCategoryDetails', this.$route);
-  },
+
 };
 </script>
 
