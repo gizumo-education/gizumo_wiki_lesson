@@ -7,12 +7,6 @@ export default {
     categoryList: [],
   },
   mutations: {
-    doneFilteredCategories(state, payload) {
-      const filteredCategories = payload.categories.filter(
-        category => category.category && category.category.name === payload.category,
-      );
-      state.categoryList = [...filteredCategories];
-    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
     },
@@ -23,24 +17,6 @@ export default {
   actions: {
     initPostCategory({ commit }) {
       commit('initPostCategory');
-    },
-    filteredCategories({ commit, rootGetters }, category) {
-      return new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/category',
-        }).then(res => {
-          const payload = {
-            category,
-            categories: res.data.categories,
-          };
-          commit('doneFilteredCategories', payload);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject(new Error('エラーが発生しました'));
-        });
-      });
     },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({

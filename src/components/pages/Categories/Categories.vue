@@ -48,20 +48,7 @@ export default {
   },
   methods: {
     fetchCategories() {
-      if (this.$route.query.category) {
-        const { category } = this.$route.query;
-        this.title = category;
-        this.$store.dispatch('categories/filteredCategories', category)
-          .then(() => {
-            if (this.$store.state.categories.categoryList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          }).catch(() => {
-            // console.log(err);
-          });
-      } else {
-        this.$store.dispatch('categories/getAllCategories');
-      }
+      this.$store.dispatch('categories/getAllCategories');
     },
   },
 };
