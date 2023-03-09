@@ -4,6 +4,7 @@
       :category="targetCategoryName"
       :error-message="errorMessage"
       :done-message="doneMessage"
+      :is-loading="isLoading"
       @update-value="updateValue"
       @click="updateCategoryName"
     />
@@ -26,6 +27,9 @@ export default {
     },
     targetCategoryName() {
       return this.$store.state.categories.targetCategory.name;
+    },
+    isLoading() {
+      return this.$store.state.categories.isLoading;
     },
   },
   created() {

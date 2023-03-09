@@ -19,6 +19,8 @@
     <app-button
       class="category-edit__update-button"
       round
+      :disabled="isLoading"
+      :pointer="!isLoading"
       @click="$emit('click', $event)"
     >
       更新
@@ -58,6 +60,10 @@ export default {
       type: String,
       required: true,
       default: '',
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
     },
   },
 };
