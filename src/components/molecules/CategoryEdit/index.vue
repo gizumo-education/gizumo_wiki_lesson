@@ -11,9 +11,11 @@
     >
       カテゴリー一覧へ戻る
     </app-router-link>
-    <app-text class="category-edit__category-name">
-      表示→{{ selectedCategoryName }}
-    </app-text>
+    <app-input
+      :value="selectedCategoryName"
+      required
+      @update-value="$emit('update-value', $event)"
+    />
     <app-button class="category-edit__update-button" round>
       更新
     </app-button>
@@ -22,7 +24,7 @@
 
 <script>
 import {
-  Button, Heading, RouterLink, Text,
+  Button, Heading, RouterLink, Input,
 } from '@Components/atoms';
 
 export default {
@@ -30,7 +32,7 @@ export default {
     appButton: Button,
     appHeading: Heading,
     appRouterLink: RouterLink,
-    appText: Text,
+    appInput: Input,
   },
   computed: {
     selectedCategoryName() {
@@ -45,13 +47,6 @@ export default {
 
 <style lang="scss" scoped>
 .category-edit__list-link {
-  margin-top: 16px;
-}
-
-.category-edit__category-name {
-  border-bottom: solid 1px #eaeaea;
-  padding: 3px 5px;
-  padding-left: 15px;
   margin-top: 16px;
 }
 .category-edit__update-button {

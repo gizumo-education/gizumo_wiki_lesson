@@ -33,6 +33,9 @@ export default {
     selectCategory(state, payload) {
       state.selectedCategory = { ...payload };
     },
+    updateCategoryName(state, payload) {
+      state.selectedCategory.name = payload;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -103,6 +106,9 @@ export default {
         .catch(err => {
           commit('failRequest', err);
         });
+    },
+    updateCategoryName({ commit }, payload) {
+      commit('updateCategoryName', payload);
     },
   },
 };
