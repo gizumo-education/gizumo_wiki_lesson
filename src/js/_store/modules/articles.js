@@ -25,7 +25,7 @@ export default {
     },
     articleList: [],
     pageTotal: null,
-    pageNum: null,
+    pageNum: 1,
     articleTotal: null,
     deleteArticleId: null,
     loading: false,
@@ -86,12 +86,6 @@ export default {
       );
       state.articleList = [...filteredArticles];
     },
-    doneGetAllArticles(state, payload) {
-      state.articleList = [...payload.articles];
-      state.pageTotal = payload.pageTotal;
-      state.articleTotal = payload.articleTotal;
-      state.pageNum = 1;
-    },
     doneGetPageArticles(state, payload) {
       state.articleList = [...payload.articles];
       state.pageTotal = payload.pageTotal;
@@ -132,36 +126,38 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: '/article',
-      }).then(res => {
-        const payload = {
-          articles: res.data.articles,
-          pageTotal: res.data.meta.last_page,
-          articleTotal: res.data.meta.total,
-        };
-        commit('doneGetAllArticles', payload);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
-      });
-    },
-    getPageArticles({ commit, rootGetters }, pageNum) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: `/article?page=${pageNum}`,
-      }).then(res => {
-        const payload = {
-          articles: res.data.articles,
-          pageTotal: res.data.meta.last_page,
-          pageNum: res.data.meta.current_page,
-          articleTotal: res.data.meta.total,
-        };
-        commit('doneGetPageArticles', payload);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
-      });
+    getArticles({ commit, rootGetters }, params) {
+      if (params) {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/article?page=${params}`,
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+            pageTotal: res.data.meta.last_page,
+            pageNum: res.data.meta.current_page,
+            articleTotal: res.data.meta.total,
+          };
+          commit('doneGetPageArticles', payload);
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      } else {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/article',
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+            pageTotal: res.data.meta.last_page,
+            articleTotal: res.data.meta.total,
+            pageNum: res.data.meta.current_page,
+          };
+          commit('doneGetPageArticles', payload);
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      }
     },
     getArticleDetail({ commit, rootGetters }, articleId) {
       return new Promise((resolve, reject) => {

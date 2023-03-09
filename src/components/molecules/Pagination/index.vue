@@ -1,7 +1,10 @@
 <template>
   <div class="pagination">
-    <p class="page-text">
+    <p v-show="pageNum < pageTotal" class="page-text">
       全 {{ articleTotal }} 件中 {{ (pageNum-1)*30+1 }} 〜 {{ pageNum*30 }} 件を表示
+    </p>
+    <p v-show="pageNum === pageTotal" class="page-text">
+      全 {{ articleTotal }} 件中 {{ (pageNum-1)*30+1 }} 〜 {{ articleTotal }} 件を表示
     </p>
     <ul
       class="page-list"
@@ -11,7 +14,7 @@
         class="page-list__item"
       >
         <router-link
-          to="articles?page=1"
+          to="articles"
           class="page-list__link"
           @click.native="$emit('page-load')"
         >

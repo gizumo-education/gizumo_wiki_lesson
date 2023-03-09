@@ -16,7 +16,6 @@
       :page-total="pageTotal"
       :page-num="pageNum"
       :article-total="articleTotal"
-      @page-load="pageLoad"
     />
   </div>
 </template>
@@ -32,7 +31,8 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const params = to.query.page;
+    this.fetchArticles(params);
     next();
   },
   data() {
@@ -61,7 +61,8 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    const params = this.$route.query.page;
+    this.fetchArticles(params);
   },
   methods: {
     openModal(articleId) {
@@ -83,13 +84,11 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getArticles');
       }
     },
-    fetchArticles() {
-      const params = this.$route.query.page;
-      if (params);
-      else if (this.$route.query.category) {
+    fetchArticles(params) {
+      if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
         this.$store.dispatch('articles/filteredArticles', category)
@@ -101,13 +100,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
-      }
-    },
-    pageLoad() {
-      const params = this.$route.query.page;
-      if (params) {
-        this.$store.dispatch('articles/getPageArticles', params);
+        this.$store.dispatch('articles/getArticles', params);
       }
     },
   },
