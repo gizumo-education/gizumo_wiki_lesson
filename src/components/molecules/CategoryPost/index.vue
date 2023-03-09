@@ -31,7 +31,10 @@
 </template>
 <script>
 import {
-  Heading, Input, Button, Text,
+  Heading,
+  Input,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {

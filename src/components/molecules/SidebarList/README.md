@@ -28,13 +28,13 @@
   },
   {
     id: 2,
-    name: '記事',
-    path: '/all/articles',
+    name: 'カテゴリー',
+    path: '/categories',
   },
   {
     id: 3,
-    name: 'カテゴリー',
-    path: '/category',
+    name: '記事',
+    path: '/all/articles',
   },
   {
     id: 4,
