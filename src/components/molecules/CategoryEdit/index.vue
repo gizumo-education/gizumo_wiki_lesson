@@ -21,7 +21,7 @@
       round
       :disabled="isLoading"
       :pointer="!isLoading"
-      @click="$emit('click', $event)"
+      @click="$emit('handle-submit', $event)"
     >
       更新
     </app-button>

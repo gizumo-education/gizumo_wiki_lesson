@@ -6,7 +6,7 @@
       :done-message="doneMessage"
       :is-loading="isLoading"
       @update-value="updateValue"
-      @click="updateCategoryName"
+      @handle-submit="updateTargetCategoryName"
     />
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetails', this.$route);
+    this.$store.dispatch('categories/getCategoryDetails', this.$route.params.id);
   },
   destroyed() {
     this.$store.dispatch('categories/inputTargetCategoryName', '');
@@ -45,7 +45,7 @@ export default {
         event.target.value,
       );
     },
-    updateCategoryName() {
+    updateTargetCategoryName() {
       this.$store.dispatch('categories/updateTargetCategoryName');
     },
   },

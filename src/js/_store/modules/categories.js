@@ -102,7 +102,7 @@ export default {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: `/category/${payload.params.id}`,
+        url: `/category/${payload}`,
       })
         .then(res => {
           commit('selectCategory', res.data.category);
