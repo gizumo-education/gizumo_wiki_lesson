@@ -1,9 +1,9 @@
 <template>
   <div>
     <app-category-edit
+      :category="targetCategoryName"
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :target-category-name="targetCategoryName"
       @update-value="updateValue"
       @click="updateCategoryName"
     />

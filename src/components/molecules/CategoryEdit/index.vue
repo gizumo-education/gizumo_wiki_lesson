@@ -12,7 +12,7 @@
       カテゴリー一覧へ戻る
     </app-router-link>
     <app-input
-      :value="targetCategoryName"
+      :value="category"
       required
       @update-value="$emit('update-value', $event)"
     />
@@ -54,12 +54,11 @@ export default {
       type: String,
       default: '',
     },
-    targetCategoryName: {
+    category: {
       type: String,
-      default: '',
+      required: true,
     },
   },
-
 };
 </script>
 
