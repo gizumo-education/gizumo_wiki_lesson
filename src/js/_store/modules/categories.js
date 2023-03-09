@@ -111,6 +111,7 @@ export default {
       commit('inputTargetCategoryName', payload);
     },
     updateTargetCategoryName({ commit, state, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${state.targetCategory.id}`,
