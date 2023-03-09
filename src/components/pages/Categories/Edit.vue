@@ -3,6 +3,7 @@
     <app-category-edit
       :error-message="errorMessage"
       :done-message="doneMessage"
+      :value="currentCategoryName"
       @update-value="updateValue"
       @click="updateCategoryNameAPI"
     />
@@ -17,6 +18,7 @@ export default {
     appCategoryEdit: CategoryEdit,
   },
   computed: {
+    currentCategoryName() {},
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },

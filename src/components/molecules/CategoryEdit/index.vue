@@ -61,7 +61,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetail', this.$route);
+    this.$store.dispatch('categories/getCategoryDetails', this.$route);
   },
 };
 </script>
