@@ -127,37 +127,24 @@ export default {
       commit('initPostArticle');
     },
     getArticles({ commit, rootGetters }, params) {
-      if (params) {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: `/article?page=${params}`,
-        }).then(res => {
-          const payload = {
-            articles: res.data.articles,
-            pageTotal: res.data.meta.last_page,
-            pageNum: res.data.meta.current_page,
-            articleTotal: res.data.meta.total,
-          };
-          commit('doneGetPageArticles', payload);
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-        });
-      } else {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/article',
-        }).then(res => {
-          const payload = {
-            articles: res.data.articles,
-            pageTotal: res.data.meta.last_page,
-            articleTotal: res.data.meta.total,
-            pageNum: res.data.meta.current_page,
-          };
-          commit('doneGetPageArticles', payload);
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-        });
-      }
+      console.log(params);
+      axios(rootGetters['auth/token'])(params ? {
+        method: 'GET',
+        url: `/article?page=${params}`,
+      } : {
+        method: 'GET',
+        url: '/article',
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+          pageTotal: res.data.meta.last_page,
+          pageNum: res.data.meta.current_page,
+          articleTotal: res.data.meta.total,
+        };
+        commit('doneGetPageArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
     getArticleDetail({ commit, rootGetters }, articleId) {
       return new Promise((resolve, reject) => {
