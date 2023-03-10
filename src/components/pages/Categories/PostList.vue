@@ -52,7 +52,7 @@ export default {
       return this.$store.state.categories.categories;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.selectedCategory.name;
+      return this.$store.state.categories.targetCategory.name;
     },
   },
   created() {

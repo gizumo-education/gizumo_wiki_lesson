@@ -3,11 +3,12 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    isLoading: false,
     doneMessage: '',
     errorMessage: '',
     category: '',
     categories: [],
-    selectedCategory: {},
+    targetCategory: {},
   },
   getters: {},
   mutations: {
@@ -31,7 +32,13 @@ export default {
       state.category = payload;
     },
     selectCategory(state, payload) {
-      state.selectedCategory = { ...payload };
+      state.targetCategory = { ...payload };
+    },
+    inputTargetCategoryName(state, payload) {
+      state.targetCategory.name = payload;
+    },
+    toggleIsLoading(state) {
+      state.isLoading = !state.isLoading;
     },
   },
   actions: {
@@ -81,17 +88,48 @@ export default {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${state.selectedCategory.id}`,
+        url: `/category/${state.targetCategory.id}`,
       })
         .then(() => {
           dispatch('getAllCategories');
-          commit(
-            'successRequest',
-            'カテゴリーを削除しました',
-          );
+          commit('successRequest', 'カテゴリーを削除しました');
         })
         .catch(err => {
           commit('failRequest', err);
+        });
+    },
+    getCategoryDetails({ commit, rootGetters }, payload) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${payload}`,
+      })
+        .then(res => {
+          commit('selectCategory', res.data.category);
+        })
+        .catch(err => {
+          commit('failRequest', err);
+        });
+    },
+    inputTargetCategoryName({ commit }, payload) {
+      commit('inputTargetCategoryName', payload);
+    },
+    updateCategory({ commit, state, rootGetters }) {
+      if (state.isLoading === true) return;
+      commit('clearMessage');
+      commit('toggleIsLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.targetCategory.id}`,
+        data: { name: state.targetCategory.name },
+      })
+        .then(() => {
+          commit('successRequest', 'カテゴリー名を更新しました！');
+          commit('toggleIsLoading');
+        })
+        .catch(err => {
+          commit('failRequest', err);
+          commit('toggleIsLoading');
         });
     },
   },

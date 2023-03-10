@@ -30,6 +30,7 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 // カテゴリ一覧ページ
 import Categories from '@Pages/Categories/index.vue';
 import CategoriesPostList from '@Pages/Categories/PostList.vue';
+import CategoriesEdit from '@Pages/Categories/Edit.vue';
 
 // Vuexの読み込み
 import Store from '../_store';
@@ -138,7 +139,7 @@ const router = new VueRouter({
       component: Categories,
       children: [
         { name: 'categoriesPostList', path: '', component: CategoriesPostList },
-      ],
+        { name: 'categoriesEdit', path: ':id', component: CategoriesEdit }],
     },
     {
       name: 'notfound',
