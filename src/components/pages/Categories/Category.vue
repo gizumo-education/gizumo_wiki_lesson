@@ -3,6 +3,7 @@
     <app-category-post
       class="category-form"
       :access="access"
+      :category-id="categoryId"
       :category="categoryName"
       :done-message="completeMessage"
       :error-message="incompleteMessage"

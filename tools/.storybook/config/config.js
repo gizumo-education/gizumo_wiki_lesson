@@ -12,7 +12,7 @@ import { ValidationProvider } from 'vee-validate';
 //atoms
 import AppButton from '@Components/atoms/Button/index.vue';
 import Input from '@Components/atoms/Input/index.vue';
-import  AppListItem from '@Components/atoms/ListItem/index.vue';
+import AppListItem from '@Components/atoms/ListItem/index.vue';
 import Heading from '@Components/atoms/Heading/index.vue';
 import AppRouterLink from '@Components/atoms/RouterLink/index.vue';
 import AppText from '@Components/atoms/Text/index.vue';

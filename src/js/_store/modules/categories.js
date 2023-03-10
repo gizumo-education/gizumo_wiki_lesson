@@ -3,6 +3,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    categoryName: '',
     categoriesList: [],
     deleteCategoryId: null,
     loading: false,
@@ -31,6 +32,12 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    editedCategoryTitle(state, payload) {
+      state.categoriesList = { ...state.categoriesList, title: payload.categoryName };
+    },
+    updateCategory(state, { category }) {
+      state.categoryList = { ...state.categoryList, ...category };
     },
     clearMessage(state) {
       state.doneMessage = '';
@@ -86,6 +93,28 @@ export default {
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
       }).catch(err => {
         commit('failDelete', err);
+      });
+    },
+    editedCategoryTitle({ commit }, categoryName) {
+      commit({
+        type: 'editedTitle',
+        categoryName,
+      });
+    },
+    updateCategory({ commit, rootGetters }) {
+      commit('toggleLoading');
+      // state.append('id', rootGetters['categories/categoryList'].id);
+      // state.append('title', rootGetters['categories/categoryList'].categoryName);
+      // state.append('category_id', rootGetters['categories/categoryList'].category.id);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/categoryList'].id}`,
+      }).then(() => {
+        commit('updateCategory');
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
       });
     },
   },
