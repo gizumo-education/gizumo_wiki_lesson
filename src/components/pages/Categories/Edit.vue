@@ -46,7 +46,7 @@ export default {
       );
     },
     handleSubmit() {
-      this.$store.dispatch('categories/updateTargetCategoryName');
+      this.$store.dispatch('categories/updateCategory');
     },
   },
 };

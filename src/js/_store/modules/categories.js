@@ -114,7 +114,7 @@ export default {
     inputTargetCategoryName({ commit }, payload) {
       commit('inputTargetCategoryName', payload);
     },
-    updateTargetCategoryName({ commit, state, rootGetters }) {
+    updateCategory({ commit, state, rootGetters }) {
       if (state.isLoading === true) return;
       commit('clearMessage');
       commit('toggleIsLoading');
