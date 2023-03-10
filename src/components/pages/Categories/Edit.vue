@@ -5,8 +5,8 @@
       :error-message="errorMessage"
       :done-message="doneMessage"
       :is-loading="isLoading"
-      @update-value="updateValue"
-      @handle-submit="updateTargetCategoryName"
+      @input-target-category-name="inputTargetCategoryName"
+      @handle-submit="handleSubmit"
     />
   </div>
 </template>
@@ -39,13 +39,13 @@ export default {
     this.$store.dispatch('categories/inputTargetCategoryName', '');
   },
   methods: {
-    updateValue(event) {
+    inputTargetCategoryName(event) {
       this.$store.dispatch(
         'categories/inputTargetCategoryName',
         event.target.value,
       );
     },
-    updateTargetCategoryName() {
+    handleSubmit() {
       this.$store.dispatch('categories/updateTargetCategoryName');
     },
   },

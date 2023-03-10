@@ -14,7 +14,7 @@
     <app-input
       :value="category"
       required
-      @update-value="$emit('update-value', $event)"
+      @update-value="$emit('input-target-category-name', $event)"
     />
     <app-button
       class="category-edit__update-button"
