@@ -4,7 +4,7 @@
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
     <div class="category-edit__contents">
-      <section>
+      <section class="article-edit-editor">
         <app-heading :level="1">カテゴリー管理</app-heading>
         <app-router-link
           :to="`/category`"
@@ -17,17 +17,15 @@
 
         <!-- 内容を書き換えるところ -->
         <div class="category-edit-form">
-          <div class="category-edit-form">
-            <app-input
-              v-validate="'required'"
-              name="カテゴリー"
-              type="text"
-              :error-messages="errors.collect('カテゴリー')"
-              :value="currentCategoryName"
-              data-vv-as="カテゴリー"
-              @update-value="$emit('edited-title', $event)"
-            />
-          </div>
+          <app-input
+            v-validate="'required'"
+            name="category"
+            type="text"
+            :error-messages="errors.collect('category')"
+            :value="categoryName"
+            data-vv-as="カテゴリー"
+            @update-value="$emit('edited-category-title', $event)"
+          />
         </div>
 
         <!-- 更新ボタン -->
@@ -52,21 +50,17 @@ import {
 
 export default {
   components: {
-    appRouterLink: RouterLink,
     appHeading: Heading,
     appInput: Input,
     appButton: Button,
+    appRouterLink: RouterLink,
   },
   props: {
     categoryId: {
       type: Number,
       default: 0,
     },
-    categoryTitle: {
-      type: String,
-      default: '',
-    },
-    currentCategoryName: {
+    categoryName: {
       type: String,
       default: '',
     },
@@ -97,9 +91,11 @@ export default {
     },
   },
   methods: {
-    handleSubmit() {
+    handleSubmit(categoryId) {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
+        console.log('更新ボタン押せた');
+        console.log(categoryId);
         if (valid) this.$emit('handle-submit');
       });
     },

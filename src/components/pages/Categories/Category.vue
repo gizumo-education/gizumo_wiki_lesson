@@ -8,6 +8,7 @@
       :done-message="completeMessage"
       :error-message="incompleteMessage"
       :disabled="loading"
+      @edited-category-title="editedCategoryTitle"
       @handle-submit="addCategory"
       @update-value="categoryName = $event.target.value"
     />
@@ -61,6 +62,9 @@ export default {
     this.$store.dispatch('categories/getAllLists');
   },
   methods: {
+    editedCategoryTitle($event) {
+      this.$store.dispatch('categories/editedCategoryTitle', $event.target.value);
+    },
     addCategory() {
       this.$store.dispatch('categories/postCategory', this.categoryName);
       this.categoryName = '';

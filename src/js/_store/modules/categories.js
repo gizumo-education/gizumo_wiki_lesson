@@ -27,6 +27,9 @@ export default {
     failDelete(state) {
       state.errorMessage = 'カテゴリーを削除できませんでした';
     },
+    failUpdate(state) {
+      state.errorMessage = 'カテゴリーを更新できませんでした';
+    },
     changeLoading(state) {
       state.loading = !state.loading;
     },
@@ -39,12 +42,35 @@ export default {
     updateCategory(state, { category }) {
       state.categoryList = { ...state.categoryList, ...category };
     },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
     },
   },
   actions: {
+    updateCategory({ commit, rootGetters }, categoryId) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${categoryId}`,
+      }).then(() => {
+        commit('updateCategory');
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+        commit('failUpdate');
+      });
+    },
+    editedCategoryTitle({ commit }, categoryName) {
+      commit({
+        type: 'editedCategoryTitle',
+        categoryName,
+      });
+    },
     getAllLists({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -93,28 +119,6 @@ export default {
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
       }).catch(err => {
         commit('failDelete', err);
-      });
-    },
-    editedCategoryTitle({ commit }, categoryName) {
-      commit({
-        type: 'editedTitle',
-        categoryName,
-      });
-    },
-    updateCategory({ commit, rootGetters }) {
-      commit('toggleLoading');
-      // state.append('id', rootGetters['categories/categoryList'].id);
-      // state.append('title', rootGetters['categories/categoryList'].categoryName);
-      // state.append('category_id', rootGetters['categories/categoryList'].category.id);
-      axios(rootGetters['auth/token'])({
-        method: 'PUT',
-        url: `/category/${rootGetters['categories/categoryList'].id}`,
-      }).then(() => {
-        commit('updateCategory');
-        commit('toggleLoading');
-        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
-      }).catch(() => {
-        commit('toggleLoading');
       });
     },
   },
