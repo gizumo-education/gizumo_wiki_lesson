@@ -24,6 +24,9 @@ export default {
       },
     },
     articleList: [],
+    pageTotal: null,
+    pageNum: 1,
+    articleTotal: null,
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -83,8 +86,11 @@ export default {
       );
       state.articleList = [...filteredArticles];
     },
-    doneGetAllArticles(state, payload) {
+    doneGetPageArticles(state, payload) {
       state.articleList = [...payload.articles];
+      state.pageTotal = payload.pageTotal;
+      state.pageNum = payload.pageNum;
+      state.articleTotal = payload.articleTotal;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -120,15 +126,21 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
-      axios(rootGetters['auth/token'])({
+    getArticles({ commit, rootGetters }, params) {
+      axios(rootGetters['auth/token'])(params ? {
+        method: 'GET',
+        url: `/article?page=${params}`,
+      } : {
         method: 'GET',
         url: '/article',
       }).then(res => {
         const payload = {
           articles: res.data.articles,
+          pageTotal: res.data.meta.last_page,
+          pageNum: res.data.meta.current_page,
+          articleTotal: res.data.meta.total,
         };
-        commit('doneGetAllArticles', payload);
+        commit('doneGetPageArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

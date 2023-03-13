@@ -3,26 +3,36 @@
     <app-article-list
       :title="title"
       :target-array="articlesList"
+      :page-total="pageTotal"
+      :page-num="pageNum"
+      :article-total="articleTotal"
       :done-message="doneMessage"
       :access="access"
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-pagination
+      :page-total="pageTotal"
+      :page-num="pageNum"
+      :article-total="articleTotal"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const params = to.query.page;
+    this.fetchArticles(params);
     next();
   },
   data() {
@@ -34,6 +44,15 @@ export default {
     articlesList() {
       return this.$store.state.articles.articleList;
     },
+    pageTotal() {
+      return this.$store.state.articles.pageTotal;
+    },
+    pageNum() {
+      return this.$store.state.articles.pageNum;
+    },
+    articleTotal() {
+      return this.$store.state.articles.articleTotal;
+    },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
     },
@@ -42,7 +61,8 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    const params = this.$route.query.page;
+    this.fetchArticles(params);
   },
   methods: {
     openModal(articleId) {
@@ -64,10 +84,10 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(params) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,7 +100,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getArticles', params);
       }
     },
   },
