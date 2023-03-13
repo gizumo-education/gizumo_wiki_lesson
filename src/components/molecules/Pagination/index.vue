@@ -9,23 +9,23 @@
     <ol
       class="page-list"
     >
-      <li
-        v-show="pageNum > 3"
-        class="page-list__item"
-      >
-        <router-link
-          to="articles"
-          class="page-list__link"
+      <template v-if="pageNum > 3">
+        <li
+          class="page-list__item"
         >
-          1
-        </router-link>
-      </li>
-      <span
-        v-show="pageNum > 3"
-        class="page-list__dots"
-      >
-        ...
-      </span>
+          <router-link
+            to="articles"
+            class="page-list__link"
+          >
+            1
+          </router-link>
+        </li>
+        <span
+          class="page-list__dots"
+        >
+          ...
+        </span>
+      </template>
       <li
         v-for="page in pages"
         :key="page"
@@ -39,23 +39,23 @@
           {{ page }}
         </router-link>
       </li>
-      <span
-        v-show="pageNum < pageTotal-2"
-        class="page-list__dots"
-      >
-        ...
-      </span>
-      <li
-        v-show="pageNum < pageTotal-2"
-        class="page-list__item"
-      >
-        <router-link
-          :to="`articles?page=${pageTotal}`"
-          class="page-list__link"
+      <template v-if="pageNum < pageTotal-2">
+        <span
+          class="page-list__dots"
         >
-          {{ pageTotal }}
-        </router-link>
-      </li>
+          ...
+        </span>
+        <li
+          class="page-list__item"
+        >
+          <router-link
+            :to="`articles?page=${pageTotal}`"
+            class="page-list__link"
+          >
+            {{ pageTotal }}
+          </router-link>
+        </li>
+      </template>
     </ol>
   </div>
 </template>
@@ -78,25 +78,17 @@ export default {
   },
   computed: {
     pages() {
+      const allPages = [];
       let pages = [];
+      for (let i = 0; i < this.pageTotal; i += 1) {
+        allPages.push(i + 1);
+      }
       if (this.pageNum < 4) {
-        pages = [1, 2, 3, 4, 5];
+        pages = allPages.slice(0, this.pageNum + 2);
       } else if (this.pageNum > this.pageTotal - 3) {
-        pages = [
-          this.pageTotal - 4,
-          this.pageTotal - 3,
-          this.pageTotal - 2,
-          this.pageTotal - 1,
-          this.pageTotal,
-        ];
+        pages = allPages.slice(this.pageNum - 3, this.pageTotal + 1);
       } else {
-        pages = [
-          this.pageNum - 2,
-          this.pageNum - 1,
-          this.pageNum,
-          this.pageNum + 1,
-          this.pageNum + 2,
-        ];
+        pages = allPages.slice(this.pageNum - 3, this.pageNum + 2);
       }
       return pages;
     },

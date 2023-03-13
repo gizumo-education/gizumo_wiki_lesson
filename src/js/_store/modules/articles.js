@@ -127,7 +127,6 @@ export default {
       commit('initPostArticle');
     },
     getArticles({ commit, rootGetters }, params) {
-      console.log(params);
       axios(rootGetters['auth/token'])(params ? {
         method: 'GET',
         url: `/article?page=${params}`,
