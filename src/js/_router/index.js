@@ -13,6 +13,7 @@ import ArticleList from '@Pages/Articles/List.vue';
 import ArticleDetail from '@Pages/Articles/Detail.vue';
 import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
+import ArticleTrash from '@Pages/Articles/Trash.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
@@ -99,6 +100,11 @@ const router = new VueRouter({
           name: 'articlePost',
           path: 'post',
           component: ArticlePost,
+        },
+        {
+          name: 'articleTrash',
+          path: 'trashed',
+          component: ArticleTrash,
         },
         {
           name: 'articleDetail',
