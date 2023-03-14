@@ -164,11 +164,6 @@ export default {
     },
     reflectPage(state, payload) {
       state.pages.lastPage = payload;
-      state.pages.secondPage = 2;
-      state.pages.thirdPage = 3;
-      state.pages.fourthPage = 4;
-      state.pages.fifthPage = 5;
-      state.pages.sixthPage = 6;
     },
   },
   actions: {
