@@ -3,6 +3,7 @@
     <app-article-trash
       :trash-list="trashList"
       :theads="theads"
+      :error-message="errorMessage"
     />
   </div>
 </template>
@@ -45,6 +46,9 @@ export default {
         trashList.push(newList);
       });
       return trashList;
+    },
+    errorMessage() {
+      return this.$store.state.articles.errorMessage;
     },
   },
   created() {

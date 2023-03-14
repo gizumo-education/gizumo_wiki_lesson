@@ -298,12 +298,15 @@ export default {
       });
     },
     getTrashedArticles({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article/trashed',
       }).then(res => {
         const payload = res.data.articles;
         commit('doneGetTrashed', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {

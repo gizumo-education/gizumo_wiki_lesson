@@ -68,6 +68,9 @@
         </transition-group>
       </table>
     </div>
+    <div v-if="errorMessage" class="trash-page__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
   </div>
 </template>
 
@@ -92,6 +95,10 @@ export default {
     theads: {
       type: Array,
       default: () => [],
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
   },
 };
@@ -129,6 +136,9 @@ export default {
         }
       }
     }
+  }
+  &__notice {
+    margin-top: 16px;
   }
 }
 </style>
