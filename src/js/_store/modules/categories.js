@@ -9,6 +9,9 @@ export default {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
     },
+    failRequest(state, { message }) {
+      state.loading = false;
+      state.errorMessage = message;
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
