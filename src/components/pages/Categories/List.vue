@@ -24,7 +24,7 @@ export default {
   mixins: [Mixins],
   data() {
     return {
-      theads: ['カテゴリー名', '', '', '', '', ''],
+      theads: ['カテゴリー名'],
     };
   },
   computed: {
@@ -45,10 +45,10 @@ export default {
   justify-content: space-between;
 }
 .app-category-post {
-  width: 350px;
+  width: 27%;
 }
 .app-category-list {
-  width: 900px;
+  width: 70%;
 }
 
 </style>
