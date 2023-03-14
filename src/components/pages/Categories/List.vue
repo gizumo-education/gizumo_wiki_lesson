@@ -1,19 +1,16 @@
 <template>
   <div class="Categories-edit">
-    <app-category-post class="app-category-post">
-    </app-category-post>
+    <app-category-post class="app-category-post" />
     <app-category-list
-    :categories="categoriesList"
-    :theads="theads"
-    class="app-category-list"
-    >
-    </app-category-list>
+      :categories="categoriesList"
+      :theads="theads"
+      class="app-category-list"
+    />
   </div>
 </template>
 
 <script>
-import { CategoryList } from '@Components/molecules'
-import { CategoryPost } from '@Components/molecules';
+import { CategoryList, CategoryPost } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
@@ -28,14 +25,14 @@ export default {
     };
   },
   computed: {
-    categoriesList(){
+    categoriesList() {
       return this.$store.state.categories.categoriesList;
-    }
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
-}
+};
 
 </script>
 

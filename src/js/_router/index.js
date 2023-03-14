@@ -7,8 +7,8 @@ import Signout from '@Pages/Signout/index.vue';
 import NotFound from '@Pages/NotFound/index.vue';
 import Home from '@Pages/Home/index.vue';
 
-//カテゴリ
-import Categories from '@Pages/Categories/index.vue'
+// カテゴリ
+import Categories from '@Pages/Categories/index.vue';
 import CategoryList from '@Pages/Categories/List.vue';
 
 // 記事
@@ -72,7 +72,7 @@ const router = new VueRouter({
       component: Profile,
     },
     {
-      path:'/categories',
+      path: '/categories',
       component: Categories,
       children: [
         {

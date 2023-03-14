@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {
-  auth, articles, users, categories
+  auth, articles, users, categories,
 } from './modules';
 
 Vue.use(Vuex);
