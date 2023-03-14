@@ -5,7 +5,7 @@ export default [
     path: '/',
   },
   {
-    id:2,
+    id: 2,
     name: 'カテゴリー',
     path: '/categories',
   },
