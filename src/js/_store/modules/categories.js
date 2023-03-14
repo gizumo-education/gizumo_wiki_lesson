@@ -12,6 +12,7 @@ export default {
     failRequest(state, { message }) {
       state.loading = false;
       state.errorMessage = message;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -19,7 +20,6 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(res => {
-        // API通信が成功した時の処理
         const payload = {
           categories: res.data.categories,
         };

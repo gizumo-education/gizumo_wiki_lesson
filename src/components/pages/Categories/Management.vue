@@ -1,9 +1,10 @@
 <template>
   <div class="category-inner">
-    <app-category-post
-      class="app-category-post"
-      :access="access"
-    />
+    <div class="app-category-post">
+      <app-category-post
+        :access="access"
+      />
+    </div>
     <div class="app-category-list">
       <app-category-list
         :categories="categoryList"
