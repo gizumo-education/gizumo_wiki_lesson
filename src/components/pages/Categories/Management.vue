@@ -1,7 +1,7 @@
 <template>
   <div class="category-inner">
     <app-category-post
-    class="app-category-post"
+      class="app-category-post"
       :access="access"
     />
     <div class="app-category-list">
@@ -9,20 +9,20 @@
         :categories="categoryList"
         :access="access"
         :theads="theads"
-      >カテゴリー名
+      >
+        カテゴリー名
       </app-category-list>
     </div>
   </div>
 </template>
 <script>
-import Text from '@Components/atoms/Text/index.vue';
 import CategoryList from '@Components/molecules/CategoryList/index.vue';
 import CategoryPost from '@Components/molecules/CategoryPost/index.vue';
+
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
-    appText: Text,
   },
   data() {
     return {
