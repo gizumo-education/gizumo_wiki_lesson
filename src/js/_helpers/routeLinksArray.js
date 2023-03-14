@@ -5,6 +5,11 @@ export default [
     path: '/',
   },
   {
+    id: 2,
+    name: 'カテゴリ',
+    path: '/categories',
+  },
+  {
     id: 3,
     name: '記事',
     path: '/articles',
