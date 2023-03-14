@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    loading,
+    loading: false,
     errorMessage: '',
   },
   mutations: {
