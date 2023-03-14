@@ -1,4 +1,5 @@
 import axios from '@Helpers/axiosDefault';
+
 // import Cookies from 'js-cookie';
 
 export default {
@@ -23,9 +24,20 @@ export default {
         updated_at: '',
       },
     },
+    pages: {
+      firstPage: 1,
+      secondPage: 0,
+      thirdPage: 0,
+      fourthPage: 0,
+      fifthPage: 0,
+      sixthPage: 0,
+      lastPage: 0,
+    },
+    url: '',
     articleList: [],
     deleteArticleId: null,
     loading: false,
+    isClickable: true,
     doneMessage: '',
     errorMessage: '',
   },
@@ -43,6 +55,13 @@ export default {
         return count <= 10;
       });
     },
+    firstPage: state => state.pages.firstPage,
+    secondPage: state => state.pages.secondPage,
+    thirdPage: state => state.pages.thirdPage,
+    fourthPage: state => state.pages.fourthPage,
+    fifthPage: state => state.pages.fifthPage,
+    sixthPage: state => state.pages.sixthPage,
+    lastPage: state => state.pages.lastPage,
     targetArticle: state => state.targetArticle,
     deleteArticleId: state => state.deleteArticleId,
   },
@@ -115,20 +134,60 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    moveArticlePage(state, { pageAll, pageId }) {
+      state.articleList = [...pageAll.articles];
+      const currentPageId = parseInt(pageId, 10);
+      const lastPageObject = {
+        lastPage: state.pages.lastPage,
+      };
+      const lastPageNo = lastPageObject.lastPage;
+      if (pageId <= 4) {
+        state.pages.firstPage = 1;
+        state.pages.secondPage = 2;
+        state.pages.thirdPage = 3;
+        state.pages.fourthPage = 4;
+        state.pages.fifthPage = 5;
+        state.pages.sixthPage = 6;
+      } else if (pageId >= lastPageNo - 3) {
+        state.pages.secondPage = lastPageNo - 5;
+        state.pages.thirdPage = lastPageNo - 4;
+        state.pages.fourthPage = lastPageNo - 3;
+        state.pages.fifthPage = lastPageNo - 2;
+        state.pages.sixthPage = lastPageNo - 1;
+      } else {
+        state.pages.secondPage = currentPageId - 2;
+        state.pages.thirdPage = currentPageId - 1;
+        state.pages.fourthPage = currentPageId;
+        state.pages.fifthPage = currentPageId + 1;
+        state.pages.sixthPage = currentPageId + 2;
+      }
+    },
+    reflectPage(state, payload) {
+      state.pages.lastPage = payload;
+      state.pages.secondPage = 2;
+      state.pages.thirdPage = 3;
+      state.pages.fourthPage = 4;
+      state.pages.fifthPage = 5;
+      state.pages.sixthPage = 6;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
+    getAllArticles({ commit, rootGetters }, pageId) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/article',
+        url: `http://api.wiki.gizumo-inc.work/api/article?page=${pageId}`,
       }).then(res => {
-        const payload = {
+        const lastPage = res.data.meta.last_page;
+        const pageAll = {
           articles: res.data.articles,
         };
-        commit('doneGetAllArticles', payload);
+        commit('reflectPage', lastPage);
+        commit('moveArticlePage', { pageAll, pageId });
+        commit('doneGetAllArticles', pageAll);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -208,6 +267,7 @@ export default {
     },
     updateArticle({ commit, rootGetters }) {
       commit('toggleLoading');
+      commit('clearMessage');
       const data = new URLSearchParams();
       data.append('id', rootGetters['articles/targetArticle'].id);
       data.append('title', rootGetters['articles/targetArticle'].title);
@@ -241,6 +301,7 @@ export default {
       commit('confirmDeleteArticle', { articleId });
     },
     deleteArticle({ commit, rootGetters }) {
+      commit('clearMessage');
       return new Promise(resolve => {
         commit('clearMessage');
         const data = new URLSearchParams();
