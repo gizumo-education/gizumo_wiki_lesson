@@ -26,11 +26,6 @@ export default {
     },
     pages: {
       firstPage: 1,
-      secondPage: 0,
-      thirdPage: 0,
-      fourthPage: 0,
-      fifthPage: 0,
-      sixthPage: 0,
       lastPage: 0,
     },
     url: '',
@@ -134,33 +129,8 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    moveArticlePage(state, { pageAll, pageId }) {
+    moveArticlePage(state, pageAll) {
       state.articleList = [...pageAll.articles];
-      const currentPageId = parseInt(pageId, 10);
-      const lastPageObject = {
-        lastPage: state.pages.lastPage,
-      };
-      const lastPageNo = lastPageObject.lastPage;
-      if (pageId <= 4) {
-        state.pages.firstPage = 1;
-        state.pages.secondPage = 2;
-        state.pages.thirdPage = 3;
-        state.pages.fourthPage = 4;
-        state.pages.fifthPage = 5;
-        state.pages.sixthPage = 6;
-      } else if (pageId >= lastPageNo - 3) {
-        state.pages.secondPage = lastPageNo - 5;
-        state.pages.thirdPage = lastPageNo - 4;
-        state.pages.fourthPage = lastPageNo - 3;
-        state.pages.fifthPage = lastPageNo - 2;
-        state.pages.sixthPage = lastPageNo - 1;
-      } else {
-        state.pages.secondPage = currentPageId - 2;
-        state.pages.thirdPage = currentPageId - 1;
-        state.pages.fourthPage = currentPageId;
-        state.pages.fifthPage = currentPageId + 1;
-        state.pages.sixthPage = currentPageId + 2;
-      }
     },
     reflectPage(state, payload) {
       state.pages.lastPage = payload;
@@ -181,7 +151,7 @@ export default {
           articles: res.data.articles,
         };
         commit('reflectPage', lastPage);
-        commit('moveArticlePage', { pageAll, pageId });
+        commit('moveArticlePage', pageAll);
         commit('doneGetAllArticles', pageAll);
       }).catch(err => {
         commit('failRequest', { message: err.message });

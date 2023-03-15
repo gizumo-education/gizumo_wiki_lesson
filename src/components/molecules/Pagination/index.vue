@@ -13,34 +13,12 @@
       …
     </app-text>
     <app-button
-      :disabled="queryPage === secondPage"
+      v-for="pageNumber in pageArray"
+      :key="pageNumber"
+      :disabled="queryPage === pageNumber"
       @click="clickPagination($event)"
     >
-      {{ secondPage }}
-    </app-button>
-    <app-button
-      :disabled="queryPage === thirdPage"
-      @click="clickPagination($event)"
-    >
-      {{ thirdPage }}
-    </app-button>
-    <app-button
-      :disabled="queryPage === fourthPage"
-      @click="clickPagination($event)"
-    >
-      {{ fourthPage }}
-    </app-button>
-    <app-button
-      :disabled="queryPage === fifthPage"
-      @click="clickPagination($event)"
-    >
-      {{ fifthPage }}
-    </app-button>
-    <app-button
-      :disabled="queryPage === sixthPage"
-      @click="clickPagination($event)"
-    >
-      {{ sixthPage }}
+      {{ pageNumber }}
     </app-button>
     <app-text
       class="pagination--omit"
@@ -69,26 +47,6 @@ export default {
       type: Number,
       required: true,
     },
-    secondPage: {
-      type: Number,
-      required: true,
-    },
-    thirdPage: {
-      type: Number,
-      required: true,
-    },
-    fourthPage: {
-      type: Number,
-      required: true,
-    },
-    fifthPage: {
-      type: Number,
-      required: true,
-    },
-    sixthPage: {
-      type: Number,
-      required: true,
-    },
     lastPage: {
       type: Number,
       required: true,
@@ -98,6 +56,39 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      wholePage: [],
+    };
+  },
+  computed: {
+    pageArray() {
+      const wholePage = [];
+      const thisPage = this.queryPage;
+      let basisPage = 0;
+      const quantity = 5;
+      if (this.queryPage <= 4) {
+        basisPage = this.firstPage + 1;
+        for (let i = 0; i < quantity; i += 1) {
+          wholePage[i] = basisPage;
+          basisPage += 1;
+        }
+      } else if (thisPage >= this.lastPage - 3) {
+        basisPage = this.lastPage - 5;
+        for (let i = 0; i < quantity; i += 1) {
+          wholePage[i] = basisPage;
+          basisPage += 1;
+        }
+      } else {
+        basisPage = thisPage - 2;
+        for (let i = 0; i < quantity; i += 1) {
+          wholePage[i] = basisPage;
+          basisPage += 1;
+        }
+      }
+      return wholePage;
+    },
+  },
   methods: {
     clickPagination($event) {
       const clickedPage = parseInt($event.target.innerHTML, 10);
@@ -105,6 +96,35 @@ export default {
         this.$emit('move-article-page', $event);
       }
     },
+    // makePageArray() {
+    //   const wholePage = [];
+    //   let thisPage = this.queryPage;
+    //   let basisPage = 0;
+    //   const quantity = 5;
+    //   if (this.queryPage <= 4) {
+    //     basisPage = this.firstPage + 1;
+    //     for (let i = 0; i < quantity; i += 1) {
+    //       wholePage[i] = basisPage;
+    //       basisPage += 1;
+    //     }
+    //     console.log(wholePage);
+    //   } else if (thisPage >= this.lastPage - 3) {
+    //     basisPage = this.lastPage;
+    //     for (let i = 0; i < quantity; i += 1) {
+    //       wholePage[i] = basisPage;
+    //       basisPage += 1;
+    //     }
+    //     console.log(wholePage);
+    //   } else {
+    //     basisPage = thisPage - 2;
+    //     for (let i = 0; i < quantity; i += 1) {
+    //       wholePage[i] = basisPage;
+    //       basisPage += 1;
+    //     }
+    //     console.log(wholePage);
+    //   }
+    //   this.wholePage = wholePage;
+    // },
   },
 };
 </script>

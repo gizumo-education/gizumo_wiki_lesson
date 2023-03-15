@@ -13,11 +13,6 @@
     <app-pagination
       :query-page="queryPage"
       :first-page="firstPage"
-      :second-page="secondPage"
-      :third-page="thirdPage"
-      :fourth-page="fourthPage"
-      :fifth-page="fifthPage"
-      :sixth-page="sixthPage"
       :last-page="lastPage"
       @move-article-page="moveArticlePage"
     />
@@ -58,21 +53,6 @@ export default {
     },
     firstPage() {
       return this.$store.getters['articles/firstPage'];
-    },
-    secondPage() {
-      return this.$store.getters['articles/secondPage'];
-    },
-    thirdPage() {
-      return this.$store.getters['articles/thirdPage'];
-    },
-    fourthPage() {
-      return this.$store.getters['articles/fourthPage'];
-    },
-    fifthPage() {
-      return this.$store.getters['articles/fifthPage'];
-    },
-    sixthPage() {
-      return this.$store.getters['articles/sixthPage'];
     },
     lastPage() {
       return this.$store.getters['articles/lastPage'];
