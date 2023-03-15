@@ -162,7 +162,6 @@ export default {
         method: 'GET',
         url: `/article?page=${pageId}`,
       }).then(res => {
-        const lastPage = res.data.meta.last_page;
         const pageAll = {
           articles: res.data.articles,
         };
