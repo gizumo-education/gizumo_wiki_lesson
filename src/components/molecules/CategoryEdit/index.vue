@@ -15,7 +15,6 @@
           カテゴリー一覧へ戻る
         </app-router-link>
 
-        <!-- 内容を書き換えるところ -->
         <form @submit.prevent="handleSubmit">
           <div class="category-edit-form">
             <app-input
@@ -29,7 +28,6 @@
             />
           </div>
 
-          <!-- 更新ボタン -->
           <app-button
             class="category-edit-submit"
             button-type="submit"

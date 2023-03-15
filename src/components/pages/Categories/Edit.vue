@@ -38,11 +38,9 @@ export default {
       return this.$store.getters['auth/access'];
     },
     categoryTitle() {
-      // カテゴリー名を変更して画面に反映
       return this.$store.state.categories.categoryTitle;
     },
   },
-  // categories.jsのactionで作った関数をここでdispatchで呼ぶ
   created() {
     this.$store.dispatch('categories/getAllLists');
     this.$store.dispatch('categories/getCategoryTitle', this.$route.params.id);

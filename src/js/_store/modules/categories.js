@@ -39,7 +39,6 @@ export default {
       state.doneMessage = payload.message;
     },
     editedCategoryTitle(state, payload) {
-      // カテゴリーを変更する payload.titleに変更したカテゴリー名が入る
       state.categoryTitle = payload.title;
     },
     toggleLoading(state) {
@@ -51,7 +50,6 @@ export default {
     },
   },
   actions: {
-    // 対象のカテゴリー名を取得するAPI通信する関数を作る
     getCategoryTitle({ commit, rootGetters }, categoryId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
