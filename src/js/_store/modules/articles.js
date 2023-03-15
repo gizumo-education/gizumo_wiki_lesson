@@ -140,7 +140,23 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }, pageId) {
+    getAllArticles({ commit, rootGetters }) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article',
+      }).then(res => {
+        const lastPage = res.data.meta.last_page;
+        const pageAll = {
+          articles: res.data.articles,
+        };
+        commit('reflectPage', lastPage);
+        commit('doneGetAllArticles', pageAll);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getPageArticles({ commit, rootGetters }, pageId) {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -150,7 +166,6 @@ export default {
         const pageAll = {
           articles: res.data.articles,
         };
-        commit('reflectPage', lastPage);
         commit('moveArticlePage', pageAll);
         commit('doneGetAllArticles', pageAll);
       }).catch(err => {

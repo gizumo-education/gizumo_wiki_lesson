@@ -68,7 +68,7 @@ export default {
       this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
     } else {
       this.fetchArticles();
-      this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
+      this.$store.dispatch('articles/getPageArticles', this.$route.query.page);
     }
   },
   updated() {
@@ -121,7 +121,7 @@ export default {
       const clickedPage = $event.target.innerHTML.trim();
       this.$router.push({ path: 'articles', query: { page: clickedPage } })
         .catch(() => {});
-      this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
+      this.$store.dispatch('articles/getPageArticles', this.$route.query.page);
     },
   },
 };
