@@ -1,7 +1,7 @@
 <template>
   <app-category-edit
     :category-id="categoryId"
-    :category-list="categoryList"
+    :category-title="categoryTitle"
     :loading="loading"
     :done-message="doneMessage"
     :access="access"
@@ -20,18 +20,13 @@ export default {
   data() {
     return {
       title: '',
-      categoryName: '',
     };
   },
   computed: {
     categoryId() {
       let { id } = this.$route.params;
-      id = parseInt(id, 10);
+      id = this.$route.params.id;
       return id;
-    },
-    categoryList() {
-      const { categoryList } = this.$store.state.categories;
-      return categoryList;
     },
     loading() {
       return this.$store.state.categories.loading;
@@ -42,10 +37,15 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    categoryTitle() {
+      // カテゴリー名を変更して画面に反映
+      return this.$store.state.categories.categoryTitle;
+    },
   },
+  // categories.jsのactionで作った関数をここでdispatchで呼ぶ
   created() {
     this.$store.dispatch('categories/getAllLists');
-    this.$store.dispatch('categories/getAllLists', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/getCategoryTitle', this.$route.params.id);
   },
   methods: {
     editedCategoryTitle($event) {
@@ -53,7 +53,7 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory');
+      this.$store.dispatch('categories/updateCategory', this.$route.params.id);
     },
   },
 };

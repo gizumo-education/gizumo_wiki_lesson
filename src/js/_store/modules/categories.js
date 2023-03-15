@@ -5,13 +5,18 @@ export default {
   state: {
     categoryName: '',
     categoriesList: [],
+    categoryList: {},
+    categoryId: '',
+    categoryTitle: '',
     deleteCategoryId: null,
     loading: false,
     doneMessage: '',
     errorMessage: '',
-
   },
   mutations: {
+    getCategoryTitle(state, res) {
+      state.categoryTitle = res;
+    },
     getAllLists(state, res) {
       state.categoriesList = res.categories.reverse();
     },
@@ -27,9 +32,6 @@ export default {
     failDelete(state) {
       state.errorMessage = 'カテゴリーを削除できませんでした';
     },
-    failUpdate(state) {
-      state.errorMessage = 'カテゴリーを更新できませんでした';
-    },
     changeLoading(state) {
       state.loading = !state.loading;
     },
@@ -37,10 +39,8 @@ export default {
       state.doneMessage = payload.message;
     },
     editedCategoryTitle(state, payload) {
-      state.categoriesList = { ...state.categoriesList, title: payload.categoryName };
-    },
-    updateCategory(state, { category }) {
-      state.categoryList = { ...state.categoryList, ...category };
+      // カテゴリーを変更する payload.titleに変更したカテゴリー名が入る
+      state.categoryTitle = payload.title;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -51,27 +51,46 @@ export default {
     },
   },
   actions: {
-    updateCategory({ commit, rootGetters }, categoryId) {
+    // 対象のカテゴリー名を取得するAPI通信する関数を作る
+    getCategoryTitle({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        commit('getCategoryTitle', res.data.category.name);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateCategory({
+      commit,
+      rootGetters,
+      state,
+      dispatch,
+    }, categoryId) {
       commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${categoryId}`,
+        data: {
+          name: state.categoryTitle,
+        },
       }).then(() => {
-        commit('updateCategory');
+        dispatch('getCategoryTitle', categoryId);
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(() => {
         commit('toggleLoading');
-        commit('failUpdate');
       });
     },
-    editedCategoryTitle({ commit }, categoryName) {
+    editedCategoryTitle({ commit }, title) {
       commit({
         type: 'editedCategoryTitle',
-        categoryName,
+        title,
       });
     },
     getAllLists({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',

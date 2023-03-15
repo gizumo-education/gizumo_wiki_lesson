@@ -16,28 +16,29 @@
         </app-router-link>
 
         <!-- 内容を書き換えるところ -->
-        <div class="category-edit-form">
-          <app-input
-            v-validate="'required'"
-            name="category"
-            type="text"
-            :error-messages="errors.collect('category')"
-            :value="categoryName"
-            data-vv-as="カテゴリー"
-            @update-value="$emit('edited-category-title', $event)"
-          />
-        </div>
+        <form @submit.prevent="handleSubmit">
+          <div class="category-edit-form">
+            <app-input
+              v-validate="'required'"
+              name="title"
+              type="text"
+              :error-messages="errors.collect('title')"
+              :value="categoryTitle"
+              data-vv-as="カテゴリー"
+              @update-value="$emit('edited-category-title', $event)"
+            />
+          </div>
 
-        <!-- 更新ボタン -->
-        <app-button
-          class="category-edit-submit"
-          button-type="submit"
-          round
-          :disabled="!disabled"
-          @click="handleSubmit"
-        >
-          {{ buttonText }}
-        </app-button>
+          <!-- 更新ボタン -->
+          <app-button
+            class="category-edit-submit"
+            button-type="submit"
+            round
+            :disabled="!disabled"
+          >
+            {{ buttonText }}
+          </app-button>
+        </form>
       </section>
     </div>
   </div>
@@ -45,7 +46,7 @@
 
 <script>
 import {
-  Heading, Input, Button, RouterLink,
+  Heading, Input, Button, RouterLink, Text,
 } from '@Components/atoms';
 
 export default {
@@ -54,19 +55,20 @@ export default {
     appInput: Input,
     appButton: Button,
     appRouterLink: RouterLink,
+    appText: Text,
   },
   props: {
     categoryId: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
+    },
+    categoryTitle: {
+      type: String,
+      default: '',
     },
     categoryName: {
       type: String,
       default: '',
-    },
-    categoryList: {
-      type: Array,
-      default: () => [],
     },
     loading: {
       type: Boolean,
@@ -91,11 +93,9 @@ export default {
     },
   },
   methods: {
-    handleSubmit(categoryId) {
+    handleSubmit() {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
-        console.log('更新ボタン押せた');
-        console.log(categoryId);
         if (valid) this.$emit('handle-submit');
       });
     },
