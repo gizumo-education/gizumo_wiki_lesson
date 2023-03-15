@@ -14,11 +14,11 @@
     </app-text>
     <app-button
       v-for="pageNumber in pageArray"
-      :key="pageNumber"
+      :key="pageNumber.id"
       :disabled="queryPage === pageNumber"
       @click="clickPagination($event)"
     >
-      {{ pageNumber }}
+      {{ pageNumber.page }}
     </app-button>
     <app-text
       class="pagination--omit"
@@ -58,26 +58,48 @@ export default {
   },
   computed: {
     pageArray() {
-      const wholePage = [];
+      const wholePage = [
+        {
+          id: 'second',
+          page: '',
+        },
+        {
+          id: 'third',
+          page: '',
+        },
+        {
+          id: 'fourth',
+          page: '',
+        },
+        {
+          id: 'fifth',
+          page: '',
+        },
+        {
+          id: 'sixth',
+          page: '',
+        },
+
+      ];
       const thisPage = this.queryPage;
       let basisPage = 0;
       const quantity = 5;
       if (this.queryPage <= 4) {
         basisPage = this.firstPage + 1;
         for (let i = 0; i < quantity; i += 1) {
-          wholePage[i] = basisPage;
+          wholePage[i].page = basisPage;
           basisPage += 1;
         }
       } else if (thisPage >= this.lastPage - 3) {
         basisPage = this.lastPage - 5;
         for (let i = 0; i < quantity; i += 1) {
-          wholePage[i] = basisPage;
+          wholePage[i].page = basisPage;
           basisPage += 1;
         }
       } else {
         basisPage = thisPage - 2;
         for (let i = 0; i < quantity; i += 1) {
-          wholePage[i] = basisPage;
+          wholePage[i].page = basisPage;
           basisPage += 1;
         }
       }
@@ -91,35 +113,6 @@ export default {
         this.$emit('move-article-page', $event);
       }
     },
-    // makePageArray() {
-    //   const wholePage = [];
-    //   let thisPage = this.queryPage;
-    //   let basisPage = 0;
-    //   const quantity = 5;
-    //   if (this.queryPage <= 4) {
-    //     basisPage = this.firstPage + 1;
-    //     for (let i = 0; i < quantity; i += 1) {
-    //       wholePage[i] = basisPage;
-    //       basisPage += 1;
-    //     }
-    //     console.log(wholePage);
-    //   } else if (thisPage >= this.lastPage - 3) {
-    //     basisPage = this.lastPage;
-    //     for (let i = 0; i < quantity; i += 1) {
-    //       wholePage[i] = basisPage;
-    //       basisPage += 1;
-    //     }
-    //     console.log(wholePage);
-    //   } else {
-    //     basisPage = thisPage - 2;
-    //     for (let i = 0; i < quantity; i += 1) {
-    //       wholePage[i] = basisPage;
-    //       basisPage += 1;
-    //     }
-    //     console.log(wholePage);
-    //   }
-    //   this.wholePage = wholePage;
-    // },
   },
 };
 </script>
