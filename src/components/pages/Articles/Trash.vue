@@ -23,28 +23,15 @@ export default {
   computed: {
     trashList() {
       const list = this.$store.state.articles.trashList;
-      const trashList = [];
-      list.forEach(item => {
-        let title = '';
-        if (item.title.length > 30) {
-          title = `${item.title.slice(0, 30)}...`;
-        } else {
-          title = item.title;
-        }
-        let content = '';
-        if (item.content.length > 30) {
-          content = `${item.content.slice(0, 30)}...`;
-        } else {
-          content = item.content;
-        }
-        const date = item.created_at.slice(0, 10);
-        const newList = {
-          title,
-          content,
-          created_at: date,
-        };
-        trashList.push(newList);
-      });
+      const trashList = list.map(value => ({
+        title: value.title.length > 30
+          ? `${value.title.slice(0, 30)}...`
+          : value.title,
+        content: value.content.length > 30
+          ? `${value.content.slice(0, 30)}...`
+          : value.content,
+        created_at: value.created_at.slice(0, 10),
+      }));
       return trashList;
     },
     errorMessage() {

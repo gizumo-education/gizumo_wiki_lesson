@@ -36,12 +36,6 @@
           <tr
             v-for="trash in trashList"
             :key="trash.title"
-            flex
-            beetween
-            align-items
-            bg-white
-            large
-            border-bottom-gray
           >
             <td>
               <app-text
