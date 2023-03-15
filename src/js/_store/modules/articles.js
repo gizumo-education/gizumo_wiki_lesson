@@ -174,7 +174,7 @@ export default {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: `http://api.wiki.gizumo-inc.work/api/article?page=${pageId}`,
+        url: `/article?page=${pageId}`,
       }).then(res => {
         const lastPage = res.data.meta.last_page;
         const pageAll = {
