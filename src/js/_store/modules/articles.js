@@ -1,4 +1,5 @@
 import axios from '@Helpers/axiosDefault';
+
 // import Cookies from 'js-cookie';
 
 export default {
@@ -23,9 +24,15 @@ export default {
         updated_at: '',
       },
     },
+    pages: {
+      firstPage: 1,
+      lastPage: 0,
+    },
+    url: '',
     articleList: [],
     deleteArticleId: null,
     loading: false,
+    isClickable: true,
     doneMessage: '',
     errorMessage: '',
   },
@@ -43,6 +50,13 @@ export default {
         return count <= 10;
       });
     },
+    firstPage: state => state.pages.firstPage,
+    secondPage: state => state.pages.secondPage,
+    thirdPage: state => state.pages.thirdPage,
+    fourthPage: state => state.pages.fourthPage,
+    fifthPage: state => state.pages.fifthPage,
+    sixthPage: state => state.pages.sixthPage,
+    lastPage: state => state.pages.lastPage,
     targetArticle: state => state.targetArticle,
     deleteArticleId: state => state.deleteArticleId,
   },
@@ -115,20 +129,46 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    moveArticlePage(state, pageAll) {
+      state.articleList = [...pageAll.articles];
+    },
+    reflectPage(state, payload) {
+      state.pages.lastPage = payload;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
     getAllArticles({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article',
       }).then(res => {
-        const payload = {
+        const lastPage = res.data.meta.last_page;
+        const pageAll = {
           articles: res.data.articles,
         };
-        commit('doneGetAllArticles', payload);
+        commit('reflectPage', lastPage);
+        commit('doneGetAllArticles', pageAll);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getPageArticles({ commit, rootGetters }, pageId) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/article?page=${pageId}`,
+      }).then(res => {
+        const lastPage = res.data.meta.last_page;
+        const pageAll = {
+          articles: res.data.articles,
+        };
+        commit('reflectPage', lastPage);
+        commit('moveArticlePage', pageAll);
+        commit('doneGetAllArticles', pageAll);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -208,6 +248,7 @@ export default {
     },
     updateArticle({ commit, rootGetters }) {
       commit('toggleLoading');
+      commit('clearMessage');
       const data = new URLSearchParams();
       data.append('id', rootGetters['articles/targetArticle'].id);
       data.append('title', rootGetters['articles/targetArticle'].title);
@@ -241,6 +282,7 @@ export default {
       commit('confirmDeleteArticle', { articleId });
     },
     deleteArticle({ commit, rootGetters }) {
+      commit('clearMessage');
       return new Promise(resolve => {
         commit('clearMessage');
         const data = new URLSearchParams();

@@ -3,6 +3,9 @@
     <div v-if="doneMessage" class="article-list__notice--create">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
+    <div v-if="errorMessage" class="article-list-notice--create">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
     <app-heading :level="1">{{ articleTitle }}</app-heading>
     <app-router-link
       to="articles/post"
@@ -119,6 +122,10 @@ export default {
       default: 'すべて',
     },
     doneMessage: {
+      type: String,
+      default: '',
+    },
+    errorMessage: {
       type: String,
       default: '',
     },
