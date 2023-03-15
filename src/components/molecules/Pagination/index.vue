@@ -56,11 +56,6 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      wholePage: [],
-    };
-  },
   computed: {
     pageArray() {
       const wholePage = [];
