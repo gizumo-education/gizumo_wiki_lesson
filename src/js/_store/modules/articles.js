@@ -24,6 +24,7 @@ export default {
       },
     },
     articleList: [],
+    trashList: [],
     pageTotal: null,
     pageNum: 1,
     articleTotal: null,
@@ -91,6 +92,9 @@ export default {
       state.pageTotal = payload.pageTotal;
       state.pageNum = payload.pageNum;
       state.articleTotal = payload.articleTotal;
+    },
+    doneGetTrashed(state, payload) {
+      state.trashList = [...payload];
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -291,6 +295,18 @@ export default {
           commit('failRequest', { message: err.message });
           reject();
         });
+      });
+    },
+    getTrashedArticles({ commit, rootGetters }) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const payload = res.data.articles;
+        commit('doneGetTrashed', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {
