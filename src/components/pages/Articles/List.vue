@@ -73,7 +73,6 @@ export default {
   },
   updated() {
     if (!this.$route.query.page) {
-      console.log('updated');
       this.$router.push({ path: 'articles', query: { page: 1 } });
       this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
     }
