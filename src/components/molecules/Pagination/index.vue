@@ -100,7 +100,10 @@ export default {
   },
   methods: {
     clickPagination($event) {
-      this.$emit('move-article-page', $event);
+      const clickedPage = parseInt($event.target.innerHTML, 10);
+      if (clickedPage !== this.queryPage) {
+        this.$emit('move-article-page', $event);
+      }
     },
   },
 };
