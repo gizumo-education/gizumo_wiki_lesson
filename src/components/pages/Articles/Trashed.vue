@@ -1,0 +1,39 @@
+<template>
+  <app-article-trashed
+    :title="title"
+    :theads="theads"
+    :target-array="articlesList"
+    :error-message="errorMessage"
+  />
+</template>
+<script>
+import { ArticleTrashed } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
+
+export default {
+  components: {
+    appArticleTrashed: ArticleTrashed,
+  },
+  mixins: [Mixins],
+  data() {
+    return {
+      title: '削除済み記事',
+      theads: ['タイトル', '本文', '作成日'],
+    };
+  },
+  computed: {
+    articlesList() {
+      return this.$store.state.articles.articleList;
+    },
+    errorMessage() {
+      return this.$store.state.articles.errorMessage;
+    },
+    access() {
+      return this.$store.getters['auth/access'];
+    },
+  },
+  created() {
+    this.$store.dispatch('articles/getTrashedArticles');
+  },
+};
+</script>

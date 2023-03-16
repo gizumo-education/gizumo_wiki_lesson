@@ -19,6 +19,18 @@
     >
       新しいドキュメントを作る
     </app-router-link>
+    <app-router-link
+      to="articles/trashed"
+      key-color
+      white
+      bg-danger
+      small
+      round
+      hover-opacity
+      class="article-list__trashed-link"
+    >
+      削除済み記事一覧
+    </app-router-link>
     <transition-group
       class="article-list__articles"
       name="fade"
@@ -136,7 +148,7 @@ export default {
   },
   computed: {
     articleTitle() {
-      return `${this.title}の一覧`;
+      return `${this.title}一覧`;
     },
     buttonText() {
       return this.access.delete ? '削除' : '削除権限がありません';
@@ -167,6 +179,9 @@ export default {
     }
     &__create-link {
       margin-top: 16px;
+    }
+    &__trashed-link {
+      margin-left: 16px;
     }
     &__links {
       *:not(first-child) {

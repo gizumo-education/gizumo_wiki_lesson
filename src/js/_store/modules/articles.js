@@ -135,6 +135,12 @@ export default {
     reflectPage(state, payload) {
       state.pages.lastPage = payload;
     },
+    doneGetTrashedArticles(state, payload) {
+      state.articleList = [...payload.articles];
+    },
+    clearListArray(state) {
+      state.articleList = [];
+    },
   },
   actions: {
     initPostArticle({ commit }) {
@@ -328,6 +334,21 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getTrashedArticles({ commit, rootGetters }) {
+      commit('clearMessage');
+      commit('clearListArray');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const pageAll = {
+          articles: res.data.articles,
+        };
+        commit('doneGetAllArticles', pageAll);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };
