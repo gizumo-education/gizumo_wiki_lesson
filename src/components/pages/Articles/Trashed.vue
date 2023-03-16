@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     articlesList() {
-      return this.$store.state.articles.articleList;
+      return this.$store.state.articles.deletedArticleList;
     },
     errorMessage() {
       return this.$store.state.articles.errorMessage;

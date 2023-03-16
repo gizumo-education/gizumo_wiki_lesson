@@ -342,7 +342,7 @@ export default {
         const pageAll = {
           articles: res.data.articles,
         };
-        commit('doneGetAllArticles', pageAll);
+        commit('doneGetTrashedArticles', pageAll);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
