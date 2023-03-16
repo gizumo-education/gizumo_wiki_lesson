@@ -6,6 +6,7 @@
     :error-message="errorMessage"
   />
 </template>
+
 <script>
 import { ArticleTrashed } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
