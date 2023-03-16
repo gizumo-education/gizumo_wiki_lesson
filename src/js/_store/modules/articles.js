@@ -30,6 +30,7 @@ export default {
     },
     url: '',
     articleList: [],
+    deletedArticleList: [],
     deleteArticleId: null,
     loading: false,
     isClickable: true,
@@ -136,10 +137,7 @@ export default {
       state.pages.lastPage = payload;
     },
     doneGetTrashedArticles(state, payload) {
-      state.articleList = [...payload.articles];
-    },
-    clearListArray(state) {
-      state.articleList = [];
+      state.deletedArticleList = [...payload.articles];
     },
   },
   actions: {
@@ -337,7 +335,6 @@ export default {
     },
     getTrashedArticles({ commit, rootGetters }) {
       commit('clearMessage');
-      commit('clearListArray');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article/trashed',
