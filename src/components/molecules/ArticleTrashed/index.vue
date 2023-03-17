@@ -1,6 +1,6 @@
 <template>
   <div class="article-trashed">
-    <app-heading :level="1">{{ articleTitle }}</app-heading>
+    <app-heading :level="1">削除済み記事一覧</app-heading>
     <div v-if="errorMessage" class="article-trashed__notice--create">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
@@ -26,21 +26,37 @@
           </th>
         </tr>
       </thead>
-      <transition-group name="fade" tag="tbody" class="article-trashed__table__body ">
-        <tr v-for="article in targetArray" :key="article.id">
+      <transition-group
+        name="fade"
+        tag="tbody"
+        class="article-trashed__table__body "
+      >
+        <tr
+          v-for="target in targetArray"
+          :key="target.id"
+        >
           <td>
-            <app-text tag="span" small>
-              {{ article.title | setSlice }}
+            <app-text
+              tag="span"
+              small
+            >
+              {{ target.title }}
             </app-text>
           </td>
           <td>
-            <app-text tag="span" small>
-              {{ article.content | setSlice }}
+            <app-text
+              tag="span"
+              small
+            >
+              {{ target.content }}
             </app-text>
           </td>
           <td>
-            <app-text tag="span" small>
-              {{ article.created_at | setData }}
+            <app-text
+              tag="span"
+              small
+            >
+              {{ target.created_at }}
             </app-text>
           </td>
         </tr>
@@ -62,22 +78,10 @@ export default {
     appRouterLink: RouterLink,
     appText: Text,
   },
-  filters: {
-    setSlice(value) {
-      return value.length > 30 ? `${value.slice(0, 30)}...` : value;
-    },
-    setData(value) {
-      return value.slice(0, 10);
-    },
-  },
   props: {
     targetArray: {
       type: Array,
       default: () => [],
-    },
-    title: {
-      type: String,
-      default: 'すべて',
     },
     errorMessage: {
       type: String,
@@ -88,10 +92,10 @@ export default {
       default: () => [],
     },
   },
-  computed: {
-    articleTitle() {
-      return `${this.title}一覧`;
-    },
+  data() {
+    return {
+      newArray: [],
+    };
   },
 };
 </script>

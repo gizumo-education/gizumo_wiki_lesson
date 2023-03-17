@@ -1,6 +1,5 @@
 <template>
   <app-article-trashed
-    :title="削除済み記事"
     :theads="['タイトル', '本文', '作成日']"
     :target-array="articlesList"
     :error-message="errorMessage"

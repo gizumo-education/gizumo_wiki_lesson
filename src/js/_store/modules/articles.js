@@ -136,8 +136,14 @@ export default {
     reflectPage(state, payload) {
       state.pages.lastPage = payload;
     },
-    doneGetTrashedArticles(state, payload) {
-      state.deletedArticleList = [...payload.articles];
+    doneGetTrashedArticles(state, { articles }) {
+      const lists = articles;
+      for (let i = 0; i < lists.length; i += 1) {
+        lists[i].title = lists[i].title.length > 30 ? `${lists[i].title.slice(0, 30)}...` : lists[i].title;
+        lists[i].content = lists[i].content.length > 30 ? `${lists[i].content.slice(0, 30)}...` : lists[i].content;
+        lists[i].created_at = lists[i].created_at.slice(0, 10);
+      }
+      state.deletedArticleList = [...lists];
     },
   },
   actions: {
@@ -334,17 +340,20 @@ export default {
       commit('clearMessage');
     },
     getTrashedArticles({ commit, rootGetters }) {
-      commit('clearMessage');
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: '/article/trashed',
-      }).then(res => {
-        const pageAll = {
-          articles: res.data.articles,
-        };
-        commit('doneGetTrashedArticles', pageAll);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise(resolve => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/article/trashed',
+        }).then(res => {
+          const pageAll = {
+            articles: res.data.articles,
+          };
+          commit('doneGetTrashedArticles', pageAll);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
       });
     },
   },
