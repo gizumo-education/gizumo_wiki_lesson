@@ -1,7 +1,7 @@
 <template>
   <app-article-trashed
-    :title="title"
-    :theads="theads"
+    :title="削除済み記事"
+    :theads="['タイトル', '本文', '作成日']"
     :target-array="articlesList"
     :error-message="errorMessage"
   />
@@ -16,12 +16,6 @@ export default {
     appArticleTrashed: ArticleTrashed,
   },
   mixins: [Mixins],
-  data() {
-    return {
-      title: '削除済み記事',
-      theads: ['タイトル', '本文', '作成日'],
-    };
-  },
   computed: {
     articlesList() {
       return this.$store.state.articles.deletedArticleList;
