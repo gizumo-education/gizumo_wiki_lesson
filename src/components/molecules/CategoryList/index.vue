@@ -32,10 +32,12 @@
           </td>
           <td>
             <app-router-link
-              theme-color
-              underline
+              :to="`/category/${category.id}/edit`"
+              white
+              bg-lightgreen
+              small
+              round
               hover-opacity
-              :to="`/categories/${category.id}`"
             >
               更新
             </app-router-link>
@@ -48,7 +50,7 @@
               :disabled="!access.delete"
               @click="openModal(category.id, category.name)"
             >
-              削除
+              {{ buttonText }}
             </app-button>
           </td>
         </tr>
@@ -85,7 +87,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -114,6 +118,14 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
+    },
+  },
+  computed: {
+    categoryTitle() {
+      return `${this.title}の一覧`;
+    },
+    buttonText() {
+      return this.access.delete ? '削除' : '削除権限がありません';
     },
   },
   methods: {

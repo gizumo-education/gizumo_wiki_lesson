@@ -3,14 +3,20 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    categoryName: '',
     categoriesList: [],
+    categoryList: {},
+    categoryId: '',
+    categoryTitle: '',
     deleteCategoryId: null,
     loading: false,
     doneMessage: '',
     errorMessage: '',
-
   },
   mutations: {
+    getCategoryTitle(state, res) {
+      state.categoryTitle = res;
+    },
     getAllLists(state, res) {
       state.categoriesList = res.categories.reverse();
     },
@@ -32,13 +38,57 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    editedCategoryTitle(state, payload) {
+      state.categoryTitle = payload.title;
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
     },
   },
   actions: {
+    getCategoryTitle({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        commit('getCategoryTitle', res.data.category.name);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateCategory({
+      commit,
+      rootGetters,
+      state,
+      dispatch,
+    }, categoryId) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${categoryId}`,
+        data: {
+          name: state.categoryTitle,
+        },
+      }).then(() => {
+        dispatch('getCategoryTitle', categoryId);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
+    },
+    editedCategoryTitle({ commit }, title) {
+      commit({
+        type: 'editedCategoryTitle',
+        title,
+      });
+    },
     getAllLists({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',

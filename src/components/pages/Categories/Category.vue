@@ -10,7 +10,6 @@
       @handle-submit="addCategory"
       @update-value="categoryName = $event.target.value"
     />
-    <!-- @エミットを受け取る＝行いたい処理 -->
     <app-category-list
       class="category-list"
       :access="access"
@@ -60,6 +59,9 @@ export default {
     this.$store.dispatch('categories/getAllLists');
   },
   methods: {
+    editedCategoryTitle($event) {
+      this.$store.dispatch('categories/editedCategoryTitle', $event.target.value);
+    },
     addCategory() {
       this.$store.dispatch('categories/postCategory', this.categoryName);
       this.categoryName = '';
