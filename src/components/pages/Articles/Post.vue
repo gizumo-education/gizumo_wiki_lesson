@@ -58,7 +58,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
     this.$store.dispatch('articles/initPostArticle');
   },
   methods: {
