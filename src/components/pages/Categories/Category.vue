@@ -3,16 +3,13 @@
     <app-category-post
       class="category-form"
       :access="access"
-      :category-id="categoryId"
       :category="categoryName"
       :done-message="completeMessage"
       :error-message="incompleteMessage"
       :disabled="loading"
-      @edited-category-title="editedCategoryTitle"
       @handle-submit="addCategory"
       @update-value="categoryName = $event.target.value"
     />
-    <!-- @エミットを受け取る＝行いたい処理 -->
     <app-category-list
       class="category-list"
       :access="access"

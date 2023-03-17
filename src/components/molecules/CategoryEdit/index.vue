@@ -104,12 +104,11 @@ export default {
 <style lang="scss" scoped>
 .category-edit {
   &__contents {
-    display: flex;
     height: 100%;
   }
   &-editor {
     padding-right: 2%;
-    width: 50%;
+    width: 100%;
     border-right: 1px solid #ccc;
     &-title {
       margin-top: 16px;
