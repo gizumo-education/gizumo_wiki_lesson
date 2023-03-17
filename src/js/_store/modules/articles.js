@@ -137,13 +137,7 @@ export default {
       state.pages.lastPage = payload;
     },
     doneGetTrashedArticles(state, { articles }) {
-      const lists = articles;
-      for (let i = 0; i < lists.length; i += 1) {
-        lists[i].title = lists[i].title.length > 30 ? `${lists[i].title.slice(0, 30)}...` : lists[i].title;
-        lists[i].content = lists[i].content.length > 30 ? `${lists[i].content.slice(0, 30)}...` : lists[i].content;
-        lists[i].created_at = lists[i].created_at.slice(0, 10);
-      }
-      state.deletedArticleList = [...lists];
+      state.deletedArticleList = articles;
     },
   },
   actions: {

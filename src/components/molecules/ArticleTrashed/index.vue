@@ -40,7 +40,7 @@
               tag="span"
               small
             >
-              {{ target.title }}
+              {{ setSlice( target.title ) }}
             </app-text>
           </td>
           <td>
@@ -48,7 +48,7 @@
               tag="span"
               small
             >
-              {{ target.content }}
+              {{ setSlice(target.content) }}
             </app-text>
           </td>
           <td>
@@ -56,7 +56,7 @@
               tag="span"
               small
             >
-              {{ target.created_at }}
+              {{ setData(target.created_at) }}
             </app-text>
           </td>
         </tr>
@@ -92,10 +92,19 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      newArray: [],
-    };
+  computed: {
+    setSlice() {
+      return target => {
+        const slicedTarget = target.length > 30 ? `${target.slice(0, 30)}...` : target;
+        return slicedTarget;
+      };
+    },
+    setData() {
+      return targetData => {
+        const slicedTarget = targetData.slice(0, 10);
+        return slicedTarget;
+      };
+    },
   },
 };
 </script>
