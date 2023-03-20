@@ -1,5 +1,28 @@
 # Gizumo Wiki
 
+## 環境構築
+
+以下のコマンドを実行して環境構築をしてください。
+
+1. お好きなディレクトリに移動してプロジェクトをクローンしてください。
+
+```bash
+cd お好きなディレクトリ
+git clone https://github.com/gizumo-education/gizumo_wiki_lesson.git
+```
+
+2. クローンしたディレクトリに移動し、パッケージをインストール後、開発サーバを起動してください。
+
+```bash
+cd gizumo_wiki_lesson
+npm i
+npm run dev
+```
+
+3. ブラウザが立ち上がったら個別に共有されているメールアドレスと初期パスワードを入力してログインしてください。（渡されていない場合ご連絡ください）
+4. 初回のログイン時はパスワードを新しく設定してください。
+5. [swagger-viewer](https://chrome.google.com/webstore/detail/swagger-viewer/nfmkaonpdmaglhjjlggfhlndofdldfag?hl=ja)のインストール（API仕様書を参照する際に使用します）
+
 ## フォルダ構成
 
 ```
