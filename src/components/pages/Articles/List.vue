@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: 'すべて',
+      title: '記事',
     };
   },
   computed: {

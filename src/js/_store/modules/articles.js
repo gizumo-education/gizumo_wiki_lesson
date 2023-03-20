@@ -30,6 +30,7 @@ export default {
     },
     url: '',
     articleList: [],
+    deletedArticleList: [],
     deleteArticleId: null,
     loading: false,
     isClickable: true,
@@ -134,6 +135,9 @@ export default {
     },
     reflectPage(state, payload) {
       state.pages.lastPage = payload;
+    },
+    doneGetTrashedArticles(state, { articles }) {
+      state.deletedArticleList = articles;
     },
   },
   actions: {
@@ -328,6 +332,23 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getTrashedArticles({ commit, rootGetters }) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/article/trashed',
+        }).then(res => {
+          const pageAll = {
+            articles: res.data.articles,
+          };
+          commit('doneGetTrashedArticles', pageAll);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
     },
   },
 };
