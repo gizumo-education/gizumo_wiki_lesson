@@ -1,8 +1,9 @@
 <template>
   <div class="categories">
     <app-category-post
+      :access="access"
       :category="category"
-      disabled
+      :disabled="disabled"
     />
     <app-category-list
       :theads="theads"
@@ -27,7 +28,7 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      disabled: true,
+      disabled: false,
     };
   },
   computed: {
