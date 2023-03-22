@@ -5,7 +5,7 @@
       :category="category"
       :done-message="doneMessage"
       :error-message="errorMessage"
-      :loading="loading"
+      :disabled="disabled"
       class="category-page__post"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
@@ -22,12 +22,14 @@
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -38,8 +40,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     category() {
-      const { name } = this.$store.state.categories.category;
-      return name;
+      return this.$store.state.categories.category.name;
     },
     categoryList() {
       return this.$store.state.categories.categoryList;
@@ -50,8 +51,8 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
-    loading() {
-      return this.$store.state.categories.loading;
+    disabled() {
+      return this.$store.state.categories.disabled;
     },
   },
   created() {
@@ -65,6 +66,7 @@ export default {
       this.$store.dispatch('categories/getAllCategories');
     },
     handleSubmit() {
+      if (this.loading) return;
       this.$store.dispatch('categories/postCategories');
     },
     updateValue($event) {
