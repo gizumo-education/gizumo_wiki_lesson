@@ -85,7 +85,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  Button,
+  Text,
+  RouterLink,
 } from '@Components/atoms';
 
 export default {
@@ -131,9 +133,10 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px;
+  padding: 10px 20px;
+  margin-left: 20px;
+  border-left:1px solid $separator-color;
   height: 100%;
-  overflow: scroll;
   &__table {
     width: 100%;
     text-align: left;
