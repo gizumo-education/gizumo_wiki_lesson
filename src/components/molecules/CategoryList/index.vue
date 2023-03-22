@@ -133,9 +133,6 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 20px;
-  margin-left: 20px;
-  border-left:1px solid $separator-color;
   height: 100%;
   &__table {
     width: 100%;

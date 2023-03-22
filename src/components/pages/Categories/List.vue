@@ -1,17 +1,22 @@
 <template>
-  <div class="categories">
-    <app-category-post
-      :access="access"
-      :category="category"
-      :disabled="disabled"
-    />
-    <app-category-list
-      :theads="theads"
-      :categories="categoryList"
-      :error-message="errorMessage"
-      :access="access"
-    />
-  </div>
+  <section class="categories">
+    <div class="categories__post__form">
+      <app-category-post
+        :access="access"
+        :category="category"
+        :disabled="loading ? true : false"
+        @handle-submit="addCategory"
+      />
+    </div>
+    <div class="categories__list">
+      <app-category-list
+        :theads="theads"
+        :categories="categoryList"
+        :error-message="errorMessage"
+        :access="access"
+      />
+    </div>
+  </section>
 </template>
 
 <script>
@@ -28,10 +33,12 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      disabled: false,
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -45,11 +52,25 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategoryList');
   },
+  methods: {
+    addCategory() {
+      if (this.loading) return;
+      this.$store.dispatch('addCategory', this.targetCategory);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .categories {
   display: flex;
+    &__post__form {
+        width: 40%;
+    }
+    &__list {
+      padding: 10px 20px;
+      margin-left: 20px;
+      border-left: 1px solid $separator-color;
+    }
 }
 </style>
