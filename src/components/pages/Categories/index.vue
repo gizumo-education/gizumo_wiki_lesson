@@ -1,11 +1,3 @@
 <template>
-  <div class="category">
-    <router-view />
-  </div>
+  <router-view />
 </template>
-
-<style lang="scss" scoped>
-// .category {
-//   display: flex;
-// }
-</style>
