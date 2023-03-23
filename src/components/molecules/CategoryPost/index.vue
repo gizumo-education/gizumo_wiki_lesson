@@ -9,7 +9,7 @@
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
       :value="category"
-      @update-value="$emit('update-value', $event)"
+      @update-value="updateValue"
     />
     <app-button
       class="category-management-post__submit"
@@ -70,6 +70,9 @@ export default {
     },
   },
   methods: {
+    updateValue($event) {
+      this.$emit('update-value', $event.target);
+    },
     addCategory() {
       if (!this.access.create) return;
       this.$emit('clear-message');

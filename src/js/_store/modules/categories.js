@@ -25,8 +25,8 @@ export default {
     applyRequest(state) {
       state.loading = true;
     },
-    doneAddCategory(state, payload) {
-      state.targetCategory.unshift(payload);
+    doneAddCategory(state) {
+      state.loading = false;
       state.doneMessage = '新規ユーザーの追加が完了しました。';
     },
   },

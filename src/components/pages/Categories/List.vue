@@ -5,7 +5,8 @@
         :access="access"
         :category="category"
         :disabled="loading ? true : false"
-        @handle-submit="addCategory"
+        @update-value="updateValue"
+        @add-category="addCategory"
       />
     </div>
     <div class="categories__list">
@@ -53,9 +54,16 @@ export default {
     this.$store.dispatch('categories/getAllCategoryList');
   },
   methods: {
+    updateValue(target) {
+      this[target.name] = target.value;
+    },
     addCategory() {
       if (this.loading) return;
-      this.$store.dispatch('addCategory', this.targetCategory);
+      this.$store.dispatch('categories/addCategory', {
+        category: this.category.replace(/( | )+/, '').trim(),
+      }).then(() => {
+        this.$router.push('/categories');
+      });
     },
   },
 };
