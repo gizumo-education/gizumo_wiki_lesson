@@ -85,7 +85,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  Button,
+  Text,
+  RouterLink,
 } from '@Components/atoms';
 
 export default {
@@ -131,9 +133,7 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px;
   height: 100%;
-  overflow: scroll;
   &__table {
     width: 100%;
     text-align: left;
