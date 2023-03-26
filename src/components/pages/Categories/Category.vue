@@ -1,17 +1,15 @@
 <template>
   <div class="categories">
-    <div class="categories_post">
-      <app-category-post
-        :access="access"
-      />
-    </div>
-    <div class="categories_list">
-      <app-category-list
-        :theads="theads"
-        :categories="categoriesList"
-        :access="access"
-      />
-    </div>
+    <app-category-post
+      class="categories_post"
+      :access="access"
+    />
+    <app-category-list
+      class="categories_list"
+      :theads="theads"
+      :categories="categoriesList"
+      :access="access"
+    />
   </div>
 </template>
 
@@ -45,12 +43,17 @@ export default {
 <style lang="scss" scoped>
 .categories {
   display: flex;
+  height: 100%;
 
   &_post {
-    width: 30%;
+    width: 35%;
   }
   &_list {
-    width: 70%;
+    width: 65%;
+    margin-left: 18px;
+    padding-left: 18px;
+    border-left: 2px solid $separator-color;
+    overflow: hidden;
   }
 }
 </style>
