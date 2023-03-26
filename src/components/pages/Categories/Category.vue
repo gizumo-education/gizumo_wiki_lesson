@@ -46,10 +46,10 @@ export default {
   height: 100%;
 
   &_post {
-    width: 35%;
+    width: 38%;
   }
   &_list {
-    width: 65%;
+    width: 62%;
     margin-left: 18px;
     padding-left: 18px;
     border-left: 2px solid $separator-color;
