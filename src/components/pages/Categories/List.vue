@@ -2,11 +2,13 @@
   <section class="categories">
     <div class="categories__post__form">
       <app-category-post
+        :error-message="errorMessage"
         :access="access"
         :category="category"
         :disabled="loading ? true : false"
+        @clear-message="clearMessage"
+        @handle-submit="addCategory"
         @update-value="updateValue"
-        @add-category="addCategory"
       />
     </div>
     <div class="categories__list">
@@ -54,16 +56,16 @@ export default {
     this.$store.dispatch('categories/getAllCategoryList');
   },
   methods: {
-    updateValue(target) {
-      this[target.name] = target.value;
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue(event) {
+      this.category = event.target.value;
     },
     addCategory() {
       if (this.loading) return;
-      this.$store.dispatch('categories/addCategory', {
-        category: this.category.replace(/( | )+/, '').trim(),
-      }).then(() => {
-        this.$router.push('/categories');
-      });
+      this.$store.dispatch('categories/addCategory', this.category);
+      this.category = '';
     },
   },
 };
