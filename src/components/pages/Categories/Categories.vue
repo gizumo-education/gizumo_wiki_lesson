@@ -15,6 +15,9 @@
         :theads="theads"
         :access="access"
         :categories="categoryList"
+        :delete-category-name="deleteCategoryName"
+        @handle-click="handleClick"
+        @open-modal="openModal"
       />
     </div>>
   </div>
@@ -45,14 +48,17 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
-    },
-    disabled() {
-      return this.$store.state.categories.disabled;
     },
   },
   created() {
@@ -65,9 +71,19 @@ export default {
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
     },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
+      this.$store.dispatch('categories/getAllCategories');
+    },
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategories');
+    },
+    openModal(categoryId, categoryName) {
+      const categoryDetail = [categoryId, categoryName];
+      this.$store.dispatch('categories/confirmDeleteCategory', categoryDetail);
+      this.toggleModal();
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value);
@@ -82,11 +98,12 @@ export default {
   &__post {
     border-right: 2px solid #ccc;
     padding-right: 2%;
-    width: 40%;
+    width: 30%;
   }
   &__list {
     padding-left: 2%;
     white-space: nowrap;
+    width: 70%;
   }
 }
 </style>
