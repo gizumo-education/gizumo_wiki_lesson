@@ -31,7 +31,7 @@ export default {
     newAddCategory(state, payload) {
       state.loading = false;
       state.categoryList.unshift(payload);
-      state.doneMessage = '新規ユーザーの追加が完了しました。';
+      state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
     failRequest(state, { message }) {
       state.errorMessage = message;

@@ -3,6 +3,7 @@
     <div class="categories__post__form">
       <app-category-post
         :error-message="errorMessage"
+        :done-message="doneMessage"
         :access="access"
         :category="category"
         :disabled="loading ? true : false"
@@ -50,6 +51,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
