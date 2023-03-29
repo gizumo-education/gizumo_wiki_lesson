@@ -101,10 +101,12 @@ export default {
       }
     },
     clickPagenation($event) {
-      // console.log($event.target)
-      const pageId = $event.target.innerHTML;
+      // console.log($event.target);
+      // console.log($event.target.innerHTML); // 文字列型
+      const pageId = parseInt($event.target.innerHTML, 10); // 数値型
       this.$router.push({ query: { page: pageId } });
       this.$store.dispatch('articles/getAllArticles', pageId);
+      // console.log(typeof pageId); //文字列型か数値型か判別
     },
   },
 };
