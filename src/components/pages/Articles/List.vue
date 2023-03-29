@@ -36,7 +36,6 @@ export default {
     return {
       title: 'すべて',
       errmessage: '',
-      pagination: 0,
     };
   },
   computed: {
