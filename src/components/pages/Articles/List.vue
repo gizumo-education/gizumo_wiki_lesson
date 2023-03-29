@@ -9,7 +9,7 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <app-article-pagination
+    <app-pagination
       :access="access"
       :pagination-last-page="paginationLastPage"
       :pagination-first-page="paginationFirstPage"
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import { ArticleList, ArticlePagination } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
-    appArticlePagination: ArticlePagination,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
