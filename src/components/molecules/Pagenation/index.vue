@@ -76,15 +76,15 @@ export default {
         pageAll.push(i + 1);
       }
       // 真ん中に表示させる５つの番号
-      let displayPageNum = [];
+      let pageArray = [];
       if (this.pageCurrent < 4) { // 現在のページが4より小さい時
-        displayPageNum = pageAll.slice(1, 6); // 2 ~６を表示させる
+        pageArray = pageAll.slice(1, 6); // 2 ~６を表示させる
       } else if (this.pageCurrent > this.pageTotal - 3) { // ページ総数(34)の-3(31)より小さい時
-        displayPageNum = pageAll.slice(this.pageTotal - 6, this.pageTotal - 1); // 29~33を真ん中に表示
+        pageArray = pageAll.slice(this.pageTotal - 6, this.pageTotal - 1); // 29~33を真ん中に表示
       } else {
-        displayPageNum = pageAll.slice(this.pageCurrent - 3, this.pageCurrent + 2); // 現在のページから前後2つ表示
+        pageArray = pageAll.slice(this.pageCurrent - 3, this.pageCurrent + 2); // 現在のページから前後2つ表示
       }
-      return displayPageNum;
+      return pageArray;
     },
   },
   methods: {
