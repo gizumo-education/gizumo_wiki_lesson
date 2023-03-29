@@ -9,16 +9,24 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-article-pagination
+      :access="access"
+      :pagination-last-page="paginationLastPage"
+      :pagination-first-page="paginationFirstPage"
+      :query-page="queryPage"
+      @current-page="getCurrentPage"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, ArticlePagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appArticlePagination: ArticlePagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -28,6 +36,8 @@ export default {
   data() {
     return {
       title: 'すべて',
+      errmessage: '',
+      pagination: 0,
     };
   },
   computed: {
@@ -40,9 +50,29 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    paginationLastPage() {
+      return this.$store.getters['articles/lastPage'];
+    },
+    paginationFirstPage() {
+      return this.$store.getters['articles/firstPage'];
+    },
+    queryPage() {
+      return parseInt(this.$route.query.page, 10);
+    },
   },
   created() {
     this.fetchArticles();
+    if (this.$route.query.page) {
+      this.$store.dispatch('articles/getPaginationArticles', this.$route.query.page);
+    } else {
+      this.$store.dispatch('articles/getAllArticles');
+    }
+  },
+  updated() {
+    if (!this.$route.query.page) {
+      this.$router.push({ path: 'articles', query: { page: 1 } });
+      this.$store.dispatch('articles/getAllArticles');
+    }
   },
   methods: {
     openModal(articleId) {
@@ -82,6 +112,12 @@ export default {
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }
+    },
+    getCurrentPage($event) {
+      const pageId = Number($event.target.innerHTML);
+      this.$router.push({ path: 'articles', query: { page: pageId } })
+        .catch(() => {});
+      this.$store.dispatch('articles/getPaginationArticles', pageId);
     },
   },
 };
