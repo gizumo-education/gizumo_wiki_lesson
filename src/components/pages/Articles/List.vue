@@ -10,7 +10,6 @@
       @handle-click="handleClick"
     />
     <app-pagination
-      :access="access"
       :pagination-last-page="paginationLastPage"
       :pagination-first-page="paginationFirstPage"
       :query-page="queryPage"

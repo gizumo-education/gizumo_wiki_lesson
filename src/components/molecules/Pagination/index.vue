@@ -45,10 +45,6 @@ export default {
     appButton: Button,
   },
   props: {
-    access: {
-      type: Object,
-      default: () => ({}),
-    },
     paginationLastPage: {
       type: Number,
       required: true,
