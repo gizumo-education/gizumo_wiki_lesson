@@ -5,20 +5,28 @@
       :target-array="articlesList"
       :done-message="doneMessage"
       :access="access"
+      :page-total="pageTotal"
+      :page-current="pageCurrent"
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
+    />
+    <app-pagenation
+      :page-total="pageTotal"
+      :page-current="pageCurrent"
+      @click-pagenation="clickPagenation"
     />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagenation } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagenation: Pagenation,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -28,6 +36,7 @@ export default {
   data() {
     return {
       title: 'すべて',
+      pageId: null,
     };
   },
   computed: {
@@ -40,9 +49,17 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    pageTotal() {
+      return this.$store.state.articles.pageTotal;
+    },
+    pageCurrent() {
+      return this.$store.state.articles.pageCurrent;
+    },
   },
   created() {
+    // console.log(this.$route)
     this.fetchArticles();
+    this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -82,6 +99,12 @@ export default {
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }
+    },
+    clickPagenation($event) {
+      // console.log($event.target)
+      const pageId = $event.target.innerHTML;
+      this.$router.push({ query: { page: pageId } });
+      this.$store.dispatch('articles/getAllArticles', pageId);
     },
   },
 };
