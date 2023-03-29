@@ -2,10 +2,14 @@
   <section class="categories">
     <div class="categories__post__form">
       <app-category-post
+        :error-message="errorMessage"
+        :done-message="doneMessage"
         :access="access"
         :category="category"
         :disabled="loading ? true : false"
+        @clear-message="clearMessage"
         @handle-submit="addCategory"
+        @update-value="updateValue"
       />
     </div>
     <div class="categories__list">
@@ -48,14 +52,24 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategoryList');
   },
   methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue(event) {
+      this.category = event.target.value;
+    },
     addCategory() {
       if (this.loading) return;
-      this.$store.dispatch('addCategory', this.targetCategory);
+      this.$store.dispatch('categories/addCategory', this.category);
+      this.category = '';
     },
   },
 };
