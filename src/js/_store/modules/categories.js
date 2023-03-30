@@ -12,11 +12,8 @@ export default {
       id: null,
       name: '',
     },
-    categoryList: [],
-    deleteCategoryId: null,
     deleteCategoryName: '',
-    categoryId: null,
-    categoryName: '',
+    categoryList: [],
     errorMessage: '',
     doneMessage: '',
   },
@@ -32,9 +29,8 @@ export default {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
     },
-    modalDeleteCategory(state, categoryId, categoryName) {
-      state.deleteCategoryId = categoryId;
-      state.deleteCategoryName = categoryName;
+    modalDeleteCategory(state, payload) {
+      state.deleteCategoryName = payload.categoryName;
     },
     newAddCategory(state, payload) {
       state.loading = false;
@@ -62,8 +58,12 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    modalDeleteCategory({ commit }, { categoryId, categoryName }) {
-      commit('modalDeleteCategory', { categoryId, categoryName });
+    modalDeleteCategory({ commit }, { id, name }) {
+      const payload = {
+        categoryId: id,
+        categoryName: name,
+      };
+      commit('modalDeleteCategory', payload);
     },
     addCategory({ commit, rootGetters }, categoryName) {
       axios(rootGetters['auth/token'])({

@@ -16,8 +16,7 @@
       <app-category-list
         :theads="theads"
         :categories="categoryList"
-        :category-id="categoryId"
-        :category-name="categoryName"
+        :delete-category-name="deleteCategoryName"
         :error-message="errorMessage"
         :access="access"
         @open-modal="openModal"
@@ -55,6 +54,9 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
@@ -78,7 +80,10 @@ export default {
       this.category = '';
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/modalDeleteCategory', categoryId, categoryName);
+      this.$store.dispatch('categories/modalDeleteCategory', {
+        id: categoryId,
+        name: categoryName,
+      });
       this.toggleModal();
     },
     deleteCategory() {
