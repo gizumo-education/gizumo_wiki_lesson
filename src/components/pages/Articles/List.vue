@@ -105,9 +105,11 @@ export default {
     },
     getCurrentPage($event) {
       const pageId = Number($event.target.innerHTML);
-      this.$router.push({ path: 'articles', query: { page: pageId } })
-        .catch(() => {});
-      this.$store.dispatch('articles/getPaginationArticles', pageId);
+      if (pageId !== this.queryPage) {
+        this.$router.push({ path: 'articles', query: { page: pageId } })
+          .catch(() => {});
+        this.$store.dispatch('articles/getPaginationArticles', pageId);
+      }
     },
   },
 };
