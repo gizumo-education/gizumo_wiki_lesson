@@ -92,11 +92,8 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
     },
-    doneGetLastArticles(state, lastPage) {
-      state.page.lastPagination = lastPage;
-    },
-    doneGetFirstArticles(state, firstPage) {
-      state.page.firstPagination = firstPage;
+    doneGetArticleMeta(state, articleMeta) {
+      state.page = { ...articleMeta };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -143,11 +140,12 @@ export default {
         const payload = {
           articles: res.data.articles,
         };
-        const lastPage = res.data.meta.last_page;
-        const firstPage = res.data.meta.current_page;
+        const articleMeta = {
+          firstPagination: res.data.meta.current_page,
+          lastPagination: res.data.meta.last_page,
+        };
         commit('doneGetAllArticles', payload);
-        commit('doneGetLastArticles', lastPage);
-        commit('doneGetFirstArticles', firstPage);
+        commit('doneGetArticleMeta', articleMeta);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
