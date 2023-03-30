@@ -5,29 +5,34 @@
       :target-array="articlesList"
       :done-message="doneMessage"
       :access="access"
+      :page-total="pageTotal"
+      :page-current="pageCurrent"
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
+    />
+    <app-pagenation
+      :page-total="pageTotal"
+      :page-current="pageCurrent"
+      @click-pagenation="clickPagenation"
     />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagenation } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagenation: Pagenation,
   },
   mixins: [Mixins],
-  beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
-    next();
-  },
   data() {
     return {
       title: 'すべて',
+      pageId: null,
     };
   },
   computed: {
@@ -40,9 +45,15 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    pageTotal() {
+      return this.$store.state.articles.pageTotal;
+    },
+    pageCurrent() {
+      return this.$store.state.articles.pageCurrent;
+    },
   },
   created() {
-    this.fetchArticles();
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +78,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageCurrent) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,8 +91,13 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', pageCurrent);
       }
+    },
+    clickPagenation($event) {
+      const pageId = parseInt($event.target.innerHTML, 10);
+      this.$router.push({ query: { page: pageId } });
+      this.$store.dispatch('articles/getAllArticles', pageId);
     },
   },
 };
