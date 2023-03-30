@@ -23,6 +23,10 @@ export default {
         updated_at: '',
       },
     },
+    page: {
+      firstPagination: 0,
+      lastPagination: 0,
+    },
     articleList: [],
     deleteArticleId: null,
     loading: false,
@@ -45,6 +49,8 @@ export default {
     },
     targetArticle: state => state.targetArticle,
     deleteArticleId: state => state.deleteArticleId,
+    lastPage: state => state.page.lastPagination,
+    firstPage: state => state.page.firstPagination,
   },
   mutations: {
     initPostArticle(state) {
@@ -86,6 +92,9 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
     },
+    doneGetArticleMeta(state, articleMeta) {
+      state.page = { ...articleMeta };
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -115,6 +124,9 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    getPagination(state, pagination) {
+      state.targetArticle.pagination = pagination;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
@@ -124,6 +136,24 @@ export default {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article',
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+        };
+        const articleMeta = {
+          firstPagination: res.data.meta.current_page,
+          lastPagination: res.data.meta.last_page,
+        };
+        commit('doneGetAllArticles', payload);
+        commit('doneGetArticleMeta', articleMeta);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getPaginationArticles({ commit, rootGetters }, pageId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/article?page=${pageId}`,
       }).then(res => {
         const payload = {
           articles: res.data.articles,
@@ -283,6 +313,23 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getPagination({ commit, rootGetters }, pageId) {
+      commit('toggleLoading');
+      return new Promise(resolve => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/articles?page=${pageId}}`,
+        }).then(response => {
+          const pagination = response.data.meta.current_page;
+          commit('toggleLoading');
+          commit('getPagination', pagination);
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
+        });
+      });
     },
   },
 };

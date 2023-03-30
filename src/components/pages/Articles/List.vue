@@ -9,25 +9,33 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-pagination
+      :pagination-last-page="paginationLastPage"
+      :pagination-first-page="paginationFirstPage"
+      :query-page="queryPage"
+      @current-page="getCurrentPage"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    // this.fetchArticles();
     next();
   },
   data() {
     return {
       title: 'すべて',
+      errmessage: '',
     };
   },
   computed: {
@@ -40,9 +48,18 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    paginationLastPage() {
+      return this.$store.getters['articles/lastPage'];
+    },
+    paginationFirstPage() {
+      return this.$store.getters['articles/firstPage'];
+    },
+    queryPage() {
+      return parseInt(this.$route.query.page, 10);
+    },
   },
   created() {
-    this.fetchArticles();
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +84,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(queryPage) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -79,8 +96,19 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
-      } else {
-        this.$store.dispatch('articles/getAllArticles');
+      } else if (this.$route.query.page) {
+        this.$store.dispatch('articles/getAllArticles', queryPage);
+      } else if (!this.$route.query.page) {
+        this.$router.push({ path: 'articles', query: { page: 1 } });
+        this.$store.dispatch('articles/getAllArticles', queryPage);
+      }
+    },
+    getCurrentPage($event) {
+      const pageId = Number($event.target.innerHTML);
+      if (pageId !== this.queryPage) {
+        this.$router.push({ path: 'articles', query: { page: pageId } })
+          .catch(() => {});
+        this.$store.dispatch('articles/getPaginationArticles', pageId);
       }
     },
   },
