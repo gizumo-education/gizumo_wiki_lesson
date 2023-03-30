@@ -29,7 +29,7 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    // this.fetchArticles();
     next();
   },
   data() {
@@ -59,18 +59,7 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
-    if (this.$route.query.page) {
-      this.$store.dispatch('articles/getPaginationArticles', this.$route.query.page);
-    } else {
-      this.$store.dispatch('articles/getAllArticles');
-    }
-  },
-  updated() {
-    if (!this.$route.query.page) {
-      this.$router.push({ path: 'articles', query: { page: 1 } });
-      this.$store.dispatch('articles/getAllArticles');
-    }
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -95,7 +84,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(queryPage) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -107,8 +96,11 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
-      } else {
-        this.$store.dispatch('articles/getAllArticles');
+      } else if (this.$route.query.page) {
+        this.$store.dispatch('articles/getAllArticles', queryPage);
+      } else if (!this.$route.query.page) {
+        this.$router.push({ path: 'articles', query: { page: 1 } });
+        this.$store.dispatch('articles/getAllArticles', queryPage);
       }
     },
     getCurrentPage($event) {
