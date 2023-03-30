@@ -16,8 +16,12 @@
       <app-category-list
         :theads="theads"
         :categories="categoryList"
+        :category-id="categoryId"
+        :category-name="categoryName"
         :error-message="errorMessage"
         :access="access"
+        @open-modal="openModal"
+        @handle-submit="deleteCategory"
       />
     </div>
   </section>
@@ -37,6 +41,8 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
+      categoryName: '',
+      categoryId: null,
     };
   },
   computed: {
@@ -70,6 +76,13 @@ export default {
       if (this.loading) return;
       this.$store.dispatch('categories/addCategory', this.category);
       this.category = '';
+    },
+    openModal(categoryId, categoryName) {
+      this.$store.dispatch('categories/modalDeleteCategory', categoryId, categoryName);
+      this.toggleModal();
+    },
+    deleteCategory() {
+
     },
   },
 };

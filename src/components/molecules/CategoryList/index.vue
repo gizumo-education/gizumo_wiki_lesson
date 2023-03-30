@@ -113,6 +113,14 @@ export default {
       type: String,
       default: '',
     },
+    categoryId: {
+      type: Number,
+      default: null,
+    },
+    categoryName: {
+      type: String,
+      default: '',
+    },
     access: {
       type: Object,
       default: () => ({}),
