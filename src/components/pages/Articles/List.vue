@@ -29,10 +29,6 @@ export default {
     appPagenation: Pagenation,
   },
   mixins: [Mixins],
-  beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
-    next();
-  },
   data() {
     return {
       title: 'すべて',
@@ -57,9 +53,7 @@ export default {
     },
   },
   created() {
-    // console.log(this.$route)
-    this.fetchArticles();
-    this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -84,7 +78,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageCurrent) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -97,16 +91,13 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', pageCurrent);
       }
     },
     clickPagenation($event) {
-      // console.log($event.target);
-      // console.log($event.target.innerHTML); // 文字列型
-      const pageId = parseInt($event.target.innerHTML, 10); // 数値型
+      const pageId = parseInt($event.target.innerHTML, 10);
       this.$router.push({ query: { page: pageId } });
       this.$store.dispatch('articles/getAllArticles', pageId);
-      // console.log(typeof pageId); //文字列型か数値型か判別
     },
   },
 };

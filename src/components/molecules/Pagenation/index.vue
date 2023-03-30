@@ -89,7 +89,10 @@ export default {
   },
   methods: {
     clickPagenation($event) {
-      this.$emit('click-pagenation', $event);
+      const pageId = parseInt($event.target.innerHTML, 10);
+      if (pageId !== this.pageCurrent) {
+        this.$emit('click-pagenation', $event);
+      }
     },
 
   },
