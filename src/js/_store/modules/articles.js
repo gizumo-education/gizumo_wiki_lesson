@@ -87,7 +87,6 @@ export default {
       state.articleList = [...filteredArticles];
     },
     doneGetAllArticles(state, payload) {
-      // console.log(payload)
       state.articleList = [...payload.articles];
       state.pageTotal = payload.pageTotal;
       state.pageCurrent = payload.pageCurrent;
