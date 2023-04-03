@@ -18,7 +18,6 @@
         :categories="categoryList"
         :delete-category-name="deleteCategoryName"
         :error-message="errorMessage"
-        :category-id="categoryId"
         :access="access"
         @open-modal="openModal"
         @handle-click="deleteCategory"
@@ -58,9 +57,6 @@ export default {
     deleteCategoryName() {
       return this.$store.state.categories.deleteCategoryName;
     },
-    deleteCategoryId() {
-      return this.$store.state.categories.deleteCategoryId;
-    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
@@ -84,7 +80,7 @@ export default {
       this.category = '';
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/modalDeleteCategory', {
+      this.$store.dispatch('categories/setDeleteCategoryInfo', {
         id: categoryId,
         name: categoryName,
       });

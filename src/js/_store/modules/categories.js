@@ -31,14 +31,15 @@ export default {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
     },
-    modalDeleteCategory(state, payload) {
+    setDeleteCategoryInfo(state, payload) {
       state.deleteCategoryName = payload.categoryName;
       state.deleteCategoryId = payload.categoryId;
     },
     doneDeleteCategory(state) {
-      state.deleteCategoryId = state.categoryId;
-      state.categoryList.splice(state.deleteCategoryId, 1);
+      const index = state.categoryList.findIndex(i => i.id === state.deleteCategoryId);
+      state.categoryList.splice(index, 1);
       state.doneMessage = 'カテゴリーの削除が完了しました。';
+      state.deleteCategoryId = null;
     },
     newAddCategory(state, payload) {
       state.loading = false;
@@ -66,17 +67,17 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    modalDeleteCategory({ commit }, { id, name }) {
+    setDeleteCategoryInfo({ commit }, { id, name }) {
       const payload = {
         categoryId: id,
         categoryName: name,
       };
-      commit('modalDeleteCategory', payload);
+      commit('setDeleteCategoryInfo', payload);
     },
     deleteCategory({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        url: `/category/${'deleteCategoryId'}`,
         data: { id: this.deleteCategoryId },
       }).then(() => {
         commit('doneDeleteCategory');

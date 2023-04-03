@@ -123,9 +123,9 @@ export default {
       if (!this.access.delete) return;
       this.$emit('open-modal', categoryId, categoryName);
     },
-    handleClick(categoryId) {
+    handleClick() {
       if (!this.access.delete) return;
-      this.$emit('handle-click', categoryId);
+      this.$emit('handle-click');
     },
   },
 };
