@@ -18,9 +18,10 @@
         :categories="categoryList"
         :delete-category-name="deleteCategoryName"
         :error-message="errorMessage"
+        :category-id="categoryId"
         :access="access"
         @open-modal="openModal"
-        @handle-submit="deleteCategory"
+        @handle-click="deleteCategory"
       />
     </div>
   </section>
@@ -57,6 +58,9 @@ export default {
     deleteCategoryName() {
       return this.$store.state.categories.deleteCategoryName;
     },
+    deleteCategoryId() {
+      return this.$store.state.categories.deleteCategoryId;
+    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
@@ -87,7 +91,8 @@ export default {
       this.toggleModal();
     },
     deleteCategory() {
-
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
     },
   },
 };
