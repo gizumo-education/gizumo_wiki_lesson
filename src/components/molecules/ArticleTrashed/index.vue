@@ -45,6 +45,7 @@
           <td class="article-trashed-table__date border-bottom">
             <app-text tag="span" small>
               {{ displayDate(item.created_at) }}
+              <!-- {{ displayDate }} -->
             </app-text>
           </td>
         </tr>
@@ -90,9 +91,14 @@ export default {
       };
     },
     displayDate() {
-      return trashedDate => {
-        const date = trashedDate.slice(0, 10); // yyyy-mm-ddのみ表示
-        return date;
+      return createDate => {
+        const trashedDate = new Date(createDate);
+
+        const year = trashedDate.getFullYear();
+        const month = `0${trashedDate.getMonth() + 1}`.slice(-2);
+        const day = `0${trashedDate.getDate()}`.slice(-2);
+
+        return `${year}-${month}-${day}`;
       };
     },
   },
