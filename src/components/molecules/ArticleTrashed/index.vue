@@ -88,9 +88,6 @@ export default {
       };
     },
   },
-  // mounted() {
-  //   console.log(this.articleTrashedList);
-  // },
 };
 </script>
 

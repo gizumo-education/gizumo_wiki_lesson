@@ -112,9 +112,7 @@ export default {
       state.deleteArticleId = null;
     },
     doneGetArticleTrashedList(state, payload) {
-      // console.log(payload);
       state.articleTrashedList = [...payload];
-      // console.log(state.articleTrashedList);
     },
     toggleLoading(state) {
       state.loading = !state.loading;
