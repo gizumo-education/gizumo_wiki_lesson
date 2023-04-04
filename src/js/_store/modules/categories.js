@@ -74,10 +74,10 @@ export default {
       };
       commit('setDeleteCategoryInfo', payload);
     },
-    deleteCategory({ commit, rootGetters }) {
+    deleteCategory({ commit, rootGetters, state }) {
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
-        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        url: `/category/${state.deleteCategoryId}`,
         data: { id: this.deleteCategoryId },
       }).then(() => {
         commit('doneDeleteCategory');
