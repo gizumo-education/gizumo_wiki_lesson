@@ -24,6 +24,7 @@ export default {
       },
     },
     articleList: [],
+    articleTrashedList: [],
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -109,6 +110,11 @@ export default {
     },
     doneDeleteArticle(state) {
       state.deleteArticleId = null;
+    },
+    doneGetArticleTrashedList(state, payload) {
+      // console.log(payload);
+      state.articleTrashedList = [...payload];
+      // console.log(state.articleTrashedList);
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -259,6 +265,18 @@ export default {
       }).then(() => {
         commit('doneDeleteArticle');
         commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getArticleTrashedList({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        // console.log(res);
+        const payload = res.data.articles;
+        commit('doneGetArticleTrashedList', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
