@@ -2,6 +2,7 @@
   <app-article-trashed
     :article-trashed-list="articleTrashedList"
     :theads="theads"
+    :error-message="errorMessage"
   />
 </template>
 
@@ -20,6 +21,9 @@ export default {
   computed: {
     articleTrashedList() {
       return this.$store.state.articles.articleTrashedList;
+    },
+    errorMessage() {
+      return this.$store.state.articles.errorMessage;
     },
   },
   created() {

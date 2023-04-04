@@ -50,6 +50,10 @@
         </tr>
       </transition-group>
     </table>
+
+    <div v-if="errorMessage" class="article-trashed__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
   </div>
 </template>
 
@@ -70,6 +74,10 @@ export default {
     theads: {
       type: Array,
       default: () => [],
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
   },
   computed: {
@@ -94,6 +102,10 @@ export default {
 <style lang="scss" scoped>
 .article-trashed {
   &__button {
+    margin-top: 20px;
+  }
+
+  &__notice {
     margin-top: 20px;
   }
 }
