@@ -1,6 +1,5 @@
 import axios from '@Helpers/axiosDefault';
 
-/* eslint-disable no-console */
 export default {
   namespaced: true,
   state: {
@@ -22,13 +21,11 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(res => {
-        console.log('categories');
         const payload = {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
       }).catch(err => {
-        console.log(err);
         commit('failRequest', { message: err.message });
       });
     },

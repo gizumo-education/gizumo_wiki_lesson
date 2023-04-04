@@ -2,6 +2,7 @@
   <section class="category-content">
     <div class="category-content__post">
       <app-category-post
+        :error-message="errorMessage"
         :category="category"
         :access="access"
       />
