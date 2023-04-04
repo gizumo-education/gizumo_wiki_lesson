@@ -172,10 +172,8 @@ export default {
     }
     &__create-link {
       margin-top: 16px;
-      margin-left: 30px;
-
-      & :first-child {
-        margin-left: 0;
+      &:last-of-type{
+        margin-left: 30px;
       }
     }
     &__links {
