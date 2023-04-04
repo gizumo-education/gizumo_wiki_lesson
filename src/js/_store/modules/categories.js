@@ -37,8 +37,14 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
+    doneEditCategory(state, { editedCategory }) {
+      state.category = { ...state.category, ...editedCategory };
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
+    },
+    doneGetCategory(state, payload) {
+      state.category = { ...state.category, ...payload.category };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -75,6 +81,31 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
+    editCategory({ commit, rootGetters }) {
+      commit('clearMessage');
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/category'].id);
+      data.append('name', rootGetters['categories/category'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/category'].id}`,
+        data,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            title: res.data.category.name,
+          },
+        };
+        commit('doneEditCategory', payload);
+        commit('initCategory');
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -84,6 +115,26 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const category = res.data.category
+          ? res.data.category
+          : { id: null, name: '' };
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+            category,
+          },
+        };
+        commit('doneGetCategory', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
