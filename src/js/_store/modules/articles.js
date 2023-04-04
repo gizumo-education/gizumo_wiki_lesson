@@ -23,6 +23,7 @@ export default {
         updated_at: '',
       },
     },
+    targetDeleteArticle: [],
     page: {
       firstPagination: 0,
       lastPagination: 0,
@@ -76,6 +77,9 @@ export default {
     },
     doneGetArticle(state, payload) {
       state.targetArticle = { ...state.targetArticle, ...payload.article };
+    },
+    getDeleteList(state, articles) {
+      state.targetDeleteArticle = [...articles.articles];
     },
     editedTitle(state, payload) {
       state.targetArticle = { ...state.targetArticle, title: payload.title };
@@ -329,6 +333,19 @@ export default {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
         });
+      });
+    },
+    getDeleteList({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const articles = {
+          articles: res.data.articles,
+        };
+        commit('getDeleteList', articles);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },

@@ -19,6 +19,7 @@
     "@storybook/addon-storysource": "^5.0.10",
     "axios": "^0.27.2",
     "cookie-parser": "^1.4.4",
+    "dayjs": "^1.11.7",
     "highlight.js": "^9.15.6",
     "http-errors": "^1.7.2",
     "js-cookie": "^2.2.0",
