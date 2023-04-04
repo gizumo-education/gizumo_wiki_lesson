@@ -41,7 +41,7 @@
         align-items
         bg-white
         large
-        bo1111rder-bottom-gray
+        border-bottom-gray
       >
         <app-text
           class="article-list__title"

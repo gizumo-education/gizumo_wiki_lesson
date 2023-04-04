@@ -272,7 +272,6 @@ export default {
         method: 'GET',
         url: '/article/trashed',
       }).then(res => {
-        // console.log(res);
         const payload = res.data.articles;
         commit('doneGetArticleTrashedList', payload);
       }).catch(err => {
