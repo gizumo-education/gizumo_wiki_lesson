@@ -45,7 +45,6 @@
           <td class="article-trashed-table__date border-bottom">
             <app-text tag="span" small>
               {{ displayDate(item.created_at) }}
-              <!-- {{ displayDate }} -->
             </app-text>
           </td>
         </tr>
