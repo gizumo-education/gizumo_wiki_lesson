@@ -13,6 +13,7 @@ import ArticleList from '@Pages/Articles/List.vue';
 import ArticleDetail from '@Pages/Articles/Detail.vue';
 import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
+import ArticleTrashed from '@Pages/Articles/Trashed.vue';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
@@ -111,6 +112,11 @@ const router = new VueRouter({
               next();
             }
           },
+        },
+        {
+          name: 'articleTrashed',
+          path: 'trashed',
+          component: ArticleTrashed,
         },
         {
           name: 'articlePost',

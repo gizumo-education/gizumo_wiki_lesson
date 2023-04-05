@@ -17,6 +17,7 @@ import ArticleDetail from './ArticleDetail/index.vue';
 import DeleteModal from './Modal/Delete.vue';
 import Notice from './Notice/index.vue';
 import Pagenation from './Pagenation/index.vue';
+import ArticleTrashed from './ArticleTrashed/index.vue';
 
 export {
   SigninForm,
@@ -38,4 +39,5 @@ export {
   DeleteModal,
   Notice,
   Pagenation,
+  ArticleTrashed,
 };
