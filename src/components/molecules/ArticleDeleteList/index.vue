@@ -93,12 +93,13 @@ export default {
     &__title {
       th {
         text-align: start;
-        padding-left: 300px;
+        padding-left: 15%;
         &:first-child {
           padding-left: 0;
         }
         &:last-child {
-          padding-left: 250px;
+          float: right;
+          margin-right: 30px;
         }
       }
     }
@@ -108,6 +109,7 @@ export default {
     &__table {
       margin-top: 10px;
       margin-left: 10px;
+      width: 100%;
     }
     &__delete-list {
       tr {
@@ -115,13 +117,15 @@ export default {
       }
       td {
         padding: 5px;
+        vertical-align: bottom;
       }
     }
     &__content {
-      margin-left: 300px;
+      margin-left: 20%;
     }
     &__created {
-      margin-left: 250px;
+      margin-right: 10px;
+      float: right;
     }
   }
 </style>
