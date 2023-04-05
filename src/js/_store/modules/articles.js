@@ -335,7 +335,7 @@ export default {
         });
       });
     },
-    getDeleteList({ commit, rootGetters }) {
+    getDeletedList({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article/trashed',

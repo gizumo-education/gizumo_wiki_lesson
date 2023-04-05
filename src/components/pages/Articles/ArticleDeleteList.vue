@@ -17,7 +17,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('articles/getDeleteList');
+    this.$store.dispatch('articles/getDeletedList');
   },
 };
 </script>
