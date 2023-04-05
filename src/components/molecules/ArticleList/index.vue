@@ -17,7 +17,7 @@
       新しいドキュメントを作る
     </app-router-link>
     <app-router-link
-      to="articles/delete"
+      to="articles/trashed"
       key-color
       white
       bg-lightgreen
