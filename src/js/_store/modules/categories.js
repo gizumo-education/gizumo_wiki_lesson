@@ -27,6 +27,9 @@ export default {
     clearMessage(state) {
       state.errorMessage = '';
     },
+    clearDoneMessage(state) {
+      state.doneMessage = '';
+    },
     confirmDeleteCategory(state, categoryDetail) {
       state.categoryDetail.deleteCategoryName = categoryDetail.categoryName;
       state.categoryDetail.deleteCategoryId = categoryDetail.categoryId;
@@ -66,6 +69,10 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
+    clearEditedValue({ commit }) {
+      commit('clearDoneMessage');
+      commit('initCategory');
+    },
     confirmDeleteCategory({ commit }, categoryDetail) {
       commit('confirmDeleteCategory', categoryDetail);
     },
@@ -85,7 +92,6 @@ export default {
       commit('clearMessage');
       commit('toggleLoading');
       const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/category'].id);
       data.append('name', rootGetters['categories/category'].name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
@@ -99,7 +105,6 @@ export default {
           },
         };
         commit('doneEditCategory', payload);
-        commit('initCategory');
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(() => {
@@ -124,14 +129,10 @@ export default {
         method: 'GET',
         url: `/category/${categoryId}`,
       }).then(res => {
-        const category = res.data.category
-          ? res.data.category
-          : { id: null, name: '' };
         const payload = {
           category: {
             id: res.data.category.id,
             name: res.data.category.name,
-            category,
           },
         };
         commit('doneGetCategory', payload);

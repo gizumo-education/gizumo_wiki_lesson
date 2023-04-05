@@ -8,7 +8,7 @@
       hover-opacity
       :to="`/categories`"
     >
-      カテゴリー一覧へ戻る
+      <span @click="clearEditedValue">カテゴリー一覧へ戻る</span>
     </app-router-link>
     <app-input
       v-validate="'required'"
@@ -38,6 +38,7 @@
     </div>
   </form>
 </template>
+
 <script>
 import {
   RouterLink,
@@ -64,10 +65,6 @@ export default {
       type: String,
       default: '',
     },
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     errorMessage: {
       type: String,
       default: '',
@@ -88,6 +85,9 @@ export default {
     },
   },
   methods: {
+    clearEditedValue() {
+      this.$emit('clear-edited-value');
+    },
     editCategory() {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {

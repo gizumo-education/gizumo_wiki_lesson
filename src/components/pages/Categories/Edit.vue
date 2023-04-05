@@ -2,11 +2,10 @@
   <app-category-edit
     :access="access"
     :category="category"
-    :category-id="categoryId"
-    :current-category-name="currentCategoryName"
     :disabled="disabled"
     :done-message="doneMessage"
     :error-message="errorMessage"
+    @clear-edited-value="clearEditedValue"
     @update-value="updateValue"
     @edit-category="editCategory"
   />
@@ -27,9 +26,7 @@ export default {
       return this.$store.state.categories.category.name;
     },
     categoryId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
-      return id;
+      return parseInt(this.$route.params.id, 10);
     },
     currentCategoryName() {
       return this.$store.state.categories.category.name;
@@ -45,9 +42,12 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetail', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
   },
   methods: {
+    clearEditedValue() {
+      this.$store.dispatch('categories/clearEditedValue');
+    },
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value);
     },
