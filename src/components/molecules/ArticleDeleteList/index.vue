@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <app-heading :level="1">{{ articleTitle }}</app-heading>
+    <app-heading :level="1">削除済み記事一覧</app-heading>
     <div class="article-list__box">
       <app-router-link
         to="/articles"
@@ -63,10 +63,6 @@ export default {
     appText: Text,
   },
   props: {
-    title: {
-      type: String,
-      default: '削除済み記事',
-    },
     deleteList: {
       type: Array,
       required: true,
@@ -77,9 +73,6 @@ export default {
     },
   },
   computed: {
-    articleTitle() {
-      return `${this.title}一覧`;
-    },
     deleteText() {
       return trashedText => {
         if (trashedText.length > 30) {
