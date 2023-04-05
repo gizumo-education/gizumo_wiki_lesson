@@ -69,7 +69,7 @@ export default {
     },
     deleteList: {
       type: Array,
-      default: () => [],
+      required: true,
     },
     theads: {
       type: Array,
