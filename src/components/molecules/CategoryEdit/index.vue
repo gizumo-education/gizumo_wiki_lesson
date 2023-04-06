@@ -97,6 +97,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .category-management-edit {
   &__link {

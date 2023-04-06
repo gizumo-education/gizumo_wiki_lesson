@@ -3,6 +3,7 @@
     <app-sidebar-list
       class-name="sidebar-list"
       :target-array="routeLinksArray"
+      @clear-edited-value="clearEditedValue"
     />
   </aside>
 </template>
@@ -18,6 +19,11 @@ export default {
   computed: {
     routeLinksArray() {
       return routeLinksArray;
+    },
+  },
+  methods: {
+    clearEditedValue() {
+      this.$store.dispatch('categories/clearEditedValue');
     },
   },
 };
