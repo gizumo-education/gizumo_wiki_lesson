@@ -20,6 +20,9 @@ export default {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
     },
+    createCategory(state) {
+      state.doneMessage = '新規カテゴリーを作成しました。';
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -49,6 +52,7 @@ export default {
           url: '/category',
           data: { name: categoryValue },
         }).then(() => {
+          commit('createCategory');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.response.data.message });

@@ -3,6 +3,7 @@
     <div class="category-content__post">
       <app-category-post
         :error-message="errorMessage"
+        :done-message="doneMessage"
         :category="category"
         :access="access"
         @clear-message="clearMessage"
@@ -46,6 +47,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
