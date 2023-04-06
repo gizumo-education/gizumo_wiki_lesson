@@ -5,6 +5,9 @@
         :error-message="errorMessage"
         :category="category"
         :access="access"
+        @clear-message="clearMessage"
+        @update-value="updateValue"
+        @handle-submit="handleSubmit"
       />
     </div>
     <div class="category-content__list">
@@ -38,14 +41,27 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
   },
-  method: {
-  },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue($event) {
+      this.category = $event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/createCategory', this.category);
+    },
   },
 };
 </script>
