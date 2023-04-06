@@ -14,7 +14,7 @@
         カテゴリー一覧へ戻る
       </app-router-link>
     </div>
-    <form @submit.prevent="editCategory">
+    <form @submit.prevent="handleSubmit">
       <div class="category-edit-item">
         <app-input
           v-validate="'required'"
@@ -22,7 +22,7 @@
           type="text"
           :error-messages="errors.collect('name')"
           :value="category.name"
-          @update-value="$emit('edited-name', $event)"
+          @update-value="$emit('update-value', $event)"
         />
       </div>
       <div class="category-edit-item">
@@ -76,6 +76,12 @@ export default {
     },
     disabled() {
       return this.access.edit && !this.loading;
+    },
+  },
+  methods: {
+    handleSubmit() {
+      if (!this.access.edit) return;
+      this.$emit('handle-submit', this.category);
     },
   },
 };

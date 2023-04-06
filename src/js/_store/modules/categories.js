@@ -33,6 +33,14 @@ export default {
     },
     doneGetTargetCategory(state, payload) {
       state.targetCategory.name = payload.name;
+      state.targetCategory.id = payload.id;
+    },
+    editedTitle(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
+    },
+    editedCategoryName(state, payload) {
+      state.targetCategory = { ...state.targetCategory, ...payload };
+      state.doneMessage = 'カテゴリーの変更が完了しました。';
     },
     setDeleteCategoryInfo(state, payload) {
       state.deleteCategoryName = payload.categoryName;
@@ -80,6 +88,27 @@ export default {
           name: response.data.category.name,
         };
         commit('doneGetTargetCategory', payload);
+      });
+    },
+    editedCategoryName({ commit, rootGetters }, editedCategory) {
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${editedCategory.id}`,
+        data: {
+          id: editedCategory.id,
+          name: editedCategory.name,
+        },
+      }).then(response => {
+        const payload = {
+          name: response.data.category.name,
+        };
+        commit('editedCategoryName', payload);
+      });
+    },
+    updateCategoryName({ commit }, name) {
+      commit({
+        type: 'editedTitle',
+        name,
       });
     },
     setDeleteCategoryInfo({ commit }, { id, name }) {

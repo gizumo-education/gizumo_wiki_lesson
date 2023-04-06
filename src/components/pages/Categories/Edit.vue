@@ -4,7 +4,8 @@
     :error-message="errorMessage"
     :done-message="doneMessage"
     :access="access"
-    @edited-name="editedName"
+    @update-value="updateCategoryName"
+    @handle-submit="editedCategoryName"
   />
 </template>
 
@@ -33,8 +34,12 @@ export default {
     this.$store.dispatch('categories/getTargetCategory', this.$route.params.id);
   },
   methods: {
-    editedName($event) {
-      this.$store.dispatch('categories/editedName', $event.target.value);
+    updateCategoryName($event) {
+      this.$store.dispatch('categories/updateCategoryName', $event.target.value);
+    },
+    editedCategoryName(editedCategory) {
+      if (this.loading) return;
+      this.$store.dispatch('categories/editedCategoryName', editedCategory);
     },
   },
 };
