@@ -65,6 +65,7 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/createCategory', this.category);
+      this.$store.dispatch('categories/getAllCategories');
     },
   },
 };
