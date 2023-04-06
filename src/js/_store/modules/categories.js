@@ -31,6 +31,9 @@ export default {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
     },
+    doneGetTargetCategory(state, payload) {
+      state.targetCategory.name = payload.name;
+    },
     setDeleteCategoryInfo(state, payload) {
       state.deleteCategoryName = payload.categoryName;
       state.deleteCategoryId = payload.categoryId;
@@ -65,6 +68,18 @@ export default {
         commit('doneGetAllCategories', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
+      });
+    },
+    getTargetCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(response => {
+        const payload = {
+          id: response.data.category.id,
+          name: response.data.category.name,
+        };
+        commit('doneGetTargetCategory', payload);
       });
     },
     setDeleteCategoryInfo({ commit }, { id, name }) {

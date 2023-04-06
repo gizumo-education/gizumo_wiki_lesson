@@ -1,37 +1,41 @@
 <template>
-  <div>
+  <section class="category-edit">
     <div v-if="doneMessage" class="category-edit__notice--update">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
     <app-heading :level="1">カテゴリーの更新</app-heading>
-    <div>
+    <div class="category-edit-link">
       <app-router-link
-        :to="/categories/"
-        theme-color
+        key-color
         underline
         hover-opacity
+        to="/categories"
       >
         カテゴリー一覧へ戻る
       </app-router-link>
     </div>
-    <div>
-      <app-input
-        v-validate="'required'"
-        name="title"
-        type="text"
-        :value="categoryTitle"
-        @update-value="$emit('edited-title', $event)"
-      />
-    </div>
-    <app-button
-      button-type="submit"
-      round
-      :disabled="!disabled"
-      @click="handleSubmit"
-    >
-      更新
-    </app-button>
-  </div>
+    <form @submit.prevent="editCategory">
+      <div class="category-edit-item">
+        <app-input
+          v-validate="'required'"
+          name="name"
+          type="text"
+          :error-messages="errors.collect('name')"
+          :value="category.name"
+          @update-value="$emit('edited-name', $event)"
+        />
+      </div>
+      <div class="category-edit-item">
+        <app-button
+          button-type="submit"
+          round
+          :disabled="!disabled"
+        >
+          {{ buttonText }}
+        </app-button>
+      </div>
+    </form>
+  </section>
 </template>
 
 <script>
@@ -48,14 +52,42 @@ export default {
     appText: Text,
   },
   props: {
-    categoryTitle: {
+    errorMessage: {
       type: String,
       default: '',
+    },
+    doneMessage: {
+      type: String,
+      default: '',
+    },
+    category: {
+      type: Object,
+      default: () => ({}),
+    },
+    access: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  computed: {
+    buttonText() {
+      if (!this.access.edit) return '更新権限がありません';
+      return this.loading ? '更新中...' : '更新';
+    },
+    disabled() {
+      return this.access.edit && !this.loading;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
+  .category-edit {
+    &-link {
+      margin-top: 16px;
+    }
+    &-item {
+      margin-top: 16px;
+    }
+  }
 </style>
