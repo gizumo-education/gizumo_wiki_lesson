@@ -55,7 +55,7 @@ export default {
       });
     },
     postCategory({ commit, state, rootGetters }) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit('clearMessage');
         commit('switchDisabled');
         const data = {
@@ -74,7 +74,6 @@ export default {
           commit('switchDisabled');
           commit('clearTargetCategory');
           commit('failRequest', { errorMessage: err.message });
-          reject();
         });
       });
     },
