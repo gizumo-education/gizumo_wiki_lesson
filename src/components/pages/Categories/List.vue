@@ -66,7 +66,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/clearMessage');
     this.$store.dispatch('categories/getAllCategoryList');
   },
   methods: {

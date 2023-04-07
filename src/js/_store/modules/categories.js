@@ -97,7 +97,6 @@ export default {
       });
     },
     editedCategoryName({ commit, rootGetters }, editedCategory) {
-      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${editedCategory.id}`,
@@ -109,6 +108,7 @@ export default {
         const payload = {
           name: response.data.category.name,
         };
+        commit('applyRequest');
         commit('editedCategoryName', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
@@ -128,7 +128,6 @@ export default {
       commit('setDeleteCategoryInfo', payload);
     },
     deleteCategory({ commit, rootGetters, state }) {
-      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${state.deleteCategoryId}`,
@@ -140,7 +139,6 @@ export default {
       });
     },
     addCategory({ commit, rootGetters }, categoryName) {
-      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',

@@ -17,6 +17,7 @@
           v-validate="'required'"
           name="name"
           type="text"
+          placeholder="カテゴリー名を入力してください。"
           :error-messages="errors.collect('name')"
           :value="category.name"
           @update-value="$emit('update-value', $event)"
