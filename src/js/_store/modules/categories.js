@@ -27,6 +27,9 @@ export default {
       state.errorMessage = '';
       state.doneMessage = '';
     },
+    applyRequest(state) {
+      state.loading = true;
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
@@ -94,7 +97,7 @@ export default {
       });
     },
     editedCategoryName({ commit, rootGetters }, editedCategory) {
-      commit('clearMessage');
+      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${editedCategory.id}`,
@@ -125,6 +128,7 @@ export default {
       commit('setDeleteCategoryInfo', payload);
     },
     deleteCategory({ commit, rootGetters, state }) {
+      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${state.deleteCategoryId}`,
@@ -136,6 +140,7 @@ export default {
       });
     },
     addCategory({ commit, rootGetters }, categoryName) {
+      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
