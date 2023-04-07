@@ -23,7 +23,7 @@
 
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
-
+/* eslint-disable no-console */
 export default {
   components: {
     appCategoryPost: CategoryPost,
@@ -53,6 +53,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch('categories/clearMessage');
     this.$store.dispatch('categories/getAllCategories');
   },
   methods: {
@@ -64,8 +65,10 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/createCategory', this.category);
-      this.$store.dispatch('categories/getAllCategories');
+      this.$store.dispatch('categories/createCategory', this.category).then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+        this.category = '';
+      });
     },
   },
 };
