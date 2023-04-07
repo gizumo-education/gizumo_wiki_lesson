@@ -28,8 +28,8 @@ export default {
         id: 'null',
       };
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
+    switchDisabled(state) {
+      state.disabled = !state.disabled;
     },
     failRequest(state, { errorMessage }) {
       state.errorMessage = errorMessage;
@@ -57,7 +57,7 @@ export default {
     postCategory({ commit, state, rootGetters }) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
-        commit('toggleLoading');
+        commit('switchDisabled');
         const data = {
           name: state.targetCategory.name,
         };
@@ -68,10 +68,10 @@ export default {
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           commit('clearTargetCategory');
-          commit('toggleLoading');
+          commit('switchDisabled');
           resolve();
         }).catch(err => {
-          commit('toggleLoading');
+          commit('switchDisabled');
           commit('clearTargetCategory');
           commit('failRequest', { errorMessage: err.message });
           reject();
