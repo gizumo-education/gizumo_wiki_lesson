@@ -4,6 +4,7 @@
     :error-message="errorMessage"
     :done-message="doneMessage"
     :access="access"
+    :loading="loading"
     @update-value="updateCategoryName"
     @handle-submit="editedCategoryName"
   />
@@ -25,6 +26,9 @@ export default {
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];

@@ -1,8 +1,5 @@
 <template>
   <section class="category-edit">
-    <div v-if="doneMessage" class="category-edit__notice--update">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
     <app-heading :level="1">カテゴリーの更新</app-heading>
     <div class="category-edit-link">
       <app-router-link
@@ -34,6 +31,9 @@
           {{ buttonText }}
         </app-button>
       </div>
+      <div v-if="doneMessage" class="category-edit-update">
+        <app-text bg-success>{{ doneMessage }}</app-text>
+      </div>
     </form>
   </section>
 </template>
@@ -59,6 +59,10 @@ export default {
     doneMessage: {
       type: String,
       default: '',
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
     category: {
       type: Object,
@@ -93,6 +97,9 @@ export default {
       margin-top: 16px;
     }
     &-item {
+      margin-top: 16px;
+    }
+    &-update {
       margin-top: 16px;
     }
   }

@@ -19,6 +19,7 @@
         :delete-category-name="deleteCategoryName"
         :error-message="errorMessage"
         :access="access"
+        @clear-message="clearMessage"
         @open-modal="openModal"
         @handle-click="deleteCategory"
       />
