@@ -19,9 +19,15 @@ npm i
 npm run dev
 ```
 
-3. ブラウザが立ち上がったら個別に共有されているメールアドレスと初期パスワードを入力してログインしてください。（渡されていない場合ご連絡ください）
-4. 初回のログイン時はパスワードを新しく設定してください。
-5. [swagger-viewer](https://chrome.google.com/webstore/detail/swagger-viewer/nfmkaonpdmaglhjjlggfhlndofdldfag?hl=ja)のインストール（API仕様書を参照する際に使用します）
+3. ブラウザが立ち上がったら研修生用のメールアドレスとパスワードを入力してログインしてください。
+
+| 項目 | 情報 | 
+| --- | --- | 
+| アカウント名 | 研修生アカウント |  
+| アドレス | guest@gizumo.com |  
+| パスワード | gizumowiki |  
+
+4. [swagger-viewer](https://chrome.google.com/webstore/detail/swagger-viewer/nfmkaonpdmaglhjjlggfhlndofdldfag?hl=ja)のインストール（API仕様書を参照する際に使用します）
 
 ## フォルダ構成
 
