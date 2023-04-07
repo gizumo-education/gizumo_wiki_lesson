@@ -40,6 +40,7 @@ export default {
     },
     editedCategoryName(state, payload) {
       state.targetCategory = { ...state.targetCategory, ...payload };
+      state.loading = false;
       state.doneMessage = 'カテゴリーの変更が完了しました。';
     },
     setDeleteCategoryInfo(state, payload) {
@@ -59,6 +60,7 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+      state.loading = false;
     },
   },
   actions: {
@@ -66,6 +68,7 @@ export default {
       commit('clearMessage');
     },
     getAllCategoryList({ commit, rootGetters }) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
@@ -91,6 +94,7 @@ export default {
       });
     },
     editedCategoryName({ commit, rootGetters }, editedCategory) {
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${editedCategory.id}`,
@@ -103,6 +107,8 @@ export default {
           name: response.data.category.name,
         };
         commit('editedCategoryName', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     updateCategoryName({ commit }, name) {

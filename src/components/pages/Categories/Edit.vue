@@ -5,6 +5,7 @@
     :done-message="doneMessage"
     :access="access"
     :loading="loading"
+    @clear-message="clearMessage"
     @update-value="updateCategoryName"
     @handle-submit="editedCategoryName"
   />
@@ -38,6 +39,9 @@ export default {
     this.$store.dispatch('categories/getTargetCategory', this.$route.params.id);
   },
   methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
     updateCategoryName($event) {
       this.$store.dispatch('categories/updateCategoryName', $event.target.value);
     },

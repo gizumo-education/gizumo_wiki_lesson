@@ -31,6 +31,9 @@
           {{ buttonText }}
         </app-button>
       </div>
+      <div v-if="errorMessage" class="category-edit-notice">
+        <app-text bg-error>{{ errorMessage }}</app-text>
+      </div>
       <div v-if="doneMessage" class="category-edit-update">
         <app-text bg-success>{{ doneMessage }}</app-text>
       </div>
