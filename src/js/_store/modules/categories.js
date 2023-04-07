@@ -83,5 +83,8 @@ export default {
       const payload = targetCategory;
       commit('doneUpdateValue', payload);
     },
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
   },
 };
