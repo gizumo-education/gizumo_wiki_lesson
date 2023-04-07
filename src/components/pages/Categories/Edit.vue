@@ -5,7 +5,6 @@
     :done-message="doneMessage"
     :access="access"
     :loading="loading"
-    @clear-message="clearMessage"
     @update-value="updateCategoryName"
     @handle-submit="editedCategoryName"
   />
