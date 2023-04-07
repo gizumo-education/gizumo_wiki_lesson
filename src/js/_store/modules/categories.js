@@ -6,15 +6,11 @@ export default {
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
-    loading: false,
   },
   mutations: {
     clearMessage(state) {
       state.errorMessage = '';
       state.doneMessage = '';
-    },
-    toggleLoading(state) {
-      state.loading = !state.loading;
     },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
@@ -46,7 +42,6 @@ export default {
     },
     createCategory({ commit, rootGetters }, name) {
       return new Promise(resolve => {
-        commit('toggleLoading');
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',

@@ -42,9 +42,6 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
-    loading() {
-      return this.$store.state.categories.loading;
-    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
@@ -64,7 +61,6 @@ export default {
       this.category = $event.target.value;
     },
     handleSubmit() {
-      if (this.loading) return;
       this.$store.dispatch('categories/createCategory', this.category).then(() => {
         this.$store.dispatch('categories/getAllCategories');
         this.category = '';
