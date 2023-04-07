@@ -10,6 +10,7 @@ export default {
     },
     disabled: false,
     errorMessage: '',
+    errorMessagePost: '',
     doneMessage: '',
   },
   mutations: {
@@ -31,12 +32,14 @@ export default {
     switchDisabled(state) {
       state.disabled = !state.disabled;
     },
-    failRequest(state, { errorMessage }) {
+    failRequest(state, { errorMessage, errorMessagePost }) {
       state.errorMessage = errorMessage;
+      state.errorMessagePost = errorMessagePost;
     },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+      state.errorMessagePost = '';
     },
     displayDoneMessage(state, { message }) {
       state.doneMessage = message;
@@ -66,10 +69,10 @@ export default {
           url: '/category',
           data,
         }).then(() => {
-          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          commit('displayDoneMessage', { message: 'カテゴリーを作成しました。' });
           resolve();
-        }).catch(err => {
-          commit('failRequest', { errorMessage: err.message });
+        }).catch(() => {
+          commit('failRequest', { errorMessagePost: 'カテゴリー作成に失敗しました。' });
         }).finally(() => {
           commit('switchDisabled');
           commit('clearTargetCategory');

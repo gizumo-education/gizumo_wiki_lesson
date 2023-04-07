@@ -3,7 +3,7 @@
     <app-category-post
       class="categories_post"
       :category="categoryName"
-      :error-message="errorMessage"
+      :error-message="errorMessagePost"
       :done-message="doneMessage"
       :access="access"
       :disabled="disabled"
@@ -51,6 +51,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    errorMessagePost() {
+      return this.$store.state.categories.errorMessagePost;
     },
     disabled() {
       return this.$store.state.categories.disabled;
