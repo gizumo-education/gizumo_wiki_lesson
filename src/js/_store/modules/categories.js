@@ -20,7 +20,7 @@ export default {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
     },
-    createCategory(state) {
+    setCreatedDoneMessage(state) {
       state.doneMessage = '新規カテゴリーを作成しました。';
     },
     failRequest(state, { message }) {
@@ -44,15 +44,15 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    createCategory({ commit, rootGetters }, categoryValue) {
+    createCategory({ commit, rootGetters }, name) {
       return new Promise(resolve => {
         commit('toggleLoading');
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
-          data: { name: categoryValue },
+          data: { name },
         }).then(() => {
-          commit('createCategory');
+          commit('setCreatedDoneMessage');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.response.data.message });
