@@ -9,20 +9,26 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-pagination
+      :current-page="currentPage"
+      :last-page="lastPage"
+      @change-page="fetchArticles"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    // this.fetchArticles();
     next();
   },
   data() {
@@ -40,9 +46,18 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
+    },
+    lastPage() {
+      return this.$store.state.articles.lastPage;
+    },
   },
   created() {
-    this.fetchArticles();
+    this.fetchArticles(this.$route.query.page);
+  },
+  destroyed() {
+    this.$store.dispatch('articles/resetArticleStates');
   },
   methods: {
     openModal(articleId) {
@@ -55,32 +70,37 @@ export default {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
-        this.$store.dispatch('articles/filteredArticles', category)
+        this.$store
+          .dispatch('articles/filteredArticles', category)
           .then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          }).catch(() => {
+          })
+          .catch(() => {
             // console.log(err);
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(clickedPage) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
-        this.$store.dispatch('articles/filteredArticles', category)
+        this.$store
+          .dispatch('articles/filteredArticles', category)
           .then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          }).catch(() => {
+          })
+          .catch(() => {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        if (clickedPage === this.currentPage) return; // 現在ページをクリックしたとき処理を中断
+        this.$store.dispatch('articles/getAllArticles', clickedPage);
       }
     },
   },
