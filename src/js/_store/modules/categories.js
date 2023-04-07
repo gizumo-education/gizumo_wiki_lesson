@@ -67,13 +67,12 @@ export default {
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          commit('clearTargetCategory');
-          commit('switchDisabled');
           resolve();
         }).catch(err => {
+          commit('failRequest', { errorMessage: err.message });
+        }).finally(() => {
           commit('switchDisabled');
           commit('clearTargetCategory');
-          commit('failRequest', { errorMessage: err.message });
         });
       });
     },
