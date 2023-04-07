@@ -23,7 +23,7 @@
 
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
-/* eslint-disable no-console */
+
 export default {
   components: {
     appCategoryPost: CategoryPost,
