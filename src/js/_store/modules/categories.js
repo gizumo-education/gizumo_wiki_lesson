@@ -96,7 +96,18 @@ export default {
         commit('doneGetTargetCategory', payload);
       });
     },
-    editedCategoryName({ commit, rootGetters }, editedCategory) {
+    editedCategoryName({ commit, rootGetters, state }, editedCategory) {
+      const targetCategory = state.categoryList.find(
+        category => category.id === editedCategory.id
+      );
+      if (
+        targetCategory.name === editedCategory.name
+      ) {
+        this.state.targetCategory = {
+          id: null,
+          name: '',
+        };
+      }
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${editedCategory.id}`,
