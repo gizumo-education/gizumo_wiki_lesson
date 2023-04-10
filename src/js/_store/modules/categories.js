@@ -7,6 +7,8 @@ export default {
     loading: false,
     errorMessage: '',
     doneMessage: '',
+    deleteCategoryId: null,
+    deleteCategoryName: '',
   },
   mutations: {
     clearMessage(state) {
@@ -23,6 +25,10 @@ export default {
     setCreatedDoneMessage(state) {
       state.loading = false;
       state.doneMessage = '新規カテゴリーを作成しました。';
+    },
+    confirmDeleteCategory(state, { deleteCategory }) {
+      state.deleteCategoryId = deleteCategory.id;
+      state.deleteCategoryName = deleteCategory.name;
     },
     failRequest(state, { message }) {
       state.loading = false;
@@ -60,6 +66,9 @@ export default {
           commit('failRequest', { message: err.response.data.message });
         });
       });
+    },
+    confirmDeleteCategory({ commit }, deleteCategory) {
+      commit('confirmDeleteCategory', { deleteCategory });
     },
   },
 };

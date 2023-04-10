@@ -15,6 +15,7 @@
       <app-category-list
         :categories="categoryList"
         :theads="theads"
+        :delete-category-name="deleteCategoryName"
         :access="access"
         @open-modal="openModal"
       />
@@ -36,6 +37,10 @@ export default {
     return {
       category: '',
       theads: ['カテゴリー名'],
+      deleteCategory: {
+        id: null,
+        name: '',
+      },
     };
   },
   computed: {
@@ -53,6 +58,9 @@ export default {
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
     },
   },
   created() {
@@ -73,8 +81,14 @@ export default {
         this.category = '';
       });
     },
-    openModal() {
+    openModal(categoryId, categoryName) {
       this.toggleModal();
+      this.deleteCategory = {
+        id: categoryId,
+        name: categoryName,
+      };
+      this.$store.dispatch('categories/clearMessage');
+      this.$store.dispatch('categories/confirmDeleteCategory', this.deleteCategory);
     },
   },
 };
