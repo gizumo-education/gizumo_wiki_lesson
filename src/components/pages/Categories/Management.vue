@@ -3,8 +3,12 @@
     <div class="category-content__post">
       <app-category-post
         :error-message="errorMessage"
+        :done-message="doneMessage"
         :category="category"
         :access="access"
+        @clear-message="clearMessage"
+        @update-value="updateValue"
+        @handle-submit="handleSubmit"
       />
     </div>
     <div class="category-content__list">
@@ -38,14 +42,34 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
-  },
-  method: {
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
+    this.$store.dispatch('categories/clearMessage');
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue($event) {
+      this.category = $event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/createCategory', this.category).then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+        this.category = '';
+      });
+    },
   },
 };
 </script>

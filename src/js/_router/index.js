@@ -75,7 +75,7 @@ const router = new VueRouter({
       component: Categories,
       children: [
         {
-          name: CategoriesManagement,
+          name: 'categoriesManagement',
           path: '',
           component: CategoriesManagement,
         },
