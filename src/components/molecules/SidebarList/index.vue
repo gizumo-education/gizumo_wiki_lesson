@@ -13,7 +13,7 @@
         white
         round
       >
-        {{ item.name }}
+        <span @click="clearEditedValue">{{ item.name }}</span>
       </app-router-link>
     </app-list-item>
   </ul>
@@ -35,6 +35,11 @@ export default {
     targetArray: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    clearEditedValue() {
+      this.$emit('clear-edited-value');
     },
   },
 };

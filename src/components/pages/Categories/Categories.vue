@@ -63,8 +63,12 @@ export default {
   },
   created() {
     this.fetchCategories();
+    this.clearEditedValue();
   },
   methods: {
+    clearEditedValue() {
+      this.$store.dispatch('categories/clearEditedValue');
+    },
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
     },

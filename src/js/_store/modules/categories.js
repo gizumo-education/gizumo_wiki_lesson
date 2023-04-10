@@ -27,6 +27,9 @@ export default {
     clearMessage(state) {
       state.errorMessage = '';
     },
+    clearDoneMessage(state) {
+      state.doneMessage = '';
+    },
     confirmDeleteCategory(state, categoryDetail) {
       state.categoryDetail.deleteCategoryName = categoryDetail.categoryName;
       state.categoryDetail.deleteCategoryId = categoryDetail.categoryId;
@@ -37,8 +40,14 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
+    doneEditCategory(state, { editedCategory }) {
+      state.category = { ...state.category, ...editedCategory };
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
+    },
+    doneGetCategory(state, payload) {
+      state.category = { ...state.category, ...payload.category };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -60,6 +69,10 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
+    clearEditedValue({ commit }) {
+      commit('clearDoneMessage');
+      commit('initCategory');
+    },
     confirmDeleteCategory({ commit }, categoryDetail) {
       commit('confirmDeleteCategory', categoryDetail);
     },
@@ -75,6 +88,29 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
+    editCategory({ commit, rootGetters }) {
+      commit('clearMessage');
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', rootGetters['categories/category'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/category'].id}`,
+        data,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            title: res.data.category.name,
+          },
+        };
+        commit('doneEditCategory', payload);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -84,6 +120,22 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneGetCategory', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
