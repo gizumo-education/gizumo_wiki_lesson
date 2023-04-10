@@ -92,7 +92,10 @@ export default {
       this.$store.dispatch('categories/confirmDeleteCategory', this.deleteCategory);
     },
     handleClick() {
-      this.$store.dispatch('categories/deleteCategory', { id: this.deleteCategory.id });
+      this.$store.dispatch('categories/deleteCategory', { id: this.deleteCategory.id })
+        .then(() => {
+          this.$store.dispatch('categories/getAllCategories');
+        });
       this.toggleModal();
     },
   },

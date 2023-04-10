@@ -34,6 +34,7 @@ export default {
       state.loading = false;
       state.deleteCategoryId = null;
       state.deleteCategoryName = '';
+      state.doneMessage = 'カテゴリーの削除が完了しました。';
     },
     failRequest(state, { message }) {
       state.loading = false;
