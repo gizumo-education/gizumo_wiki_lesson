@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    loading: false,
     errorMessage: '',
     doneMessage: '',
   },
@@ -12,14 +13,19 @@ export default {
       state.errorMessage = '';
       state.doneMessage = '';
     },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
     },
     setCreatedDoneMessage(state) {
+      state.loading = false;
       state.doneMessage = '新規カテゴリーを作成しました。';
     },
     failRequest(state, { message }) {
+      state.loading = false;
       state.errorMessage = message;
     },
   },
@@ -42,6 +48,7 @@ export default {
     },
     createCategory({ commit, rootGetters }, name) {
       return new Promise(resolve => {
+        commit('toggleLoading');
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
