@@ -85,7 +85,7 @@ export default {
         name: categoryName,
         id: categoryId,
       };
-      this.$store.dispatch('categories/getDeleteCategory', deleteCategory);
+      this.$store.dispatch('categories/setTargetCategory', deleteCategory);
       this.toggleModal();
     },
     hundleClick() {

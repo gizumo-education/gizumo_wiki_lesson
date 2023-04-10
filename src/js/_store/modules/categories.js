@@ -96,7 +96,7 @@ export default {
       const payload = targetCategory;
       commit('doneUpdateValue', payload);
     },
-    getDeleteCategory({ commit }, deleteCategory) {
+    setTargetCategory({ commit }, deleteCategory) {
       commit('clearMessage');
       const payload = deleteCategory;
       commit('deleteCategory', payload);
