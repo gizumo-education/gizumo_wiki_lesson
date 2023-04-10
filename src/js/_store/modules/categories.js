@@ -30,6 +30,9 @@ export default {
     applyRequest(state) {
       state.loading = true;
     },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
@@ -43,7 +46,6 @@ export default {
     },
     editedCategoryName(state, payload) {
       state.targetCategory = { ...state.targetCategory, ...payload };
-      state.loading = false;
       state.doneMessage = 'カテゴリーの変更が完了しました。';
     },
     setDeleteCategoryInfo(state, payload) {
@@ -57,13 +59,11 @@ export default {
       state.deleteCategoryId = null;
     },
     newAddCategory(state, payload) {
-      state.loading = false;
       state.categoryList.unshift(payload);
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
   },
   actions: {
@@ -96,31 +96,33 @@ export default {
         commit('doneGetTargetCategory', payload);
       });
     },
-    editedCategoryName({ commit, rootGetters, state }, editedCategory) {
-      const targetCategory = state.categoryList.find(
-        category => category.id === editedCategory.id
-      );
-      if (
-        targetCategory.name === editedCategory.name
-      ) {
-        this.state.targetCategory = {
-          id: null,
-          name: '',
-        };
-      }
+    editedCategoryName({ commit, rootGetters }, updateCategory) {
+      // const targetCategory = state.categoryList.find(
+      //   category => category.id === this.updateCategory.id
+      //   );
+      //   console.log(targetCategory);
+      // if (
+      //   targetCategory.name === this.updateCategory.name
+      // ) {
+      //   this.state.targetCategory = {
+      //     id: null,
+      //     name: '',
+      //   };
+      //   return;
+      // }
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${editedCategory.id}`,
+        url: `/category/${updateCategory.id}`,
         data: {
-          id: editedCategory.id,
-          name: editedCategory.name,
+          name: updateCategory.name,
         },
       }).then(response => {
         const payload = {
           name: response.data.category.name,
         };
-        commit('applyRequest');
         commit('editedCategoryName', payload);
+        commit('toggleLoading');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -139,6 +141,7 @@ export default {
       commit('setDeleteCategoryInfo', payload);
     },
     deleteCategory({ commit, rootGetters, state }) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${state.deleteCategoryId}`,
@@ -150,6 +153,7 @@ export default {
       });
     },
     addCategory({ commit, rootGetters }, categoryName) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
