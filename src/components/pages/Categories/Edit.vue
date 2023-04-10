@@ -33,6 +33,9 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    categoryList() {
+      return this.$store.state.categories.categoryList;
+    },
   },
   created() {
     this.$store.dispatch('categories/clearMessage');

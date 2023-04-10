@@ -94,20 +94,16 @@ export default {
         commit('doneGetTargetCategory', payload);
       });
     },
-    editedCategoryName({ commit, rootGetters }, updateCategory) {
-      // const targetCategory = state.categoryList.find(
-      //   category => category.id === this.updateCategory.id
-      //   );
-      //   console.log(targetCategory);
-      // if (
-      //   targetCategory.name === this.updateCategory.name
-      // ) {
-      //   this.state.targetCategory = {
-      //     id: null,
-      //     name: '',
-      //   };
-      //   return;
-      // }
+    editedCategoryName({ commit, rootGetters, state }, updateCategory) {
+      const targetCategory = state.categoryList.find(
+        category => category.id === updateCategory.id,
+      );
+      if (
+        targetCategory.name === updateCategory.name
+      ) {
+        commit('failRequest', { message: '変更内容が変わっていません' });
+        return;
+      }
       commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',

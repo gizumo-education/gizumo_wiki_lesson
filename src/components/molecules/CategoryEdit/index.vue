@@ -103,6 +103,9 @@ export default {
     &-item {
       margin-top: 16px;
     }
+    &-notice {
+      margin-top: 16px;
+    }
     &-update {
       margin-top: 16px;
     }
