@@ -16,6 +16,7 @@
         :categories="categoryList"
         :theads="theads"
         :access="access"
+        @open-modal="openModal"
       />
     </div>
   </section>
@@ -23,12 +24,14 @@
 
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  mixins: [Mixins],
   data() {
     return {
       category: '',
@@ -69,6 +72,9 @@ export default {
         this.$store.dispatch('categories/getAllCategories');
         this.category = '';
       });
+    },
+    openModal() {
+      this.toggleModal();
     },
   },
 };
