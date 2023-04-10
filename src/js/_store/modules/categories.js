@@ -30,6 +30,11 @@ export default {
       state.deleteCategoryId = deleteCategory.id;
       state.deleteCategoryName = deleteCategory.name;
     },
+    deleteCategory(state) {
+      state.loading = false;
+      state.deleteCategoryId = null;
+      state.deleteCategoryName = '';
+    },
     failRequest(state, { message }) {
       state.loading = false;
       state.errorMessage = message;
@@ -69,6 +74,22 @@ export default {
     },
     confirmDeleteCategory({ commit }, deleteCategory) {
       commit('confirmDeleteCategory', { deleteCategory });
+    },
+    deleteCategory({ commit, rootGetters }, { id }) {
+      return new Promise(resolve => {
+        commit('toggleLoading');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${id}`,
+        }).then(response => {
+          if (response.data.code === 0) throw new Error(response.data.message);
+
+          commit('deleteCategory');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
     },
   },
 };
