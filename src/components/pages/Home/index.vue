@@ -19,7 +19,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('articles/getArticles');
+    this.$store.dispatch('articles/getAllArticles');
   },
 };
 </script>
