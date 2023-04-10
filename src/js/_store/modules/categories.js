@@ -143,6 +143,7 @@ export default {
         url: `/category/${state.deleteCategoryId}`,
         data: { id: this.deleteCategoryId },
       }).then(() => {
+        commit('toggleLoading');
         commit('doneDeleteCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
@@ -159,6 +160,7 @@ export default {
           id: response.data.category.id,
           name: response.data.category.name,
         };
+        commit('toggleLoading');
         commit('newAddCategory', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
