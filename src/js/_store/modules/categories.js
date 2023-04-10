@@ -27,9 +27,6 @@ export default {
       state.errorMessage = '';
       state.doneMessage = '';
     },
-    applyRequest(state) {
-      state.loading = true;
-    },
     toggleLoading(state) {
       state.loading = !state.loading;
     },
@@ -47,6 +44,7 @@ export default {
     editedCategoryName(state, payload) {
       state.targetCategory = { ...state.targetCategory, ...payload };
       state.doneMessage = 'カテゴリーの変更が完了しました。';
+      state.errorMessage = '';
     },
     setDeleteCategoryInfo(state, payload) {
       state.deleteCategoryName = payload.categoryName;
@@ -124,6 +122,8 @@ export default {
         commit('editedCategoryName', payload);
         commit('toggleLoading');
       }).catch(err => {
+        commit('toggleLoading');
+        commit('clearMessage');
         commit('failRequest', { message: err.message });
       });
     },

@@ -45,9 +45,9 @@ export default {
     updateCategoryName($event) {
       this.$store.dispatch('categories/updateCategoryName', $event.target.value);
     },
-    editedCategoryName(editedCategory) {
+    editedCategoryName(updateCategory) {
       if (this.loading) return;
-      this.$store.dispatch('categories/editedCategoryName', editedCategory);
+      this.$store.dispatch('categories/editedCategoryName', updateCategory);
     },
   },
 };
