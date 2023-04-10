@@ -84,7 +84,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles(clickedPage) {
+    fetchArticles(pageParam) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -99,8 +99,8 @@ export default {
             // console.log(err);
           });
       } else {
-        if (clickedPage === this.currentPage) return; // 現在ページをクリックしたとき処理を中断
-        this.$store.dispatch('articles/getAllArticles', clickedPage);
+        if (pageParam === this.currentPage) return; // 現在ページをクリックしたとき処理を中断
+        this.$store.dispatch('articles/getAllArticles', pageParam);
       }
     },
   },
