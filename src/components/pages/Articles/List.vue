@@ -9,7 +9,11 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <app-pagination :current-page="currentPage" :last-page="lastPage" />
+    <app-pagination
+      v-show="articlesList.length !== 0"
+      :current-page="currentPage"
+      :last-page="lastPage"
+    />
   </div>
 </template>
 
@@ -63,12 +67,14 @@ export default {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
-        this.$store.dispatch('articles/filteredArticles', category)
+        this.$store
+          .dispatch('articles/filteredArticles', category)
           .then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          }).catch(() => {
+          })
+          .catch(() => {
             // console.log(err);
           });
       } else {
@@ -80,11 +86,13 @@ export default {
         const { category } = this.$route.query;
         this.title = category;
         this.$store
-          .dispatch('articles/filteredArticles', category).then(() => {
+          .dispatch('articles/filteredArticles', category)
+          .then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          }).catch(() => {
+          })
+          .catch(() => {
             // console.log(err);
           });
       } else {

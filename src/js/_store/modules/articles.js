@@ -258,9 +258,7 @@ export default {
         data,
       }).then(() => {
         commit('doneDeleteArticle');
-        commit('displayDoneMessage', {
-          message: 'ドキュメントを削除しました',
-        });
+        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -282,9 +280,7 @@ export default {
           data,
         }).then(() => {
           commit('toggleLoading');
-          commit('displayDoneMessage', {
-            message: 'ドキュメントを作成しました',
-          });
+          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
           resolve();
         }).catch(err => {
           commit('toggleLoading');
