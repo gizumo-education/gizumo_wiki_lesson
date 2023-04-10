@@ -8,7 +8,7 @@
       hover-opacity
       :to="`/categories`"
     >
-      <span @click="clearEditedValue">カテゴリー一覧へ戻る</span>
+      カテゴリー一覧へ戻る
     </app-router-link>
     <app-input
       v-validate="'required'"
@@ -85,9 +85,6 @@ export default {
     },
   },
   methods: {
-    clearEditedValue() {
-      this.$emit('clear-edited-value');
-    },
     editCategory() {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
