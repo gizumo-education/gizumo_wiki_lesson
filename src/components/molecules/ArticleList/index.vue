@@ -16,7 +16,11 @@
     >
       新しいドキュメントを作る
     </app-router-link>
-    <transition-group class="article-list__articles" name="fade" tag="ul">
+    <transition-group
+      class="article-list__articles"
+      name="fade"
+      tag="ul"
+    >
       <app-list-item
         v-for="article in targetArray"
         :key="article.id"
@@ -27,7 +31,9 @@
         large
         border-bottom-gray
       >
-        <app-text class="article-list__title">
+        <app-text
+          class="article-list__title"
+        >
           {{ article.title }}
         </app-text>
         <div class="article-list__links">
@@ -63,10 +69,15 @@
       </app-list-item>
     </transition-group>
     <app-modal>
-      <app-text ex-large>
+      <app-text
+        ex-large
+      >
         本当に削除しますか?
       </app-text>
-      <app-button bg-danger @click="$emit('handle-click')">
+      <app-button
+        bg-danger
+        @click="$emit('handle-click')"
+      >
         削除
       </app-button>
     </app-modal>
@@ -75,7 +86,11 @@
 
 <script>
 import {
-  Heading, ListItem, RouterLink, Button, Text,
+  Heading,
+  ListItem,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -130,31 +145,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.article-list {
-  &__articles {
-    margin-top: 16px;
-    .fade-enter-active,
-    .fade-leave-active {
-      transition: opacity 0.5s;
+  .article-list {
+    &__articles {
+      margin-top: 16px;
+      .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+      }
+    }
+    .fade-enter, .fade-leave-to {
+      opacity: 0;
+    }
+    &__title {
+      width: 60%;
+    }
+    &__create-link {
+      margin-top: 16px;
+    }
+    &__links {
+      *:not(first-child) {
+        margin-left: 16px;
+      }
+    }
+    &__notice--create {
+      margin-bottom: 16px;
     }
   }
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
-  }
-  &__title {
-    width: 60%;
-  }
-  &__create-link {
-    margin-top: 16px;
-  }
-  &__links {
-    *:not(first-child) {
-      margin-left: 16px;
-    }
-  }
-  &__notice--create {
-    margin-bottom: 16px;
-  }
-}
 </style>

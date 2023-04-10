@@ -2,27 +2,23 @@
   <nav class="pagination">
     <ol class="pagination__list--ordered">
       <template v-if="currentPage > 3">
-        <li @click="changePage(1)">
+        <li>
           <app-router-link to="/articles?page=1" white>1</app-router-link>
         </li>
         <span>…</span>
       </template>
-      <li v-for="page in paginationList" :key="page" @click="changePage(page)">
+      <li v-for="page in paginationRange" :key="page">
         <app-router-link
-          v-if="page === currentPage"
           :to="`/articles?page=${page}`"
+          :class="page === currentPage ? 'is-current' : ''"
           white
-          class="is-current"
         >
-          {{ page }}
-        </app-router-link>
-        <app-router-link v-else :to="`/articles?page=${page}`" white>
           {{ page }}
         </app-router-link>
       </li>
       <template v-if="currentPage < lastPage - 2">
         <span>…</span>
-        <li @click="changePage(lastPage)">
+        <li>
           <app-router-link :to="`/articles?page=${lastPage}`" white>
             {{ lastPage }}
           </app-router-link>
@@ -42,33 +38,21 @@ export default {
   props: {
     currentPage: {
       type: Number,
-      default: null,
+      required: true,
     },
     lastPage: {
       type: Number,
-      default: null,
+      required: true,
     },
   },
   computed: {
-    paginationList() {
-      let paginationList = [];
-      if (this.currentPage <= 2) {
-        paginationList = [1, 2, 3, 4, 5];
-      } else if (this.currentPage > this.lastPage - 2) {
-        for (let i = -4; i <= 0; i += 1) {
-          paginationList.push(this.lastPage + i);
-        }
-      } else {
-        for (let i = -2; i <= 2; i += 1) {
-          paginationList.push(this.currentPage + i);
-        }
+    paginationRange() {
+      const startPage = Math.max(1, this.currentPage - 2);
+      const endPage = Math.min(startPage + 4, this.lastPage);
+      if (this.currentPage >= this.lastPage - 1) {
+        return Array.from({ length: 5 }, (_, i) => endPage - 4 + i);
       }
-      return paginationList;
-    },
-  },
-  methods: {
-    changePage(page) {
-      this.$emit('change-page', page);
+      return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
     },
   },
 };

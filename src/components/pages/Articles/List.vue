@@ -9,11 +9,7 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <app-pagination
-      :current-page="currentPage"
-      :last-page="lastPage"
-      @change-page="fetchArticles"
-    />
+    <app-pagination :current-page="currentPage" :last-page="lastPage" />
   </div>
 </template>
 
@@ -28,7 +24,7 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    // this.fetchArticles();
+    this.fetchArticles(to.query.page);
     next();
   },
   data() {
@@ -56,9 +52,6 @@ export default {
   created() {
     this.fetchArticles(this.$route.query.page);
   },
-  destroyed() {
-    this.$store.dispatch('articles/resetArticleStates');
-  },
   methods: {
     openModal(articleId) {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
@@ -70,14 +63,12 @@ export default {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
-        this.$store
-          .dispatch('articles/filteredArticles', category)
+        this.$store.dispatch('articles/filteredArticles', category)
           .then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          })
-          .catch(() => {
+          }).catch(() => {
             // console.log(err);
           });
       } else {
@@ -89,13 +80,11 @@ export default {
         const { category } = this.$route.query;
         this.title = category;
         this.$store
-          .dispatch('articles/filteredArticles', category)
-          .then(() => {
+          .dispatch('articles/filteredArticles', category).then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          })
-          .catch(() => {
+          }).catch(() => {
             // console.log(err);
           });
       } else {
