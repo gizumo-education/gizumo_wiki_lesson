@@ -163,6 +163,7 @@ export default {
         commit('toggleLoading');
         commit('newAddCategory', payload);
       }).catch(err => {
+        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
     },
