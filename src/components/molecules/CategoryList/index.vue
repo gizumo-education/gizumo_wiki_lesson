@@ -13,8 +13,15 @@
           </th>
         </tr>
       </thead>
-      <transition-group name="fade" tag="tbody" class="category-list__table__body">
-        <tr v-for="category in categories" :key="category.id">
+      <transition-group
+        name="fade"
+        tag="tbody"
+        class="category-list__table__body"
+      >
+        <tr
+          v-for="category in targetArray"
+          :key="category.id"
+        >
           <td>
             <app-text tag="span">
               {{ category.name }}
@@ -85,7 +92,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -100,6 +109,10 @@ export default {
       default() {
         return [];
       },
+    },
+    targetArray: {
+      type: Array,
+      default: () => [],
     },
     categories: {
       type: Array,
