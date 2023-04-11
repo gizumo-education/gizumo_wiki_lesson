@@ -10,7 +10,7 @@
       @handle-click="handleClick"
     />
     <app-pagination
-      v-show="articlesList.length !== 0"
+      v-if="articlesList.length !== 0"
       :current-page="currentPage"
       :last-page="lastPage"
     />
