@@ -28,6 +28,8 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    currentPage: null,
+    lastPage: null,
   },
   getters: {
     transformedArticles(state) {
@@ -75,7 +77,10 @@ export default {
       state.targetArticle = { ...state.targetArticle, title: payload.title };
     },
     editedContent(state, payload) {
-      state.targetArticle = { ...state.targetArticle, content: payload.content };
+      state.targetArticle = {
+        ...state.targetArticle,
+        content: payload.content,
+      };
     },
     doneFilteredArticles(state, payload) {
       const filteredArticles = payload.articles.filter(
@@ -85,13 +90,14 @@ export default {
     },
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
+      state.currentPage = payload.currentPage;
+      state.lastPage = payload.lastPage;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
     selectedArticleCategory(state, payload) {
       state.targetArticle.category = {
-
         ...state.targetArticle.category,
         ...payload.category,
       };
@@ -120,13 +126,15 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
+    getAllArticles({ commit, rootGetters }, pageParam = 1) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/article',
+        url: `/article?page=${pageParam}`,
       }).then(res => {
         const payload = {
           articles: res.data.articles,
+          currentPage: res.data.meta.current_page,
+          lastPage: res.data.meta.last_page,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {
