@@ -7,8 +7,10 @@ export default {
     loading: false,
     errorMessage: '',
     doneMessage: '',
-    deleteCategoryId: null,
-    deleteCategoryName: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   mutations: {
     clearMessage(state) {
@@ -27,13 +29,13 @@ export default {
       state.doneMessage = '新規カテゴリーを作成しました。';
     },
     confirmDeleteCategory(state, { deleteCategory }) {
-      state.deleteCategoryId = deleteCategory.id;
-      state.deleteCategoryName = deleteCategory.name;
+      state.deleteCategory.id = deleteCategory.id;
+      state.deleteCategory.name = deleteCategory.name;
     },
     deleteCategory(state) {
       state.loading = false;
-      state.deleteCategoryId = null;
-      state.deleteCategoryName = '';
+      state.deleteCategory.id = null;
+      state.deleteCategory.name = '';
       state.doneMessage = 'カテゴリーの削除が完了しました。';
     },
     failRequest(state, { message }) {

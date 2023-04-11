@@ -61,7 +61,7 @@ export default {
       return this.$store.state.categories.doneMessage;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
+      return this.$store.state.categories.deleteCategory.name;
     },
   },
   created() {
