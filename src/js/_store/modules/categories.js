@@ -7,6 +7,10 @@ export default {
     loading: false,
     errorMessage: '',
     doneMessage: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   mutations: {
     clearMessage(state) {
@@ -23,6 +27,16 @@ export default {
     setCreatedDoneMessage(state) {
       state.loading = false;
       state.doneMessage = '新規カテゴリーを作成しました。';
+    },
+    confirmDeleteCategory(state, { deleteCategory }) {
+      state.deleteCategory.id = deleteCategory.id;
+      state.deleteCategory.name = deleteCategory.name;
+    },
+    deleteCategory(state) {
+      state.loading = false;
+      state.deleteCategory.id = null;
+      state.deleteCategory.name = '';
+      state.doneMessage = 'カテゴリーの削除が完了しました。';
     },
     failRequest(state, { message }) {
       state.loading = false;
@@ -58,6 +72,25 @@ export default {
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.response.data.message });
+        });
+      });
+    },
+    confirmDeleteCategory({ commit }, deleteCategory) {
+      commit('confirmDeleteCategory', { deleteCategory });
+    },
+    deleteCategory({ commit, rootGetters }, { id }) {
+      return new Promise(resolve => {
+        commit('toggleLoading');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${id}`,
+        }).then(response => {
+          if (response.data.code === 0) throw new Error(response.data.message);
+
+          commit('deleteCategory');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
         });
       });
     },
