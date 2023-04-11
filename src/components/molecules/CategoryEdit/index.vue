@@ -4,6 +4,7 @@
     <app-router-link
       underline
       hover-opacity
+      :to="'/categories'"
       class="category-edit__back-link"
     >
       カテゴリー一覧へ戻る
@@ -40,7 +41,7 @@
 
 <script>
 import {
-  Heading, RouterLink, Input, Button,
+  Heading, RouterLink, Input, Button, Text,
 } from '@Components/atoms';
 
 export default {
@@ -49,6 +50,7 @@ export default {
     appRouterLink: RouterLink,
     appInput: Input,
     appButton: Button,
+    appText: Text,
   },
   props: {
     loading: {
