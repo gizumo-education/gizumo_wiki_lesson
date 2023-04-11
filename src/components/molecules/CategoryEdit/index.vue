@@ -71,6 +71,14 @@ export default {
       return this.access.edit && !this.loading;
     },
   },
+  methods: {
+    handleSubmit() {
+      if (!this.access.edit) return;
+      this.$validator.validate().then(valid => {
+        if (valid) this.$emit('handle-submit');
+      });
+    },
+  },
 };
 </script>
 
