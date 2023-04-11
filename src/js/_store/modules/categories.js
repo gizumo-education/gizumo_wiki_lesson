@@ -11,6 +11,10 @@ export default {
       id: null,
       name: '',
     },
+    editCategory: {
+      id: null,
+      name: '',
+    },
   },
   mutations: {
     clearMessage(state) {
@@ -23,6 +27,10 @@ export default {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       state.categoryList = state.categoryList.reverse();
+    },
+    doneGetCategory(state, payload) {
+      state.editCategory = { ...state.editCategory, ...payload };
+      state.loading = false;
     },
     setCreatedDoneMessage(state) {
       state.loading = false;
@@ -56,6 +64,22 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCategory({ commit, rootGetters }, { id }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        if (res.data.code === 0) throw new Error(res.data.message);
+        const data = res.data.category;
+        const payload = {
+          id: data.id,
+          name: data.name,
+        };
+        commit('doneGetCategory', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
