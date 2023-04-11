@@ -38,11 +38,11 @@ export default {
   props: {
     currentPage: {
       type: Number,
-      required: true,
+      default: null,
     },
     lastPage: {
       type: Number,
-      required: true,
+      default: null,
     },
   },
   computed: {

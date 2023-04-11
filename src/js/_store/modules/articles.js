@@ -28,8 +28,8 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    currentPage: NaN,
-    lastPage: NaN,
+    currentPage: null,
+    lastPage: null,
   },
   getters: {
     transformedArticles(state) {
