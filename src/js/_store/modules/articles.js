@@ -28,8 +28,8 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    currentPage: 1,
-    lastPage: 5, // 最初の読み込み時に不自然なページネーションが表示される問題の対策
+    currentPage: NaN,
+    lastPage: NaN,
   },
   getters: {
     transformedArticles(state) {
