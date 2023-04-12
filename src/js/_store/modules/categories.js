@@ -36,7 +36,7 @@ export default {
       state.loading = false;
       state.doneMessage = '新規カテゴリーを作成しました。';
     },
-    editedName(state, payload) {
+    editingName(state, payload) {
       state.editCategory = { ...state.editCategory, name: payload.name };
     },
     updateCategory(state, { category }) {
@@ -107,9 +107,9 @@ export default {
         });
       });
     },
-    editedName({ commit }, name) {
+    editingName({ commit }, name) {
       commit({
-        type: 'editedName',
+        type: 'editingName',
         name,
       });
     },

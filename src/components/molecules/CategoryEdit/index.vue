@@ -18,7 +18,7 @@
       :error-messages="errors.collect('category')"
       :value="editCategory.name"
       class="category-edit__form"
-      @update-value="$emit('edited-name', $event)"
+      @update-value="$emit('editing-name', $event)"
     />
     <app-button
       class="category-edit__submit"

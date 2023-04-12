@@ -6,7 +6,7 @@
     :loading="loading"
     :access="access"
     @clear-message="clearMessage"
-    @edited-name="editedName"
+    @editing-name="editingName"
     @handle-submit="handleSubmit"
   />
 </template>
@@ -44,8 +44,8 @@ export default {
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
     },
-    editedName($event) {
-      this.$store.dispatch('categories/editedName', $event.target.value);
+    editingName($event) {
+      this.$store.dispatch('categories/editingName', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;
