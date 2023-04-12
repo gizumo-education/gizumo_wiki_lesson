@@ -93,11 +93,11 @@ export default {
     articleTitle() {
       return `${this.title}の一覧`;
     },
-  },
-  methods: {
-    shortenStrWithEllipsis(str) {
-      if (str.length <= 30) return str;
-      return `${str.slice(0, 30)}…`;
+    shortenStrWithEllipsis() {
+      return str => {
+        if (str.length <= 30) return str;
+        return `${str.slice(0, 30)}…`;
+      };
     },
   },
 };
