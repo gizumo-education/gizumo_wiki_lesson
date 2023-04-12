@@ -36,6 +36,14 @@ export default {
       state.loading = false;
       state.doneMessage = '新規カテゴリーを作成しました。';
     },
+    editedName(state, payload) {
+      state.editCategory = { ...state.editCategory, name: payload.name };
+    },
+    updateCategory(state, { category }) {
+      state.loading = false;
+      state.editCategory = { ...state.editCategory, ...category };
+      state.doneMessage = 'カテゴリーの更新が完了しました。';
+    },
     confirmDeleteCategory(state, { deleteCategory }) {
       state.deleteCategory.id = deleteCategory.id;
       state.deleteCategory.name = deleteCategory.name;
@@ -97,6 +105,32 @@ export default {
         }).catch(err => {
           commit('failRequest', { message: err.response.data.message });
         });
+      });
+    },
+    editedName({ commit }, name) {
+      commit({
+        type: 'editedName',
+        name,
+      });
+    },
+    updateCategory({ commit, rootGetters }, category) {
+      commit('toggleLoading');
+
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${category.id}`,
+        data: category,
+      }).then(response => {
+        if (response.data.code === 0) throw new Error(response.data.message);
+
+        const editedCategory = {
+          id: response.data.category.id,
+          name: response.data.category.name,
+        };
+
+        commit('updateCategory', { editedCategory });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     confirmDeleteCategory({ commit }, deleteCategory) {

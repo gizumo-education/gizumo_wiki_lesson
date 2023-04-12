@@ -2,9 +2,12 @@
   <app-category-edit
     :error-message="errorMessage"
     :done-message="doneMessage"
-    :edit-category-name="editCategoryName"
+    :edit-category="editCategory"
     :loading="loading"
     :access="access"
+    @clear-message="clearMessage"
+    @edited-name="editedName"
+    @handle-submit="handleSubmit"
   />
 </template>
 
@@ -15,11 +18,6 @@ export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  data() {
-    return {
-      name: '',
-    };
-  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
@@ -27,9 +25,8 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
-    editCategoryName() {
-      const { name } = this.$store.state.categories.editCategory;
-      return name;
+    editCategory() {
+      return this.$store.state.categories.editCategory;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
@@ -42,6 +39,22 @@ export default {
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', { id });
     this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    editedName($event) {
+      this.$store.dispatch('categories/editedName', $event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/updateCategory', {
+        id: this.editCategory.id,
+        /* eslint-disable-next-line no-irregular-whitespace */
+        name: this.editCategory.name.replace(/(　)+/, ' ').trim(),
+      });
+    },
   },
 };
 </script>

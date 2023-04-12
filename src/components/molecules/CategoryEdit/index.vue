@@ -16,9 +16,9 @@
       placeholder="追加するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
-      :value="editCategoryName"
+      :value="editCategory.name"
       class="category-edit__form"
-      @update-value="$emit('edited-category-name', $event)"
+      @update-value="$emit('edited-name', $event)"
     />
     <app-button
       class="category-edit__submit"
@@ -53,9 +53,9 @@ export default {
     appText: Text,
   },
   props: {
-    editCategoryName: {
-      type: String,
-      default: '',
+    editCategory: {
+      type: Object,
+      default: () => ({}),
     },
     errorMessage: {
       type: String,
@@ -84,8 +84,12 @@ export default {
     },
   },
   methods: {
+    updateValue($event) {
+      this.$emit('update-value', $event.target);
+    },
     handleSubmit() {
       if (!this.access.edit) return;
+      this.$emit('clear-message');
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
