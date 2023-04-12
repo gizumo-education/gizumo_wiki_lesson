@@ -3,7 +3,7 @@
     <div v-if="errorMessage" class="article-list__notice--error">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
-    <app-heading :level="1">{{ articleTitle }}</app-heading>
+    <app-heading :level="1">削除済み記事の一覧</app-heading>
     <app-router-link
       to="/articles"
       class="article-list__link"
@@ -19,7 +19,7 @@
     <table class="article-list__table">
       <thead class="article-list__table__head">
         <tr>
-          <th v-for="item in theads" :key="item">
+          <th v-for="item in $options.theads" :key="item">
             <app-text tag="span" theme-color bold>
               {{ item }}
             </app-text>
@@ -66,6 +66,7 @@ export default {
     appRouterLink: RouterLink,
     appText: Text,
   },
+  theads: ['タイトル', '本文', '作成日'],
   props: {
     targetArray: {
       type: Array,
@@ -75,24 +76,12 @@ export default {
       type: Boolean,
       default: false,
     },
-    title: {
-      type: String,
-      default: '削除済み記事',
-    },
     errorMessage: {
       type: String,
       default: '',
     },
   },
-  data() {
-    return {
-      theads: ['タイトル', '本文', '作成日'],
-    };
-  },
   computed: {
-    articleTitle() {
-      return `${this.title}の一覧`;
-    },
     shortenStrWithEllipsis() {
       return str => {
         if (str.length <= 30) return str;

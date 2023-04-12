@@ -1,7 +1,6 @@
 <template>
   <div class="articles">
     <app-article-list-trashed
-      :title="'削除済み記事'"
       :target-array="trashedArticlesList"
       :error-message="errorMessage"
       border-gray
@@ -11,13 +10,11 @@
 
 <script>
 import { ArticleListTrashed } from '@Components/molecules';
-import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleListTrashed: ArticleListTrashed,
   },
-  mixins: [Mixins],
   computed: {
     trashedArticlesList() {
       return this.$store.state.articles.trashedArticleList;
