@@ -46,6 +46,7 @@
               small
               round
               :disabled="!access.delete"
+              @click="openModal(category.id, category.name)"
             >
               削除
             </app-button>
