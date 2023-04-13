@@ -6,7 +6,7 @@
       :access="access"
     />
     <app-category-list
-      :target-array="categoryList"
+      :categories="categoryList"
       :theads="theads"
       :access="access"
     />
@@ -25,7 +25,7 @@ export default {
   mixins: [Mixins],
   data() {
     return {
-      theads: ['カテゴリー名', '', '', ''],
+      theads: ['カテゴリー名'],
     };
   },
   computed: {

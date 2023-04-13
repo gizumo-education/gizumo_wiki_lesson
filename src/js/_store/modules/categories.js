@@ -10,21 +10,9 @@ export default {
         id: null,
         name: '',
       },
-      user: {
-        account_name: '',
-        created_at: '',
-        email: '',
-        full_name: '',
-        id: '',
-        password_reset_flg: null,
-        role: '',
-        update_at: '',
-      },
     },
     categoryList: [],
-    deleteCategoryId: null,
     loading: false,
-    doneMessage: '',
     errorMessage: '',
   },
   getters: {
@@ -35,7 +23,6 @@ export default {
       }));
     },
     targetCategory: state => state.targetCategory,
-    deleteCategoryId: state => state.deleteCategoryId,
   },
   mutations: {
     initPostCategory(state) {

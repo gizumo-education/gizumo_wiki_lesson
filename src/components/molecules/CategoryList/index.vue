@@ -13,13 +13,9 @@
           </th>
         </tr>
       </thead>
-      <transition-group
-        name="fade"
-        tag="tbody"
-        class="category-list__table__body"
-      >
+      <transition-group name="fade" tag="tbody" class="category-list__table__body">
         <tr
-          v-for="category in targetArray"
+          v-for="category in categories"
           :key="category.id"
         >
           <td>
@@ -109,10 +105,6 @@ export default {
       default() {
         return [];
       },
-    },
-    targetArray: {
-      type: Array,
-      default: () => [],
     },
     categories: {
       type: Array,
