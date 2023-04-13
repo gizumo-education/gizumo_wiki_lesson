@@ -33,16 +33,6 @@ export default {
           id: null,
           name: '',
         },
-        user: {
-          account_name: '',
-          created_at: '',
-          email: '',
-          full_name: '',
-          id: '',
-          password_reset_flg: null,
-          role: '',
-          update_at: '',
-        },
       };
     },
     doneGetAllCategories(state, payload) {
