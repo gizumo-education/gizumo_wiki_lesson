@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     categoryId() {
-      const id = parseInt(this.$route.params, 10);
+      const id = parseInt(this.$route.params.id, 10);
       return id;
     },
     currentCategoryName() {
