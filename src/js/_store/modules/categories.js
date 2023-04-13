@@ -76,10 +76,10 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    getCategory({ commit, rootGetters }, { id }) {
+    getCategory({ commit, rootGetters }, categoryId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: `/category/${id}`,
+        url: `/category/${categoryId}`,
       }).then(res => {
         if (res.data.code === 0) throw new Error(res.data.message);
         const data = res.data.category;

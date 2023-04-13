@@ -25,6 +25,11 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
+    targetId() {
+      let { id } = this.$route.params;
+      id = parseInt(id, 10);
+      return id;
+    },
     targetCategory() {
       return this.$store.state.categories.targetCategory;
     },
@@ -36,8 +41,7 @@ export default {
     },
   },
   created() {
-    const { id } = this.$route.params;
-    this.$store.dispatch('categories/getCategory', { id });
+    this.$store.dispatch('categories/getCategory', this.targetId);
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {
