@@ -55,9 +55,7 @@ export default {
       if (this.currentCategoryName === this.newCategoryName) {
         this.$store.dispatch('categories/showMessage');
       } else {
-        this.$store.dispatch('categories/editCategory').then(() => {
-          this.$store.dispatch('categories/getAllCategories');
-        });
+        this.$store.dispatch('categories/editCategory');
       }
     },
     updatedCategory($event) {
