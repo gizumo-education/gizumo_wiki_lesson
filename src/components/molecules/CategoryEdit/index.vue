@@ -64,10 +64,6 @@ export default {
       type: String,
       required: true,
     },
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     errorMessage: {
       type: String,
       default: '',

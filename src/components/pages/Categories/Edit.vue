@@ -1,7 +1,6 @@
 <template>
   <div>
     <app-category-edit
-      :category-id="categoryId"
       :current-category-name="currentCategoryName"
       :access="access"
       :disabled="disabled"
