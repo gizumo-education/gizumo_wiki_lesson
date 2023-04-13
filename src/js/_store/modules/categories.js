@@ -29,11 +29,18 @@ export default {
       state.targetCategory = { ...state.targetCategory, ...payload };
       state.newCategory = { ...state.newCategory, ...payload };
     },
+    doneEditCategory(state) {
+      state.targetCategory = state.newCategory;
+      state.newCategory = { ...state.newCategory, name: '' };
+    },
+    doneUpdateCategory(state, payload) {
+      state.newCategory.name = payload;
+    },
     donePostCategories(state, { payload }) {
       state.categoryList.unshft(payload);
     },
     doneUpdateValue(state, payload) {
-      state.newCategory.name = payload;
+      state.targetCategory.name = payload;
     },
     deleteCategory(state, payload) {
       state.deleteCategory = payload;
@@ -113,12 +120,12 @@ export default {
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを更新しました。' });
+          commit('doneEditCategory');
           resolve();
         }).catch(() => {
           commit('failRequest', { errorMessage: 'カテゴリー更新に失敗しました。' });
         }).finally(() => {
           commit('switchDisabled');
-          commit('clearTargetCategory');
         });
       });
     },
@@ -143,7 +150,7 @@ export default {
     },
     updatedCategory({ commit }, categoryName) {
       const payload = categoryName;
-      commit('doneUpdateValue', payload);
+      commit('doneUpdateCategory', payload);
       commit('clearMessage');
     },
     setTargetCategory({ commit }, deleteCategory) {
