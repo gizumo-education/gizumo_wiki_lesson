@@ -105,11 +105,11 @@ export default {
         commit('clearMessage');
         commit('switchDisabled');
         const data = {
-          name: state.targetCategory.name,
+          name: state.newCategory.name,
         };
         axios(rootGetters['auth/token'])({
           method: 'PUT',
-          url: `/category/${state.targetCategory.id}`,
+          url: `/category/${state.newCategory.id}`,
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを更新しました。' });
@@ -128,6 +128,7 @@ export default {
     },
     getCategory({ commit, rootGetters }, categoryId) {
       return new Promise(resolve => {
+        commit('clearMessage');
         axios(rootGetters['auth/token'])({
           method: 'GET',
           url: `/category/${categoryId}`,
@@ -143,6 +144,7 @@ export default {
     updatedCategory({ commit }, categoryName) {
       const payload = categoryName;
       commit('doneUpdateValue', payload);
+      commit('clearMessage');
     },
     setTargetCategory({ commit }, deleteCategory) {
       commit('clearMessage');
