@@ -2,7 +2,7 @@
   <app-category-edit
     :error-message="errorMessage"
     :done-message="doneMessage"
-    :edit-category="editCategory"
+    :target-category="targetCategory"
     :loading="loading"
     :access="access"
     @clear-message="clearMessage"
@@ -25,8 +25,8 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
-    editCategory() {
-      return this.$store.state.categories.editCategory;
+    targetCategory() {
+      return this.$store.state.categories.targetCategory;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
@@ -50,9 +50,9 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/updateCategory', {
-        id: this.editCategory.id,
+        id: this.targetCategory.id,
         /* eslint-disable-next-line no-irregular-whitespace */
-        name: this.editCategory.name.replace(/(　)+/, ' ').trim(),
+        name: this.targetCategory.name.replace(/(　)+/, ' ').trim(),
       });
     },
   },

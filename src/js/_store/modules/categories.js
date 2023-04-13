@@ -11,7 +11,7 @@ export default {
       id: null,
       name: '',
     },
-    editCategory: {
+    targetCategory: {
       id: null,
       name: '',
     },
@@ -29,7 +29,7 @@ export default {
       state.categoryList = state.categoryList.reverse();
     },
     doneGetCategory(state, payload) {
-      state.editCategory = { ...state.editCategory, ...payload };
+      state.targetCategory = { ...state.targetCategory, ...payload };
       state.loading = false;
     },
     setCreatedDoneMessage(state) {
@@ -37,11 +37,11 @@ export default {
       state.doneMessage = '新規カテゴリーを作成しました。';
     },
     editingName(state, payload) {
-      state.editCategory = { ...state.editCategory, name: payload.name };
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
     updateCategory(state, { category }) {
       state.loading = false;
-      state.editCategory = { ...state.editCategory, ...category };
+      state.targetCategory = { ...state.targetCategory, ...category };
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
     confirmDeleteCategory(state, { deleteCategory }) {

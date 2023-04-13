@@ -16,7 +16,7 @@
       placeholder="追加するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
-      :value="editCategory.name"
+      :value="targetCategory.name"
       class="category-edit__form"
       @update-value="$emit('editing-name', $event)"
     />
@@ -53,7 +53,7 @@ export default {
     appText: Text,
   },
   props: {
-    editCategory: {
+    targetCategory: {
       type: Object,
       default: () => ({}),
     },
