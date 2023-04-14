@@ -1,10 +1,12 @@
 <template>
-  <div class="display: flex">
-    <app-category-post class="left"
+  <div class="flex">
+    <app-category-post
+      class="left"
       :access="access"
     />
 
-    <app-category-list class="right"
+    <app-category-list
+      class="right"
       :theads="theads"
       :categories="categoryList"
       :access="access"
@@ -19,6 +21,11 @@ export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
+  },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
   },
   computed: {
     access() {
@@ -44,7 +51,7 @@ export default {
 }
 .left{
   width: 40%;
-  border-right: 1px solid ;
+  border-right: 1px solid $separator-color;
   padding-right: 2%;
 }
 </style>
