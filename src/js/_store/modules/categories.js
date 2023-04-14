@@ -3,7 +3,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    theads: '',
+    theads: ['カテゴリー名'],
     errorMessage: '',
     id: null,
     title: '',

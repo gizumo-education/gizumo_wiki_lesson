@@ -27,9 +27,6 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoriesList;
     },
-    theads() {
-      return ['カテゴリー名'];
-    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -39,7 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .flex{
-    display: flex;
+  display: flex;
 }
 .right{
   width: 60%;
