@@ -5,15 +5,7 @@ export default {
   state: {
     theads: '',
     errorMessage: '',
-    id: null,
-    title: '',
-    content: '',
-    category: {
-      id: null,
-      name: '',
-    },
     categoriesList: [],
-    doneMessage: '',
   },
   mutations: {
     doneGetAllCategories(state, payload) {
