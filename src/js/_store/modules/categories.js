@@ -8,6 +8,10 @@ export default {
       name: '',
       id: 'null',
     },
+    newCategory: {
+      name: '',
+      id: 'null',
+    },
     deleteCategory: {
       name: '',
       id: 'null',
@@ -20,6 +24,17 @@ export default {
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload];
+    },
+    doneGetCategory(state, payload) {
+      state.targetCategory = { ...state.targetCategory, ...payload };
+      state.newCategory = { ...state.newCategory, ...payload };
+    },
+    doneEditCategory(state) {
+      state.targetCategory = state.newCategory;
+      state.newCategory = { ...state.newCategory, name: '' };
+    },
+    doneUpdateCategory(state, payload) {
+      state.newCategory.name = payload;
     },
     donePostCategories(state, { payload }) {
       state.categoryList.unshft(payload);
@@ -92,9 +107,48 @@ export default {
         });
       });
     },
+    editCategory({ commit, state, rootGetters }) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        commit('switchDisabled');
+        const data = {
+          name: state.newCategory.name,
+        };
+        axios(rootGetters['auth/token'])({
+          method: 'PUT',
+          url: `/category/${state.newCategory.id}`,
+          data,
+        }).then(() => {
+          commit('displayDoneMessage', { message: 'カテゴリーを更新しました。' });
+          commit('doneEditCategory');
+          resolve();
+        }).catch(() => {
+          commit('failRequest', { errorMessage: 'カテゴリー更新に失敗しました。' });
+        }).finally(() => {
+          commit('switchDisabled');
+        });
+      });
+    },
     updateValue({ commit }, targetCategory) {
       const payload = targetCategory;
       commit('doneUpdateValue', payload);
+    },
+    getCategory({ commit, rootGetters }, categoryId) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const payload = res.data.category;
+        commit('doneGetCategory', payload);
+      }).catch(err => {
+        commit('failRequest', { errorMessage: err.message });
+      });
+    },
+    updatedCategory({ commit }, categoryName) {
+      const payload = categoryName;
+      commit('doneUpdateCategory', payload);
+      commit('clearMessage');
     },
     setTargetCategory({ commit }, deleteCategory) {
       commit('clearMessage');
@@ -115,6 +169,12 @@ export default {
       }).catch(err => {
         commit('failRequest', { errorMessage: err.message });
       });
+    },
+    showMessage({ commit }) {
+      commit('failRequest', { errorMessage: 'カテゴリー名が変更されていません' });
+    },
+    clearTargetCategory({ commit }) {
+      commit('clearTargetCategory');
     },
     clearMessage({ commit }) {
       commit('clearMessage');
