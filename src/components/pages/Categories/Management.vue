@@ -2,15 +2,16 @@
   <ul class="category">
     <!-- カテゴリー管理 -->
     <li class="category-post">
-      <CategoryPost
+      <app-category-post
         :access="access"
       />
     </li>
     <!-- カテゴリー名 -->
     <li class="category-list">
-      <CategoryList
+      <app-category-list
         :theads="theads"
         :categories="categoryList"
+        :access="access"
       />
     </li>
   </ul>
@@ -21,8 +22,8 @@ import { CategoryPost, CategoryList } from '@Components/molecules';
 
 export default {
   components: {
-    CategoryPost,
-    CategoryList,
+    appCategoryPost: CategoryPost,
+    appCategoryList: CategoryList,
   },
   data() {
     return {
@@ -42,6 +43,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .category {
   display: flex;

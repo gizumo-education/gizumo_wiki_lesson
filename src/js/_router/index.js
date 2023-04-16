@@ -15,7 +15,7 @@ import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
 
 // カテゴリー
-// import Categories from '@Pages/Categories/index.vue';
+import Categories from '@Pages/Categories/index.vue';
 import CategoryManagement from '@Pages/Categories/Management.vue';
 
 // 自分のアカウントページ
@@ -57,9 +57,15 @@ const router = new VueRouter({
       component: Home,
     },
     {
-      name: 'Categories',
       path: '/categories',
-      component: CategoryManagement,
+      component: Categories,
+      children: [
+        {
+          name: '',
+          path: '',
+          component: CategoryManagement,
+        },
+      ],
     },
     {
       name: 'passwordInit',
