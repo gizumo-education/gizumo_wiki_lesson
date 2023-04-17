@@ -49,7 +49,7 @@ export default {
   display: flex;
   &-post {
     width: 40%;
-    border-right: 0.5px solid #DCDCDC;
+    border-right: 0.5px solid $separator-color;
     padding: 0 20px;
   }
   &-list {
