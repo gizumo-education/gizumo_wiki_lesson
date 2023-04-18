@@ -6,13 +6,29 @@ export default {
     theads: '',
     errorMessage: '',
     categoriesList: [],
+    updateName: {
+      id: 'null',
+      name: '',
+    },
+    loading: false,
+    doneMessage: '',
   },
   mutations: {
+    updateCategory(state, payload) {
+      state.updateName.name = payload;
+    },
     doneGetAllCategories(state, payload) {
       state.categoriesList = [...payload.categories];
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
     },
   },
   actions: {
@@ -28,6 +44,35 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+    },
+    updateCategory({ commit }, updateName) {
+      const payload = updateName;
+      commit('updateCategory', payload);
+    },
+    postCategory({
+      commit, rootGetters, state, dispatch,
+    }) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        commit('toggleLoading');
+        const data = state.updateName;
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data,
+        }).then(() => {
+          dispatch('getAllCategories');
+          commit('toggleLoading');
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };
