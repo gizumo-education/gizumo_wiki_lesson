@@ -5,6 +5,7 @@
       :access="access"
       :category="updateName"
       :error-message="errorMessage"
+      :done-message="doneMessage"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
@@ -46,6 +47,9 @@ export default {
     },
     updateName() {
       return this.$store.state.categories.updateName.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {

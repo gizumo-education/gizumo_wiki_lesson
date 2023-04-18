@@ -30,6 +30,12 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    clearUpdateName(state) {
+      state.updateName = '';
+    },
+    doneMessage(state, { message }) {
+      state.doneMessage = message;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -63,6 +69,8 @@ export default {
         }).then(() => {
           dispatch('getAllCategories');
           commit('toggleLoading');
+          commit('clearUpdateName');
+          commit('doneMessage', { message: 'カテゴリーの追加に成功しました' });
           resolve();
         }).catch(err => {
           commit('toggleLoading');
