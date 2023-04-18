@@ -46,7 +46,7 @@
               small
               round
               :disabled="!access.delete"
-              @click="openModal(category.id, category.name)"
+              @click="openModal(category.id, category.name), $emit('handle-click')"
             >
               削除
             </app-button>
@@ -122,6 +122,7 @@ export default {
       this.$emit('open-modal', categoryId, categoryName);
     },
     handleClick() {
+      this.$store.dispatch('articles/deleteArticle');
       if (!this.access.delete) return;
       this.$emit('handle-click');
     },
