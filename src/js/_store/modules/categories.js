@@ -6,8 +6,9 @@ export default {
     targetCategory: {
       name: '',
     },
-    thread: [],
+    theads: ['カテゴリー名'],
     categoryList: [],
+    deleteCategoryName: '',
   },
   mutations: {
     doneGetAllCategories(state, payload) {

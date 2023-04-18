@@ -1,6 +1,6 @@
 <template>
   <app-category-list
-    :threads="threads"
+    :theads="theads"
     :categories="categories"
     :delete-category-name="deleteCategoryName"
     :access="access"
@@ -15,15 +15,21 @@ export default {
     AppCategoryList: CategoryList,
   },
   computed: {
-    threads() {
-      return ['カテゴリー名'];
+    theads() {
+      return this.$store.state.categories.theads;
     },
     categories() {
-      return this.$store.categories.categoryList;
+      return this.$store.state.categories.categoryList;
     },
     access() {
       return this.$store.getters['auth/access'];
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    },
+  },
+  created() {
+    this.$store.dispatch('categories/getAllCategories');
   },
 };
 </script>
