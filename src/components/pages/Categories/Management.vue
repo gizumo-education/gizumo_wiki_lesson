@@ -1,20 +1,20 @@
 <template>
-  <ul class="category">
+  <div class="category">
     <!-- カテゴリー管理 -->
-    <li class="category-post">
+    <div class="category-post">
       <app-category-post
         :access="access"
       />
-    </li>
+    </div>
     <!-- カテゴリー名 -->
-    <li class="category-list">
+    <div class="category-list">
       <app-category-list
         :theads="theads"
         :categories="categoryList"
         :access="access"
       />
-    </li>
-  </ul>
+    </div>
+  </div>
 </template>
 
 <script>
