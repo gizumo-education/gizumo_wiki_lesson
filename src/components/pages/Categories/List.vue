@@ -57,7 +57,6 @@ export default {
   },
   methods: {
     updateValue(event) {
-      console.log(event);// eslint-disable-line no-console
       const updateName = event.target.value;
       this.$store.dispatch('categories/updateCategory', updateName);
     },
