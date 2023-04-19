@@ -133,7 +133,7 @@ export default {
 .category-list {
   padding: 10px 0 20px;
   height: 100%;
-  overflow: scroll;
+  // overflow: scroll;
   &__table {
     width: 100%;
     text-align: left;

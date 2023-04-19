@@ -45,7 +45,6 @@ export default {
 <style lang="scss" scoped>
   .categories {
     display: flex;
-    overflow: hidden;
 
     &__post {
       width: 30%;
@@ -56,6 +55,7 @@ export default {
       width: 70%;
       padding-left: 25px;
       border-left: 1px solid #cdcdcd;
+      overflow: hidden;
     }
   }
 </style>
