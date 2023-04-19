@@ -59,7 +59,7 @@ export default {
     postCategory({
       commit, rootGetters, state, dispatch,
     }) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleDisable');
         const data = state.updateName;

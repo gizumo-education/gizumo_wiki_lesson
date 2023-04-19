@@ -79,6 +79,16 @@ const router = new VueRouter({
           name: 'CategoryList',
           path: '/Categories',
           component: CategoryList,
+          beforeEnter(to, from, next) {
+            const isCategory = from.name ? from.name.indexOf('CategoryList') >= 0 : false;
+            const isRedirect = to.query.redirect;
+            if (isCategory && isRedirect) {
+              next();
+            } else {
+              Store.dispatch('categories/clearMessage');
+              next();
+            }
+          },
         },
       ],
     },

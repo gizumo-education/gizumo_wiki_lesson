@@ -40,9 +40,6 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoriesList;
     },
-    loading() {
-      return this.$store.state.categories.loading;
-    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
