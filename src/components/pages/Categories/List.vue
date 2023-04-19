@@ -62,8 +62,7 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/postCategory').then(() => {
-      });
+      this.$store.dispatch('categories/postCategory');
     },
   },
 };
