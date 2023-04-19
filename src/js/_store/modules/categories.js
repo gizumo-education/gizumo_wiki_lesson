@@ -33,8 +33,8 @@ export default {
     clearUpdateName(state) {
       state.updateName = '';
     },
-    doneMessage(state, { message }) {
-      state.doneMessage = message;
+    doneMessage(state, payload = { message: '成功しました' }) {
+      state.doneMessage = payload.message;
     },
   },
   actions: {
@@ -54,6 +54,7 @@ export default {
     updateCategory({ commit }, updateName) {
       const payload = updateName;
       commit('updateCategory', payload);
+      commit('clearMessage');
     },
     postCategory({
       commit, rootGetters, state, dispatch,
@@ -70,6 +71,7 @@ export default {
           dispatch('getAllCategories');
           commit('toggleLoading');
           commit('clearUpdateName');
+          commit('clearMessage');
           commit('doneMessage', { message: 'カテゴリーの追加に成功しました' });
           resolve();
         }).catch(err => {

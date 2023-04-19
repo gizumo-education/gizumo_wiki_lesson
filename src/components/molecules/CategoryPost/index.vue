@@ -62,10 +62,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
   },
   computed: {
     buttonText() {
