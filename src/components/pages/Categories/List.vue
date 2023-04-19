@@ -62,17 +62,17 @@ export default {
 
 <style lang='scss' scoped>
   .categories {
-    height: 100%;
+    height: calc(100vh - 54px);;
     display: flex;
 
     &__post {
-      height: 100%;
+      height: calc(100vh - 54px);;
       width: 30%;
       margin-right: 25px;
     }
 
     &__content {
-      height: 100%;
+      height: calc(100vh - 54px);
       width: 70%;
       padding-left: 25px;
       border-left: 1px solid #cdcdcd;
