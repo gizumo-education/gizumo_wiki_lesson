@@ -3,15 +3,12 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    targetCategory: '',
-    theads: ['カテゴリー名'],
     categoryList: [],
-    deleteCategoryName: '',
     disabled: false,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
-      state.categoryList = [...payload.categories].reverse();
+      state.categoryList = payload.categories.reverse();
     },
   },
   actions: {

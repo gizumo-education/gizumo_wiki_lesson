@@ -7,6 +7,8 @@
         :done-message="doneMessage"
         :disabled="disabled"
         :access="access"
+        @update-value="updatedCategory"
+        @handle-submit="addCategory"
       />
     </div>
     <div class="categories__content">
@@ -28,6 +30,11 @@ export default {
     AppCategoryList: CategoryList,
     AppCategoryPost: CategoryPost,
   },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
+  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
@@ -35,27 +42,17 @@ export default {
     categories() {
       return this.$store.state.categories.categoryList;
     },
-    deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
-    },
     disabled() {
       return this.$store.state.categories.disabled;
-    },
-    doneMessage() {
-      return this.$store.state.categories.doneMessage;
-    },
-    errorMessage() {
-      return this.$store.state.categories.errorMessage;
-    },
-    targetCategory() {
-      return this.$store.state.categories.targetCategory;
-    },
-    theads() {
-      return this.$store.state.categories.theads;
     },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    addCategory() {
+      this.$store.dispatch('categories/addCategory');
+    },
   },
 };
 </script>

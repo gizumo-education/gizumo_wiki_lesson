@@ -46,9 +46,8 @@ export default {
   padding-top: $header-height;
   z-index: $z-content;
   &.articlePost,
-  &.articleEdit,
-  &.categoriesPost,
-  &.categoriesList {
+  &.articleEdit
+  {
     height: 100vh;
   }
   &-main {
