@@ -10,8 +10,8 @@ export default {
       id: 'null',
       name: '',
     },
-    loading: false,
     doneMessage: '',
+    disabled: false,
   },
   mutations: {
     updateCategory(state, payload) {
@@ -23,18 +23,18 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
+    toggleDisable(state) {
+      state.disabled = !state.disabled;
     },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
     },
     clearUpdateName(state) {
-      state.updateName = '';
+      state.updateName = { id: 'null', name: '' };
     },
-    doneMessage(state, payload = { message: '成功しました' }) {
-      state.doneMessage = payload.message;
+    doneMessage(state, { message }) {
+      state.doneMessage = message;
     },
   },
   actions: {
@@ -61,7 +61,7 @@ export default {
     }) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
-        commit('toggleLoading');
+        commit('toggleDisable');
         const data = state.updateName;
         axios(rootGetters['auth/token'])({
           method: 'POST',
@@ -69,13 +69,14 @@ export default {
           data,
         }).then(() => {
           dispatch('getAllCategories');
-          commit('toggleLoading');
           commit('clearUpdateName');
           commit('clearMessage');
           commit('doneMessage', { message: 'カテゴリーの追加に成功しました' });
           resolve();
+        }).then(() => {
+          commit('toggleDisable');
         }).catch(err => {
-          commit('toggleLoading');
+          commit('toggleDisable');
           commit('failRequest', { message: err.message });
           reject();
         });
