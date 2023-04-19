@@ -78,7 +78,6 @@ export default {
         }).catch(err => {
           commit('toggleDisable');
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },
