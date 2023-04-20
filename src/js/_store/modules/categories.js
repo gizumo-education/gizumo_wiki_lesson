@@ -10,6 +10,9 @@ export default {
     disabled: false,
   },
   mutations: {
+    initTargetCategory(state) {
+      state.targetCategory = '';
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = payload.categories.reverse();
     },
@@ -34,6 +37,12 @@ export default {
     targetCategory: state => state.targetCategory,
   },
   actions: {
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
+    initTargetCategory({ commit }) {
+      commit('initTargetCategory');
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
