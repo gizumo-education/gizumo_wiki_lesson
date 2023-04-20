@@ -59,7 +59,7 @@ export default {
     postCategory({
       commit, rootGetters, state, dispatch,
     }) {
-      return new Promise(resolve => {
+      return new Promise(() => {
         commit('clearMessage');
         commit('toggleDisable');
         const data = state.updateName;
@@ -72,7 +72,6 @@ export default {
           commit('clearUpdateName');
           commit('clearMessage');
           commit('doneMessage', { message: 'カテゴリーの追加に成功しました' });
-          resolve();
         }).then(() => {
           commit('toggleDisable');
         }).catch(err => {
