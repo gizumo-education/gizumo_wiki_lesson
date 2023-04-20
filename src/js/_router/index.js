@@ -14,6 +14,10 @@ import ArticleDetail from '@Pages/Articles/Detail.vue';
 import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
 
+// カテゴリー
+import Categories from '@Pages/Categories/index.vue';
+import CategoryList from '@Pages/Categories/List.vue';
+
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
 
@@ -105,6 +109,48 @@ const router = new VueRouter({
           path: ':id/edit',
           component: ArticleEdit,
         },
+      ],
+    },
+
+    {
+      categories: '/categories',
+      component: Categories,
+      path: '/categories',
+      children: [
+        {
+          name: 'categoryList',
+          path: '',
+          component: CategoryList,
+          beforeEnter(to, from, next) {
+            /**
+             * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
+             * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
+             */
+            const isCategory = from.name ? from.name.indexOf('category') >= 0 : false;
+            const isRedirect = to.query.redirect;
+            if (isCategory && isRedirect) {
+              next();
+            } else {
+              Store.dispatch('categories/clearMessage');
+              next();
+            }
+          },
+        },
+        // {
+        //   name: 'categoryPost',
+        //   path: 'post',
+        //   component: CategoryPost,
+        // },
+        // {
+        //   name: 'articleDetail',
+        //   path: ':id',
+        //   component: ArticleDetail,
+        // },
+        // {
+        //   name: 'categoryEdit',
+        //   path: ':id/edit',
+        //   component: categoryEdit,
+        // },
       ],
     },
     {

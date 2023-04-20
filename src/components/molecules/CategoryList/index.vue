@@ -176,4 +176,9 @@ export default {
     margin-top: 48px;
   }
 }
+
+.delete-button {
+  background: #D9300B;
+  border-radius: 5px;
+}
 </style>
