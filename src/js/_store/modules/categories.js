@@ -59,25 +59,23 @@ export default {
     postCategory({
       commit, rootGetters, state, dispatch,
     }) {
-      return new Promise(() => {
+      commit('clearMessage');
+      commit('toggleDisable');
+      const data = state.updateName;
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(() => {
+        dispatch('getAllCategories');
+        commit('clearUpdateName');
         commit('clearMessage');
+        commit('doneMessage', { message: 'カテゴリーの追加に成功しました' });
+      }).then(() => {
         commit('toggleDisable');
-        const data = state.updateName;
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data,
-        }).then(() => {
-          dispatch('getAllCategories');
-          commit('clearUpdateName');
-          commit('clearMessage');
-          commit('doneMessage', { message: 'カテゴリーの追加に成功しました' });
-        }).then(() => {
-          commit('toggleDisable');
-        }).catch(err => {
-          commit('toggleDisable');
-          commit('failRequest', { message: err.message });
-        });
+      }).catch(err => {
+        commit('toggleDisable');
+        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {
