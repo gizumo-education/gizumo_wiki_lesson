@@ -3,6 +3,12 @@
     <app-category-post
       class="left"
       :access="access"
+      :category="updateName"
+      :error-message="errorMessage"
+      :done-message="doneMessage"
+      :disabled="disabled"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
 
     <app-category-list
@@ -34,9 +40,31 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoriesList;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    updateName() {
+      return this.$store.state.categories.updateName.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    updateValue(event) {
+      const updateName = event.target.value;
+      this.$store.dispatch('categories/updateCategory', updateName);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
   },
 };
 </script>

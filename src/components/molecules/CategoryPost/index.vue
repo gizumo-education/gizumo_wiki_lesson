@@ -44,7 +44,7 @@ export default {
   props: {
     category: {
       type: String,
-      required: true,
+      default: '',
     },
     errorMessage: {
       type: String,
