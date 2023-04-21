@@ -8,6 +8,10 @@ export default {
     doneMessage: '',
     categoryList: [],
     disabled: false,
+    deleteCategory: {
+      id: '',
+      name: ''
+    },
   },
   mutations: {
     initTargetCategory(state) {
@@ -31,6 +35,9 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    openDeleteModal(state, payload) {
+      state.deleteCategory = { id: payload.id, name: payload.name };
     },
   },
   getters: {
@@ -84,5 +91,12 @@ export default {
         });
       });
     },
+    openDeleteModal({ commit }, { id, name }) {
+      const payload = {
+        id,
+        name,
+      }
+      commit('openDeleteModal', payload);
+    }
   },
 };
