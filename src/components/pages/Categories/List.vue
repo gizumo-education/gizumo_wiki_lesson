@@ -52,8 +52,11 @@ export default {
 }
 .category-post {
   width: 40%;
+  padding: 0 10px;
 }
 .list-items {
   width: 60%;
+  padding-left: 10px;
+  border-left: solid #c0c0c0 1px;
 }
 </style>
