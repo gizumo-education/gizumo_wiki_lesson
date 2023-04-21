@@ -74,6 +74,20 @@ const router = new VueRouter({
     {
       path: '/articles',
       component: Articles,
+      beforeEnter(to, from, next) {
+        /**
+         * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
+         * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
+         */
+        const isCategory = from.name ? from.name.indexOf('category') >= 0 : false;
+        const isRedirect = to.query.redirect;
+        if (isCategory && isRedirect) {
+          next();
+        } else {
+          Store.dispatch('categories/clearMessage');
+          next();
+        }
+      },
       children: [
         {
           name: 'articleList',
