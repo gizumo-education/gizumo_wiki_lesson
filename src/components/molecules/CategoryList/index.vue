@@ -80,6 +80,9 @@
         </app-button>
       </div>
     </app-modal>
+    <div v-if="errorMessage" class="category-management-list__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
   </div>
 </template>
 
@@ -115,6 +118,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     openModal(categoryId, categoryName) {
@@ -133,7 +140,6 @@ export default {
 .category-list {
   padding: 10px 0 20px;
   height: 100%;
-  overflow: scroll;
   &__table {
     width: 100%;
     text-align: left;
