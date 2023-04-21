@@ -1,12 +1,11 @@
 <template>
   <div class="category-manage">
-    <div class="category-post">
-      <app-category-post
-        :done-message="doneMessage"
-        :access="access"
-        :category="category"
-      />
-    </div>
+    <app-category-post
+      class="category-post"
+      :done-message="doneMessage"
+      :access="access"
+      :category="category"
+    />
     <app-category-list
       :theads="theads"
       :categories="categoriesList"
@@ -65,5 +64,4 @@ export default {
   width: 70%;
   padding-left:20px;
 }
-
 </style>
