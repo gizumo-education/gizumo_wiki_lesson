@@ -5,7 +5,6 @@
         :category="categoryName"
         :error-message="errorMessage"
         :done-message="doneMessage"
-        :delete-category-name="deleteCategoryName"
         :disabled="disabled"
         :access="access"
         @update-value="updatedCategory"
@@ -16,8 +15,10 @@
       <app-category-list
         :theads="theads"
         :categories="categories"
+        :delete-category-name="deleteCategoryName"
         :access="access"
         @open-modal="openDeleteModal"
+        @handle-click="deleteCategory"
       />
     </div>
   </div>
@@ -59,7 +60,6 @@ export default {
       return this.$store.state.categories.doneMessage;
     },
     deleteCategoryName() {
-      console.log(this.$store.state.categories.deleteCategory.name);
       return this.$store.state.categories.deleteCategory.name;
     },
   },
@@ -77,6 +77,12 @@ export default {
     },
     updatedCategory($event) {
       this.$store.dispatch('categories/updatedCategory', $event.target.value);
+    },
+    deleteCategory() {
+      this.$store.dispatch('categories/deleteCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+      });
+      this.toggleModal();
     },
     openDeleteModal(id, name) {
       this.toggleModal();
