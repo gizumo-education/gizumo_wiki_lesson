@@ -86,7 +86,7 @@ export default {
     },
     openDeleteModal(id, name) {
       this.toggleModal();
-      this.$store.dispatch('categories/openDeleteModal', { id, name });
+      this.$store.dispatch('categories/setDeleteCategory', { id, name });
     },
   },
 };
