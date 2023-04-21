@@ -57,6 +57,9 @@ export default {
       );
       state.categoriesList = [...filteredCategories];
     },
+    displayDoneMessage(state, payload = { message: '成功しました' }) {
+      state.doneMessage = payload.message;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -118,6 +121,7 @@ export default {
       }).then(() => {
         commit('doneDeleteCategory');
         dispatch('getAllCategories');
+        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
       }).catch(() => {
         commit(')failRequest');
       });
