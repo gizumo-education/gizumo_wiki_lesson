@@ -2,7 +2,7 @@
   <div class="categories">
     <div class="categories__post">
       <app-category-post
-        :category="targetCategory"
+        :category="categoryName"
         :error-message="errorMessage"
         :done-message="doneMessage"
         :disabled="disabled"
@@ -15,7 +15,6 @@
       <app-category-list
         :theads="theads"
         :categories="categories"
-        :delete-category-name="deleteCategoryName"
         :access="access"
       />
     </div>
@@ -45,13 +44,31 @@ export default {
     disabled() {
       return this.$store.state.categories.disabled;
     },
+    categoryName() {
+      const name = this.$store.state.categories.targetCategory;
+      return name;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
+    this.$store.dispatch('categories/clearMessage');
+    this.$store.dispatch('categories/initTargetCategory');
     this.$store.dispatch('categories/getAllCategories');
   },
   methods: {
     addCategory() {
-      this.$store.dispatch('categories/addCategory');
+      if (this.disabled) return;
+      this.$store.dispatch('categories/addCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+      });
+    },
+    updatedCategory($event) {
+      this.$store.dispatch('categories/updatedCategory', $event.target.value);
     },
   },
 };
