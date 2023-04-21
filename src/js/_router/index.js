@@ -14,6 +14,10 @@ import ArticleDetail from '@Pages/Articles/Detail.vue';
 import ArticleEdit from '@Pages/Articles/Edit.vue';
 import ArticlePost from '@Pages/Articles/Post.vue';
 
+// カテゴリー
+import Categories from '@Pages/Categories/index.vue';
+import CategoryList from '@Pages/Categories/List.vue';
+
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
 
@@ -70,25 +74,25 @@ const router = new VueRouter({
     {
       path: '/articles',
       component: Articles,
+      beforeEnter(to, from, next) {
+        /**
+         * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
+         * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
+         */
+        const isCategory = from.name ? from.name.indexOf('category') >= 0 : false;
+        const isRedirect = to.query.redirect;
+        if (isCategory && isRedirect) {
+          next();
+        } else {
+          Store.dispatch('categories/clearMessage');
+          next();
+        }
+      },
       children: [
         {
           name: 'articleList',
           path: '',
           component: ArticleList,
-          beforeEnter(to, from, next) {
-            /**
-             * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
-             * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
-             */
-            const isArticle = from.name ? from.name.indexOf('article') >= 0 : false;
-            const isRedirect = to.query.redirect;
-            if (isArticle && isRedirect) {
-              next();
-            } else {
-              Store.dispatch('articles/clearMessage');
-              next();
-            }
-          },
         },
         {
           name: 'articlePost',
@@ -104,6 +108,19 @@ const router = new VueRouter({
           name: 'articleEdit',
           path: ':id/edit',
           component: ArticleEdit,
+        },
+      ],
+    },
+
+    {
+      categories: '/categories',
+      component: Categories,
+      path: '/categories',
+      children: [
+        {
+          name: 'categoryList',
+          path: '',
+          component: CategoryList,
         },
       ],
     },
