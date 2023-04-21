@@ -9,7 +9,7 @@ export default {
     categoryList: [],
     disabled: false,
     deleteCategory: {
-      id: '',
+      id: null,
       name: '',
     },
   },
@@ -46,7 +46,7 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategory = {
         ...state.deleteCategory,
-        id: '',
+        id: null,
         name: '',
       };
     },
@@ -105,12 +105,9 @@ export default {
     },
     deleteCategory({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
-        const data = new URLSearchParams();
-        data.append('id', rootGetters['categories/deleteCategory'].id);
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/category/${rootGetters['categories/deleteCategory'].id}`,
-          data,
+          url: `/category/${this.state.categories.deleteCategory.id}`,
         }).then(() => {
           commit('doneDeleteCategory');
           commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
@@ -121,7 +118,7 @@ export default {
         });
       });
     },
-    openDeleteModal({ commit }, { id, name }) {
+    setDeleteCategory({ commit }, { id, name }) {
       commit('clearMessage');
       const payload = {
         id,
