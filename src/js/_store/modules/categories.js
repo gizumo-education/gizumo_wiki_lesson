@@ -36,7 +36,7 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    openDeleteModal(state, payload) {
+    setDeleteCategory(state, payload) {
       state.deleteCategory = {
         ...state.deleteCategory,
         id: payload.id,
@@ -107,7 +107,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/category/${this.state.categories.deleteCategory.id}`,
+          url: `/category/${rootGetters['categories/deleteCategory'].id}`,
         }).then(() => {
           commit('doneDeleteCategory');
           commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
@@ -124,7 +124,7 @@ export default {
         id,
         name,
       };
-      commit('openDeleteModal', payload);
+      commit('setDeleteCategory', payload);
     },
   },
 };
