@@ -79,20 +79,6 @@ const router = new VueRouter({
           name: 'articleList',
           path: '',
           component: ArticleList,
-          beforeEnter(to, from, next) {
-            /**
-             * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
-             * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
-             */
-            const isArticle = from.name ? from.name.indexOf('article') >= 0 : false;
-            const isRedirect = to.query.redirect;
-            if (isArticle && isRedirect) {
-              next();
-            } else {
-              Store.dispatch('articles/clearMessage');
-              next();
-            }
-          },
         },
         {
           name: 'articlePost',
@@ -121,36 +107,7 @@ const router = new VueRouter({
           name: 'categoryList',
           path: '',
           component: CategoryList,
-          beforeEnter(to, from, next) {
-            /**
-             * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
-             * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
-             */
-            const isCategory = from.name ? from.name.indexOf('category') >= 0 : false;
-            const isRedirect = to.query.redirect;
-            if (isCategory && isRedirect) {
-              next();
-            } else {
-              Store.dispatch('categories/clearMessage');
-              next();
-            }
-          },
         },
-        // {
-        //   name: 'categoryPost',
-        //   path: 'post',
-        //   component: CategoryPost,
-        // },
-        // {
-        //   name: 'articleDetail',
-        //   path: ':id',
-        //   component: ArticleDetail,
-        // },
-        // {
-        //   name: 'categoryEdit',
-        //   path: ':id/edit',
-        //   component: categoryEdit,
-        // },
       ],
     },
     {

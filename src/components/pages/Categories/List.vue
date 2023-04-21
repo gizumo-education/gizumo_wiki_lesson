@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <article class="home__content">
+  <div class="categories">
+    <article class="categories__content">
       <app-category-post
         class="category-post"
         :access="access"
@@ -22,7 +22,6 @@ export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
-
   },
   data() {
     return {
@@ -44,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home__content {
+.categories__content {
   display: flex;
   margin-top: 20px;
   &:first-child {
