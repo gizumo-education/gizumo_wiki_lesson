@@ -3,7 +3,12 @@
     <article class="categories__content">
       <app-category-post
         class="category-post"
+        :category-name="categoryName"
         :access="access"
+        :disabled="loading"
+        :error-message="errorMessage"
+        @edited-category="editedCategory"
+        @handle-submit="handleSubmit"
       />
       <app-category-list
         class="list-items"
@@ -29,17 +34,43 @@ export default {
     };
   },
   computed: {
+    categoryName() {
+      const { category } = this.$store.state.categories.targetCategory;
+      return category;
+    },
     categoryList() {
       return this.$store.getters['categories/categoryList'];
     },
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/initPostCategory');
+  },
+  methods: {
+    editedCategory($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$router.push({
+          path: '/category',
+          query: { redirect: '/categories/post' },
+        });
+      });
+    },
   },
 };
+
 </script>
 
 <style lang="scss" scoped>
