@@ -45,8 +45,8 @@ export default {
     this.fetchArticles();
   },
   methods: {
-    openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);
+    openModal(articleId) {
+      this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
     },
     handleClick() {
