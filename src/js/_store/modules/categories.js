@@ -105,8 +105,8 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
-      const payload = { id: categoryId, name: categoryName };
+    confirmDeleteCategory({ commit }, { id, name }) {
+      const payload = { id, name };
       commit('confirmDeleteCategory', payload);
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
