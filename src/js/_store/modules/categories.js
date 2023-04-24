@@ -51,12 +51,6 @@ export default {
       state.deleteCategory.id = null;
       state.deleteCategory.name = '';
     },
-    doneFilteredCategories(state, payload) {
-      const filteredCategories = payload.categories.filter(
-        category => category.category && category.category.name === payload.category,
-      );
-      state.categoriesList = [...filteredCategories];
-    },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
