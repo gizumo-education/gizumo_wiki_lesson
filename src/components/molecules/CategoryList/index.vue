@@ -42,6 +42,7 @@
           </td>
           <td>
             <app-button
+              class="category-list__table__body__button"
               bg-danger
               small
               round
@@ -147,6 +148,9 @@ export default {
       }
     }
     &__body {
+      &__button {
+        background-color: #e61717;
+      }
       td {
         padding: 10px;
         vertical-align: middle;
