@@ -1,18 +1,29 @@
 <template>
   <form @submit.prevent="editCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
+    <div class="category-management-edit__back">
+      <app-router-link
+        block
+        underline
+        key-color
+        hover-opacity
+        to="/categories"
+      >
+        カテゴリー一覧へ戻る
+      </app-router-link>
+    </div>
     <app-input
       v-validate="'required'"
       name="category"
       type="text"
-      placeholder="追加するカテゴリー名を入力してください"
+      placeholder="更新するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
       :value="category"
       @update-value="$emit('update-value', $event)"
     />
     <app-button
-      class="category-management-post__submit"
+      class="category-management-edit__submit"
       button-type="submit"
       round
       :disabled="disabled || !access.create"
@@ -20,18 +31,18 @@
       {{ buttonText }}
     </app-button>
 
-    <div v-if="errorMessage" class="category-management-post__notice">
+    <div v-if="errorMessage" class="category-management-edit__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
 
-    <div v-if="doneMessage" class="category-management-post__notice">
+    <div v-if="doneMessage" class="category-management-edit__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
   </form>
 </template>
 <script>
 import {
-  Heading, Input, Button, Text,
+  Heading, Input, Button, Text, RouterLink,
 } from '@Components/atoms';
 
 export default {
@@ -40,6 +51,7 @@ export default {
     appInput: Input,
     appButton: Button,
     appText: Text,
+    appRouterLink: RouterLink,
   },
   props: {
     category: {
@@ -81,7 +93,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.category-management-post {
+.category-management-edit {
+  &__back {
+    margin-top: 20px;
+  }
   &__input {
     margin-top: 16px;
   }
