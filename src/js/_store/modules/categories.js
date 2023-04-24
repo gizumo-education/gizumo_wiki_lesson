@@ -126,23 +126,5 @@ export default {
         commit(')failRequest');
       });
     },
-    filteredCategories({ commit, rootGetters }, category) {
-      return new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/category',
-        }).then(res => {
-          const payload = {
-            category,
-            categories: res.data.categories,
-          };
-          commit('doneFilteredCategories', payload);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject(new Error('エラーが発生しました'));
-        });
-      });
-    },
   },
 };

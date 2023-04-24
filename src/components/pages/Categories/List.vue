@@ -88,20 +88,6 @@ export default {
     handleClick() {
       this.$store.dispatch('categories/deleteCategory');
       this.toggleModal();
-      if (this.$route.query.category) {
-        const { category } = this.$route.query;
-        this.title = category;
-        this.$store.dispatch('categories/filteredCategories', category)
-          .then(() => {
-            if (this.$store.state.categories.categoriesList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          }).catch(() => {
-            // console.log(err);
-          });
-      } else {
-        this.$store.dispatch('categories/getAllCategories');
-      }
     },
   },
 };
