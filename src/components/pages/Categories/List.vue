@@ -22,6 +22,11 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
+  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
@@ -31,9 +36,6 @@ export default {
     },
     categoryList() {
       return this.$store.state.categories.categoryList;
-    },
-    theads() {
-      return ['カテゴリー名'];
     },
   },
   created() {
@@ -45,12 +47,15 @@ export default {
 <style lang="scss" scoped>
 .category {
   display: flex;
-  &_border{
-    border-right: 1px solid #eaeaea;
-    margin: 0px 15px 0px ;
+  &_border {
+    border-right: 1px solid $separator-color;
+    margin: 0px 15px 0px;
   }
-  &_post{
-    width: 400px;
+  &_post {
+    width: 30%;
+  }
+  &_list {
+    width: 70%;
   }
 }
 </style>

@@ -42,11 +42,10 @@
           </td>
           <td>
             <app-button
-              class="category-list__table__body__button"
               bg-danger
               small
               round
-              :disabled="!access.delete"
+              :disabled="access.delete"
               @click="openModal(category.id, category.name)"
             >
               削除
@@ -148,9 +147,6 @@ export default {
       }
     }
     &__body {
-      &__button {
-        background-color: #e61717;
-      }
       td {
         padding: 10px;
         vertical-align: middle;

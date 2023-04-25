@@ -3,19 +3,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    targetCategory: {
-      id: null,
-      title: '',
-      content: '',
-      category: {
-        id: null,
-        name: '',
-      },
-    },
     categoryList: [],
-    deleteCategoryId: null,
-    loading: false,
-    doneMessage: '',
     errorMessage: '',
   },
   mutations: {
