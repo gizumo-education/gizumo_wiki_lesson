@@ -6,16 +6,6 @@ export default {
     targetCategory: {
       id: null,
       name: '',
-      user: {
-        account_name: '',
-        created_at: '',
-        email: '',
-        full_name: '',
-        id: '',
-        password_reset_flg: null,
-        role: '',
-        updated_at: '',
-      },
     },
     categoryList: [],
     loading: false,
@@ -33,16 +23,6 @@ export default {
       state.targetCategory = {
         id: null,
         name: '',
-        // user: {
-        //   account_name: '',
-        //   created_at: '',
-        //   email: '',
-        //   full_name: '',
-        //   id: '',
-        //   password_reset_flg: null,
-        //   role: '',
-        //   updated_at: '',
-        // },
       };
     },
     doneGetCategory(state, payload) {
@@ -52,7 +32,7 @@ export default {
       state.categoryList = [...payload.categories.reverse()];
     },
     editedCategory(state, payload) {
-      state.targetCategory = { ...state.targetCategory, name: payload.name };
+      state.targetCategory = { ...state.targetCategory, name: payload };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -85,11 +65,8 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    editedCategory({ commit }, category) {
-      commit({
-        type: 'editedCategory',
-        category,
-      });
+    editedCategory({ commit }, name) {
+      commit('editedCategory', name);
     },
     postCategory({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
@@ -97,10 +74,10 @@ export default {
         commit('toggleLoading');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/targetCategory'].name);
-        //  data.append('user_id', rootGetters['auth/user'].id);
         //  自分用メモ：fetchとaxios同じ意味で大丈夫
         axios(rootGetters['auth/token'])({
           method: 'POST',
+          // 自分用メモ：以下のurlはswaggerと一致する必要がある
           url: '/category',
           data,
         }).then(() => {

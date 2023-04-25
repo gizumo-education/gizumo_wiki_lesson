@@ -8,7 +8,7 @@
       placeholder="追加するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
-      :value="category"
+      :value="categoryName.name"
       @update-value="$emit('edited-category', $event)"
     />
     <app-button
@@ -16,6 +16,7 @@
       button-type="submit"
       round
       :disabled="disabled || !access.create"
+      @click="$emit('handle-submit', $event)"
     >
       {{ buttonText }}
     </app-button>
@@ -62,6 +63,14 @@ export default {
       type: Object,
       default: () => ({}),
     },
+  },
+  data() {
+    return {
+      categoryName: {
+        id: null,
+        name: '',
+      },
+    };
   },
   computed: {
     buttonText() {

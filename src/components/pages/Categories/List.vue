@@ -3,7 +3,7 @@
     <article class="categories__content">
       <app-category-post
         class="category-post"
-        :category-name="categoryName"
+        :category="categoryName.category"
         :access="access"
         :disabled="loading"
         :error-message="errorMessage"
@@ -31,13 +31,17 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      categoryName: {
+        id: null,
+        category: '',
+      },
     };
   },
   computed: {
-    categoryName() {
-      const { category } = this.$store.state.categories.targetCategory;
-      return category;
-    },
+    // categoryName() {
+    //   const { category } = this.$store.state.categories.targetCategory;
+    //   return category;
+    // },
     categoryList() {
       return this.$store.getters['categories/categoryList'];
     },
@@ -62,10 +66,10 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory').then(() => {
-        this.$router.push({
-          path: '/category',
-          query: { redirect: '/categories/post' },
-        });
+        // this.$router.push({
+        //   path: '/categories',
+        //   // query: { redirect: '/categories' },
+        // });
       });
     },
   },
