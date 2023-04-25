@@ -9,6 +9,7 @@
       class="category_list"
       :error-message="errorMessage"
       :categories="categoryList"
+      :access="access"
       :theads="theads"
     />
   </div>
