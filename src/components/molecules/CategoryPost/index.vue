@@ -9,7 +9,7 @@
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
       :value="categoryName.name"
-      @update-value="$emit('edited-category', $event)"
+      @update-value="updateCategory"
     />
     <app-button
       class="category-management-post__submit"
@@ -63,6 +63,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    value: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -79,6 +83,11 @@ export default {
     },
   },
   methods: {
+    updateCategory($event) {
+      if (!this.access.create) return;
+      this.categoryName.name = $event.target.value;
+      this.$emit('edited-category', $event);
+    },
     addCategory() {
       if (!this.access.create) return;
       this.$emit('clear-message');

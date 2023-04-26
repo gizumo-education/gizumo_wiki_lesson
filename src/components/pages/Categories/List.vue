@@ -38,10 +38,6 @@ export default {
     };
   },
   computed: {
-    // categoryName() {
-    //   const { category } = this.$store.state.categories.targetCategory;
-    //   return category;
-    // },
     categoryList() {
       return this.$store.getters['categories/categoryList'];
     },
@@ -66,10 +62,6 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory').then(() => {
-        // this.$router.push({
-        //   path: '/categories',
-        //   // query: { redirect: '/categories' },
-        // });
       });
     },
   },
