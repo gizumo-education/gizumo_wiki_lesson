@@ -2,8 +2,15 @@
   <div class="category">
     <app-category-post
       class="category-post"
-      category=""
+      :category="category"
+      :error-message="errorMessage"
+      :done-message="doneMessage"
       :access="access"
+      :disabled="loading ? true : false"
+      :button-text="buttonText"
+      @handle-submit="addCategory"
+      @clear-message="clearMessage"
+      @update-value="updateValue"
     />
     <app-category-list
       :categories="categoryList"
@@ -26,22 +33,48 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     categoryList() {
       return this.$store.state.categories.categoryList;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    buttonText() {
+      return this.disabled ? '作成中...' : '作成';
     },
     access() {
       return this.$store.getters['auth/access'];
     },
   },
   created() {
-    this.fetchCategories();
+    this.$store.dispatch('categories/getAllCategories');
   },
   methods: {
-    fetchCategories() {
-      this.$store.dispatch('categories/getAllCategories');
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue(target) {
+      this.category = target.value;
+    },
+    addCategory() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/addCategory', {
+        category: this.category,
+      });
+      this.category = '';
+    },
+    editCategory() {
+      this.$store.dispatch('categories/editCategory');
     },
   },
 };
@@ -52,14 +85,14 @@ export default {
   display: flex;
   &-post{
     height: 100%;
-    width: 40%;
+    width: 30%;
     padding-right: 20px;
   }
   &-list{
     height: 100%;
-    width: 60%;
+    width: 70%;
     border-left: 1px solid $separator-color;
-    padding-left: 10px;
+    padding-left: 20px;
   }
   &__table{
     margin-top: 20px;
