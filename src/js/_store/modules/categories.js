@@ -41,6 +41,9 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    clearError(state) {
+      state.errorMessagePost = '';
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -71,7 +74,7 @@ export default {
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          state.errorMessagePost = '';
+          commit('clearError');
           resolve();
         }).catch(() => {
           commit('failRequest', { errorMessagePost: '失敗しました' });
