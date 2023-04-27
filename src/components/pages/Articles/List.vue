@@ -9,7 +9,10 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <app-pagination />
+    <app-pagination
+      :current-page="currentPage"
+      :total-page="totalPage"
+    />
   </div>
 </template>
 
@@ -24,7 +27,8 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const pageId = to.query.page;
+    this.fetchArticles(pageId);
     next();
   },
   data() {
@@ -35,6 +39,12 @@ export default {
   computed: {
     articlesList() {
       return this.$store.state.articles.articleList;
+    },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
+    },
+    totalPage() {
+      return this.$store.state.articles.totalPage;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
@@ -69,7 +79,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageId) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -82,7 +92,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', pageId);
       }
     },
   },
