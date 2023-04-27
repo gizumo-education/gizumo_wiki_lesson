@@ -37,7 +37,7 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    addCategory({ commit, rootGetters }, categoryName) {
+    addCategory({ commit, rootGetters, dispatch }, categoryName) {
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
@@ -45,15 +45,7 @@ export default {
           name: categoryName,
         },
       }).then(() => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/category',
-        }).then(res => {
-          const categories = res.data.categories.reverse();
-          commit('setCategories', { categories });
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-        });
+        dispatch('getCategoryList');
         commit('doneCreateCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
