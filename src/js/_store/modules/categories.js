@@ -4,9 +4,8 @@ export default {
   namespaced: true,
   state: {
     categoriesList: [],
-    deleteCategoriesList: null,
-    errorMessage: '',
     doneMessage: '',
+    errorMessage: '',
   },
   mutations: {
     failRequest(state, { message }) {
@@ -19,8 +18,14 @@ export default {
     setCategories(state, { categories }) {
       state.categoriesList = categories;
     },
+    doneCreateCategory(state) {
+      state.doneMessage = '新しいカテゴリーが作成されました。';
+    },
   },
   actions: {
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
     getCategoryList({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -28,7 +33,20 @@ export default {
       }).then(res => {
         const categories = res.data.categories.reverse();
         commit('setCategories', { categories });
-        commit('clearMessage');
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    addCategory({ commit, rootGetters, dispatch }, categoryName) {
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data: {
+          name: categoryName,
+        },
+      }).then(() => {
+        dispatch('getCategoryList');
+        commit('doneCreateCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
