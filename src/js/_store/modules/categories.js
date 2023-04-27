@@ -3,7 +3,6 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    category: '',
     categoriesList: [],
     doneMessage: '',
     errorMessage: '',
@@ -19,6 +18,9 @@ export default {
     setCategories(state, { categories }) {
       state.categoriesList = categories;
     },
+    doneCreateCategory(state) {
+      state.doneMessage = '新しいカテゴリーが作成されました。';
+    },
   },
   actions: {
     clearMessage({ commit }) {
@@ -31,12 +33,11 @@ export default {
       }).then(res => {
         const categories = res.data.categories.reverse();
         commit('setCategories', { categories });
-        commit('clearMessage');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
     },
-    updateCategory({ commit, rootGetters }, categoryName) {
+    addCategory({ commit, rootGetters }, categoryName) {
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
@@ -50,11 +51,10 @@ export default {
         }).then(res => {
           const categories = res.data.categories.reverse();
           commit('setCategories', { categories });
-          commit('clearMessage');
         }).catch(err => {
           commit('failRequest', { message: err.message });
         });
-        commit('clearMessage');
+        commit('doneCreateCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
