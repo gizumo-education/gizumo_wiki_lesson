@@ -5,6 +5,7 @@
       :done-message="doneMessage"
       :access="access"
       :category="category"
+      :error-message="errorMessage"
       @update-value="updateValue"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
@@ -50,9 +51,8 @@ export default {
     this.$store.dispatch('categories/getCategoryList');
   },
   methods: {
-    updateValue($event) {
-      const categoryName = $event.target.value;
-      this.category = categoryName;
+    updateValue(event) {
+      this.category = event.target.value;
     },
     clearMessage() {
       return this.$store.dispatch('categories/clearMessage');
@@ -60,7 +60,7 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       const categoryName = this.category;
-      this.$store.dispatch('categories/updateCategory', categoryName);
+      this.$store.dispatch('categories/addCategory', categoryName);
       this.category = '';
     },
   },
