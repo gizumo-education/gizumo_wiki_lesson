@@ -71,9 +71,11 @@ export default {
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          state.errorMessagePost = '';
           resolve();
         }).catch(() => {
           commit('failRequest', { errorMessagePost: '失敗しました' });
+          state.displayDoneMessage = '';
         }).finally(() => {
           commit('switchDisabled');
           commit('clearTargetCategory');
