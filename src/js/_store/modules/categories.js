@@ -60,7 +60,7 @@ export default {
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
     applyRequest(state) {
-      state.loading = false;
+      state.loading = true;
     },
   },
   actions: {
@@ -101,23 +101,6 @@ export default {
         }).catch(err => {
           commit('failRequest', { message: err.response.data.message });
         });
-      });
-    },
-    editCategory({ commit, rootGetters }, category) {
-      commit('applyRequest');
-      axios(rootGetters['auth/token'])({
-        method: 'PUSH',
-        url: `/category/${category.id}`,
-        data: category,
-      }).then(response => {
-        if (response.data.code === 0) throw new Error(response.data.message);
-        const editedCategory = {
-          id: response.data.category.id,
-          name: response.data.category.id,
-        };
-        commit('doneEditCategory', { editedCategory });
-      }).catch(err => {
-        commit('failRequest', { message: err.response.data.message });
       });
     },
   },

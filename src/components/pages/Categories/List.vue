@@ -73,9 +73,6 @@ export default {
       });
       this.category = '';
     },
-    editCategory() {
-      this.$store.dispatch('categories/editCategory');
-    },
   },
 };
 </script>
