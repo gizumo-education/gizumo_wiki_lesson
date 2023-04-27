@@ -5,6 +5,9 @@
       :done-message="doneMessage"
       :access="access"
       :category="category"
+      @update-value="updateValue"
+      @clear-message="clearMessage"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :theads="theads"
@@ -26,14 +29,12 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名', '', '', ''],
+      category: '',
     };
   },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
-    },
-    category() {
-      return this.$store.state.categories.category;
     },
     categoriesList() {
       return this.$store.state.categories.categoriesList;
@@ -47,6 +48,21 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getCategoryList');
+  },
+  methods: {
+    updateValue($event) {
+      const categoryName = $event.target.value;
+      this.category = categoryName;
+    },
+    clearMessage() {
+      return this.$store.dispatch('categories/clearMessage');
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      const categoryName = this.category;
+      this.$store.dispatch('categories/updateCategory', categoryName);
+      this.category = '';
+    },
   },
 };
 </script>
