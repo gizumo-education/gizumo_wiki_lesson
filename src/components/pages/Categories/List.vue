@@ -4,7 +4,6 @@
       class="category_post"
       :access="access"
       :category="category"
-      :loading="loading"
       :disabled="disabled"
       :error-message="errorMessagePost"
       :done-message="doneMessage"
@@ -14,7 +13,6 @@
     <div class="category_border" />
     <app-category-list
       class="category_list"
-      :error-message="errorMessage"
       :categories="categoryList"
       :access="access"
       :theads="theads"
@@ -42,17 +40,11 @@ export default {
     category() {
       return this.$store.state.categories.targetCategory.name;
     },
-    loading() {
-      return this.$store.state.categories.loading;
-    },
     disabled() {
       return this.$store.state.categories.disabled;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
-    },
-    errorMessage() {
-      return this.$store.state.categories.errorMessage;
     },
     errorMessagePost() {
       return this.$store.state.categories.errorMessagePost;

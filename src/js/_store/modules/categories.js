@@ -9,7 +9,6 @@ export default {
     },
     disabled: false,
     categoryList: [],
-    loading: false,
     doneMessage: '',
     errorMessage: '',
     errorMessagePost: '',
@@ -36,13 +35,10 @@ export default {
     },
     clearMessage(state) {
       state.doneMessage = '';
-      state.errorMessage = '';
+      state.errorMessagePost = '';
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
-    },
-    clearError(state) {
-      state.errorMessagePost = '';
     },
   },
   actions: {
@@ -60,6 +56,7 @@ export default {
     updateValue({ commit }, targetCategory) {
       const payload = targetCategory;
       commit('updateValue', payload);
+      commit('clearMessage');
     },
     postCategory({ commit, state, rootGetters }) {
       return new Promise(resolve => {
@@ -74,16 +71,17 @@ export default {
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          commit('clearError');
           resolve();
         }).catch(() => {
           commit('failRequest', { errorMessagePost: '失敗しました' });
-          state.displayDoneMessage = '';
         }).finally(() => {
           commit('switchDisabled');
           commit('clearTargetCategory');
         });
       });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };
