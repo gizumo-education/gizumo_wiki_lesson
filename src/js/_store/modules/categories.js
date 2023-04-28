@@ -61,6 +61,7 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+        commit('initPostCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -82,7 +83,8 @@ export default {
           data,
         }).then(() => {
           commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          commit('initPostCategory');
           resolve();
         }).catch(err => {
           commit('toggleLoading');
