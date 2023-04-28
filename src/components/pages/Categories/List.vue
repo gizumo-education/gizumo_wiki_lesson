@@ -3,7 +3,13 @@
     <article class="categories__content">
       <app-category-post
         class="category-post"
+        :category="targetCategory"
         :access="access"
+        :disabled="loading"
+        :error-message="errorMessage"
+        :done-message="doneMessage"
+        @edited-category="editedCategory"
+        @handle-submit="handleSubmit"
       />
       <app-category-list
         class="list-items"
@@ -35,9 +41,35 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    targetCategory() {
+      return this.$store.state.categories.targetCategory.name;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/initPostCategory');
+    this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    editedCategory(event) {
+      this.$store.dispatch('categories/editedCategory', event.target.value);
+      this.$store.dispatch('categories/clearMessage');
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+      });
+    },
   },
 };
 </script>
