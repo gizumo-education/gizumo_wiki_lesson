@@ -5,6 +5,8 @@
         :to="'/articles'"
         white
         class="pagination-btn_link"
+        :class="currentPage === 1 ? 'pagination-btn_disabled' : ''"
+        :disabled="currentPage === 1"
       >
         1
       </app-router-link>
@@ -24,6 +26,8 @@
         :to="`/articles?page=${page}`"
         white
         class="pagination-btn_link"
+        :class="currentPage === page ? 'pagination-btn_disabled' : ''"
+        :disabled="currentPage === page"
       >
         {{ page }}
       </app-router-link>
@@ -39,6 +43,8 @@
         :to="`/articles?page=${totalPage}`"
         white
         class="pagination-btn_link"
+        :class="currentPage === totalPage ? 'pagination-btn_disabled' : ''"
+        :disabled="currentPage === totalPage"
       >
         {{ totalPage }}
       </app-router-link>
@@ -68,7 +74,7 @@ export default {
       const range = 5;
       let start = '';
       let end = '';
-      if (this.currentPage <= range) {
+      if (this.currentPage < range) {
         start = 2;
         end = range + 1;
       } else if (this.currentPage > this.totalPage - range + 1) {
@@ -99,18 +105,25 @@ export default {
     width: 56px;
     height: 40px;
     margin-left: 20px;
-    font-size: 16px;
-    line-height: 40px;
-    background-color: $theme-color;
     &:first-child {
       margin-left: 0;
     }
     &_link {
       width: 100%;
       height: 100%;
+      font-size: 16px;
+      line-height: 40px;
+      background-color: $theme-color;
+    }
+    &_disabled {
+      cursor: default;
+      background-color: $disabled-color;
     }
   }
   &-dots {
+    width: 40px;
+    font-size: 16px;
+    line-height: 40px;
     color: $disabled-color;
     background-color: $white;
   }
