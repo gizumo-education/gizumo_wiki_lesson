@@ -48,19 +48,9 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
     doneAddCategory(state) {
-      state.loading = false;
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
-    },
-    doneEditCategory(state, { category }) {
-      state.targetCategory = { ...state.category, ...category };
-      state.loading = false;
-      state.doneMessage = 'カテゴリーの更新が完了しました。';
-    },
-    applyRequest(state) {
-      state.loading = false;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -90,7 +80,6 @@ export default {
       });
     },
     addCategory({ commit, rootGetters, dispatch }, category) {
-      commit('applyRequest');
       commit('toggleLoading');
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
@@ -100,10 +89,12 @@ export default {
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           dispatch('getAllCategories');
+          commit('toggleLoading');
           commit('doneAddCategory');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.response.data.message });
+          commit('toggleLoading');
         });
       });
     },
