@@ -57,10 +57,12 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategories');
     this.$store.dispatch('categories/initPostCategory');
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
-    editedCategory($event) {
-      this.$store.dispatch('categories/editedCategory', $event.target.value);
+    editedCategory(event) {
+      this.$store.dispatch('categories/editedCategory', event.target.value);
+      this.$store.dispatch('categories/clearMessage');
     },
     handleSubmit() {
       if (this.loading) return;
@@ -70,7 +72,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang="scss" scoped>

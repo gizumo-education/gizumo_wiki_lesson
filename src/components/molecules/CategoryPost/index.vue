@@ -68,14 +68,6 @@ export default {
       default: '',
     },
   },
-  data() {
-    return {
-      categoryName: {
-        id: null,
-        name: '',
-      },
-    };
-  },
   computed: {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
@@ -84,8 +76,6 @@ export default {
   },
   methods: {
     updateCategory($event) {
-      if (!this.access.create) return;
-      this.categoryName.name = $event.target.value;
       this.$emit('edited-category', $event);
     },
     addCategory() {

@@ -25,9 +25,6 @@ export default {
         name: '',
       };
     },
-    doneGetCategory(state, payload) {
-      state.targetCategory = { ...state.targetCategory, ...payload.categories };
-    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories.reverse()];
     },
@@ -75,10 +72,8 @@ export default {
         commit('toggleLoading');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/targetCategory'].name);
-        //  自分用メモ：fetchとaxios同じ意味で大丈夫
         axios(rootGetters['auth/token'])({
           method: 'POST',
-          // 自分用メモ：以下のurlはswaggerと一致する必要がある
           url: '/category',
           data,
         }).then(() => {
