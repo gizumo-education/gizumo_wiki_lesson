@@ -72,11 +72,11 @@ export default {
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           resolve();
+          commit('clearTargetCategory');
         }).catch(() => {
           commit('failRequest', { errorMessagePost: '失敗しました' });
         }).finally(() => {
           commit('switchDisabled');
-          commit('clearTargetCategory');
         });
       });
     },
