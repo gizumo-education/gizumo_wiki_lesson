@@ -3,11 +3,16 @@
     <app-category-post
       class="category_post"
       :access="access"
+      :category="category"
+      :disabled="disabled"
+      :error-message="errorMessagePost"
+      :done-message="doneMessage"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <div class="category_border" />
     <app-category-list
       class="category_list"
-      :error-message="errorMessage"
       :categories="categoryList"
       :access="access"
       :theads="theads"
@@ -32,8 +37,17 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
-    errorMessage() {
-      return this.$store.state.categories.errorMessage;
+    category() {
+      return this.$store.state.categories.targetCategory.name;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessagePost() {
+      return this.$store.state.categories.errorMessagePost;
     },
     categoryList() {
       return this.$store.state.categories.categoryList;
@@ -41,6 +55,17 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    updateValue(event) {
+      const targetCategory = event.target.value;
+      this.$store.dispatch('categories/updateValue', targetCategory);
+    },
+    handleSubmit() {
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+      });
+    },
   },
 };
 </script>
