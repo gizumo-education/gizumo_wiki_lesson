@@ -48,19 +48,19 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
+      state.loading = !state.loading;
     },
     doneAddCategory(state) {
-      state.loading = false;
+      state.loading = !state.loading;
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
     doneEditCategory(state, { category }) {
       state.targetCategory = { ...state.category, ...category };
-      state.loading = false;
+      state.loading = !state.loading;
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
     applyRequest(state) {
-      state.loading = true;
+      state.loading = !state.loading;
     },
   },
   actions: {
