@@ -12,6 +12,7 @@
     <app-pagination
       :current-page="currentPage"
       :total-page="totalPage"
+      :error-message="errorMessage"
     />
   </div>
 </template>
@@ -49,12 +50,16 @@ export default {
     doneMessage() {
       return this.$store.state.articles.doneMessage;
     },
+    errorMessage() {
+      return this.$store.state.articles.errorMessage;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
   },
   created() {
-    this.fetchArticles();
+    const pageId = this.$route.query.page;
+    this.fetchArticles(pageId);
   },
   methods: {
     openModal(articleId) {

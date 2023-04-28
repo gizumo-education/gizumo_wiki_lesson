@@ -1,63 +1,72 @@
 <template>
-  <ol class="pagination">
-    <li class="pagination-btn">
-      <app-router-link
-        :to="'/articles'"
-        white
-        class="pagination-btn_link"
-        :class="currentPage === 1 ? 'pagination-btn_disabled' : ''"
-        :disabled="currentPage === 1"
-      >
-        1
-      </app-router-link>
-    </li>
-    <li
-      v-if="currentPage > 4"
-      class="pagination-btn pagination-dots"
+  <div class="pagination">
+    <ol
+      v-if="!errorMessage"
+      class="pagination-list"
     >
-      • • •
-    </li>
-    <li
-      v-for="page in pages"
-      :key="page"
-      class="pagination-btn"
-    >
-      <app-router-link
-        :to="`/articles?page=${page}`"
-        white
-        class="pagination-btn_link"
-        :class="currentPage === page ? 'pagination-btn_disabled' : ''"
-        :disabled="currentPage === page"
+      <li class="pagination-list-btn">
+        <app-router-link
+          :to="'/articles'"
+          white
+          class="pagination-list-btn_link"
+          :class="currentPage === 1 ? 'pagination-list-btn_disabled' : ''"
+          :disabled="currentPage === 1"
+        >
+          1
+        </app-router-link>
+      </li>
+      <li
+        v-if="currentPage > 4"
+        class="pagination-list-btn pagination-list-dots"
       >
-        {{ page }}
-      </app-router-link>
-    </li>
-    <li
-      v-if="currentPage < totalPage - 3"
-      class="pagination-btn pagination-dots"
-    >
-      • • •
-    </li>
-    <li class="pagination-btn">
-      <app-router-link
-        :to="`/articles?page=${totalPage}`"
-        white
-        class="pagination-btn_link"
-        :class="currentPage === totalPage ? 'pagination-btn_disabled' : ''"
-        :disabled="currentPage === totalPage"
+        • • •
+      </li>
+      <li
+        v-for="page in pages"
+        :key="page"
+        class="pagination-list-btn"
       >
-        {{ totalPage }}
-      </app-router-link>
-    </li>
-  </ol>
+        <app-router-link
+          :to="`/articles?page=${page}`"
+          white
+          class="pagination-list-btn_link"
+          :class="currentPage === page ? 'pagination-list-btn_disabled' : ''"
+          :disabled="currentPage === page"
+        >
+          {{ page }}
+        </app-router-link>
+      </li>
+      <li
+        v-if="currentPage < totalPage - 3"
+        class="pagination-list-btn pagination-list-dots"
+      >
+        • • •
+      </li>
+      <li class="pagination-list-btn">
+        <app-router-link
+          :to="`/articles?page=${totalPage}`"
+          white
+          class="pagination-list-btn_link"
+          :class="currentPage === totalPage ? 'pagination-list-btn_disabled' : ''"
+          :disabled="currentPage === totalPage"
+        >
+          {{ totalPage }}
+        </app-router-link>
+      </li>
+    </ol>
+    <div v-if="errorMessage" class="pagination-message">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
+  </div>
 </template>
 
 <script>
-import { RouterLink } from '@Components/atoms';
+import { RouterLink, Text } from '@Components/atoms';
 
 export default {
   components: {
     appRouterLink: RouterLink,
+    appText: Text,
   },
   props: {
     currentPage: {
@@ -67,6 +76,10 @@ export default {
     totalPage: {
       type: Number,
       default: null,
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
   },
   computed: {
@@ -95,37 +108,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pagination {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  text-align: center;
-  margin-top: 30px;
-  &-btn {
-    width: 56px;
-    height: 40px;
-    margin-left: 20px;
-    &:first-child {
-      margin-left: 0;
+.pagination{
+  &-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    text-align: center;
+    margin-top: 30px;
+    &-btn {
+      width: 56px;
+      height: 40px;
+      margin-left: 20px;
+      &:first-child {
+        margin-left: 0;
+      }
+      &_link {
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        line-height: 40px;
+        background-color: $theme-color;
+      }
+      &_disabled {
+        cursor: default;
+        background-color: $disabled-color;
+      }
     }
-    &_link {
-      width: 100%;
-      height: 100%;
+    &-dots {
+      width: 40px;
       font-size: 16px;
       line-height: 40px;
-      background-color: $theme-color;
-    }
-    &_disabled {
-      cursor: default;
-      background-color: $disabled-color;
+      color: $disabled-color;
+      background-color: $white;
     }
   }
-  &-dots {
-    width: 40px;
-    font-size: 16px;
-    line-height: 40px;
-    color: $disabled-color;
-    background-color: $white;
+  &-message {
+    margin-top: 20px;
   }
 }
 </style>
