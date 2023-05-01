@@ -7,11 +7,19 @@ export default {
       name: '',
       id: null,
     },
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
     disabled: false,
     categoryList: [],
     doneMessage: '',
     errorMessage: '',
     errorMessagePost: '',
+  },
+  getters: {
+    deleteCategoryId: state => state.deleteCategory.id,
+    deleteCategoryName: state => state.deleteCategory.name,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -39,6 +47,19 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    confirmDeleteCategory(state, payload) {
+      state.deleteCategory = payload;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
+      state.deleteCategoryName = '';
+    },
+    doneFilteredCategories(state, payload) {
+      const filteredCategories = payload.categories.filter(
+        category => category && category.name === payload.category,
+      );
+      state.categoryList = [...filteredCategories];
     },
   },
   actions: {
@@ -82,6 +103,40 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    confirmDeleteCategory({ commit }, { id, name }) {
+      const payload = { id, name };
+      commit('confirmDeleteCategory', payload);
+    },
+    deleteCategory({ commit, rootGetters }) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+      }).then(() => {
+        commit('doneDeleteCategory');
+        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    filteredCategories({ commit, rootGetters }, category) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/category',
+        }).then(res => {
+          const payload = {
+            category,
+            categories: res.data.categories,
+          };
+          commit('doneFilteredCategories', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject(new Error('エラーが発生しました'));
+        });
+      });
     },
   },
 };

@@ -16,17 +16,26 @@
       :categories="categoryList"
       :access="access"
       :theads="theads"
+      :delete-category-name="deleteCategoryName"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
 
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
+  },
+  mixins: [Mixins],
+  beforeRouteUpdate(to, from, next) {
+    this.fetchCategories();
+    next();
   },
   data() {
     return {
@@ -52,6 +61,9 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategory.name;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -65,6 +77,32 @@ export default {
       this.$store.dispatch('categories/postCategory').then(() => {
         this.$store.dispatch('categories/getAllCategories');
       });
+    },
+    openModal(categoryId, categoryName) {
+      const deleteCategory = {
+        id: categoryId,
+        name: categoryName,
+      };
+      this.$store.dispatch('categories/confirmDeleteCategory', deleteCategory);
+      this.toggleModal();
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
+      if (this.$route.query.category) {
+        const { category } = this.$route.query;
+        this.name = category;
+        this.$store.dispatch('categories/filteredCategories', category)
+          .then(() => {
+            if (this.$store.state.categories.categoryList.length === 0) {
+              this.$router.push({ path: '/notfound' });
+            }
+          }).catch(() => {
+            // console.log(err);
+          });
+      } else {
+        this.$store.dispatch('categories/getAllCategories');
+      }
     },
   },
 };
