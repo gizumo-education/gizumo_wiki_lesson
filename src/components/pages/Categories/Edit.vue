@@ -44,8 +44,8 @@ export default {
     updateName() {
       return this.$store.state.categories.updateName.name;
     },
-    newCategoryName() {
-      const { name } = this.$store.state.categories.newCategory;
+    editingCategoryName() {
+      const { name } = this.$store.state.categories.editingCategory;
       return name;
     },
   },
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.currentCategoryName === this.newCategoryName) {
+      if (this.currentCategoryName === this.editingCategoryName) {
         this.$store.dispatch('categories/showMessage');
       } else {
         this.$store.dispatch('categories/editCategory');

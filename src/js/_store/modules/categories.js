@@ -7,7 +7,7 @@ export default {
       id: null,
       name: '',
     },
-    newCategory: {
+    editingCategory: {
       id: null,
       name: '',
     },
@@ -73,14 +73,14 @@ export default {
     },
     doneGetCategory(state, payload) {
       state.targetCategory = { ...state.targetCategory, ...payload };
-      state.newCategory = { ...state.newCategory, ...payload };
+      state.editingCategory = { ...state.editingCategory, ...payload };
     },
     doneUpdateCategory(state, payload) {
-      state.newCategory.name = payload;
+      state.editingCategory.name = payload;
     },
     doneEditCategory(state) {
-      state.targetCategory = state.newCategory;
-      state.newCategory = { ...state.newCategory, name: '' };
+      state.targetCategory = state.editingCategory;
+      state.editingCategory = { ...state.editingCategory, name: '' };
     },
   },
   actions: {
@@ -169,25 +169,25 @@ export default {
         commit('clearMessage');
         commit('toggleDisable');
         const data = {
-          name: state.newCategory.name,
+          name: state.editingCategory.name,
         };
         axios(rootGetters['auth/token'])({
           method: 'PUT',
-          url: `/category/${state.newCategory.id}`,
+          url: `/category/${state.editingCategory.id}`,
           data,
         }).then(() => {
           commit('displayDoneMessage', { message: 'カテゴリーを更新しました。' });
           commit('doneEditCategory');
           resolve();
-        }).catch(() => {
-          commit('failRequest', { errorMessage: 'カテゴリー更新に失敗しました。' });
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
         }).finally(() => {
           commit('toggleDisable');
         });
       });
     },
     showMessage({ commit }) {
-      commit('failRequest', { errorMessage: 'カテゴリー名が変更されていません' });
+      commit('failRequest', { Message: 'カテゴリー名が変更されていません' });
     },
   },
 };
