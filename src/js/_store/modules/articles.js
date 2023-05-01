@@ -26,6 +26,8 @@ export default {
     articleList: [],
     currentPage: 1,
     totalPage: null,
+    perPage: null,
+    totalArticles: null,
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -89,6 +91,8 @@ export default {
       state.articleList = [...payload.articles];
       state.currentPage = payload.current_page;
       state.totalPage = payload.last_page;
+      state.perPage = payload.per_page;
+      state.totalArticles = payload.total_articles;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -133,6 +137,8 @@ export default {
           articles: res.data.articles,
           current_page: res.data.meta.current_page,
           last_page: res.data.meta.last_page,
+          per_page: res.data.meta.per_page,
+          total_articles: res.data.meta.total,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {

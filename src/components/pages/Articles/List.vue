@@ -10,6 +10,7 @@
       @handle-click="handleClick"
     />
     <app-pagination
+      v-if="totalArticles > perPage"
       :path="path"
       :current-page="currentPage"
       :total-page="totalPage"
@@ -47,6 +48,12 @@ export default {
     },
     totalPage() {
       return this.$store.state.articles.totalPage;
+    },
+    perPage() {
+      return this.$store.state.articles.perPage;
+    },
+    totalArticles() {
+      return this.$store.state.articles.totalArticles;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
