@@ -55,12 +55,6 @@ export default {
       state.deleteCategoryId = null;
       state.deleteCategoryName = '';
     },
-    doneFilteredCategories(state, payload) {
-      const filteredCategories = payload.categories.filter(
-        category => category && category.name === payload.category,
-      );
-      state.categoryList = [...filteredCategories];
-    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -108,7 +102,7 @@ export default {
       const payload = { id, name };
       commit('confirmDeleteCategory', payload);
     },
-    deleteCategory({ commit, rootGetters }) {
+    deleteCategory({ commit, rootGetters, dispatch }) {
       commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
@@ -116,26 +110,9 @@ export default {
       }).then(() => {
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+        dispatch('getAllCategories');
       }).catch(err => {
         commit('failRequest', { message: err.message });
-      });
-    },
-    filteredCategories({ commit, rootGetters }, category) {
-      return new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/category',
-        }).then(res => {
-          const payload = {
-            category,
-            categories: res.data.categories,
-          };
-          commit('doneFilteredCategories', payload);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject(new Error('エラーが発生しました'));
-        });
       });
     },
   },
