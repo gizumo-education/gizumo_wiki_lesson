@@ -23,6 +23,7 @@ export default {
         updated_at: '',
       },
     },
+    trashedArticle: [],
     articleList: [],
     currentPage: 1,
     totalPage: null,
@@ -112,6 +113,9 @@ export default {
     },
     doneDeleteArticle(state) {
       state.deleteArticleId = null;
+    },
+    doneGetTrashedArticle(state, { articles }) {
+      state.trashedArticle = articles;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -291,6 +295,22 @@ export default {
           commit('failRequest', { message: err.message });
           reject();
         });
+      });
+    },
+    getTrashedArticle({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const articles = res.data.articles.map(data => ({
+          id: data.id,
+          title: data.title,
+          content: data.content,
+          createdDate: data.created_at,
+        }));
+        commit('doneGetTrashedArticle', { articles });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {
