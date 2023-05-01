@@ -1,12 +1,9 @@
 <template>
   <div class="pagination">
-    <ol
-      v-if="!errorMessage"
-      class="pagination-list"
-    >
+    <ol class="pagination-list">
       <li class="pagination-list-btn">
         <app-router-link
-          :to="'/articles'"
+          :to="path"
           white
           class="pagination-list-btn_link"
           :class="currentPage === 1 ? 'pagination-list-btn_disabled' : ''"
@@ -27,7 +24,7 @@
         class="pagination-list-btn"
       >
         <app-router-link
-          :to="`/articles?page=${page}`"
+          :to="path + `?page=${page}`"
           white
           class="pagination-list-btn_link"
           :class="currentPage === page ? 'pagination-list-btn_disabled' : ''"
@@ -44,7 +41,7 @@
       </li>
       <li class="pagination-list-btn">
         <app-router-link
-          :to="`/articles?page=${totalPage}`"
+          :to="path + `?page=${totalPage}`"
           white
           class="pagination-list-btn_link"
           :class="currentPage === totalPage ? 'pagination-list-btn_disabled' : ''"
@@ -54,21 +51,21 @@
         </app-router-link>
       </li>
     </ol>
-    <div v-if="errorMessage" class="pagination-message">
-      <app-text bg-error>{{ errorMessage }}</app-text>
-    </div>
   </div>
 </template>
 
 <script>
-import { RouterLink, Text } from '@Components/atoms';
+import { RouterLink } from '@Components/atoms';
 
 export default {
   components: {
     appRouterLink: RouterLink,
-    appText: Text,
   },
   props: {
+    path: {
+      type: String,
+      default: '',
+    },
     currentPage: {
       type: Number,
       default: null,
@@ -76,10 +73,6 @@ export default {
     totalPage: {
       type: Number,
       default: null,
-    },
-    errorMessage: {
-      type: String,
-      default: '',
     },
   },
   computed: {
@@ -108,7 +101,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pagination{
+.pagination {
   &-list {
     display: flex;
     justify-content: center;
@@ -141,9 +134,6 @@ export default {
       color: $disabled-color;
       background-color: $white;
     }
-  }
-  &-message {
-    margin-top: 20px;
   }
 }
 </style>

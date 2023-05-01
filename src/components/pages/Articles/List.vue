@@ -10,9 +10,9 @@
       @handle-click="handleClick"
     />
     <app-pagination
+      :path="path"
       :current-page="currentPage"
       :total-page="totalPage"
-      :error-message="errorMessage"
     />
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       title: 'すべて',
+      path: '/articles',
     };
   },
   computed: {
@@ -49,9 +50,6 @@ export default {
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
-    },
-    errorMessage() {
-      return this.$store.state.articles.errorMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
