@@ -4,7 +4,6 @@
       <section class="category-edit-editor">
         <app-heading :level="1">カテゴリーの管理</app-heading>
         <app-router-link
-          theme-color
           underline
           hover-opacity
           :to="`/categories`"
@@ -104,17 +103,10 @@ export default {
   }
   &-editor {
     padding-right: 2%;
-    width: 50%;
-    border-right: 1px solid #ccc;
+    width: 100%;
     &-title {
       margin-top: 16px;
     }
-  }
-  &-preview {
-    margin-left: 2%;
-    width: 48%;
-    overflow-y: scroll;
-    background-color: #fff;
   }
   &-form {
     margin-top: 20px;
@@ -125,5 +117,8 @@ export default {
   &__notice--update {
     margin-bottom: 16px;
   }
+}
+.category-management-post__notice {
+  width: 20%;
 }
 </style>
