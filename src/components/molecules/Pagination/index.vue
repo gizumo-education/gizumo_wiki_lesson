@@ -78,23 +78,14 @@ export default {
   computed: {
     pages() {
       const range = 5;
-      let start = '';
-      let end = '';
+      const totalRange = [...Array(this.totalPage)].map((_, i) => i + 1);
       if (this.currentPage < range) {
-        start = 2;
-        end = range + 1;
-      } else if (this.currentPage > this.totalPage - range + 1) {
-        start = this.totalPage - range;
-        end = this.totalPage - 1;
-      } else {
-        start = this.currentPage - Math.floor(range / 2);
-        end = this.currentPage + Math.floor(range / 2);
+        return totalRange.splice(1, range);
       }
-      const currentRange = [];
-      for (let i = start; i <= end; i += 1) {
-        currentRange.push(i);
+      if (this.currentPage > this.totalPage - range + 1) {
+        return totalRange.splice(this.totalPage - range - 1, range);
       }
-      return currentRange;
+      return totalRange.splice(this.currentPage - 3, range);
     },
   },
 };
