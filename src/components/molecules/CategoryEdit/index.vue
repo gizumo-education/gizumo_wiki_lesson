@@ -6,7 +6,7 @@
         <app-router-link
           underline
           hover-opacity
-          :to="`/categories`"
+          to="/categories"
         >
           カテゴリー一覧に戻る
         </app-router-link>

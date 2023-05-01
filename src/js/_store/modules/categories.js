@@ -170,7 +170,6 @@ export default {
         commit('toggleDisable');
         const data = {
           name: state.newCategory.name,
-          id: state.newCategory.id,
         };
         axios(rootGetters['auth/token'])({
           method: 'PUT',
