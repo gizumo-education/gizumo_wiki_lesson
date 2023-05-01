@@ -2,6 +2,7 @@
   <div class="trashed-list">
     <app-heading :level="1">{{ trashedTitle }}</app-heading>
     <app-router-link
+      :to="path"
       key-color
       white
       bg-lightgreen
@@ -53,6 +54,10 @@ export default {
     appText: Text,
   },
   props: {
+    path: {
+      type: String,
+      default: '',
+    },
     title: {
       type: String,
       default: '',

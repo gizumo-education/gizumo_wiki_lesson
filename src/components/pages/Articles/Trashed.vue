@@ -1,7 +1,8 @@
 <template>
   <app-trashed-list
-    :theads="theads"
+    :path="path"
     :title="title"
+    :theads="theads"
     :target-array="trashedArticle"
     border-gray
   />
@@ -16,6 +17,7 @@ export default {
   },
   data() {
     return {
+      path: '/articles',
       title: '記事',
       theads: ['タイトル', '本文', '作成日'],
     };
