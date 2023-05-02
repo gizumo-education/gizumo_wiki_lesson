@@ -30,13 +30,19 @@
       >
         <tr v-for="trash in targetArray" :key="trash.id">
           <td>
-            <app-text tag="span" small>{{ trash.title }}</app-text>
+            <app-text tag="span" small>
+              {{ trash.title | omittedText }}
+            </app-text>
           </td>
           <td>
-            <app-text tag="span" small>{{ trash.content }}</app-text>
+            <app-text tag="span" small>
+              {{ trash.content | omittedText }}
+            </app-text>
           </td>
           <td>
-            <app-text tag="span" small>{{ trash.createdDate }}</app-text>
+            <app-text tag="span" small>
+              {{ trash.createdDate | omittedDate }}
+            </app-text>
           </td>
         </tr>
       </transition-group>
@@ -52,6 +58,14 @@ export default {
     appHeading: Heading,
     appRouterLink: RouterLink,
     appText: Text,
+  },
+  filters: {
+    omittedText(text) {
+      return text.length > 30 ? `${text.slice(0, 30)}...` : text;
+    },
+    omittedDate(text) {
+      return text.length > 10 ? text.slice(0, 10) : text;
+    },
   },
   props: {
     path: {
@@ -88,19 +102,8 @@ export default {
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
-  &__title {
-    width: 60%;
-  }
   &__link {
     margin-top: 16px;
-  }
-  &__links {
-    *:not(first-child) {
-      margin-left: 16px;
-    }
-  }
-  &__notice--create {
-    margin-bottom: 16px;
   }
   &__table {
     width: 100%;
@@ -120,10 +123,6 @@ export default {
       td {
         padding: 10px;
         vertical-align: middle;
-        &.is-disabled {
-          color: $disabled-color;
-          font-size: 12px;
-        }
       }
       .fade-enter-active, .fade-leave-active {
         transition: opacity 0.5s;
