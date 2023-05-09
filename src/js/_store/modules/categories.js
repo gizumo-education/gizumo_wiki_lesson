@@ -51,10 +51,6 @@ export default {
     confirmDeleteCategory(state, payload) {
       state.deleteCategory = payload;
     },
-    doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
-      state.deleteCategoryName = '';
-    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -98,8 +94,7 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDeleteCategory({ commit }, { id, name }) {
-      const payload = { id, name };
+    confirmDeleteCategory({ commit }, payload) {
       commit('confirmDeleteCategory', payload);
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
@@ -108,7 +103,6 @@ export default {
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
       }).then(() => {
-        commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
         dispatch('getAllCategories');
       }).catch(err => {
