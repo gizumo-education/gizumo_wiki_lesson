@@ -68,11 +68,11 @@ export default {
     },
     currentPage: {
       type: Number,
-      default: null,
+      required: true,
     },
     totalPage: {
       type: Number,
-      default: null,
+      required: true,
     },
   },
   computed: {
