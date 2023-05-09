@@ -118,10 +118,18 @@ export default {
         font-size: 16px;
         line-height: 40px;
         background-color: $theme-color;
+        transition: opacity .5s;
+        &:hover {
+          opacity: .7;
+        }
       }
       &_disabled {
         cursor: default;
         background-color: $disabled-color;
+        transition: none;
+        &:hover {
+          opacity: 1;
+        }
       }
     }
     &-dots {
