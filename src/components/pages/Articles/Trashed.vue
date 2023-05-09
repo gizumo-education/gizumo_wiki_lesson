@@ -4,6 +4,7 @@
     :title="title"
     :theads="theads"
     :target-array="trashedArticle"
+    :error-message="errorMessage"
     border-gray
   />
 </template>
@@ -25,6 +26,9 @@ export default {
   computed: {
     trashedArticle() {
       return this.$store.state.articles.trashedArticle;
+    },
+    errorMessage() {
+      return this.$store.state.articles.errorMessage;
     },
   },
   created() {

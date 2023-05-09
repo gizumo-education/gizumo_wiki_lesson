@@ -47,6 +47,9 @@
         </tr>
       </transition-group>
     </table>
+    <div v-if="errorMessage" class="trashed-list__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
   </div>
 </template>
 
@@ -87,6 +90,10 @@ export default {
     borderGray: {
       type: Boolean,
       default: false,
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
   },
   computed: {
@@ -131,6 +138,9 @@ export default {
         opacity: 0;
       }
     }
+  }
+  &__notice {
+    margin-top: 16px;
   }
 }
 </style>
