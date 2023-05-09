@@ -8,11 +8,16 @@ export default {
       id: null,
     },
     deleteCategory: {
-      id: null,
       name: '',
+      id: null,
+    },
+    editCategory: {
+      name: '',
+      id: null,
     },
     disabled: false,
     categoryList: [],
+    loading: false,
     doneMessage: '',
     errorMessage: '',
     errorMessagePost: '',
@@ -20,6 +25,8 @@ export default {
   getters: {
     deleteCategoryId: state => state.deleteCategory.id,
     deleteCategoryName: state => state.deleteCategory.name,
+    editCategoryId: state => state.editCategory.id,
+    editCategoryName: state => state.editCategory.name,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -51,9 +58,21 @@ export default {
     confirmDeleteCategory(state, payload) {
       state.deleteCategory = payload;
     },
-    doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
-      state.deleteCategoryName = '';
+    editValue(state, payload) {
+      state.editCategory.name = payload;
+    },
+    editedName(state, payload) {
+      state.editCategory = { ...state.editCategory, ...payload.name };
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
+    doneGetCategory(state, payload) {
+      state.editCategory = { ...state.editCategory, ...payload.category };
+    },
+    updateCategory(state) {
+      state.targetCategory = state.editCategory;
+      state.editCategory = { ...state.editCategory, name: '' };
     },
   },
   actions: {
@@ -98,8 +117,7 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDeleteCategory({ commit }, { id, name }) {
-      const payload = { id, name };
+    confirmDeleteCategory({ commit }, payload) {
       commit('confirmDeleteCategory', payload);
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
@@ -108,12 +126,69 @@ export default {
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
       }).then(() => {
-        commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
         dispatch('getAllCategories');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+    },
+    editValue({ commit }, editCategory) {
+      const payload = editCategory;
+      commit('editValue', payload);
+      commit('clearMessage');
+    },
+    editedName({ commit }, name) {
+      commit({
+        type: 'editedName',
+        name,
+      });
+    },
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/category/${categoryId}`,
+        }).then(res => {
+          const category = res.data.category.category
+            ? res.data.category.category
+            : { id: null, name: '' };
+          const payload = {
+            category: {
+              id: res.data.category.id,
+              name: res.data.category.name,
+              category,
+            },
+          };
+          commit('doneGetCategory', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
+    updateCategory({ commit, state, rootGetters }) {
+      return new Promise(resolve => {
+        commit('switchDisabled');
+        const data = {
+          name: state.editCategory.name,
+        };
+        axios(rootGetters['auth/token'])({
+          method: 'PUT',
+          url: `/category/${state.editCategory.id}`,
+          data,
+        }).then(() => {
+          commit('updateCategory');
+          commit('toggleLoading');
+          commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+          resolve();
+        }).catch(() => {
+          commit('toggleLoading');
+        });
+      });
+    },
+    showMessage({ commit }) {
+      commit('failRequest', { errorMessage: 'カテゴリー名を変更してください。' });
     },
   },
 };

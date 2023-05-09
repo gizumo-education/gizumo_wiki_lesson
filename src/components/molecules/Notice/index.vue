@@ -42,8 +42,5 @@ export default {
   margin-top: 80px;
   width: 100%;
   text-align: center;
-  &__link {
-    margin-top: 40px;
-  }
 }
 </style>

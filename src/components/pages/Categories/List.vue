@@ -33,10 +33,6 @@ export default {
     appCategoryList: CategoryList,
   },
   mixins: [Mixins],
-  beforeRouteUpdate(to, from, next) {
-    this.fetchCategories();
-    next();
-  },
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -79,11 +75,10 @@ export default {
       });
     },
     openModal(categoryId, categoryName) {
-      const deleteCategory = {
+      this.$store.dispatch('categories/confirmDeleteCategory', {
         id: categoryId,
         name: categoryName,
-      };
-      this.$store.dispatch('categories/confirmDeleteCategory', deleteCategory);
+      });
       this.toggleModal();
     },
     handleClick() {
