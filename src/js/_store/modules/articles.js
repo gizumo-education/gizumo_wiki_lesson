@@ -193,7 +193,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
-          url: '/articles',
+          url: '/article',
         }).then(res => {
           const payload = {
             category,
