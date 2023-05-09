@@ -9,30 +9,51 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-pagination
+      v-if="totalArticles > perPage"
+      :path="path"
+      :current-page="currentPage"
+      :total-page="totalPage"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const pageId = to.query.page;
+    this.fetchArticles(pageId);
     next();
   },
   data() {
     return {
       title: 'すべて',
+      path: '/articles',
     };
   },
   computed: {
     articlesList() {
       return this.$store.state.articles.articleList;
+    },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
+    },
+    totalPage() {
+      return this.$store.state.articles.totalPage;
+    },
+    perPage() {
+      return this.$store.state.articles.perPage;
+    },
+    totalArticles() {
+      return this.$store.state.articles.totalArticles;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
@@ -42,7 +63,8 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    const pageId = this.$route.query.page;
+    this.fetchArticles(pageId);
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +89,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageId) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,7 +102,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', pageId);
       }
     },
   },
