@@ -5,8 +5,10 @@
         <app-router-link
           :to="path"
           white
-          class="pagination-list-btn_link"
-          :class="currentPage === 1 ? 'pagination-list-btn_disabled' : ''"
+          :class="[
+            'pagination-list-btn_link',
+            {'pagination-list-btn_disabled': currentPage === 1 }
+          ]"
           :disabled="currentPage === 1"
         >
           1
@@ -26,8 +28,10 @@
         <app-router-link
           :to="path + `?page=${page}`"
           white
-          class="pagination-list-btn_link"
-          :class="currentPage === page ? 'pagination-list-btn_disabled' : ''"
+          :class="[
+            'pagination-list-btn_link',
+            {'pagination-list-btn_disabled': currentPage === page }
+          ]"
           :disabled="currentPage === page"
         >
           {{ page }}
@@ -43,8 +47,10 @@
         <app-router-link
           :to="path + `?page=${totalPage}`"
           white
-          class="pagination-list-btn_link"
-          :class="currentPage === totalPage ? 'pagination-list-btn_disabled' : ''"
+          :class="[
+            'pagination-list-btn_link',
+            {'pagination-list-btn_disabled': currentPage === totalPage }
+          ]"
           :disabled="currentPage === totalPage"
         >
           {{ totalPage }}
