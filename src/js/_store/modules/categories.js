@@ -171,7 +171,7 @@ export default {
       return new Promise(resolve => {
         commit('switchDisabled');
         const data = {
-          name: state.editCategory.name,
+          name: state.targetCategory.name,
         };
         axios(rootGetters['auth/token'])({
           method: 'PUT',
@@ -179,11 +179,12 @@ export default {
           data,
         }).then(() => {
           commit('updateCategory');
-          commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
           resolve();
         }).catch(() => {
-          commit('toggleLoading');
+          commit('failRequest');
+        }).finally(() => {
+          commit('switchDisabled');
         });
       });
     },

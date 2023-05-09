@@ -30,9 +30,9 @@ export default {
       return id;
     },
     categoryName() {
-      // const { name } = this.$store.state.categories.targetCategory;
-      // return name;
-      return this.$store.state.categories.editCategory.name;
+      const { name } = this.$store.state.categories.targetCategory;
+      return name;
+      // return this.$store.state.categories.editCategory.name;
     },
     // editCategoryName() {
     //   return this.$store.state.categories.editCategory.name;

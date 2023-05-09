@@ -53,10 +53,6 @@ export default {
     appNotice: Notice,
   },
   props: {
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     categoryName: {
       type: String,
       required: true,
