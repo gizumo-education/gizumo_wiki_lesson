@@ -28,20 +28,20 @@
         tag="tbody"
         class="article-trash__table-body"
       >
-        <tr v-for="trash in trashes" :key="trash.id">
+        <tr v-for="trash in omittedTrashes" :key="trash.id">
           <td>
             <app-text tag="span" small>
-              {{ trash.title | omittedText }}
+              {{ trash.title }}
             </app-text>
           </td>
           <td>
             <app-text tag="span" small>
-              {{ trash.content | omittedText }}
+              {{ trash.text }}
             </app-text>
           </td>
           <td>
             <app-text tag="span" small>
-              {{ trash.createdDate | omittedDate }}
+              {{ trash.date }}
             </app-text>
           </td>
         </tr>
@@ -62,14 +62,6 @@ export default {
     appRouterLink: RouterLink,
     appText: Text,
   },
-  filters: {
-    omittedText(text) {
-      return text.length > 30 ? `${text.slice(0, 30)}...` : text;
-    },
-    omittedDate(text) {
-      return text.length > 10 ? text.slice(0, 10) : text;
-    },
-  },
   props: {
     theads: {
       type: Array,
@@ -82,6 +74,18 @@ export default {
     errorMessage: {
       type: String,
       default: '',
+    },
+  },
+  computed: {
+    omittedTrashes() {
+      const omittedTrashes = this.trashes.map(data => ({
+        id: data.id,
+        title: data.title.length > 30 ? `${data.title.slice(0, 30)}...` : data.title,
+        text: data.content.length > 30 ? `${data.content.slice(0, 30)}...` : data.content,
+        date: data.createdDate.length > 10
+          ? data.createdDate.slice(0, 10) : data.createdDate,
+      }));
+      return omittedTrashes;
     },
   },
 };
