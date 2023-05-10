@@ -10,9 +10,15 @@ export default {
       id: null,
       name: '',
     },
+    category: {
+      id: null,
+      name: '',
+    },
+    loading: false,
   },
   getters: {
     deleteCategoryId: state => state.deleteCategory.id,
+    category: state => state.category,
   },
   mutations: {
     failRequest(state, { message }) {
@@ -21,6 +27,9 @@ export default {
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+    },
+    updateValue(state, { name, value }) {
+      state.category = { ...state.category, [name]: value };
     },
     setCategories(state, { categories }) {
       state.categoriesList = categories;
@@ -39,10 +48,20 @@ export default {
     displayDoneMessage(state) {
       state.doneMessage = 'カテゴリーの削除が完了しました。';
     },
+    doneGetCategory(state, { category }) {
+      state.category = { ...state.category, ...category };
+    },
+    doneUpdateCategory(state, { categoryName }) {
+      state.category = { ...state.category, ...categoryName };
+      state.doneMessage = 'カテゴリーの更新が完了しました。';
+    },
   },
   actions: {
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    updateValue({ commit }, target) {
+      commit('updateValue', target);
     },
     getCategoryList({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
@@ -80,6 +99,34 @@ export default {
         dispatch('getCategoryList');
         commit('doneDeleteCategory');
         commit('displayDoneMessage');
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCategory({ commit, rootGetters }, { id }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(response => {
+        const category = {
+          id: response.data.category.id,
+          name: response.data.category.name,
+        };
+        commit('doneGetCategory', { category });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateCategory({ commit, rootGetters }, categoryName) {
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/category'].id}`,
+        data: {
+          id: categoryName.id,
+          name: categoryName.name,
+        },
+      }).then(() => {
+        commit('doneUpdateCategory', { categoryName });
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
