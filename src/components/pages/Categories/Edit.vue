@@ -19,9 +19,7 @@ export default {
   },
   computed: {
     categoryId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
-      return id;
+      return parseInt(this.$route.params.id, 10);
     },
     categoryName() {
       return this.$store.state.categories.editCategory.name;
@@ -43,8 +41,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
-    this.$store.dispatch('categories/getCategoryDetail', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/getCategoryDetail', (this.categoryId, 10));
   },
   methods: {
     editValue($event) {

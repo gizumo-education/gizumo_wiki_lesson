@@ -1,47 +1,44 @@
 <template>
   <div class="category-edit">
-    <div class="category-edit__columns">
-      <section class="category-edit-editor">
-        <app-heading :level="1">カテゴリー管理</app-heading>
-        <app-notice
-          class="notice"
-          link-path="/categories"
-          link-text="カテゴリー一覧へ戻る"
-        />
-        <div class="category-edit-form">
-          <app-input
-            v-validate="'required'"
-            name="name"
-            type="text"
-            placeholder="カテゴリー名を入力してください。"
-            white-bg
-            data-vv-as="カテゴリー名"
-            :error-messages="errors.collect('name')"
-            :value="categoryName"
-            @update-value="$emit('edit-value', $event)"
-          />
-        </div>
-        <app-button
-          class="category-edit-submit"
-          button-type="submit"
-          round
-          :disabled="!disabled"
-          @click="handleSubmit"
-        >
-          {{ buttonText }}
-        </app-button>
-        <div v-if="errorMessage" class="category-edit__notice">
-          <app-text bg-error>
-            {{ errorMessage }}
-          </app-text>
-        </div>
-        <div v-if="doneMessage" class="category-edit__notice--update">
-          <app-text bg-success>
-            {{ doneMessage }}
-          </app-text>
-        </div>
-      </section>
-    </div>
+    <section class="category-edit-editor">
+      <app-heading :level="1">カテゴリー管理</app-heading>
+      <app-notice
+        class="notice"
+        link-path="/categories"
+        link-text="カテゴリー一覧へ戻る"
+      />
+      <app-input
+        v-validate="'required'"
+        name="name"
+        type="text"
+        placeholder="カテゴリー名を入力してください。"
+        white-bg
+        data-vv-as="カテゴリー名"
+        category-edit-form
+        :error-messages="errors.collect('name')"
+        :value="categoryName"
+        @update-value="$emit('edit-value', $event)"
+      />
+      <app-button
+        class="category-edit-submit"
+        button-type="submit"
+        round
+        :disabled="!disabled"
+        @click="handleSubmit"
+      >
+        {{ buttonText }}
+      </app-button>
+      <div v-if="errorMessage" class="category-edit__notice--update">
+        <app-text bg-error>
+          {{ errorMessage }}
+        </app-text>
+      </div>
+      <div v-if="doneMessage" class="category-edit__notice--update">
+        <app-text bg-success>
+          {{ doneMessage }}
+        </app-text>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -121,7 +118,7 @@ export default {
     margin-top: 16px;
   }
   &__notice--update {
-    margin-bottom: 16px;
+    margin-top: 16px;
   }
   .notice {
     margin-top: 10px;
