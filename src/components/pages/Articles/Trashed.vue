@@ -3,7 +3,7 @@
     :path="path"
     :title="title"
     :theads="theads"
-    :trashes="trashedArticle"
+    :trashes="trashedArticles"
     :error-message="errorMessage"
     border-gray
   />
@@ -24,7 +24,7 @@ export default {
     };
   },
   computed: {
-    trashedArticle() {
+    trashedArticles() {
       return this.$store.state.articles.trashedArticle;
     },
     errorMessage() {
