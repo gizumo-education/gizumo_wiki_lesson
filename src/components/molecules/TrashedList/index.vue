@@ -28,7 +28,7 @@
         tag="tbody"
         class="trashed-list__table-body"
       >
-        <tr v-for="trash in targetArray" :key="trash.id">
+        <tr v-for="trash in trashes" :key="trash.id">
           <td>
             <app-text tag="span" small>
               {{ trash.title | omittedText }}
@@ -83,7 +83,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    targetArray: {
+    trashes: {
       type: Array,
       default: () => [],
     },

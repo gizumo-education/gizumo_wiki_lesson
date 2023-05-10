@@ -3,7 +3,7 @@
     :path="path"
     :title="title"
     :theads="theads"
-    :target-array="trashedArticle"
+    :trashes="trashedArticle"
     :error-message="errorMessage"
     border-gray
   />
