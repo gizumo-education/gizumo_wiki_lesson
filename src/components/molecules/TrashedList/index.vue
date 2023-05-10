@@ -87,10 +87,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    borderGray: {
-      type: Boolean,
-      default: false,
-    },
     errorMessage: {
       type: String,
       default: '',
