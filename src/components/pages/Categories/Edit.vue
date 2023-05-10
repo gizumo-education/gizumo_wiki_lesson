@@ -1,11 +1,11 @@
 <template>
   <app-category-edit
-    :category-id="categoryId"
     :category-name="categoryName"
     :loading="loading"
     :done-message="doneMessage"
     :access="access"
-    @update-value="editValue"
+    :error-message="errorMessage"
+    @edit-value="editValue"
     @handle-submit="handleSubmit"
   />
 </template>
@@ -17,12 +17,6 @@ export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  data() {
-    return {
-      title: '',
-      content: '',
-    };
-  },
   computed: {
     categoryId() {
       let { id } = this.$route.params;
@@ -30,18 +24,19 @@ export default {
       return id;
     },
     categoryName() {
-      const { name } = this.$store.state.categories.targetCategory;
-      return name;
-      // return this.$store.state.categories.editCategory.name;
+      return this.$store.state.categories.editCategory.name;
     },
-    // editCategoryName() {
-    //   return this.$store.state.categories.editCategory.name;
-    // },
+    editCategoryName() {
+      return this.$store.state.categories.targetCategory.category.name;
+    },
     loading() {
       return this.$store.state.categories.loading;
     },
     doneMessage() {
-      return this.$store.state.categories.doneMessage;
+      return this.$store.state.categories.editDoneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessagePost;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -58,7 +53,7 @@ export default {
     },
     handleSubmit() {
       if (this.categoryName === this.editCategoryName) {
-        this.$store.state.dispatch('categories/showMessage');
+        this.$store.dispatch('categories/showMessage');
       } else {
         this.$store.dispatch('categories/updateCategory');
       }

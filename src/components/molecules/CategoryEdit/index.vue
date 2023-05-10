@@ -1,8 +1,5 @@
 <template>
   <div class="category-edit">
-    <div v-if="doneMessage" class="category-edit__notice--update">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
     <div class="category-edit__columns">
       <section class="category-edit-editor">
         <app-heading :level="1">カテゴリー管理</app-heading>
@@ -33,6 +30,16 @@
         >
           {{ buttonText }}
         </app-button>
+        <div v-if="errorMessage" class="category-edit__notice">
+          <app-text bg-error>
+            {{ errorMessage }}
+          </app-text>
+        </div>
+        <div v-if="doneMessage" class="category-edit__notice--update">
+          <app-text bg-success>
+            {{ doneMessage }}
+          </app-text>
+        </div>
       </section>
     </div>
   </div>
@@ -60,6 +67,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
     doneMessage: {
       type: String,
