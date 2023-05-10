@@ -79,9 +79,11 @@ export default {
       });
     },
     openModal(categoryId, categoryName) {
-      // console.log(categoryName);
-      const actionName = 'categories/confirmDeleteCategory';
-      this.$store.dispatch(actionName, { categoryId, categoryName });
+      // const actionName = 'categories/confirmDeleteCategory';
+      this.$store.dispatch(
+        'categories/confirmDeleteCategory',
+        { categoryId, categoryName },
+      );
       this.toggleModal();
     },
     handleClick() {
