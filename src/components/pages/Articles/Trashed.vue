@@ -1,25 +1,20 @@
 <template>
-  <app-trashed-list
-    :path="path"
-    :title="title"
+  <app-article-trash
     :theads="theads"
     :trashes="trashedArticles"
     :error-message="errorMessage"
-    border-gray
   />
 </template>
 
 <script>
-import { TrashedList } from '@Components/molecules';
+import { ArticleTrash } from '@Components/molecules';
 
 export default {
   components: {
-    appTrashedList: TrashedList,
+    appArticleTrash: ArticleTrash,
   },
   data() {
     return {
-      path: '/articles',
-      title: '記事',
       theads: ['タイトル', '本文', '作成日'],
     };
   },

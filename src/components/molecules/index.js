@@ -14,10 +14,10 @@ import CategoryEdit from './CategoryEdit/index.vue';
 import ArticleEdit from './ArticleEdit/index.vue';
 import ArticlePost from './ArticlePost/index.vue';
 import ArticleDetail from './ArticleDetail/index.vue';
+import ArticleTrash from './ArticleTrash/index.vue';
 import DeleteModal from './Modal/Delete.vue';
 import Notice from './Notice/index.vue';
 import Pagination from './Pagination/index.vue';
-import TrashedList from './TrashedList/index.vue';
 
 export {
   SigninForm,
@@ -36,8 +36,8 @@ export {
   ArticleEdit,
   ArticlePost,
   ArticleDetail,
+  ArticleTrash,
   DeleteModal,
   Notice,
   Pagination,
-  TrashedList,
 };

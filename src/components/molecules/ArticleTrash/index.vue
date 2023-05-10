@@ -1,20 +1,20 @@
 <template>
-  <div class="trashed-list">
-    <app-heading :level="1">{{ trashedTitle }}</app-heading>
+  <div class="article-trash">
+    <app-heading :level="1">削除済み記事一覧</app-heading>
     <app-router-link
-      :to="path"
+      to="/articles"
       key-color
       white
       bg-lightgreen
       small
       round
       hover-opacity
-      class="trashed-list__link"
+      class="article-trash__link"
     >
       すべての記事一覧へ戻る
     </app-router-link>
-    <table class="trashed-list__table">
-      <thead class="trashed-list__table-head">
+    <table class="article-trash__table">
+      <thead class="article-trash__table-head">
         <tr>
           <th v-for="(thead, index) in theads" :key="index">
             <app-text tag="span" theme-color bold>
@@ -26,7 +26,7 @@
       <transition-group
         name="fade"
         tag="tbody"
-        class="trashed-list__table-body"
+        class="article-trash__table-body"
       >
         <tr v-for="trash in trashes" :key="trash.id">
           <td>
@@ -47,7 +47,7 @@
         </tr>
       </transition-group>
     </table>
-    <div v-if="errorMessage" class="trashed-list__notice">
+    <div v-if="errorMessage" class="article-trash__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
   </div>
@@ -71,14 +71,6 @@ export default {
     },
   },
   props: {
-    path: {
-      type: String,
-      default: '',
-    },
-    title: {
-      type: String,
-      default: '',
-    },
     theads: {
       type: Array,
       default: () => [],
@@ -92,16 +84,11 @@ export default {
       default: '',
     },
   },
-  computed: {
-    trashedTitle() {
-      return `削除済み${this.title}一覧`;
-    },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-.trashed-list {
+.article-trash {
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
