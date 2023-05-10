@@ -51,8 +51,7 @@ export default {
     doneGetCategory(state, { category }) {
       state.category = { ...state.category, ...category };
     },
-    doneUpdateCategory(state, { categoryName }) {
-      state.category = { ...state.category, ...categoryName };
+    doneUpdateCategory(state) {
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
   },
@@ -117,16 +116,16 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    updateCategory({ commit, rootGetters }, categoryName) {
+    updateCategory({ commit, rootGetters }, category) {
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${rootGetters['categories/category'].id}`,
         data: {
-          id: categoryName.id,
-          name: categoryName.name,
+          name: category.name,
         },
       }).then(() => {
-        commit('doneUpdateCategory', { categoryName });
+        commit('doneGetCategory', { category });
+        commit('doneUpdateCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
