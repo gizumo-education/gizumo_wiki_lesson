@@ -72,19 +72,22 @@ export default {
       this.$store.dispatch('categories/editedCategory', event.target.value);
       this.$store.dispatch('categories/clearMessage');
     },
-    openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/deleteCategoryName', categoryName);
-      this.toggleModal();
-    },
-    handleClick() {
-      this.$store.dispatch('categories/deleteCategory');
-      this.toggleModal();
-    },
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory').then(() => {
         this.$store.dispatch('categories/getAllCategories');
       });
+    },
+    openModal(categoryId, categoryName) {
+      // console.log(categoryName);
+      const actionName = 'categories/confirmDeleteCategory';
+      this.$store.dispatch(actionName, { categoryId, categoryName });
+      this.toggleModal();
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
+      this.$store.dispatch('categories/getAllCategories');
     },
   },
 };
