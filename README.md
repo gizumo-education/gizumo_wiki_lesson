@@ -27,8 +27,6 @@ npm run dev
 | アドレス | guest@gizumo.com |  
 | パスワード | gizumowiki |  
 
-4. [swagger-viewer](https://chrome.google.com/webstore/detail/swagger-viewer/nfmkaonpdmaglhjjlggfhlndofdldfag?hl=ja)のインストール（API仕様書を参照する際に使用します）
-
 ## フォルダ構成
 
 ```
