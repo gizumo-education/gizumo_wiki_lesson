@@ -168,25 +168,22 @@ export default {
       });
     },
     updateCategory({ commit, state, rootGetters }) {
-      return new Promise(resolve => {
-        commit('clearMessage');
+      commit('clearMessage');
+      commit('toggleLoading');
+      const data = {
+        name: state.editCategory.name,
+      };
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.editCategory.id}`,
+        data,
+      }).then(() => {
+        commit('updateCategory');
+        commit('editDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('failRequest', { errorMessagePost: '失敗しました' });
+      }).finally(() => {
         commit('toggleLoading');
-        const data = {
-          name: state.editCategory.name,
-        };
-        axios(rootGetters['auth/token'])({
-          method: 'PUT',
-          url: `/category/${state.editCategory.id}`,
-          data,
-        }).then(() => {
-          commit('updateCategory');
-          commit('editDoneMessage', { message: 'カテゴリーを更新しました' });
-          resolve();
-        }).catch(() => {
-          commit('failRequest', { errorMessagePost: '失敗しました' });
-        }).finally(() => {
-          commit('toggleLoading');
-        });
       });
     },
     showMessage({ commit }) {
