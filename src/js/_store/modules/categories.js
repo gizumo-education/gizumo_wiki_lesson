@@ -37,6 +37,9 @@ export default {
     doneDeleteCategory(state) {
       state.targetCategoryId = null;
     },
+    displayAllCategories(state, payload) {
+      state.categoryList = state.categoryList.filter(value => value.id !== payload.id);
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories.reverse()];
     },
@@ -87,10 +90,13 @@ export default {
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
-      }).then(() => {
+      }).then(res => {
+        const payload = {
+          id: res.data.category.id,
+        };
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
-        commit('getAllCategories');
+        commit('displayAllCategories', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

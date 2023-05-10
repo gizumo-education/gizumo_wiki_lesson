@@ -79,7 +79,6 @@ export default {
       });
     },
     openModal(categoryId, categoryName) {
-      // const actionName = 'categories/confirmDeleteCategory';
       this.$store.dispatch(
         'categories/confirmDeleteCategory',
         { categoryId, categoryName },
@@ -89,7 +88,6 @@ export default {
     handleClick() {
       this.$store.dispatch('categories/deleteCategory');
       this.toggleModal();
-      this.$store.dispatch('categories/getAllCategories');
     },
   },
 };
