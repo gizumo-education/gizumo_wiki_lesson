@@ -27,8 +27,6 @@ npm run dev
 | アドレス | guest@gizumo.com |  
 | パスワード | gizumowiki |  
 
-4. VS Codeに[OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)の拡張機能のインストール（API仕様書を参照する際に使用します）
-
 ## フォルダ構成
 
 ```
