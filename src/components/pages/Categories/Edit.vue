@@ -41,7 +41,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetail', (this.categoryId, 10));
+    this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
   },
   methods: {
     editValue($event) {
