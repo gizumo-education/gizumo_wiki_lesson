@@ -4,10 +4,14 @@ export default {
   namespaced: true,
   state: {
     categories: [],
+    errorMessage: '',
   },
   mutations: {
     doneGetCategories(state, payload) {
-      state.categories = [...payload];
+      state.categories = [...payload.reverse()];
+    },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
     },
   },
   actions: {
@@ -18,6 +22,8 @@ export default {
       }).then(res => {
         const payload = res.data.categories;
         commit('doneGetCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },

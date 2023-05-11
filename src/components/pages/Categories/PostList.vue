@@ -3,9 +3,12 @@
     <div class="category_post">
       <app-category-post
         :access="access"
+        :error-message="errorMessage"
       />
     </div>
     <app-category-list
+      :access="access"
+      :theads="theads"
       :categories="categories"
     />
   </div>
@@ -19,12 +22,20 @@ export default {
     appCategoryPost: CategoryPost,
     appCategoryList: CategoryList,
   },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
+  },
   computed: {
     access() {
       return this.$store.getters['auth/access'];
     },
     categories() {
       return this.$store.state.categories.categories;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
   },
   created() {
@@ -37,7 +48,7 @@ export default {
 .category {
   display: flex;
   &_post {
-    width: 40%;
+    width: 30%;
   }
 }
 </style>

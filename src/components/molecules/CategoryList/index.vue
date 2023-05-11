@@ -131,10 +131,11 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px;
+  padding: 10px 20px 20px;
+  margin-left: 20px;
   height: 100%;
-  width: 60%;
-  border-left: 3px solid $separator-color;
+  width: 70%;
+  border-left: 2px solid #E8E8E8;
   overflow: scroll;
   &__table {
     width: 100%;
