@@ -59,10 +59,10 @@ const router = new VueRouter({
     {
       path: '/categories',
       component: Categories,
-      CategoryManagement: [
+      children: [
         {
-          name: '',
-          path: '',
+          name: 'categoryManagement',
+          path: '/categories',
           component: CategoryManagement,
         },
       ],

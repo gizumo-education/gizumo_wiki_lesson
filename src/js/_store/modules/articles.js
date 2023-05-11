@@ -91,7 +91,6 @@ export default {
     },
     selectedArticleCategory(state, payload) {
       state.targetArticle.category = {
-
         ...state.targetArticle.category,
         ...payload.category,
       };

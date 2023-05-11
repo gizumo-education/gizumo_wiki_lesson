@@ -4,7 +4,13 @@
     <div class="category-post">
       <app-category-post
         :access="access"
+        :category="newCategory"
+        :disabled="loading ? true : false"
+        @update-value="updateValue"
+        @handle-submit="handleSubmit"
       />
+      <!-- propsとしてcategoryにnewCategoryを渡す -->
+      <!-- update-valueで更新させる -->
     </div>
     <!-- カテゴリー名 -->
     <div class="category-list">
@@ -28,6 +34,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      // newCategory: '',
     };
   },
   computed: {
@@ -37,9 +44,25 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    newCategory() {
+      return this.$store.state.categories.targetCategory.category.name;
+    },
   },
   created() {
     this.$store.dispatch('categories/getCategories');
+  },
+  methods: {
+    updateValue(event) {
+      // console.log(event); //オブジェクトが取得できる
+      this.$store.dispatch('categories/targetCategory', event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
   },
 };
 </script>

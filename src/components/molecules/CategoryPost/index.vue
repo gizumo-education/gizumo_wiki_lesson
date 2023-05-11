@@ -36,9 +36,9 @@ import {
 
 export default {
   components: {
+    appButton: Button,
     appHeading: Heading,
     appInput: Input,
-    appButton: Button,
     appText: Text,
   },
   props: {
@@ -74,8 +74,12 @@ export default {
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
+        // console.log(valid); //true→hundle-submitをemit、親でpostCategoryをdispatch
         if (valid) this.$emit('handle-submit');
       });
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
