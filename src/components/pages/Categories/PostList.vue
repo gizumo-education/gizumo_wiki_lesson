@@ -1,15 +1,15 @@
 <template>
   <div class="category">
-    <div class="category_post">
-      <app-category-post
-        :access="access"
-        :error-message="errorMessage"
-      />
-    </div>
+    <app-category-post
+      :access="access"
+      :error-message="errorMessage"
+      class="category_post"
+    />
     <app-category-list
       :access="access"
       :theads="theads"
       :categories="categories"
+      class="category_list"
     />
   </div>
 </template>
@@ -49,6 +49,12 @@ export default {
   display: flex;
   &_post {
     width: 30%;
+  }
+  &_list {
+    padding: 0 20px;
+    margin-left: 20px;
+    width: 70%;
+    border-left: 2px solid #E8E8E8;
   }
 }
 </style>
