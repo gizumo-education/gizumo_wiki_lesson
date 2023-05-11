@@ -8,6 +8,8 @@ export default {
       name: '',
     },
     categoryList: [],
+    deleteCategoryId: null,
+    deleteCategoryName: '',
     loading: false,
     doneMessage: '',
     errorMessage: '',
@@ -17,6 +19,7 @@ export default {
     categoryList(state) {
       return state.categoryList;
     },
+    deleteCategoryId: state => state.deleteCategoryId,
   },
   mutations: {
     initPostCategory(state) {
@@ -24,6 +27,18 @@ export default {
         id: null,
         name: '',
       };
+    },
+    deleteCategoryName(state, { categoryName }) {
+      state.deleteCategoryName = categoryName;
+    },
+    confirmDeleteCategory(state, { categoryId }) {
+      state.deleteCategoryId = categoryId;
+    },
+    doneDeleteCategory(state) {
+      state.targetCategoryId = null;
+    },
+    displayAllCategories(state, payload) {
+      state.categoryList = state.categoryList.filter(value => value.id !== payload.id);
     },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories.reverse()];
@@ -65,6 +80,26 @@ export default {
     },
     editedCategory({ commit }, name) {
       commit('editedCategory', name);
+    },
+    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('confirmDeleteCategory', { categoryId });
+      commit('deleteCategoryName', { categoryName });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+      }).then(res => {
+        const payload = {
+          id: res.data.category.id,
+        };
+        commit('doneDeleteCategory');
+        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+        commit('displayAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
     postCategory({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
