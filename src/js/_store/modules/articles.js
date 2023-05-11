@@ -28,6 +28,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    theads: [],
   },
   getters: {
     transformedArticles(state) {

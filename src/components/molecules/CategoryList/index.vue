@@ -133,6 +133,8 @@ export default {
 .category-list {
   padding: 10px 0 20px;
   height: 100%;
+  width: 60%;
+  border-left: 3px solid $separator-color;
   overflow: scroll;
   &__table {
     width: 100%;
