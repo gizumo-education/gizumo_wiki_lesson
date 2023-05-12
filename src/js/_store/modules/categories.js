@@ -117,8 +117,6 @@ export default {
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
       commit('clearMessage');
-      const data = new URLSearchParams();
-      data.append('categories', rootGetters['categories/deleteCategoryId']);
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
