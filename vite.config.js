@@ -2,10 +2,12 @@ import { defineConfig, loadEnv } from 'vite';
 import { createVuePlugin } from 'vite-plugin-vue2';
 import legacy from '@vitejs/plugin-legacy';
 import checker from 'vite-plugin-checker';
+// nodemoduleからパッケージインストール
 
 export default (({ mode }) => {
-  const rootDirPath = process.cwd();
+  const rootDirPath = process.cwd();// カレントリディレクトリを取得
   const env = loadEnv(mode, `${rootDirPath}/env`, '');
+
 
   return defineConfig({
     root: 'src',
