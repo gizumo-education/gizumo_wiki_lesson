@@ -60,7 +60,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
+      return this.$store.state.categories.deleteCategory.name;
     },
   },
   created() {
@@ -72,7 +72,7 @@ export default {
     },
     openModal(categoryId, categoryName) {
       this.$store.dispatch(
-        'categories/confirmDeleteCategory',
+        'categories/setTargetCategory',
         { categoryId, categoryName },
       );
       this.toggleModal();
@@ -88,10 +88,7 @@ export default {
       this.category = '';
     },
     handleClick() {
-      this.$store.dispatch('categories/deleteCategory', { id: this.deleteCategoryId })
-        .then(() => {
-          this.$store.dispatch('categories/getAllCategories');
-        });
+      this.$store.dispatch('categories/deleteCategory');
       this.toggleModal();
     },
   },
