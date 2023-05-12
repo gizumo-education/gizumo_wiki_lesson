@@ -77,7 +77,7 @@
           class="category-list__modal__button"
           bg-danger
           round
-          @click="handleClick"
+          @click="$emit('handle-click')"
         >
           削除する
         </app-button>
@@ -125,10 +125,6 @@ export default {
     openModal(categoryId, categoryName) {
       if (!this.access.delete) return;
       this.$emit('open-modal', categoryId, categoryName);
-    },
-    handleClick() {
-      if (!this.access.delete) return;
-      this.$emit('handle-click');
     },
   },
 };
