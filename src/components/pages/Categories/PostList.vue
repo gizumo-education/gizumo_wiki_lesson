@@ -3,7 +3,10 @@
     <app-category-post
       :access="access"
       :error-message="errorMessage"
+      :category="newCategory"
       class="category_post"
+      @update-value="addCategory"
+      @create-category="createCategory"
     />
     <app-category-list
       :access="access"
@@ -37,9 +40,20 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    newCategory() {
+      return this.$store.state.categories.newCategory;
+    },
   },
   created() {
     this.$store.dispatch('categories/getCategories');
+  },
+  methods: {
+    addCategory($event) {
+      this.$store.dispatch('categories/addCategory', $event.target.value);
+    },
+    createCategory() {
+      this.$store.dispatch('categories/createCategory');
+    },
   },
 };
 </script>
