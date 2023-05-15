@@ -5,11 +5,16 @@ export default {
   state: {
     categories: [],
     errorMessage: '',
-    newCategory: '',
+    targetCategory: '',
+    disabled: false,
+    doneMessage: '',
   },
   mutations: {
-    addCategory(state, category) {
-      state.newCategory = category;
+    addCategory(state, addCategory) {
+      state.categories.unshift(addCategory);
+    },
+    getTargetCategory(state, category) {
+      state.targetCategory = category;
     },
     doneGetCategories(state, categoriesList) {
       state.categories = [...categoriesList.reverse()];
@@ -17,16 +22,30 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
-
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
+    },
+    toggleLoading(state) {
+      state.disabled = !state.disabled;
+    },
+    displayDoneMessage(state, payload = { message: '成功しました' }) {
+      state.doneMessage = payload.message;
+    },
+    clearTargetInput(state) {
+      state.targetCategory = '';
+    },
   },
   getters: {
-    targetCategory: state => state.newCategory,
+    targetCategory: state => state.targetCategory,
   },
   actions: {
-    addCategory({ commit }, category) {
-      commit('addCategory', category);
+    getTargetCategory({ commit }, category) {
+      commit('getTargetCategory', category);
     },
-    createCategory({ commit, rootGetters }) {
+    addCategory({ commit, rootGetters }) {
+      commit('clearMessage');
+      commit('toggleLoading');
       const data = {
         name: rootGetters['categories/targetCategory'],
       };
@@ -34,8 +53,15 @@ export default {
         method: 'POST',
         url: '/category',
         data,
-      }).then(({data}) => {
-        console.log(data);
+      }).then(res => {
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを追加しました' });
+        const addedCategory = res.data.category;
+        commit('addCategory', addedCategory);
+        commit('clearTargetInput');
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
       });
     },
     getCategories({ commit, rootGetters }) {
@@ -48,6 +74,9 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };

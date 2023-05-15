@@ -16,7 +16,6 @@
       button-type="submit"
       round
       :disabled="disabled || !access.create"
-      @click="$emit('create-category')"
     >
       {{ buttonText }}
     </app-button>
