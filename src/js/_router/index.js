@@ -17,6 +17,10 @@ import ArticlePost from '@Pages/Articles/Post.vue';
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
 
+// カテゴリ
+import Categories from '@Pages/Categories/index.vue';
+import CategoryList from '@Pages/Categories/List.vue';
+
 // ユーザー
 import Users from '@Pages/Users/index.vue';
 import UserList from '@Pages/Users/List.vue';
@@ -51,6 +55,17 @@ const router = new VueRouter({
       name: 'home',
       path: '/',
       component: Home,
+    },
+    {
+      path: '/categories',
+      component: Categories,
+      children: [
+        {
+          name: 'categoryList',
+          path: '',
+          component: CategoryList,
+        },
+      ],
     },
     {
       name: 'passwordInit',
