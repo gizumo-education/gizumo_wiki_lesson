@@ -3,7 +3,13 @@
     <app-category-post
       :access="access"
       :error-message="errorMessage"
+      :category="targetCategory"
+      :disabled="disabled"
+      :done-message="doneMessage"
       class="category_post"
+      @update-value="setTargetCategory"
+      @clear-message="clearMessage"
+      @handle-submit="addCategory"
     />
     <app-category-list
       :access="access"
@@ -37,9 +43,29 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    targetCategory() {
+      return this.$store.state.categories.targetCategory;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getCategories');
+  },
+  methods: {
+    setTargetCategory($event) {
+      this.$store.dispatch('categories/setTargetCategory', $event.target.value);
+    },
+    addCategory() {
+      this.$store.dispatch('categories/addCategory');
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
   },
 };
 </script>
