@@ -7,7 +7,7 @@
       :disabled="disabled"
       :done-message="doneMessage"
       class="category_post"
-      @update-value="getTargetCategory"
+      @update-value="setTargetCategory"
       @clear-message="clearMessage"
       @handle-submit="addCategory"
     />
@@ -57,8 +57,8 @@ export default {
     this.$store.dispatch('categories/getCategories');
   },
   methods: {
-    getTargetCategory($event) {
-      this.$store.dispatch('categories/getTargetCategory', $event.target.value);
+    setTargetCategory($event) {
+      this.$store.dispatch('categories/setTargetCategory', $event.target.value);
     },
     addCategory() {
       this.$store.dispatch('categories/addCategory');

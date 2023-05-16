@@ -13,7 +13,7 @@ export default {
     addCategory(state, addCategory) {
       state.categories.unshift(addCategory);
     },
-    getTargetCategory(state, category) {
+    setTargetCategory(state, category) {
       state.targetCategory = category;
     },
     doneGetCategories(state, categoriesList) {
@@ -40,8 +40,8 @@ export default {
     targetCategory: state => state.targetCategory,
   },
   actions: {
-    getTargetCategory({ commit }, category) {
-      commit('getTargetCategory', category);
+    setTargetCategory({ commit }, category) {
+      commit('setTargetCategory', category);
     },
     addCategory({ commit, rootGetters }) {
       commit('clearMessage');
@@ -55,7 +55,6 @@ export default {
         data,
       }).then(res => {
         commit('toggleLoading');
-        commit('displayDoneMessage');
         const addedCategory = res.data.category;
         commit('addCategory', addedCategory);
         commit('clearTargetInput');
