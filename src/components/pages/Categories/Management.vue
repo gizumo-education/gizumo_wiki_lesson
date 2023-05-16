@@ -10,7 +10,7 @@
         @handle-submit="handleSubmit"
       />
       <!-- propsとしてcategoryにnewCategoryを渡す -->
-      <!-- update-valueで更新させる -->
+      <!-- update-valueで更新 -->
     </div>
     <!-- カテゴリー名 -->
     <div class="category-list">
@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      // newCategory: '',
     };
   },
   computed: {
@@ -56,12 +55,14 @@ export default {
   },
   methods: {
     updateValue(event) {
-      // console.log(event); //オブジェクトが取得できる
       this.$store.dispatch('categories/targetCategory', event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory');
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };

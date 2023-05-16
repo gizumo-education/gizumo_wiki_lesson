@@ -23,7 +23,7 @@ export default {
       },
     },
     categoryList: [],
-    loading: false, // loadingの判定→「作成中...」に変化
+    loading: false, // 判定→「作成中...」に変化
     doneMessage: '',
     errorMessage: '',
   },
@@ -36,7 +36,7 @@ export default {
       state.errorMessage = message;
     },
     mutateCategories(state, payload) {
-      state.categoryList = payload.categories;
+      state.categoryList = payload.categories.reverse();
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -50,10 +50,9 @@ export default {
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+      // 入力内容を空にする！
+      state.targetCategory.category.name = '';
     },
-    // mutatePostCategories(state, payload) {
-    //   state.categoryList = state.categoryList.reverse();
-    // },
   },
   actions: {
     getCategories({ commit, rootGetters }) {
@@ -61,7 +60,7 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(res => {
-        // resで受け取ったデータから「categories」(一覧)を取得
+        // resのデータから一覧を取得
         const payload = {
           categories: res.data.categories,
         };
@@ -70,12 +69,11 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    postCategory({ commit, rootGetters }) {
+    postCategory({ commit, rootGetters, dispatch }) {
       return new Promise((resolve, reject) => {
-        commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
-        // console.log(rootGetters['categories/targetCategory']); // オブジェクト形式で取得
+        // rootGetters→オブジェクト形式で取得できる！
         data.append('name', rootGetters['categories/targetCategory'].category.name);
         if (rootGetters['categories/targetCategory'].category.name !== null) {
           data.append(
@@ -89,10 +87,9 @@ export default {
           data,
         }).then(() => {
           commit('toggleLoading');
+          dispatch('getCategories');
+          commit('clearMessage');
           resolve();
-          // console.log(res); // 入力内容を{}で取得
-          // リロードしないと更新できない→getCategoriesを実行        }).catch(() => {
-          // console.log(err); // 何も表示されず※後で消す
         }).catch(() => {
           commit('toggleLoading');
           reject();
@@ -105,12 +102,5 @@ export default {
         categoryName,
       });
     },
-    clearMessage({ commit }) {
-      commit('clearMessage');
-    },
-    // deleteCategory({ commit, rootGetters }) {
-    //   console.log(commit);
-    //   console.log(rootGetters);
-    // },
   },
 };
