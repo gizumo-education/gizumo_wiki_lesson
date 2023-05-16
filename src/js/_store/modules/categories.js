@@ -55,10 +55,11 @@ export default {
         data,
       }).then(res => {
         commit('toggleLoading');
-        commit('displayDoneMessage', { message: 'カテゴリーを追加しました' });
+        commit('displayDoneMessage');
         const addedCategory = res.data.category;
         commit('addCategory', addedCategory);
         commit('clearTargetInput');
+        commit('displayDoneMessage', { message: 'カテゴリーを追加しました' });
       }).catch(err => {
         commit('toggleLoading');
         commit('failRequest', { message: err.message });
