@@ -9,21 +9,31 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <div class="pagination">
+      <app-pagination
+        :current-page="currentPage"
+        :total-pages="lastPage"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    if(!this.$route.query.page){
+      this.fetchArticles();
+    }
     next();
+    this.fetchArticles();
   },
   data() {
     return {
@@ -40,8 +50,15 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
+    },
+    lastPage() {
+      return this.$store.state.articles.lastPage;
+    },
   },
   created() {
+    console.log('?query=',this.$route.query.page);
     this.fetchArticles();
   },
   methods: {
@@ -68,6 +85,7 @@ export default {
       }
     },
     fetchArticles() {
+      console.log('?query=',this.$route.query.page);
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -79,10 +97,19 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
+      } else if (this.$route.query.page) {
+        this.$store.dispatch('articles/getPaginatedArticles', this.$route.query.page);
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getPaginatedArticles', 1);
+        // this.$store.dispatch('articles/getAllArticles');
       }
     },
   },
 };
 </script>
+
+<style lang='scss' scoped>
+  .pagination {
+    margin: 30px auto 0;
+  }
+</style>
