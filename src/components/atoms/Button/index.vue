@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    big: {
+      type: Boolean,
+      default: false,
+    },
     round: {
       type: Boolean,
       default: false,
@@ -62,6 +66,7 @@ export default {
         button: true,
         'button--block': this.block,
         'button--small': this.small,
+        'button--big': this.big,
         'button--round': this.round,
         'button--bold': this.bold,
         'button--theme-color': this.themeColor,
@@ -95,6 +100,9 @@ export default {
 .button--small {
   padding: 5px 12px;
   font-size: 14px;
+}
+.button--big {
+  padding: 10px 20px;
 }
 .button--round {
   border-radius: 5px;

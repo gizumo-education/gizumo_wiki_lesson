@@ -21,6 +21,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    ellipsis: {
+      type: Boolean,
+      default: false,
+    },
     themeColor: {
       type: Boolean,
       default: false,
@@ -53,6 +57,7 @@ export default {
         'text--bold': this.bold,
         'text--inline-block': this.inlineBlock,
         'text--error': this.error,
+        'text--ellipsis': this.ellipsis,
         'text--themecolor': this.themeColor,
         'text--bg-success': this.bgSuccess,
         'text--bg-error': this.bgError,
@@ -88,6 +93,10 @@ export default {
 }
 .text--error {
   color: $error-color;
+}
+.text--ellipsis {
+  padding: 10px 0;
+  color: $disabled-color;
 }
 .text--bg-error {
   padding: 10px 15px;
