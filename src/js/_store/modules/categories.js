@@ -1,50 +1,35 @@
 import axios from '@Helpers/axiosDefault';
 
 export default {
+  namespaced: true,
   state: {
-    targetArticle: {
+    category: {
       id: null,
-      title: '',
-      content: '',
-      category: {
-        id: null,
-        name: '',
-      },
-      user: {
-        account_name: '',
-        created_at: '',
-        email: '',
-        full_name: '',
-        id: '',
-        password_reset_flg: null,
-        role: '',
-        updated_at: '',
-      },
+      name: '',
     },
-    articleList: [],
-    deleteArticleId: null,
-    loading: false,
-    doneMessage: '',
-    errorMessage: '',
+    categoryList: [],
+    categoryPost: [],
+  },
+  getters: {
+    categoryListLength: state => state.categoryList.Length,
   },
   mutations: {
-    doneGetCategories(state, payload) {
-      state.category = [...payload.category];
+    doneGetAllCategories(state, categories) {
+      state.categoryList = categories.reverse();
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+      state.loading = false;
     },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/categories',
-      }).then(res => {
-        const payload = {
-          category: res.data.category,
-        };
-        commit('doneGetCategories', payload);
+        url: '/category',
+      }).then(({ data }) => {
+        const categoryList = data.categories;
+        commit('doneGetAllCategories', categoryList);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
