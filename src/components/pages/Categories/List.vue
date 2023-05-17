@@ -47,12 +47,12 @@ export default {
 }
 
 .category form{
-  width: 40%;
+  width: 35%;
   padding-right: 20px;
 }
 .category-list {
   padding-left: 20px;
-  width: 60%;
+  width: 65%;
   border-left: 2px solid #eaeaea;
 }
 </style>
