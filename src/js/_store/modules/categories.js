@@ -40,8 +40,7 @@ export default {
       state.targetCategory = '';
     },
     confirmDeleteCategory(state, confirmCategory) {
-      state.deleteCategory.id = confirmCategory.id;
-      state.deleteCategory.name = confirmCategory.name;
+      state.deleteCategory = confirmCategory;
     },
     doneDeleteCategory(state) {
       state.deleteCategory.id = null;
@@ -93,19 +92,18 @@ export default {
     confirmDeleteCategory({ commit }, confirmCategory) {
       commit('confirmDeleteCategory', confirmCategory);
     },
-    deleteCategory({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
+    deleteCategory({ commit, rootGetters, getters }) {
+      return new Promise(resolve => {
         commit('clearMessage');
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+          url: `/category/${getters.deleteCategoryId}`,
         }).then(() => {
           commit('doneDeleteCategory');
           resolve();
           commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
         }).catch(err => {
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },
