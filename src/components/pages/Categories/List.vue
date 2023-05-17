@@ -11,6 +11,7 @@
       :theads="theads"
       :categories="categories"
       :access="access"
+      :error-message="errorMessage"
     />
   </div>
 </template>
@@ -46,6 +47,9 @@ export default {
     categories() {
       return this.$store.state.categories.categoryList;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -58,11 +62,11 @@ export default {
   display: flex;
   .is-post {
     margin-right: 20px;
-    width: calc(100% - 65%);
+    width: 35%;
   }
   .is-list {
     padding-left: 20px;
-    width: calc(100% - 35%);
+    width: 65%;
     border-left: solid 1px rgb(217, 216, 216);
   }
 }

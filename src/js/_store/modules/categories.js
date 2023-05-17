@@ -12,9 +12,6 @@ export default {
     categoryList: [],
     categoryPost: [],
   },
-  getters: {
-    categoryListLength: state => state.categoryList.Length,
-  },
   mutations: {
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
