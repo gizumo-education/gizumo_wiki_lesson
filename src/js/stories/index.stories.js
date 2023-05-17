@@ -1,5 +1,5 @@
 import { withBackgrounds } from '@storybook/addon-backgrounds';
-import { addParameters, storiesOf } from '@storybook/vue';
+import { addParameters } from '@storybook/vue';
 import backgrounds from "@storybook/addon-backgrounds";
 import '@Scss/global.scss';
 import '@Scss/storybookoverride.scss';
