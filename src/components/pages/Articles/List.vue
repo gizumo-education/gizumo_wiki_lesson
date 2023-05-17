@@ -13,6 +13,7 @@
       <app-pagination
         :current-page="currentPage"
         :total-pages="lastPage"
+        :page-range="pageRange"
       />
     </div>
   </div>
@@ -29,7 +30,7 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    if(!this.$route.query.page){
+    if (!this.$route.query.page) {
       this.fetchArticles();
     }
     next();
@@ -56,9 +57,11 @@ export default {
     lastPage() {
       return this.$store.state.articles.lastPage;
     },
+    pageRange() {
+      return this.$store.state.articles.pageRange;
+    },
   },
   created() {
-    console.log('?query=',this.$route.query.page);
     this.fetchArticles();
   },
   methods: {
@@ -85,7 +88,6 @@ export default {
       }
     },
     fetchArticles() {
-      console.log('?query=',this.$route.query.page);
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -109,6 +111,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+  .articles {
+    display: flex;
+    flex-direction: column;
+  }
   .pagination {
     margin: 30px auto 0;
   }

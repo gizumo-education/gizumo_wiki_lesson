@@ -1,29 +1,41 @@
 <template>
-  <ul class="pagination__inner">
+  <ul class="pagination-inner">
     <li
-      v-for="pageNumber in totalPages"
-      :key="pageNumber"
+      v-for="pageNumber in pageRange"
+      :key="pageNumber.id"
+      class="pagination-item"
     >
       <template
-        v-if="pageNumber !== currentPage"
+        v-if="pageNumber.range === '…'"
+      >
+        <app-text
+          ellipsis
+          bold
+        >
+          {{ pageNumber.range }}
+        </app-text>
+      </template>
+      <template
+        v-else-if="pageNumber.range !== currentPage"
       >
         <app-router-link
-          :to="`?page=${pageNumber}`"
+          :to="`?page=${pageNumber.range}`"
           large
           white
-          bgThemeColor
-          hoverOpacity
+          bg-theme-color
+          hover-opacity
         >
-          {{ pageNumber }}
+          {{ pageNumber.range }}
         </app-router-link>
       </template>
       <template
         v-else
       >
         <app-button
+          big
           disabled
         >
-          {{ pageNumber }}
+          {{ pageNumber.range }}
         </app-button>
       </template>
     </li>
@@ -31,10 +43,11 @@
 </template>
 
 <script>
-import { RouterLink, Button } from '@Components/atoms';
+import { Text, RouterLink, Button } from '@Components/atoms';
 
 export default {
   components: {
+    appText: Text,
     appRouterLink: RouterLink,
     appButton: Button,
   },
@@ -47,6 +60,10 @@ export default {
       type: Number,
       default: null,
     },
+    pageRange: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 </script>
@@ -54,9 +71,13 @@ export default {
 <style lang="scss" scoped>
 .pagination {
 
-  &__inner {
-    width: 100%;
+  &-inner {
+    margin: 0 auto;
     display: flex;
+  }
+
+  &-item {
+    margin-left: 20px;
   }
 }
 </style>
