@@ -1,4 +1,5 @@
 import SigninForm from './SigninForm/index.vue';
+import Pagination from './Pagination/index.vue';
 import PasswordForm from './PasswordForm/index.vue';
 import Profile from './Profile/index.vue';
 import SidebarList from './SidebarList/index.vue';
@@ -18,6 +19,7 @@ import Notice from './Notice/index.vue';
 
 export {
   SigninForm,
+  Pagination,
   PasswordForm,
   Profile,
   SidebarList,
