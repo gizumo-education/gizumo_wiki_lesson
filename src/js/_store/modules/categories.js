@@ -43,6 +43,9 @@ export default {
         name: payload.name,
       };
     },
+    doneGetCategory(state, payload) {
+      state.targetCategory = payload.name;
+    },
     doneDeleteCategory(state) {
       state.deleteCategory = {
         ...state.deleteCategory,
@@ -54,6 +57,7 @@ export default {
   getters: {
     targetCategory: state => state.targetCategory,
     deleteCategory: state => state.deleteCategory,
+    categoryList: state => state.categoryList,
   },
   actions: {
     clearMessage({ commit }) {
@@ -71,6 +75,20 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        const payload = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneGetCategory', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -125,6 +143,25 @@ export default {
         name,
       };
       commit('setDeleteCategory', payload);
+    },
+    editCategory({ commit, rootGetters }, id) {
+      commit('clearMessage');
+      commit('toggleLoading');
+
+      const name = rootGetters['categories/targetCategory'];
+      const data = new URLSearchParams();
+      data.append('name', name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${id}`,
+        data,
+      }).then(() => {
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };
