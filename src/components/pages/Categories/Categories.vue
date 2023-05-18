@@ -67,7 +67,7 @@ export default {
   .is-list {
     padding-left: 20px;
     width: 65%;
-    border-left: solid 1px rgb(217, 216, 216);
+    border-left: solid 1px $separator-color;
   }
 }
 </style>

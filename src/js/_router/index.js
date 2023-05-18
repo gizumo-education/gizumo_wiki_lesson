@@ -9,7 +9,7 @@ import Home from '@Pages/Home/index.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
-import CategoryList from '@Pages/Categories/List.vue';
+import CategoryList from '@Pages/Categories/Categories.vue';
 
 // 記事
 import Articles from '@Pages/Articles/index.vue';

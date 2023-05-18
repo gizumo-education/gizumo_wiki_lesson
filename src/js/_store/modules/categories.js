@@ -10,7 +10,6 @@ export default {
       name: '',
     },
     categoryList: [],
-    categoryPost: [],
   },
   mutations: {
     doneGetAllCategories(state, categories) {
