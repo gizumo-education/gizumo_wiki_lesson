@@ -138,12 +138,13 @@ export default {
       };
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${getters.targetEditCategory.id}`,
+        url: `/ategory/${getters.targetEditCategory.id}`,
         data,
       }).then(() => {
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(err => {
+        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
     },
