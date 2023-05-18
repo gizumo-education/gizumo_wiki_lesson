@@ -69,7 +69,6 @@ export default {
         dispatch('getCategories');
         commit('toggleLoading');
         commit('clearInit');
-        // commit('clearMessages');
         commit('displayDoneMessage', { message: '成功しました' });
       }).catch(err => {
         commit('toggleLoading');
