@@ -11,13 +11,13 @@ const routeLinksArray = [
   },
   {
     id: 2,
-    name: 'カテゴリー',
-    path: '/categorys',
+    name: '記事',
+    path: '/all/articles',
   },
   {
     id: 3,
-    name: '記事',
-    path: '/all/articles',
+    name: 'カテゴリー',
+    path: '/category',
   },
   {
     id: 4,
