@@ -16,11 +16,11 @@ export default {
   },
   getters: {
     targetCategory: state => state.targetCategory,
-    deleteArticle: state => state.deleteArticleId,
   },
   mutations: {
     failRequest(state, { message }) {
       state.errorMessage = message;
+      state.doneMessage = message;
     },
     mutateCategories(state, payload) {
       state.categoryList = payload.categories.reverse();
@@ -57,32 +57,23 @@ export default {
       });
     },
     postCategory({ commit, rootGetters, dispatch }) {
-      return new Promise((resolve, reject) => {
+      commit('toggleLoading');
+      commit('clearMessages');
+      const data = new URLSearchParams();
+      data.append('name', rootGetters['categories/targetCategory'].category.name);
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(() => {
+        dispatch('getCategories');
         commit('toggleLoading');
-        const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategory'].category.name);
-        if (rootGetters['categories/targetCategory'].category.name !== null) {
-          data.append(
-            'category_id',
-            rootGetters['categories/targetCategory'].category.name,
-          );
-        }
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data,
-        }).then(() => {
-          dispatch('getCategories');
-          commit('toggleLoading');
-          commit('clearInit');
-          commit('clearMessages');
-          commit('displayDoneMessage', { message: '成功しました' });
-          resolve();
-        }).catch(err => {
-          commit('toggleLoading');
-          commit('failRequest', { message: err.message });
-          reject();
-        });
+        commit('clearInit');
+        // commit('clearMessages');
+        commit('displayDoneMessage', { message: '成功しました' });
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
       });
     },
     targetCategory({ commit }, categoryName) {
