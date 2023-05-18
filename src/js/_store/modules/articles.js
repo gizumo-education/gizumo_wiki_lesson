@@ -1,5 +1,4 @@
 import axios from '@Helpers/axiosDefault';
-import { v4 as uuidv4 } from 'uuid';
 // import Cookies from 'js-cookie';
 
 export default {
@@ -26,7 +25,6 @@ export default {
     },
     currentPage: null,
     lastPage: null,
-    pageRange: [],
     articleList: [],
     deleteArticleId: null,
     loading: false,
@@ -141,48 +139,12 @@ export default {
         method: 'GET',
         url: `/article?page=${page}`,
       }).then(res => {
-        const current = res.data.meta.current_page;
-        const last = res.data.meta.last_page;
-        const delta = 2;
-        const left = current - delta;
-        const right = current + delta + 1;
-        const range = [];
-        const rangeWithDots = [];
-        let l;
-
-        for (let i = 1; i <= last; i += 1) {
-          if (i === 1 || i === last || (i >= left && i < right)) {
-            range.push(i);
-          }
-        }
-        range.forEach(i => {
-          if (l) {
-            if (i - l === 2) {
-              rangeWithDots.push({
-                id: uuidv4(),
-                range: l + 1,
-              });
-            } else if (i - l !== 1) {
-              rangeWithDots.push({
-                id: uuidv4(),
-                range: '…',
-              });
-            }
-          }
-          rangeWithDots.push({
-            id: uuidv4(),
-            range: i,
-          });
-          l = i;
-        });
         const payload = {
           articles: res.data.articles,
           currentPage: res.data.meta.current_page,
           lastPage: res.data.meta.last_page,
-          pageRange: [...rangeWithDots],
         };
         commit('doneGetPaginatedArticles', payload);
-        commit('doneUpdatePageRange', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
