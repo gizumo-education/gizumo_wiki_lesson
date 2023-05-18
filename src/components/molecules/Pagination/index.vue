@@ -1,31 +1,46 @@
 <template>
   <ul class="pagination-inner">
-    <li
-      v-for="pageNumber in pageRange"
-      :key="pageNumber.id"
-      class="pagination-item"
+    <template
+      v-if="disabledLinkToFirst"
     >
-      <template
-        v-if="pageNumber.range === '…'"
-      >
-        <app-text
-          ellipsis
-          bold
-        >
-          {{ pageNumber.range }}
-        </app-text>
-      </template>
-      <template
-        v-else-if="pageNumber.range !== currentPage"
-      >
+      <li>
         <app-router-link
-          :to="`?page=${pageNumber.range}`"
+          :to="'?page=1'"
           large
           white
           bg-theme-color
           hover-opacity
         >
-          {{ pageNumber.range }}
+          1
+        </app-router-link>
+      </li>
+      <li
+        class="pagination-item"
+      >
+        <app-text
+          ellipsis
+          bold
+        >
+          …
+        </app-text>
+      </li>
+    </template>
+    <li
+      v-for="page in pageRange"
+      :key="page"
+      class="pagination-item"
+    >
+      <template
+        v-if="page !== currentPage"
+      >
+        <app-router-link
+          :to="`?page=${page}`"
+          large
+          white
+          bg-theme-color
+          hover-opacity
+        >
+          {{ page }}
         </app-router-link>
       </template>
       <template
@@ -35,10 +50,36 @@
           big
           disabled
         >
-          {{ pageNumber.range }}
+          {{ page }}
         </app-button>
       </template>
     </li>
+    <template
+      v-if="disabledLinkToLast"
+    >
+      <li
+        class="pagination-item"
+      >
+        <app-text
+          ellipsis
+          bold
+        >
+          …
+        </app-text>
+      </li><li
+        class="pagination-item"
+      >
+        <app-router-link
+          :to="`?page=${totalPages}`"
+          large
+          white
+          bg-theme-color
+          hover-opacity
+        >
+          {{ totalPages }}
+        </app-router-link>
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -60,9 +101,29 @@ export default {
       type: Number,
       default: null,
     },
-    pageRange: {
-      type: Array,
-      default: () => [],
+  },
+  computed: {
+    disabledLinkToFirst() {
+      return this.currentPage > 3;
+    },
+    disabledLinkToLast() {
+      return this.currentPage < this.totalPages - 2;
+    },
+    pageRange() {
+      let startPage = null;
+      const { currentPage, totalPages } = this;
+      const calculatedPageRange = [];
+      if (currentPage < 3) {
+        startPage = 1;
+      } else if ((totalPages - 2) < currentPage) {
+        startPage = totalPages - 4;
+      } else {
+        startPage = currentPage - 2;
+      }
+      for (let i = startPage; i < startPage + 5; i += 1) {
+        calculatedPageRange.push(i);
+      }
+      return calculatedPageRange;
     },
   },
 };

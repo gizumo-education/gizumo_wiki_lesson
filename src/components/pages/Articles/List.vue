@@ -13,7 +13,6 @@
       <app-pagination
         :current-page="currentPage"
         :total-pages="lastPage"
-        :page-range="pageRange"
       />
     </div>
   </div>
@@ -56,9 +55,6 @@ export default {
     },
     lastPage() {
       return this.$store.state.articles.lastPage;
-    },
-    pageRange() {
-      return this.$store.state.articles.pageRange;
     },
   },
   created() {
