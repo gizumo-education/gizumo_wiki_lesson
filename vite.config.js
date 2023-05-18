@@ -5,7 +5,7 @@ import checker from 'vite-plugin-checker';
 // nodemoduleからパッケージインストール
 
 export default (({ mode }) => {
-  const rootDirPath = process.cwd();// カレントリディレクトリを取得
+  const rootDirPath = process.cwd();
   const env = loadEnv(mode, `${rootDirPath}/env`, '');
 
 

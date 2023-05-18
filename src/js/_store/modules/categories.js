@@ -8,6 +8,7 @@ export default {
       name: '',
     },
     categoryList: [],
+    errorMessage: '',
   },
   mutations: {
     doneGetAllCategories(state, categories) {

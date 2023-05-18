@@ -7,6 +7,7 @@
       :theads="theads"
       :categories="categories"
       :access="access"
+      :error-message="errorMessage"
     />
   </div>
 </template>
@@ -33,6 +34,9 @@ export default {
     categories() {
       return this.$store.state.categories.categoryList;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -46,7 +50,7 @@ export default {
   width: 100%;
 }
 
-.category form{
+.category-form{
   width: 35%;
   padding-right: 20px;
 }

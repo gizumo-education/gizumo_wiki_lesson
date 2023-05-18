@@ -19,7 +19,7 @@ import Profile from '@Pages/Profile/index.vue';
 
 // カテゴリ
 import Categories from '@Pages/Categories/index.vue';
-import CategoryList from '@Pages/Categories/List.vue';
+import CategoryList from '@Pages/Categories/Detail.vue';
 
 // ユーザー
 import Users from '@Pages/Users/index.vue';
