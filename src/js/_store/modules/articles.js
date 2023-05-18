@@ -135,18 +135,22 @@ export default {
       commit('initPostArticle');
     },
     getPaginatedArticles({ commit, rootGetters }, page) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: `/article?page=${page}`,
-      }).then(res => {
-        const payload = {
-          articles: res.data.articles,
-          currentPage: res.data.meta.current_page,
-          lastPage: res.data.meta.last_page,
-        };
-        commit('doneGetPaginatedArticles', payload);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/article?page=${page}`,
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+            currentPage: res.data.meta.current_page,
+            lastPage: res.data.meta.last_page,
+          };
+          commit('doneGetPaginatedArticles', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
       });
     },
     getAllArticles({ commit, rootGetters }) {

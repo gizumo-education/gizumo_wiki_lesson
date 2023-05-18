@@ -31,7 +31,17 @@
       class="pagination-item"
     >
       <template
-        v-if="page !== currentPage"
+        v-if="page === currentPage"
+      >
+        <app-button
+          big
+          disabled
+        >
+          {{ page }}
+        </app-button>
+      </template>
+      <template
+        v-else
       >
         <app-router-link
           :to="`?page=${page}`"
@@ -42,16 +52,6 @@
         >
           {{ page }}
         </app-router-link>
-      </template>
-      <template
-        v-else
-      >
-        <app-button
-          big
-          disabled
-        >
-          {{ page }}
-        </app-button>
       </template>
     </li>
     <template
@@ -66,7 +66,8 @@
         >
           …
         </app-text>
-      </li><li
+      </li>
+      <li
         class="pagination-item"
       >
         <app-router-link
