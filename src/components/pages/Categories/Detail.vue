@@ -2,12 +2,12 @@
   <div class="category">
     <app-category-Post
       :access="access"
+      :error-message="errorMessage"
     />
     <app-category-list
       :theads="theads"
       :categories="categories"
       :access="access"
-      :error-message="errorMessage"
     />
   </div>
 </template>

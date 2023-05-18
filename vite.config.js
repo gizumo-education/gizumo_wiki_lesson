@@ -8,7 +8,6 @@ export default (({ mode }) => {
   const rootDirPath = process.cwd();
   const env = loadEnv(mode, `${rootDirPath}/env`, '');
 
-
   return defineConfig({
     root: 'src',
     build: {

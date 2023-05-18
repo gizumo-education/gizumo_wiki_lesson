@@ -54,13 +54,6 @@
         </tr>
       </transition-group>
     </table>
-    <div v-if="errorMessage">
-      <app-text
-        class="errorObject"
-      >
-        {{ errorMessage }}
-      </app-text>
-    </div>
     <app-modal>
       <div class="category-list__modal">
         <app-text
@@ -174,10 +167,6 @@ export default {
       }
     }
   }
-}
-
-.errorObject {
-  margin-top: 20px;
 }
 
 .category-list__modal {
