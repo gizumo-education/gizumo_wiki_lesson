@@ -5,10 +5,6 @@ export default {
   state: {
     loading: false,
     errorMessage: '',
-    category: {
-      id: null,
-      name: '',
-    },
     categoryList: [],
   },
   mutations: {
