@@ -1,14 +1,14 @@
 <template>
   <div
-    :class="categoryObject"
+    class="categoryObject"
   >
     <app-category-post
-      :class="classPostObject"
+      class="categoryPost"
       :access="access"
       :error-message="errorMessage"
     />
     <app-category-list
-      :class="classListObject"
+      class="categoryList"
       :theads="theads"
       :categories="categories"
       :access="access"
@@ -18,26 +18,15 @@
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
-import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
-  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
-      categoryObject: {
-        'is-category': true,
-      },
-      classPostObject: {
-        'is-post': true,
-      },
-      classListObject: {
-        'is-list': true,
-      },
     };
   },
   computed: {
@@ -58,13 +47,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.is-category {
+.categoryObject {
+  // width: 100%;
   display: flex;
-  .is-post {
+  .categoryPost {
     margin-right: 20px;
     width: 35%;
   }
-  .is-list {
+  .categoryList {
     padding-left: 20px;
     width: 65%;
     border-left: solid 1px $separator-color;
