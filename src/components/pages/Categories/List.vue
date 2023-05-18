@@ -5,13 +5,13 @@
     <app-category-post
       :class="classPostObject"
       :access="access"
+      :error-message="errorMessage"
     />
     <app-category-list
       :class="classListObject"
       :theads="theads"
       :categories="categories"
       :access="access"
-      :error-message="errorMessage"
     />
   </div>
 </template>
