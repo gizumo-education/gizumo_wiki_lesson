@@ -111,10 +111,6 @@ export default {
       type: String,
       default: '',
     },
-    errorMessage: {
-      type: String,
-      default: '',
-    },
     access: {
       type: Object,
       default: () => ({}),
