@@ -4,26 +4,13 @@ export default {
   namespaced: true,
   state: {
     targetCategory: {
-      id: null,
-      title: '',
-      content: '',
       category: {
         id: null,
         name: '',
       },
-      user: {
-        account_name: '',
-        created_at: '',
-        email: '',
-        full_name: '',
-        id: '',
-        password_reset_flg: null,
-        role: '',
-        updated_at: '',
-      },
     },
     categoryList: [],
-    loading: false, // 判定→「作成中...」に変化
+    loading: false,
     doneMessage: '',
     errorMessage: '',
   },
@@ -47,10 +34,11 @@ export default {
     targetCategory(state, payload) {
       state.targetCategory.category.name = payload.categoryName;
     },
-    clearMessage(state) {
+    clearMessages(state) {
       state.doneMessage = '';
       state.errorMessage = '';
-      // 入力内容を空にする！
+    },
+    clearInit(state) {
       state.targetCategory.category.name = '';
     },
   },
@@ -60,7 +48,6 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(res => {
-        // resのデータから一覧を取得
         const payload = {
           categories: res.data.categories,
         };
@@ -73,7 +60,6 @@ export default {
       return new Promise((resolve, reject) => {
         commit('toggleLoading');
         const data = new URLSearchParams();
-        // rootGetters→オブジェクト形式で取得できる！
         data.append('name', rootGetters['categories/targetCategory'].category.name);
         if (rootGetters['categories/targetCategory'].category.name !== null) {
           data.append(
@@ -86,12 +72,15 @@ export default {
           url: '/category',
           data,
         }).then(() => {
-          commit('toggleLoading');
           dispatch('getCategories');
-          commit('clearMessage');
-          resolve();
-        }).catch(() => {
           commit('toggleLoading');
+          commit('clearInit');
+          commit('clearMessages');
+          commit('displayDoneMessage', { message: '成功しました' });
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
           reject();
         });
       });
@@ -101,6 +90,9 @@ export default {
         type: 'targetCategory',
         categoryName,
       });
+    },
+    clearMessages({ commit }) {
+      commit('clearMessages');
     },
   },
 };

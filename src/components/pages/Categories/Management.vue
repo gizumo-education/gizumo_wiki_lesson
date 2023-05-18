@@ -1,18 +1,16 @@
 <template>
   <div class="category">
-    <!-- カテゴリー管理 -->
     <div class="category-post">
       <app-category-post
         :access="access"
         :category="newCategory"
-        :disabled="loading ? true : false"
+        :disabled="loading"
+        :error-message="errorMessage"
+        :done-message="doneMessage"
         @update-value="updateValue"
         @handle-submit="handleSubmit"
       />
-      <!-- propsとしてcategoryにnewCategoryを渡す -->
-      <!-- update-valueで更新 -->
     </div>
-    <!-- カテゴリー名 -->
     <div class="category-list">
       <app-category-list
         :theads="theads"
@@ -49,6 +47,12 @@ export default {
     newCategory() {
       return this.$store.state.categories.targetCategory.category.name;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getCategories');
@@ -60,9 +64,6 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory');
-    },
-    clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
