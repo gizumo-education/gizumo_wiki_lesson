@@ -38,7 +38,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getEditCategory', this.$route.params.id);
+    this.$store.dispatch('categories/getCategoryDetail', this.$route.params.id);
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {

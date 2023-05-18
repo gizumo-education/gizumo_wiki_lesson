@@ -49,7 +49,7 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategory.id = null;
     },
-    getEditCategory(state, editCategory) {
+    getCategoryDetail(state, editCategory) {
       state.targetEditCategory = editCategory;
     },
     setEditCategory(state, editedCategory) {
@@ -118,13 +118,13 @@ export default {
         });
       });
     },
-    getEditCategory({ commit, rootGetters }, editCategoryId) {
+    getCategoryDetail({ commit, rootGetters }, editCategoryId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${editCategoryId}`,
       }).then(res => {
         const editCategory = res.data.category;
-        commit('getEditCategory', editCategory);
+        commit('getCategoryDetail', editCategory);
       });
     },
     setEditCategory({ commit }, editedCategory) {
@@ -138,7 +138,7 @@ export default {
       };
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/ategory/${getters.targetEditCategory.id}`,
+        url: `/category/${getters.targetEditCategory.id}`,
         data,
       }).then(() => {
         commit('toggleLoading');

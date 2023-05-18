@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="putCategory">
+  <form @submit.prevent="handleSubmit">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
       class="category-edit__link"
@@ -80,7 +80,7 @@ export default {
     },
   },
   methods: {
-    putCategory() {
+    handleSubmit() {
       if (!this.access.edit) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
