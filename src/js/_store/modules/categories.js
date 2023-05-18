@@ -3,10 +3,6 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    category: {
-      id: null,
-      name: '',
-    },
     categoryList: [],
     errorMessage: '',
   },
