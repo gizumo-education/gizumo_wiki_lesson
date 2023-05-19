@@ -111,20 +111,18 @@ export default {
       return this.currentPage < this.totalPages - 2;
     },
     pageRange() {
-      let startPage = null;
       const { currentPage, totalPages } = this;
-      const calculatedPageRange = [];
+      const pages = [];
+      for (let i = 1; i < totalPages + 1; i += 1) {
+        pages.push(i);
+      }
       if (currentPage < 3) {
-        startPage = 1;
-      } else if ((totalPages - 2) < currentPage) {
-        startPage = totalPages - 4;
-      } else {
-        startPage = currentPage - 2;
+        return pages.slice(0, 5);
       }
-      for (let i = startPage; i < startPage + 5; i += 1) {
-        calculatedPageRange.push(i);
+      if ((totalPages - 2) < currentPage) {
+        return pages.slice(totalPages - 5);
       }
-      return calculatedPageRange;
+      return pages.slice((currentPage - 3), currentPage + 2);
     },
   },
 };
