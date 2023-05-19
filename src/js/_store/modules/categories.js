@@ -20,7 +20,7 @@ export default {
   mutations: {
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.doneMessage = message;
+      state.doneMessage = '';
     },
     mutateCategories(state, payload) {
       state.categoryList = payload.categories.reverse();
