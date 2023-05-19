@@ -12,7 +12,6 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
   },
   actions: {
