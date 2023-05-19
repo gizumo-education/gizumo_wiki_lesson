@@ -1,14 +1,14 @@
 <template>
   <div
-    class="categoryObject"
+    class="category"
   >
     <app-category-post
-      class="categoryPost"
+      class="category-post"
       :access="access"
       :error-message="errorMessage"
     />
     <app-category-list
-      class="categoryList"
+      class="category-list"
       :theads="theads"
       :categories="categories"
       :access="access"
@@ -47,14 +47,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.categoryObject {
+.category {
   // width: 100%;
   display: flex;
-  .categoryPost {
+  .category-post {
     margin-right: 20px;
     width: 35%;
   }
-  .categoryList {
+  .category-list {
     padding-left: 20px;
     width: 65%;
     border-left: solid 1px $separator-color;
