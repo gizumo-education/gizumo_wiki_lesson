@@ -23,6 +23,8 @@ export default {
         updated_at: '',
       },
     },
+    currentPage: null,
+    lastPage: null,
     articleList: [],
     deleteArticleId: null,
     loading: false,
@@ -45,6 +47,8 @@ export default {
     },
     targetArticle: state => state.targetArticle,
     deleteArticleId: state => state.deleteArticleId,
+    currentPage: state => state.currentPage,
+    lastPage: state => state.lastPage,
   },
   mutations: {
     initPostArticle(state) {
@@ -85,6 +89,16 @@ export default {
     },
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
+      state.currentPage = payload.currentPage;
+      state.lastPage = payload.lastPage;
+    },
+    doneGetPaginatedArticles(state, payload) {
+      state.articleList = [...payload.articles];
+      state.currentPage = payload.currentPage;
+      state.lastPage = payload.lastPage;
+    },
+    doneUpdatePageRange(state, payload) {
+      state.pageRange = [...payload.pageRange];
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -120,6 +134,24 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
+    getPaginatedArticles({ commit, rootGetters }, page) {
+      return new Promise(resolve => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/article?page=${page}`,
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+            currentPage: res.data.meta.current_page,
+            lastPage: res.data.meta.last_page,
+          };
+          commit('doneGetPaginatedArticles', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
+    },
     getAllArticles({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -127,6 +159,8 @@ export default {
       }).then(res => {
         const payload = {
           articles: res.data.articles,
+          currentPage: res.data.meta.current_page,
+          lastPage: res.data.meta.last_page,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {
