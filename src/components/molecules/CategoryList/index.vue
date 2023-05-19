@@ -85,7 +85,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
