@@ -48,7 +48,6 @@ export default {
 
 <style lang="scss" scoped>
 .category {
-  // width: 100%;
   display: flex;
   .category-post {
     margin-right: 20px;
