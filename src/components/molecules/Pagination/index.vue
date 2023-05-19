@@ -112,17 +112,14 @@ export default {
     },
     pageRange() {
       const { currentPage, totalPages } = this;
-      const pages = [];
-      for (let i = 1; i < totalPages + 1; i += 1) {
-        pages.push(i);
-      }
+      const totalPageNumberArray = [...Array(totalPages)].map((_, i) => i + 1);
       if (currentPage < 3) {
-        return pages.slice(0, 5);
+        return totalPageNumberArray.slice(0, 5);
       }
       if ((totalPages - 2) < currentPage) {
-        return pages.slice(totalPages - 5);
+        return totalPageNumberArray.slice(totalPages - 5);
       }
-      return pages.slice((currentPage - 3), currentPage + 2);
+      return totalPageNumberArray.slice((currentPage - 3), currentPage + 2);
     },
   },
 };
