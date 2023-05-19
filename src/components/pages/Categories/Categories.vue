@@ -3,11 +3,13 @@
     <app-category-Post
       :access="access"
       :error-message="errorMessage"
+      class="category-form"
     />
     <app-category-list
       :theads="theads"
       :categories="categories"
       :access="access"
+      class="category-list"
     />
   </div>
 </template>
