@@ -63,7 +63,7 @@
             :disabled="!access.delete"
             @click="openModal(article.id)"
           >
-            削除
+            {{ buttonText }}
           </app-button>
         </div>
       </app-list-item>
@@ -130,6 +130,9 @@ export default {
   computed: {
     articleTitle() {
       return `${this.title}の一覧`;
+    },
+    buttonText() {
+      return this.access.delete ? '削除' : '削除権限がありません';
     },
   },
   methods: {

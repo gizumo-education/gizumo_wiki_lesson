@@ -8,6 +8,7 @@
       :categories="categoryList"
       :access="access"
       :theads="theads"
+      class="category-list-management"
     />
   </div>
 </template>
@@ -34,12 +35,7 @@ export default {
     },
   },
   created() {
-    this.fetchCategories();
-  },
-  methods: {
-    fetchCategories() {
-      this.$store.dispatch('categories/getAllCategories');
-    },
+    this.$store.dispatch('categories/getAllCategories');
   },
 };
 </script>
@@ -53,5 +49,9 @@ export default {
     width: 40%;
     border-right: 3px solid #eaeaea;
     padding-right: 20px;
+  }
+
+  .category-list-management {
+    margin-left: 20px;
   }
 </style>

@@ -29,7 +29,6 @@
     </div>
   </form>
 </template>
-
 <script>
 import {
   Heading, Input, Button, Text,
