@@ -20,8 +20,7 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(({ data }) => {
-        const categoryList = data.categories;
-        commit('doneGetAllCategories', categoryList);
+        commit('doneGetAllCategories', data.categories);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
