@@ -135,7 +135,7 @@ export default {
       commit('initPostArticle');
     },
     getPaginatedArticles({ commit, rootGetters }, page) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
           url: `/article?page=${page}`,
@@ -149,7 +149,6 @@ export default {
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },

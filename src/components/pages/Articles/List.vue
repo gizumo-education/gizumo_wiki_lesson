@@ -92,14 +92,15 @@ export default {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          })
+          }).catch(() => {
+          });
       } else if (this.$route.query.page) {
         this.$store.dispatch('articles/getPaginatedArticles', this.$route.query.page)
           .then(() => {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          })
+          });
       } else {
         this.$store.dispatch('articles/getPaginatedArticles', 1);
       }
