@@ -48,7 +48,7 @@
               :disabled="!access.delete"
               @click="openModal(category.id, category.name)"
             >
-              削除
+              {{ buttonText }}
             </app-button>
           </td>
         </tr>
@@ -85,7 +85,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -116,6 +118,11 @@ export default {
       default: () => ({}),
     },
   },
+  computed: {
+    buttonText() {
+      return this.access.delete ? '削除' : '削除権限がありません';
+    },
+  },
   methods: {
     openModal(categoryId, categoryName) {
       if (!this.access.delete) return;
@@ -132,6 +139,7 @@ export default {
 <style lang="scss" scoped>
 .category-list {
   padding: 10px 0 20px;
+  padding-left: 20px;
   height: 100%;
   overflow: scroll;
   &__table {
