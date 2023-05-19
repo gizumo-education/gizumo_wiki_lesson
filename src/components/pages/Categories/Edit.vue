@@ -6,7 +6,6 @@
     :done-message="doneMessage"
     :error-message="errorMessage"
     :disabled="loading ? true : false"
-    :button-text="buttonText"
     @clear-message="clearMessage"
     @update-value="updateValue"
     @handle-submit="handleSubmit"
@@ -15,13 +14,11 @@
 
 <script>
 import { CategoryEdit } from '@Components/molecules';
-import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  mixins: [Mixins],
   computed: {
     loading() {
       return this.$store.state.categories.loading;
@@ -38,9 +35,6 @@ export default {
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
-    },
-    buttonText() {
-      return this.disabled ? '更新' : '更新中...';
     },
   },
   created() {

@@ -58,8 +58,7 @@ export default {
     doneAddCategory(state) {
       state.doneMessage = '新規カテゴリーの追加が完了しました。';
     },
-    doneEditCategory(state, { targetCategory }) {
-      state.targetCategory = { ...state.targetCategory, ...targetCategory };
+    doneEditCategory(state) {
       state.loading = false;
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
@@ -151,7 +150,6 @@ export default {
           name: response.data.category.name,
         };
         commit('updateValue');
-        commit('toggleLoading');
         commit('doneEditCategory', { editedCategory });
       }).catch(err => {
         commit('failRequest', { message: err.message });

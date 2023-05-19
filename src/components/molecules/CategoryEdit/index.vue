@@ -34,7 +34,7 @@
       class="category-edit-submit"
       button-type="submit"
       round
-      :disabled="!disabled"
+      :disabled="disabled"
       @click="handleSubmit"
     >
       {{ buttonText }}
@@ -80,18 +80,20 @@ export default {
       type: String,
       default: '',
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
-    disabled() {
-      return this.access.edit && !this.loading;
-    },
     buttonText() {
-      if (!this.access.create) return '作成権限がありません';
-      return this.disabled ? '更新' : '更新中...';
+      if (!this.access.create) return '更新権限がありません';
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {
     updateValue($event) {
+      this.$emit('clear-message');
       this.$emit('update-value', $event);
     },
     handleSubmit() {
