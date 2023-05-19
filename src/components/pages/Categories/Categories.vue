@@ -5,7 +5,6 @@
       :category="category"
       :access="access"
     />
-    <div class="category_border" />
     <app-category-list
       class="category_list"
       :access="access"
@@ -42,22 +41,20 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
-  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
 .category {
   display: flex;
-  &_border {
-    border-right: 1px solid $separator-color;
-    margin: 0px 15px 0px;
-  }
   &_post {
     width: 30%;
+    border-right: 1px solid $separator-color;
+    padding-right: 15px;
   }
   &_list {
     width: 70%;
+    padding-left: 15px;
   }
 }
 </style>
