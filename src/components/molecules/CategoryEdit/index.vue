@@ -106,8 +106,7 @@ export default {
   }
   &-editor {
     padding-right: 2%;
-    width: 50%;
-    border-right: 1px solid #ccc;
+    width: 100%;
     &-back {
       margin-top: 16px;
     }
