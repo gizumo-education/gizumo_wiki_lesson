@@ -109,8 +109,9 @@ export default {
         commit('updateCategory', payload);
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
-      }).catch(() => {
+      }).catch(err => {
         commit('toggleLoading');
+        commit('failRequest', { message: err.message });
       });
     },
     confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
