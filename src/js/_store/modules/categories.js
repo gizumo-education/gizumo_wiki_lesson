@@ -46,9 +46,8 @@ export default {
     editedCategory(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload };
     },
-    setTargetCategory(state, categoryId) {
-      const targetCategory = state.categoryList.filter(value => value.id === categoryId);
-      state.targetCategory = { ...targetCategory[0] };
+    setTargetCategory(state, payload) {
+      state.targetCategory = { ...payload.category };
     },
     updateCategory(state, { category }) {
       state.targetCategory = { ...state.targetCategory, ...category };
@@ -88,8 +87,24 @@ export default {
     editedCategory({ commit }, name) {
       commit('editedCategory', name);
     },
-    setTargetCategory({ commit }, id) {
-      commit('setTargetCategory', id);
+    setTargetCategory({ commit, rootGetters }, id) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('toggleLoading');
+        commit('setTargetCategory', payload);
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
+      });
     },
     updateCategory({ commit, rootGetters }) {
       commit('toggleLoading');
