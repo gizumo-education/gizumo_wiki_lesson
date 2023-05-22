@@ -5,7 +5,7 @@
     :loading="loading"
     :done-message="doneMessage"
     :access="access"
-    @category-name="editedName"
+    @editing-category-name="editedName"
     @handle-submit="handleSubmit"
   />
 </template>

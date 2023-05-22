@@ -26,7 +26,7 @@
             data-vv-as="カテゴリー名"
             :error-messages="errors.collect('name')"
             :value="categoryName"
-            @update-value="$emit('category-name', $event)"
+            @update-value="$emit('editing-category-name', $event)"
           />
         </div>
         <app-button
