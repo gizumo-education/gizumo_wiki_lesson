@@ -12,6 +12,7 @@ import UserList from './UserList/index.vue';
 import CategoryPost from './CategoryPost/index.vue';
 import CategoryList from './CategoryList/index.vue';
 import CategoryEdit from './CategoryEdit/index.vue';
+import ArticleTrashed from './ArticleTrashed/index.vue';
 import ArticleEdit from './ArticleEdit/index.vue';
 import ArticlePost from './ArticlePost/index.vue';
 import ArticleDetail from './ArticleDetail/index.vue';
@@ -33,6 +34,7 @@ export {
   CategoryPost,
   CategoryList,
   CategoryEdit,
+  ArticleTrashed,
   ArticleEdit,
   ArticlePost,
   ArticleDetail,
