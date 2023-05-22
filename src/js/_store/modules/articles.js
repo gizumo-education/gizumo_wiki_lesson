@@ -26,6 +26,7 @@ export default {
     currentPage: null,
     lastPage: null,
     articleList: [],
+    trashedArticleList: [],
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -100,12 +101,14 @@ export default {
     doneUpdatePageRange(state, payload) {
       state.pageRange = [...payload.pageRange];
     },
+    doneGetTrashedArticles(state, payload) {
+      state.trashedArticleList = [...payload];
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
     selectedArticleCategory(state, payload) {
       state.targetArticle.category = {
-
         ...state.targetArticle.category,
         ...payload.category,
       };
@@ -193,6 +196,20 @@ export default {
           commit('failRequest', { message: err.message });
           reject();
         });
+      });
+    },
+    getTrashedArticles({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(({ data }) => {
+        const payload = data.articles.map(obj => ({
+          id: obj.id,
+          title: obj.title,
+          content: obj.content,
+          createdAt: obj.created_at,
+        }));
+        commit('doneGetTrashedArticles', payload);
       });
     },
     editedTitle({ commit }, title) {
