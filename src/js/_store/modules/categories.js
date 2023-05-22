@@ -15,12 +15,6 @@ export default {
     errorMessage: '',
   },
   getters: {
-    transformedCategories(state) {
-      return state.categoryList.map(category => ({
-        id: category.id,
-        content: `${category.name}`,
-      }));
-    },
     targetCategory: state => state.targetCategory,
     categoryList(state) {
       return state.categoryList;

@@ -17,12 +17,6 @@ export default {
   components: {
     appCategoryEdit: CategoryEdit,
   },
-  data() {
-    return {
-      id: null,
-      name: '',
-    };
-  },
   computed: {
     categoryId() {
       let { id } = this.$route.params;
