@@ -1,66 +1,36 @@
 <template>
-  <div class="article-edit">
-    <div v-if="doneMessage" class="article-edit__notice--update">
+  <div class="category-edit">
+    <div v-if="doneMessage" class="category-edit__notice--update">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
-    <div class="article-edit__columns">
-      <section class="article-edit-editor">
-        <app-heading :level="1">の更新</app-heading>
-        <app-heading
-          class="article-edit-editor-title"
-          :level="2"
+    <div class="category-edit__columns">
+      <section class="category-edit-editor">
+        <app-heading :level="1">カテゴリー管理</app-heading>
+        <app-router-link
+          block
+          underline
+          key-color
+          hover-opacity
+          to="/categories"
+          class="category-edit-editor-back"
         >
-          カテゴリーの選択
-        </app-heading>
-        <app-select
-          v-validate="'required'"
-          name="category"
-          :error-messages="errors.collect('category')"
-          :value="currentCategoryName"
-          @update-value="$emit('selected-article-category', $event)"
-        >
-          <option
-            v-for="(category) in categoryList"
-            :key="category.id"
-            :value="category.name"
-          >
-            {{ category.name }}
-          </option>
-        </app-select>
-        <app-heading
-          class="article-edit-editor-title"
-          :level="2"
-        >
-          タイトル・本文の更新
-        </app-heading>
-        <div class="article-edit-form">
+          カテゴリー一覧へ戻る
+        </app-router-link>
+        <div class="category-edit-form">
           <app-input
             v-validate="'required'"
-            name="title"
+            name="name"
             type="text"
-            placeholder="記事のタイトルを入力してください。"
+            placeholder="カテゴリー名を入力してください。"
             white-bg
-            data-vv-as="記事のタイトル"
-            :error-messages="errors.collect('title')"
-            :value="articleTitle"
-            @update-value="$emit('edited-title', $event)"
-          />
-        </div>
-
-        <div class="article-edit-form">
-          <app-textarea
-            v-validate="'required'"
-            name="content"
-            placeholder="記事の本文をマークダウン記法で入力してください。"
-            white-bg
-            data-vv-as="記事の本文"
-            :error-messages="errors.collect('content')"
-            :value="articleContent"
-            @update-value="$emit('edited-content', $event)"
+            data-vv-as="カテゴリー名"
+            :error-messages="errors.collect('name')"
+            :value="categoryName"
+            @update-value="$emit('category-name', $event)"
           />
         </div>
         <app-button
-          class="article-edit-submit"
+          class="category-edit-submit"
           button-type="submit"
           round
           :disabled="!disabled"
@@ -69,55 +39,35 @@
           {{ buttonText }}
         </app-button>
       </section>
-
-      <article class="article-edit-preview">
-        <app-markdown-preview
-          :markdown-content="markdownContent"
-        />
-      </article>
     </div>
   </div>
 </template>
 
 <script>
 import {
-  Heading, MarkdownPreview, Textarea, Input, Button, Select, Text,
+  Heading,
+  Input,
+  Button,
+  Text,
+  RouterLink,
 } from '@Components/atoms';
 
 export default {
   components: {
     appHeading: Heading,
-    appTextarea: Textarea,
-    appMarkdownPreview: MarkdownPreview,
     appInput: Input,
     appButton: Button,
-    appSelect: Select,
     appText: Text,
+    appRouterLink: RouterLink,
   },
   props: {
-    articleId: {
+    categoryId: {
       type: Number,
       default: 0,
     },
-    articleTitle: {
+    categoryName: {
       type: String,
       default: '',
-    },
-    articleContent: {
-      type: String,
-      default: '',
-    },
-    markdownContent: {
-      type: String,
-      default: '',
-    },
-    currentCategoryName: {
-      type: String,
-      default: '',
-    },
-    categoryList: {
-      type: Array,
-      default: () => [],
     },
     loading: {
       type: Boolean,
@@ -153,7 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.article-edit {
+.category-edit {
   &__columns {
     display: flex;
     height: 100%;
@@ -162,7 +112,7 @@ export default {
     padding-right: 2%;
     width: 50%;
     border-right: 1px solid #ccc;
-    &-title {
+    &-back {
       margin-top: 16px;
     }
   }

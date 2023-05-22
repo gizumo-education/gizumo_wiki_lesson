@@ -5,13 +5,13 @@
     :loading="loading"
     :done-message="doneMessage"
     :access="access"
-    @edited-name="editedName"
+    @category-name="editedName"
     @handle-submit="handleSubmit"
   />
 </template>
 
 <script>
-import { CategoryEdit } from '@Components/molecules';
+import CategoryEdit from '@Components/molecules/CategoryEdit/index.vue';
 
 export default {
   components: {
@@ -19,63 +19,39 @@ export default {
   },
   data() {
     return {
-      title: '',
-      content: '',
+      id: null,
+      name: '',
     };
   },
   computed: {
-    articleId() {
+    categoryId() {
       let { id } = this.$route.params;
       id = parseInt(id, 10);
       return id;
     },
-    articleTitle() {
-      const { title } = this.$store.state.articles.targetArticle;
-      return title;
-    },
-    articleContent() {
-      const { content } = this.$store.state.articles.targetArticle;
-      return content;
-    },
-    markdownContent() {
-      return `# ${this.articleTitle}\n${this.articleContent}`;
-    },
-    currentCategoryName() {
-      const { name } = this.$store.state.articles.targetArticle.category;
-      return name;
-    },
-    categoryList() {
-      const { categoryList } = this.$store.state.categories;
-      return categoryList;
+    categoryName() {
+      return this.$store.state.categories.targetCategory.name;
     },
     loading() {
-      return this.$store.state.articles.loading;
+      return this.$store.state.categories.loading;
     },
     doneMessage() {
-      return this.$store.state.articles.doneMessage;
+      return this.$store.state.categories.doneMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
-    this.$store.dispatch('articles/getArticleDetail', parseInt(this.articleId, 10));
+    this.$store.dispatch('categories/setTargetCategory', this.categoryId);
   },
   methods: {
-    editedTitle($event) {
-      this.$store.dispatch('articles/editedTitle', $event.target.value);
-    },
-    editedContent($event) {
-      this.$store.dispatch('articles/editedContent', $event.target.value);
+    editedName($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('articles/updateArticle');
-    },
-    selectedArticleCategory($event) {
-      const categoryName = $event.target.value;
-      this.$store.dispatch('articles/selectedArticleCategory', categoryName);
+      this.$store.dispatch('categories/updateCategory');
     },
   },
 };

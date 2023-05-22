@@ -15,6 +15,12 @@ export default {
     errorMessage: '',
   },
   getters: {
+    transformedCategories(state) {
+      return state.categoryList.map(category => ({
+        id: category.id,
+        content: `${category.name}`,
+      }));
+    },
     targetCategory: state => state.targetCategory,
     categoryList(state) {
       return state.categoryList;
@@ -45,6 +51,13 @@ export default {
     },
     editedCategory(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload };
+    },
+    setTargetCategory(state, categoryId) {
+      const targetCategory = state.categoryList.filter(value => value.id === categoryId);
+      state.targetCategory = { ...targetCategory[0] };
+    },
+    updateCategory(state, { category }) {
+      state.targetCategory = { ...state.targetCategory, ...category };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -80,6 +93,32 @@ export default {
     },
     editedCategory({ commit }, name) {
       commit('editedCategory', name);
+    },
+    setTargetCategory({ commit }, id) {
+      commit('setTargetCategory', id);
+    },
+    updateCategory({ commit, rootGetters }) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/targetCategory'].id);
+      data.append('name', rootGetters['categories/targetCategory'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/targetCategory'].id}`,
+        data,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('updateCategory', payload);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
     },
     confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
       commit('confirmDeleteCategory', { categoryId });
