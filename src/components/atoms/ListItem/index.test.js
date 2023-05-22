@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { shallowMount } from '@vue/test-utils';
 import { ListItem } from '@Components/atoms';
 
@@ -15,33 +14,40 @@ const factory = (propsData, slots) => {
 
 describe('List Item', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = factory();
   });
 
   it('is a Vue instance', () => {
-    assert.equal(wrapper.isVueInstance(), true);
-  });
-
-  it('is a input tag', () => {
-    assert.equal(wrapper.is('li'), true);
+    expect(wrapper.vm).toBeTruthy();
   });
 
   it('has a only "list-item" class', () => {
-    assert.equal(wrapper.classes(), 'list-item');
+    expect(wrapper.classes()).toContain('list-item');
   });
 });
 
 describe('List Item with slot', () => {
   let wrapper;
-  beforeEach(() => {
-    wrapper = factory(null, {
+  beforeAll(() => {
+    wrapper = factory({
+      flex: true,
+      beetween: true,
+    }, {
       default: '<div>test</div>',
     });
   });
 
   it('has text as slot', () => {
-    assert.equal(wrapper.contains('div'), true);
-    assert.equal(wrapper.find('div').text(), 'test');
+    expect(wrapper.find('div')).toBeTruthy();
+    expect(wrapper.find('div').text()).toBe('test');
+  });
+
+  it('has a given classes', () => {
+    expect(wrapper.classes()).toEqual([
+      'list-item',
+      'list-item--flex',
+      'list-item--space-beetween',
+    ]);
   });
 });

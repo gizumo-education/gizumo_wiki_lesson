@@ -22,7 +22,7 @@
       }
     }
   },
-  "ignorePatterns": ["__test__/", "/**/*.stories.js"],
+  "ignorePatterns": ["/**/*.test.js", "/**/*.stories.js"],
   "globals": {
     "API_BASE_URL": true,
     "MY_SESSION_STORAGE_KEY": true
