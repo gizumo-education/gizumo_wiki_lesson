@@ -33,7 +33,7 @@
           class="category-edit-submit"
           button-type="submit"
           round
-          :disabled="!disabled"
+          :disabled="null"
           @click="handleSubmit"
         >
           {{ buttonText }}
