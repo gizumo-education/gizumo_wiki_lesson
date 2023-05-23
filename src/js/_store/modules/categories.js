@@ -3,7 +3,6 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    categories: [],
     targetCategory: '',
     categoryList: [],
     disabled: false,
@@ -17,12 +16,6 @@ export default {
     },
     resetMessage(state) {
       state.targetCategory = '';
-    },
-    addCategory(state, addCategory) {
-      state.categories.unshift(addCategory);
-    },
-    setTargetCategory(state, category) {
-      state.targetCategory = category;
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
