@@ -5,7 +5,6 @@
     </app-heading>
     <app-router-link
       to="/articles"
-      key-color
       white
       bg-lightgreen
       small
@@ -36,17 +35,17 @@
         <tr v-for="article in trashedArticles" :key="article.id">
           <td>
             <app-text small>
-              {{ article.title | omittedText }}
+              {{ omittedText(article.title) }}
             </app-text>
           </td>
           <td>
             <app-text small>
-              {{ article.content | omittedText }}
+              {{ omittedText(article.content) }}
             </app-text>
           </td>
           <td>
             <app-text small>
-              {{ article.createdAt | formatDate }}
+              {{ formatDate(article.createdAt) }}
             </app-text>
           </td>
         </tr>
@@ -69,16 +68,7 @@ export default {
     appText: Text,
   },
   filters: {
-    omittedText(text) {
-      const ellipsis = '...';
-      return text.length > 30 ? `${text.slice(0, 30)}${ellipsis}` : text;
-    },
-    formatDate(text) {
-      const year = text.slice(0, 4);
-      const month = text.slice(5, 7);
-      const date = text.slice(8, 10);
-      return `${year}-${month}-${date}`;
-    },
+
   },
   props: {
     theads: {
@@ -92,6 +82,21 @@ export default {
       default() {
         return [];
       },
+    },
+  },
+  computed: {
+    omittedText() {
+      return text => {
+        const ellipsis = '...';
+        return text.length > 30 ? `${text.slice(0, 30)}${ellipsis}` : text;
+      };
+    },
+    formatDate() {
+      return date => {
+        const targetDate = new Date(date);
+        const formatDate = targetDate.toISOString().slice(0, 10);
+        return formatDate;
+      };
     },
   },
 };
