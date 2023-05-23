@@ -6,6 +6,12 @@
       class="category-post"
       :access="access"
       :error-message="errorMessage"
+      :done-message="doneMessage"
+      :category="categoryName"
+      :disabled="loading"
+      @clear-message="clearMessage"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="category-list"
@@ -30,6 +36,12 @@ export default {
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    categoryName() {
+      return this.$store.state.categories.categoryName;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -39,9 +51,26 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue(event) {
+      this.$store.dispatch('categories/updateValue', event.target.value);
+    },
+    handleSubmit() {
+      this.$store.dispatch('categories/createCategories', this.categoryName).then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+        this.$store.dispatch('categories/resetMessage');
+      });
+    },
   },
 };
 </script>
