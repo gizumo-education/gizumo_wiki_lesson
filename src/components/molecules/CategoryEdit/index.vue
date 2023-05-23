@@ -33,7 +33,7 @@
           class="category-edit-submit"
           button-type="submit"
           round
-          :disabled="null"
+          :disabled="disabled"
           @click="handleSubmit"
         >
           {{ buttonText }}
@@ -84,7 +84,7 @@ export default {
       return this.loading ? '更新中...' : '更新';
     },
     disabled() {
-      return this.access.edit && !this.loading;
+      return this.access.edit && this.loading;
     },
   },
   methods: {
