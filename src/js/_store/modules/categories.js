@@ -6,7 +6,6 @@ export default {
     targetCategory: '',
     categoryList: [],
     disabled: false,
-    loading: false,
     errorMessage: '',
     doneMessage: '',
   },
@@ -19,10 +18,6 @@ export default {
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
-    },
-    doneAddCategory(state) {
-      state.loading = false;
-      state.doneMessage = 'カテゴリーの追加が完了しました。';
     },
     updateCategory(state, payload) {
       state.targetCategory = payload;
@@ -70,7 +65,7 @@ export default {
     },
 
     addCategory({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
 
@@ -88,7 +83,6 @@ export default {
         }).catch(err => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },
