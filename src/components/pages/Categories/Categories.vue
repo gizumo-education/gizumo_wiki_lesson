@@ -59,9 +59,6 @@ export default {
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {
-    clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
-    },
     addCategory() {
       if (this.disabled) return;
       this.$store.dispatch('categories/addCategory').then(() => {
