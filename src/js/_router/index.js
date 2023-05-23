@@ -6,6 +6,8 @@ import Signin from '@Pages/Signin/index.vue';
 import Signout from '@Pages/Signout/index.vue';
 import NotFound from '@Pages/NotFound/index.vue';
 import Home from '@Pages/Home/index.vue';
+import Categories from '@Pages/Categories/index.vue';
+import Management from '@Pages/Categories/Management.vue';
 
 // 記事
 import Articles from '@Pages/Articles/index.vue';
@@ -51,6 +53,18 @@ const router = new VueRouter({
       name: 'home',
       path: '/',
       component: Home,
+    },
+    {
+      name: 'categories',
+      path: '/categories',
+      component: Categories,
+      children: [
+        {
+          name: 'management',
+          path: '',
+          component: Management,
+        },
+      ],
     },
     {
       name: 'passwordInit',

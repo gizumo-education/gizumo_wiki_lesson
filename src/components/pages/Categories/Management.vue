@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <app-category-post
+      class="category_post"
+      :category="test"
+      :loading="loading"
+      :access="access"
+    />
+    <app-category-list
+      class="category_list"
+      :categories="categoriesList"
+      :access="access"
+    />
+  </div>
+</template>
+
+<script>
+import { CategoryPost, CategoryList } from '@Components/molecules';
+
+export default {
+  components: {
+    appCategoryList: CategoryList,
+    appCategoryPost: CategoryPost,
+  },
+  data() {
+    return {
+      test: '',
+      test2: [],
+    };
+  },
+  computed: {
+    categoriesList() {
+      return this.$store.state.categories.categoriesList;
+    },
+    access() {
+      return this.$store.getters['auth/access'];
+    },
+  },
+  created() {
+    this.$store.dispatch('categories/getAllCategories');
+  },
+
+};
+
+</script>
+
+<style>
+  .category_post {
+    float:left;
+    width:40%;
+    margin-right:20px;
+  },
+  .category_list {
+    width:60%;
+  }
+</style>
