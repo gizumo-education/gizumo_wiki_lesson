@@ -7,8 +7,8 @@
       :access="access"
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :category="category"
-      @reset-message="resetMessage"
+      :category="categoryName"
+      :disabled="loading"
       @clear-message="clearMessage"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
@@ -39,8 +39,8 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
-    category() {
-      return this.$store.state.categories.category.name;
+    categoryName() {
+      return this.$store.state.categories.categoryName;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -62,16 +62,11 @@ export default {
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
     },
-    resetMessage() {
-      this.$store.dispatch('categories/resetMessage');
-    },
     updateValue(event) {
-      const { target } = event;
-      this.$store.dispatch('categories/updateValue', target.value);
+      this.$store.dispatch('categories/updateValue', event.target.value);
     },
     handleSubmit() {
-      const categoryName = this.category;
-      this.$store.dispatch('categories/createCategories', categoryName).then(() => {
+      this.$store.dispatch('categories/createCategories', this.categoryName).then(() => {
         this.$store.dispatch('categories/getAllCategories');
         this.$store.dispatch('categories/resetMessage');
       });

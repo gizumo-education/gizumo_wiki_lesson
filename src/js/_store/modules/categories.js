@@ -7,11 +7,7 @@ export default {
     errorMessage: '',
     doneMessage: '',
     categoryList: [],
-    category: {
-      id: null,
-      name: '',
-    },
-    value: '',
+    categoryName: '',
   },
   mutations: {
     clearMessage(state) {
@@ -19,12 +15,10 @@ export default {
       state.doneMessage = '';
     },
     resetMessage(state) {
-      state.category.id = '';
-      state.category.name = '';
-      state.value = '';
+      state.categoryName = '';
     },
     updateValue(state, target) {
-      state.category.name = target;
+      state.categoryName = target;
     },
     doneCreateCategories(state, categories) {
       state.categoryList = categories;
@@ -54,7 +48,7 @@ export default {
       commit('updateValue', target);
     },
     createCategories({ commit, rootGetters }, category) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
         const data = new URLSearchParams();
@@ -66,10 +60,10 @@ export default {
         }).then(response => {
           commit('doneCreateCategories', response.categories);
           commit('doneMessage', { message: 'カテゴリーの作成が成功しました' });
+          commit('toggleLoading');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },
