@@ -108,8 +108,8 @@ export default {
       },
     },
     deleteCategoryName: {
-      type: String,
-      default: '',
+      type: Function,
+      default: () => {}, // ここが間違ってる
     },
     access: {
       type: Object,
