@@ -91,7 +91,7 @@ export default {
     openDeleteModal({ commit }, { categoryId, categoryName }) {
       commit('openDeleteModal', { categoryName, categoryId });
     },
-    deleteCategory({ commit, rootGetters }, id) {
+    deleteCategory({ commit, rootGetters }, { id }) {
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',

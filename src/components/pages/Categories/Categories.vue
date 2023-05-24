@@ -18,9 +18,9 @@
       :theads="theads"
       :categories="categories"
       :access="access"
-      :delete-category-name="deleteCategoryName"
+      :delete-category-name="deleteCategory.name"
       @open-modal="openDeleteModal"
-      @handle-click="deleteCategory"
+      @handle-click="deleteInCategory"
     />
   </div>
 </template>
@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      categoryId: null,
     };
   },
   computed: {
@@ -60,11 +59,8 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
-    deleteCategoryName() {
-      return this.$store.state.categories.deleteCategory.name;
-    },
-    deleteCategoryId() {
-      return this.$store.state.categories.deleteCategory.id;
+    deleteCategory() {
+      return this.$store.state.categories.deleteCategory;
     },
   },
   created() {
@@ -88,9 +84,9 @@ export default {
       this.$store.dispatch('categories/clearMessage');
       this.$store.dispatch('categories/openDeleteModal', { categoryName, categoryId });
     },
-    deleteCategory() {
+    deleteInCategory() {
       this.toggleModal();
-      this.$store.dispatch('categories/deleteCategory', this.deleteCategoryId)
+      this.$store.dispatch('categories/deleteCategory', this.deleteCategory)
         .then(() => {
           this.$store.dispatch('categories/getAllCategories');
           this.$store.dispatch('categories/resetMessage');
