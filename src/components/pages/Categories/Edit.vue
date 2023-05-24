@@ -3,6 +3,7 @@
     :category-id="categoryId"
     :category-name="categoryName"
     :loading="loading"
+    :error-message="errorMessage"
     :done-message="doneMessage"
     :access="access"
     @editing-category-name="editedName"
@@ -28,6 +29,9 @@ export default {
     },
     loading() {
       return this.$store.state.categories.loading;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;

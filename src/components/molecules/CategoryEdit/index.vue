@@ -38,6 +38,9 @@
         >
           {{ buttonText }}
         </app-button>
+        <div v-if="errorMessage" class="category-edit-submit">
+          <app-text bg-error>{{ errorMessage }}</app-text>
+        </div>
       </section>
     </div>
   </div>
@@ -68,6 +71,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
     doneMessage: {
       type: String,

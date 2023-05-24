@@ -107,6 +107,7 @@ export default {
       });
     },
     updateCategory({ commit, rootGetters }) {
+      commit('clearMessage');
       commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', rootGetters['categories/targetCategory'].name);
