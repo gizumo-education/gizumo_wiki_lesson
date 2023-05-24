@@ -96,9 +96,8 @@ export default {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
           url: `/category/${id}`,
-        }).then(response => {
+        }).then(() => {
           commit('doneMessage', { message: 'カテゴリーの削除が成功しました' });
-          commit('deleteCategory', response.categories);
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
