@@ -8,6 +8,10 @@ export default {
     doneMessage: '',
     categoryList: [],
     categoryName: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   mutations: {
     clearMessage(state) {
@@ -28,6 +32,13 @@ export default {
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
+    },
+    openDeleteModal(state, { categoryId, categoryName }) {
+      state.deleteCategory.id = categoryId;
+      state.deleteCategory.name = categoryName;
+    },
+    deleteCategory(state, categories) {
+      state.categoryList = categories;
     },
     doneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -75,6 +86,22 @@ export default {
         commit('doneGetAllCategories', data.categories);
       }).catch(err => {
         commit('failRequest', { message: err.message });
+      });
+    },
+    openDeleteModal({ commit }, { categoryId, categoryName }) {
+      commit('openDeleteModal', { categoryName, categoryId });
+    },
+    deleteCategory({ commit, rootGetters }, { id }) {
+      return new Promise(resolve => {
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${id}`,
+        }).then(() => {
+          commit('doneMessage', { message: 'カテゴリーの削除が成功しました' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
       });
     },
   },
