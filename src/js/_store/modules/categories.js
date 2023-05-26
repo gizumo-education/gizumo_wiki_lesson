@@ -37,11 +37,9 @@ export default {
     targetCategory(state, payload) {
       state.targetCategory.category.name = payload.categoryName;
     },
-    // これは問題ない気がする
     confirmDeleteCategory(state, { categoryId }) {
       state.deleteCategoryId = categoryId;
     },
-    // これも問題なし
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
@@ -92,12 +90,10 @@ export default {
         categoryName,
       });
     },
-    // これは大丈夫そ
     confirmDeleteCategory({ commit }, categoryId) {
       commit('confirmDeleteCategory', { categoryId });
     },
-    /// 大丈夫そ
-    deleteCategory({ commit, rootGetters }) {
+    deleteCategory({ commit, rootGetters, dispatch }) {
       commit('clearMessages');
       const data = new URLSearchParams();
       data.append('id', rootGetters['categories/deleteCategoryId']);
@@ -106,9 +102,9 @@ export default {
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
         data,
       }).then(() => {
-        // console.log('deleteCategoryは正常に通信してます');
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリを削除しました' });
+        dispatch('getCategories');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

@@ -46,7 +46,7 @@
               small
               round
               :disabled="!access.delete"
-              @click="openModal(category.id, category.name), $emit('handle-click')"
+              @click="openModal(category.id, category.name)"
             >
               削除
             </app-button>
@@ -108,8 +108,10 @@ export default {
       },
     },
     deleteCategoryName: {
-      type: Function,
-      default: () => {}, // ここが間違ってる
+      type: String,
+      default() {
+        return '';
+      },
     },
     access: {
       type: Object,
