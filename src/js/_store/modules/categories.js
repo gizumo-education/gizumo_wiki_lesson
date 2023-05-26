@@ -8,6 +8,10 @@ export default {
     doneMessage: '',
     categoryList: [],
     categoryName: '',
+    editCategory: {
+      id: null,
+      name: '',
+    },
     deleteCategory: {
       id: null,
       name: '',
@@ -24,11 +28,18 @@ export default {
     updateValue(state, target) {
       state.categoryName = target;
     },
+    editValue(state, payload) {
+      state.editCategory.name = payload;
+    },
     doneCreateCategories(state, categories) {
       state.categoryList = categories;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
+    },
+    getEditCategory(state, category) {
+      state.editCategory.id = category.id;
+      state.editCategory.name = category.name;
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
@@ -58,6 +69,9 @@ export default {
     updateValue({ commit }, target) {
       commit('updateValue', target);
     },
+    editValue({ commit }, target) {
+      commit('editValue', target);
+    },
     createCategories({ commit, rootGetters }, category) {
       return new Promise(resolve => {
         commit('clearMessage');
@@ -86,6 +100,36 @@ export default {
         commit('doneGetAllCategories', data.categories);
       }).catch(err => {
         commit('failRequest', { message: err.message });
+      });
+    },
+    getEditCategory({ commit, rootGetters }, editId) {
+      return new Promise(resolve => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/category/${editId}`,
+        }).then(res => {
+          commit('getEditCategory', res.data.category);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
+    },
+    editCategory({ commit, rootGetters }, { editId, editCategoryName }) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        const data = new URLSearchParams();
+        data.append('name', editCategoryName);
+        axios(rootGetters['auth/token'])({
+          method: 'PUT',
+          url: `/category/${editId}`,
+          data,
+        }).then(() => {
+          commit('doneMessage', { message: 'カテゴリーの更新が成功しました' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
       });
     },
     openDeleteModal({ commit }, { categoryId, categoryName }) {
