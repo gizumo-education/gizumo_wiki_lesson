@@ -29,7 +29,7 @@
       class="category-management-edit__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
+      :disabled="disabled || !access.edit"
     >
       {{ buttonText }}
     </app-button>
@@ -43,6 +43,7 @@
     </div>
   </form>
 </template>
+
 <script>
 import {
   Heading, Input, Button, Text, RouterLink,
@@ -86,7 +87,7 @@ export default {
   },
   methods: {
     editCategory() {
-      if (!this.access.create) return;
+      if (!this.access.edit) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
@@ -95,6 +96,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .category-management-edit {
   &__link {

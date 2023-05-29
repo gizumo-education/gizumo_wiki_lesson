@@ -22,8 +22,7 @@ export default {
   },
   computed: {
     categoryId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
+      const id = parseInt(this.$route.params.id, 10);
       return id;
     },
     access() {
@@ -47,11 +46,11 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/clearMessage');
-    this.$store.dispatch('categories/getCategory', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/getCategory', this.categoryId);
   },
   methods: {
-    updatedCategory($event) {
-      this.$store.dispatch('categories/updatedCategory', $event.target.value);
+    updatedCategory(event) {
+      this.$store.dispatch('categories/updatedCategory', event.target.value);
     },
     editCategory() {
       if (this.disabled) return;

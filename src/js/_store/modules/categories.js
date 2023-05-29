@@ -142,7 +142,6 @@ export default {
         url: `/category/${id}`,
         data,
       }).then(() => {
-        commit('resetMessage');
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(err => {
