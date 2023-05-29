@@ -8,6 +8,10 @@ export default {
     doneMessage: '',
     categoryList: [],
     categoryName: '',
+    category: {
+      id: null,
+      name: '',
+    },
     deleteCategory: {
       id: null,
       name: '',
@@ -24,11 +28,18 @@ export default {
     updateValue(state, target) {
       state.categoryName = target;
     },
+    editValue(state, payload) {
+      state.category.name = payload;
+    },
     doneCreateCategories(state, categories) {
       state.categoryList = categories;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
+    },
+    getCategory(state, category) {
+      state.category.id = category.id;
+      state.category.name = category.name;
     },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
@@ -58,6 +69,9 @@ export default {
     updateValue({ commit }, target) {
       commit('updateValue', target);
     },
+    editValue({ commit }, target) {
+      commit('editValue', target);
+    },
     createCategories({ commit, rootGetters }, category) {
       return new Promise(resolve => {
         commit('clearMessage');
@@ -84,6 +98,32 @@ export default {
         url: '/category',
       }).then(({ data }) => {
         commit('doneGetAllCategories', data.categories);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        commit('getCategory', res.data.category);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editCategory({ commit, rootGetters }, { id, name }) {
+      commit('clearMessage');
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${id}`,
+        data,
+      }).then(() => {
+        commit('toggleLoading');
+        commit('doneMessage', { message: 'カテゴリーの更新が成功しました' });
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
