@@ -114,6 +114,7 @@ export default {
     },
     editCategory({ commit, rootGetters }, { id, name }) {
       commit('clearMessage');
+      commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', name);
       axios(rootGetters['auth/token'])({
@@ -121,6 +122,7 @@ export default {
         url: `/category/${id}`,
         data,
       }).then(() => {
+        commit('toggleLoading');
         commit('doneMessage', { message: 'カテゴリーの更新が成功しました' });
       }).catch(err => {
         commit('failRequest', { message: err.message });

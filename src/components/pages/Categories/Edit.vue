@@ -1,6 +1,8 @@
 <template>
   <div>
     <app-category-edit
+      :access="access"
+      :disabled="loading"
       :edit-id="editId"
       :category="categoryName"
       :done-message="doneMessage"
@@ -19,6 +21,12 @@ export default {
     appCategoryEdit: CategoryEdit,
   },
   computed: {
+    access() {
+      return this.$store.getters['auth/access'];
+    },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     editId() {
       const id = parseInt(this.$route.params.id, 10);
       return id;

@@ -25,9 +25,10 @@
       class="category-edit__button"
       button-type="submit"
       round
+      :disabled="disabled || !access.create"
       @click="editClick(category)"
     >
-      更新
+      {{ buttonText }}
     </app-button>
 
     <div v-if="doneMessage" class="category-edit__doneMessage">
@@ -63,6 +64,10 @@ export default {
       type: Number,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     category: {
       type: Object,
       default: () => ({}),
@@ -78,6 +83,12 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
+    },
+  },
+  computed: {
+    buttonText() {
+      if (!this.access.create) return '更新権限がありません';
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {
