@@ -18,14 +18,14 @@
       class="category-edit__input"
       name="category"
       type="text"
-      :value="editCategoryName"
+      :value="category.name"
       @update-value="$emit('edit-value', $event)"
     />
     <app-button
       class="category-edit__button"
       button-type="submit"
       round
-      @click="editClick(editId, editCategoryName)"
+      @click="editClick(category)"
     >
       更新
     </app-button>
@@ -63,9 +63,9 @@ export default {
       type: Number,
       default: null,
     },
-    editCategoryName: {
-      type: String,
-      default: '',
+    category: {
+      type: Object,
+      default: () => ({}),
     },
     doneMessage: {
       type: String,
@@ -81,8 +81,8 @@ export default {
     },
   },
   methods: {
-    editClick(editId, editCategoryName) {
-      this.$emit('edit-click', editId, editCategoryName);
+    editClick(category) {
+      this.$emit('edit-click', category);
     },
   },
 };

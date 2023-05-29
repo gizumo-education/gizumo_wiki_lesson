@@ -2,7 +2,7 @@
   <div>
     <app-category-edit
       :edit-id="editId"
-      :edit-category-name="editCategoryName"
+      :category="categoryName"
       :done-message="doneMessage"
       :error-message="errorMessage"
       @edit-click="editCategory"
@@ -20,12 +20,11 @@ export default {
   },
   computed: {
     editId() {
-      let { id } = this.$route.params;
-      id = parseInt(id, 10);
+      const id = parseInt(this.$route.params.id, 10);
       return id;
     },
-    editCategoryName() {
-      return this.$store.state.categories.editCategory.name;
+    categoryName() {
+      return this.$store.state.categories.category;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
@@ -36,12 +35,12 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/clearMessage');
-    this.$store.dispatch('categories/getEditCategory', parseInt(this.editId, 10));
+    this.$store.dispatch('categories/getCategory', this.editId);
   },
   methods: {
-    editCategory(editId, editCategoryName) {
+    editCategory({ id, name }) {
       this.$store.dispatch('categories/clearMessage');
-      this.$store.dispatch('categories/editCategory', { editId, editCategoryName });
+      this.$store.dispatch('categories/editCategory', { id, name });
     },
     editValue(event) {
       this.$store.dispatch('categories/editValue', event.target.value);
