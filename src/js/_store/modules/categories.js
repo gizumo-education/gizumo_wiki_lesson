@@ -4,7 +4,6 @@ export default {
   namespaced: true,
   state: {
     targetCategory: '',
-    targetEditCategory: '',
     categoryList: [],
     disabled: false,
     errorMessage: '',
