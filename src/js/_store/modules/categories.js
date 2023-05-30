@@ -3,11 +3,12 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    targetCategory: '',
+    targetEditCategory: '',
     categoryList: [],
     disabled: false,
     errorMessage: '',
     doneMessage: '',
-    targetCategory: '',
     deleteCategory: {
       id: null,
       name: '',
@@ -15,9 +16,6 @@ export default {
   },
   mutations: {
     initTargetCategory(state) {
-      state.targetCategory = '';
-    },
-    resetMessage(state) {
       state.targetCategory = '';
     },
     doneGetAllCategories(state, categories) {
@@ -61,9 +59,6 @@ export default {
     initTargetCategory({ commit }) {
       commit('initTargetCategory');
     },
-    resetMessage({ commit }) {
-      commit('resetMessage');
-    },
     updatedCategory({ commit }, category) {
       commit('updateCategory', category);
     },
@@ -81,7 +76,6 @@ export default {
       return new Promise(resolve => {
         commit('clearMessage');
         commit('toggleLoading');
-
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/targetCategory']);
         axios(rootGetters['auth/token'])({
@@ -89,7 +83,7 @@ export default {
           url: '/category',
           data,
         }).then(() => {
-          commit('resetMessage');
+          commit('initTargetCategory');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           resolve();

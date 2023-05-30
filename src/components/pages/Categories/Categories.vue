@@ -63,6 +63,7 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategories');
     this.$store.dispatch('categories/clearMessage');
+    this.$store.dispatch('categories/initTargetCategory');
   },
   methods: {
     addCategory() {
