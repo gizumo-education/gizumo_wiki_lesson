@@ -59,8 +59,9 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       const categoryName = this.category;
-      this.$store.dispatch('categories/addCategory', categoryName);
-      this.category = '';
+      this.$store.dispatch('categories/addCategory', categoryName).then(() => {
+        this.category = '';
+      });
     },
   },
 };

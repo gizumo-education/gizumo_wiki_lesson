@@ -41,7 +41,7 @@ export default {
       });
     },
     addCategory({ commit, rootGetters, dispatch }, categoryName) {
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         commit('toggleLoading');
         axios(rootGetters['auth/token'])({
           method: 'POST',
@@ -57,6 +57,7 @@ export default {
         }).catch(err => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
+          reject();
         });
       });
     },
