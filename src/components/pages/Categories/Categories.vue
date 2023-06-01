@@ -4,6 +4,10 @@
       class="category_post"
       :category="category"
       :access="access"
+      :disabled="loading"
+      :done-message="doneMessage"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="category_list"
@@ -37,9 +41,28 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    updateValue(event) {
+      this.category = event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      const categoryName = this.category;
+      this.$store.dispatch('categories/addCategory', categoryName).then(() => {
+        this.category = '';
+      });
+    },
   },
 };
 </script>
