@@ -53,4 +53,8 @@ export default {
   .category_list {
     width:60%;
   }
+  .category_list.category-list {
+    padding: 10px 0 20px 20px;
+
+  }
 </style>

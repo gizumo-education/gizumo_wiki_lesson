@@ -132,7 +132,7 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px 20px;
+  padding: 10px 0 20px;
   height: 100%;
   overflow: scroll;
   border-left: 2px solid $separator-color;
