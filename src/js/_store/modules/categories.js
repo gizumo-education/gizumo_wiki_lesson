@@ -6,6 +6,7 @@ export default {
     categoryList: [],
     doneMessage: '',
     errorMessage: '',
+    loading: false,
   },
   mutations: {
     doneGetAllCategory(state, { categories }) {
@@ -18,8 +19,11 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
-    doneCreateCategory(state) {
-      state.doneMessage = 'カテゴリーが新規作成されました';
+    doneCategoryMessage(state, { message }) {
+      state.doneMessage = message;
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
     },
   },
   actions: {
@@ -37,17 +41,23 @@ export default {
       });
     },
     addCategory({ commit, rootGetters, dispatch }, categoryName) {
-      axios(rootGetters['auth/token'])({
-        method: 'POST',
-        url: '/category',
-        data: {
-          name: categoryName,
-        },
-      }).then(() => {
-        dispatch('getAllCategories');
-        commit('doneCreateCategory');
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise(resolve => {
+        commit('toggleLoading');
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data: {
+            name: categoryName,
+          },
+        }).then(() => {
+          commit('toggleLoading');
+          dispatch('getAllCategories');
+          commit('doneCategoryMessage', { message: 'カテゴリーが新規作成されました' });
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
+        });
       });
     },
     clearMessage({ commit }) {

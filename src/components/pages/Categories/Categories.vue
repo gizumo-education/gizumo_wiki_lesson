@@ -4,6 +4,7 @@
       class="category_post"
       :category="category"
       :access="access"
+      :disabled="loading"
       :done-message="doneMessage"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
@@ -30,7 +31,7 @@ export default {
   data() {
     return {
       category: '',
-      theads: ['カテゴリー名', '', '', ''],
+      theads: ['カテゴリー名'],
     };
   },
   computed: {
@@ -43,14 +44,17 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     updateValue(event) {
-      const categoryName = event.target.value;
-      this.category = categoryName;
+      this.category = event.target.value;
     },
     handleSubmit() {
       if (this.loading) return;
