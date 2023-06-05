@@ -21,6 +21,9 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
+    clearErrorMessage(state) {
+      state.errorMessage = '';
+    },
     toggleLoading(state) {
       state.loading = !state.loading;
     },
@@ -61,6 +64,7 @@ export default {
     },
     clearMessage({ commit }) {
       commit('afterDoneClearMessage');
+      commit('clearErrorMessage');
     },
   },
 };
