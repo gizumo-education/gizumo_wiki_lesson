@@ -14,6 +14,9 @@
       :access="access"
       :theads="theads"
       :categories="categoryList"
+      :delete-category-name="deleteCategoryName"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
@@ -47,6 +50,9 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategory.name;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -62,6 +68,18 @@ export default {
       this.$store.dispatch('categories/addCategory', categoryName).then(() => {
         this.category = '';
       });
+    },
+    openModal(categoryId, categoryName) {
+      this.toggleModal();
+      const categoryIdName = {
+        id: categoryId,
+        name: categoryName,
+      };
+      this.$store.dispatch('categories/confirmDeleteCategory', categoryIdName);
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
     },
   },
 };
