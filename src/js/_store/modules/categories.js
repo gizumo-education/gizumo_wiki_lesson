@@ -29,9 +29,9 @@ export default {
     doneCategoryMessage(state, { message }) {
       state.doneMessage = message;
     },
-    confirmDeleteCategory(state, categoryId) {
-      state.deleteCategory.id = categoryId.id;
-      state.deleteCategory.name = categoryId.name;
+    confirmDeleteCategory(state, categories) {
+      state.deleteCategory.id = categories.id;
+      state.deleteCategory.name = categories.name;
     },
     doneDeleteCategory(state) {
       state.deleteCategory.id = null;
@@ -76,8 +76,8 @@ export default {
         });
       });
     },
-    confirmDeleteCategory({ commit }, categoryIdName) {
-      commit('confirmDeleteCategory', categoryIdName);
+    confirmDeleteCategory({ commit }, categoryInfo) {
+      commit('confirmDeleteCategory', categoryInfo);
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
       axios(rootGetters['auth/token'])({

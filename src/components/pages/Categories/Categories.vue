@@ -6,6 +6,7 @@
       :access="access"
       :disabled="loading"
       :done-message="doneMessage"
+      :error-message="errorMessage"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
@@ -15,6 +16,7 @@
       :theads="theads"
       :categories="categoryList"
       :delete-category-name="deleteCategoryName"
+      :error-message="errorMessage"
       @open-modal="openModal"
       @handle-click="handleClick"
     />
@@ -53,6 +55,9 @@ export default {
     deleteCategoryName() {
       return this.$store.state.categories.deleteCategory.name;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -71,11 +76,11 @@ export default {
     },
     openModal(categoryId, categoryName) {
       this.toggleModal();
-      const categoryIdName = {
+      const categoryInfo = {
         id: categoryId,
         name: categoryName,
       };
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryIdName);
+      this.$store.dispatch('categories/confirmDeleteCategory', categoryInfo);
     },
     handleClick() {
       this.$store.dispatch('categories/deleteCategory');
