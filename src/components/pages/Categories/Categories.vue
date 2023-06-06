@@ -16,7 +16,6 @@
       :theads="theads"
       :categories="categoryList"
       :delete-category-name="deleteCategoryName"
-      :error-message="errorMessage"
       @open-modal="openModal"
       @handle-click="handleClick"
     />
