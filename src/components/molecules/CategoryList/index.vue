@@ -1,6 +1,5 @@
 <template>
   <div class="category-list">
-    <app-text class="category-list__title">カテゴリー名</app-text>
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>

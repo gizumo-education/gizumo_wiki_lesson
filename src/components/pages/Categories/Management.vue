@@ -10,6 +10,7 @@
       class="category_list"
       :categories="categoriesList"
       :access="access"
+      :theads="theads"
     />
   </div>
 </template>
@@ -23,7 +24,9 @@ export default {
     appCategoryPost: CategoryPost,
   },
   data() {
-    return {};
+    return {
+      theads: ['カテゴリー名'],
+    };
   },
   computed: {
     categoriesList() {
