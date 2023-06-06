@@ -16,7 +16,6 @@
       button-type="submit"
       round
       :disabled="disabled || !access.create"
-      @click="addCategory"
     >
       {{ buttonText }}
     </app-button>
@@ -59,10 +58,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
     access: {
       type: Object,
       default: () => ({}),
@@ -87,13 +82,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category-management-post {
-  margin-right:20px;
   &__input {
     margin-top: 16px;
   }
   &__submit {
     margin-top: 16px;
-    background-color: $theme-color;
   }
   &__notice {
     margin-top: 16px;

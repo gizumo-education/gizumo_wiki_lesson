@@ -23,10 +23,7 @@ export default {
     appCategoryPost: CategoryPost,
   },
   data() {
-    return {
-      test: '',
-      test2: [],
-    };
+    return {};
   },
   computed: {
     categoriesList() {
@@ -46,15 +43,14 @@ export default {
 
 <style>
   .category_post {
-    float:left;
-    width:40%;
-    margin-right:20px;
+    float: left;
+    width: 40%;
+    margin-right: 20px;
   },
   .category_list {
-    width:60%;
+    width: 60%;
   }
   .category_list.category-list {
     padding: 10px 0 20px 20px;
-
   }
 </style>
