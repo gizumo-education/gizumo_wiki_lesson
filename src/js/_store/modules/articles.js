@@ -28,6 +28,11 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    // 全てのページPage
+    meta: {
+      current_page: '',
+      last_page: '',
+    },
   },
   getters: {
     transformedArticles(state) {
@@ -115,6 +120,11 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    // 取ってきた全てのページをstateに入れる
+    // doneGetPageData(state, pageData) {
+    //   state.meta.current_page = pageData.current_page;
+    //   state.meta.current_page = pageData.last_page;
+    // },
   },
   actions: {
     initPostArticle({ commit }) {
@@ -125,10 +135,15 @@ export default {
         method: 'GET',
         url: '/article',
       }).then(res => {
+        // console.log(res)
         const payload = {
           articles: res.data.articles,
         };
+        const pageData = {
+          articles: res.data.meta,
+        };
         commit('doneGetAllArticles', payload);
+        commit('doneGetPageData', pageData);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -284,5 +299,23 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
+    // 全てのページを取得する
+    // getAllPage({ commit, rootGetters }) {
+    //   axios(rootGetters['auth/token'])({
+    //     method: 'Get',
+    //     url: '/article',
+    //     data,
+    //   }).then(() => {
+    //     console.log(11)
+    //     // commit('toggleLoading');
+    //     // commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+    //     resolve();
+    //   }).catch(err => {
+    //     console.log(err)
+    //     // commit('toggleLoading');
+    //     // commit('failRequest', { message: err.message });
+    //     reject();
+    //   });
+    // }
   },
 };
