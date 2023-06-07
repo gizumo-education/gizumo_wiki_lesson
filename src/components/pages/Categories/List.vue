@@ -1,9 +1,11 @@
 <template>
   <div class="category-item">
     <app-category-post
+      class="category-item-post"
       :access="access"
     />
     <app-category-list
+      class="category-item-list"
       :categories="categoryList"
       :theads="theads"
       :access="access"
@@ -41,5 +43,15 @@ export default {
 <style lang="scss" scoped>
   .category-item {
     display: flex;
+    &-post {
+      width: 35%;
+      margin-right: 20px;
+    }
+    &-list {
+      width: 65%;
+      border-left: 1px solid $separator-color;
+      padding-left: 20px;
+      overflow: hidden;
+    }
   }
 </style>

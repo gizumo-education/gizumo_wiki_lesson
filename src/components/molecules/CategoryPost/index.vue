@@ -83,8 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 .category-post {
-  width: 35%;
-  margin-right: 20px;
   .category-management-post {
     &__input {
       margin-top: 16px;

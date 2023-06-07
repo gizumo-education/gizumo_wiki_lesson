@@ -9,19 +9,10 @@ export default {
     },
     categoryList: [],
     loading: false,
-    errorMessage: '',
-    doneMessage: '',
   },
   mutations: {
-    clearMessage(state) {
-      state.errorMessage = '';
-      state.doneMessage = '';
-    },
-    updateValue(state, { name, value }) {
-      state.user = { ...state.user, [name]: value };
-    },
     // カテゴリーリスト取得
-    doneGetAllCategories(state, { categories }) {
+    doneGetAllCategories(state, categories) {
       state.categoryList = categories;
       state.loading = false;
     },
@@ -31,12 +22,6 @@ export default {
     },
   },
   actions: {
-    clearMessage({ commit }) {
-      commit('clearMessage');
-    },
-    updateValue({ commit }, target) {
-      commit('updateValue', target);
-    },
     // カテゴリー全件取得
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
@@ -49,7 +34,7 @@ export default {
           id: data.id,
           name: data.name,
         }));
-        commit('doneGetAllCategories', { categories });
+        commit('doneGetAllCategories', categories);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
