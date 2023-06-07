@@ -9,9 +9,6 @@ export default {
     },
     categoryList: [],
   },
-  getters: {
-
-  },
   mutations: {
     doneGetAllCategories(state, { categories }) {
       state.categoryList = categories;

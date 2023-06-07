@@ -1,15 +1,17 @@
 <template>
   <div class="wrapper">
-    <app-category-post
-      class="wrapper__post"
-      :access="access"
-    />
-    <app-category-list
-      class="wrapper__list"
-      :access="access"
-      :categories="categories"
-      :theads="theads"
-    />
+    <div class="wrapper__post">
+      <app-category-post
+        :access="access"
+      />
+    </div>
+    <div class="wrapper__list">
+      <app-category-list
+        :access="access"
+        :categories="categories"
+        :theads="theads"
+      />
+    </div>
   </div>
 </template>
 
