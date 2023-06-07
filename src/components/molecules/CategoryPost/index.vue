@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form class="category-management-post" @submit.prevent="addCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-input
       v-validate="'required'"
