@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form class="category-post" @submit.prevent="addCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-input
       v-validate="'required'"
@@ -80,16 +80,21 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
-.category-management-post {
-  &__input {
-    margin-top: 16px;
-  }
-  &__submit {
-    margin-top: 16px;
-  }
-  &__notice {
-    margin-top: 16px;
+.category-post {
+  width: 35%;
+  margin-right: 20px;
+  .category-management-post {
+    &__input {
+      margin-top: 16px;
+    }
+    &__submit {
+      margin-top: 16px;
+    }
+    &__notice {
+      margin-top: 16px;
+    }
   }
 }
 </style>

@@ -3,10 +3,7 @@
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
-          <th
-            v-for="(thead, index) in theads"
-            :key="index"
-          >
+          <th v-for="(thead, index) in theads" :key="index">
             <app-text tag="span" theme-color bold>
               {{ thead }}
             </app-text>
@@ -85,7 +82,9 @@
 
 <script>
 import {
-  RouterLink, Button, Text,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -97,15 +96,11 @@ export default {
   props: {
     theads: {
       type: Array,
-      default() {
-        return [];
-      },
+      default: () => [],
     },
     categories: {
       type: Array,
-      default() {
-        return [];
-      },
+      default: () => [],
     },
     deleteCategoryName: {
       type: String,
@@ -131,9 +126,11 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px;
+  width: 65%;
+  border-left: 1px solid $separator-color;
+  padding: 10px 0 20px 20px;
   height: 100%;
-  overflow: scroll;
+  overflow: hidden;
   &__table {
     width: 100%;
     text-align: left;
