@@ -9,16 +9,24 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <div class="page-nation">
+      <app-page-nation
+        :last-page="lastPage"
+        :page-num="pageNum"
+        @current-page="getCurrentPage"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, PageNation } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPageNation: PageNation,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -40,14 +48,26 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    lastPage() {
+      return this.$store.state.articles.lastPage;
+    },
+    pageNum() {
+      return this.$store.state.articles.pageNum;
+    },
   },
   created() {
     this.fetchArticles();
+    this.$store.dispatch('articles/getAllTotalPage', this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
+    },
+    getCurrentPage() {
+      const page = this.$route.query.pageId;
+      console.log(page);
+      this.$store.dispatch('articles/getCurrentPage', page);
     },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
