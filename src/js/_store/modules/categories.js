@@ -3,14 +3,10 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    category: {
-      id: null,
-      name: '',
-    },
     categoryList: [],
   },
   mutations: {
-    doneGetAllCategories(state, { categories }) {
+    doneGetAllCategories(state, categories) {
       state.categoryList = categories;
     },
   },
@@ -25,7 +21,7 @@ export default {
           id: data.id,
           name: data.name,
         }));
-        commit('doneGetAllCategories', { categories });
+        commit('doneGetAllCategories', categories);
       });
     },
   },
