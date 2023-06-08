@@ -72,7 +72,6 @@ export default {
       });
     },
     openDeleteModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);
       this.$store.dispatch('categories/setTargetCategory', { categoryId, categoryName });
       this.toggleModal();
     },
