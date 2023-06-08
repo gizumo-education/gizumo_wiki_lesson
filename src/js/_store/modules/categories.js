@@ -83,7 +83,7 @@ export default {
     setTargetCategory({ commit }, { categoryId, categoryName }) {
       commit('setTargetCategory', { categoryId, categoryName });
     },
-    deleteCategory({ commit, rootGetters, dispatch }) {
+    deleteCategory({ commit, rootGetters }) {
       return new Promise(resolve => {
         commit('afterDoneClearMessage');
         axios(rootGetters['auth/token'])({
@@ -92,7 +92,6 @@ export default {
         }).then(() => {
           commit('doneDeleteCategory');
           commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
-          dispatch('getAllCategories');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
