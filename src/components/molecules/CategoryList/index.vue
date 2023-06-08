@@ -74,7 +74,7 @@
           class="category-list__modal__button"
           bg-danger
           round
-          @click="$emit('handle-click')"
+          @click="handleClick"
         >
           削除する
         </app-button>
