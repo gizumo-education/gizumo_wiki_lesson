@@ -23,9 +23,6 @@ export default {
     doneCreateCategory(state) {
       state.doneMessage = 'カテゴリーが作成されました。';
     },
-    confirmDeleteCategory(state, { categoryId }) {
-      state.deleteCategoryId = categoryId;
-    },
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
@@ -86,18 +83,12 @@ export default {
     setTargetCategory({ commit }, { categoryId, categoryName }) {
       commit('setTargetCategory', { categoryId, categoryName });
     },
-    confirmDeleteCategory({ commit }, categoryId) {
-      commit('confirmDeleteCategory', { categoryId });
-    },
     deleteCategory({ commit, rootGetters, dispatch }) {
       return new Promise(resolve => {
         commit('afterDoneClearMessage');
-        const data = new URLSearchParams();
-        data.append('id', rootGetters['categories/deleteCategoryId']);
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
           url: `/category/${rootGetters['categories/deleteCategoryId']}`,
-          data,
         }).then(() => {
           commit('doneDeleteCategory');
           commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
