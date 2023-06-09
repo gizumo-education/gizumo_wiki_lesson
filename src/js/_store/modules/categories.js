@@ -63,6 +63,9 @@ export default {
         name,
       });
     },
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
     postCategory({ commit, rootGetters }) {
       return new Promise(resolve => {
         commit('clearMessage');
