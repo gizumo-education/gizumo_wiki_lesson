@@ -53,12 +53,7 @@ export default {
   methods: {
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/postCategory').then(() => {
-        this.$router.push({
-          path: '/categories',
-          query: { redirect: '/categories' },
-        });
-      });
+      this.$store.dispatch('categories/postCategory');
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value); // actionsのupdateValueに入力値を渡す
