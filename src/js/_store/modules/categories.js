@@ -10,14 +10,13 @@ export default {
     categoryList: [],
     deleteCategoryId: null,
     loading: false,
-    doneMessage: '', // 作成成功時のメッセージ
+    doneMessage: '',
     errorMessage: '',
   },
   getters: {
     targetCategory: state => state.targetCategory,
   },
   mutations: {
-    // カテゴリーリスト取得
     doneGetAllCategories(state, categories) {
       state.categoryList = categories;
       state.loading = false;
@@ -33,7 +32,6 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    // doneMessageにinputに入力した値をカテゴリー名に入れる
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
@@ -51,7 +49,6 @@ export default {
     },
   },
   actions: {
-    // カテゴリー全件取得
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -68,11 +65,9 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    // inputに入力した値をupdateValueに渡す
     updateValue({ commit }, name) {
       commit({ type: 'updateValue', name });
     },
-    // カテゴリー作成
     postCategory({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');

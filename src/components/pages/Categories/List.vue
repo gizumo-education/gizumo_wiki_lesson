@@ -38,14 +38,13 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
-    // POST
     categoryName() {
       const { name } = this.$store.state.categories.targetCategory;
       return name;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
-    }, // 作成成功時のメッセージ
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -56,8 +55,8 @@ export default {
       this.$store.dispatch('categories/postCategory');
     },
     updateValue($event) {
-      this.$store.dispatch('categories/updateValue', $event.target.value); // actionsのupdateValueに入力値を渡す
-      this[$event.target.name] = $event.target.value; // ここのcategoryに入力値を入れる
+      this.$store.dispatch('categories/updateValue', $event.target.value);
+      this[$event.target.name] = $event.target.value;
     },
   },
 };
