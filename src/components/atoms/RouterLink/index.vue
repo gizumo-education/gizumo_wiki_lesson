@@ -76,6 +76,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     classes() {
@@ -94,6 +98,7 @@ export default {
         'router-link--bg-lightgreen': this.bgLightgreen,
         'router-link--hover-opacity': this.hoverOpacity,
         'router-link--hover-underline': this.hoverUnderline,
+        'button--disabled': this.disabled,
       };
     },
   },
@@ -151,5 +156,12 @@ export default {
 }
 .router-link--round {
   border-radius: 5px;
+}
+.button--disabled {
+  background-color: $disabled-color;
+  cursor: default;
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>

@@ -2,59 +2,59 @@
   <div class="pageNation">
     <ul class="pageNation__items">
       <li>
-        <app-button
-          theme-color
-          :disabled="disabled"
+        <router-link
+          :disabled="pageNum === 1"
+          white
+          large
+          bg-theme-color
+          hover-opacity
+          :to="`articles?page=1`"
         >
-          <router-link
-            white
-            :to="`articles?page=1`"
-            @click="$emit('current-page')"
-          >
-            1
-          </router-link>
-        </app-button>
+          1
+        </router-link>
       </li>
       <li>
         <app-text
+          class="pageNation__items__text"
           bold
         >
           ...
         </app-text>
       </li>
-      <li v-for="pageNum in lastPage" :key="pageNum">
-        <app-button
-          theme-color
-          @click="$emit('current-page')"
+      <li
+        v-for="page in totalPage"
+        :key="page"
+      >
+        <router-link
+          white
+          large
+          bg-theme-color
+          hover-opacity
+          :disabled="page === pageNum"
+          :to="`/articles?page=${page}`"
         >
-          <router-link
-            white
-            :to="`/articles?page=${pageNum}`"
-          >
-            {{ pageNum }}
-          </router-link>
-        </app-button>
+          {{ page }}
+        </router-link>
       </li>
       <li>
         <app-text
+          class="pageNation__items__text"
           bold
         >
           ...
         </app-text>
       </li>
       <li>
-        <app-button
-          theme-color
-          :disabled="disabled"
+        <router-link
+          white
+          large
+          bg-theme-color
+          hover-opacity
+          :disabled="pageNum === lastPage"
+          :to="`/articles?page=${lastPage}`"
         >
-          <router-link
-            white
-            :to="`/articles?page=${lastPage}`"
-            @click="$emit('current-page')"
-          >
-            {{ lastPage }}
-          </router-link>
-        </app-button>
+          {{ lastPage }}
+        </router-link>
       </li>
     </ul>
   </div>
@@ -64,39 +64,43 @@
 import {
   RouterLink,
   Text,
-  Button,
 } from '@Components/atoms';
 
 export default {
   components: {
     RouterLink,
     appText: Text,
-    appButton: Button,
   },
   props: {
     lastPage: {
       type: Number,
-      default() {
-        return null;
-      },
+      default: null,
     },
-    page: {
+    pageNum: {
       type: Number,
       default() {
         return null;
       },
     },
   },
-  data() {
-    return {
-    };
-  },
   computed: {
-    disabled() {
-      return this.pageNum ? '!disabled' : 'disabled';
+    totalPage() {
+      const startIdx = this.pageNum;
+      const lastIdx = this.lastPage;
+      const allPages = [];
+      let arryPage = [];
+      for (let i = 0; i < lastIdx; i += 1) {
+        allPages.push(i + 1);
+      }
+      if (startIdx < 4) {
+        arryPage = allPages.slice(1, 6);
+      } else if (startIdx < (lastIdx - 3)) {
+        arryPage = allPages.slice((startIdx - 3), (startIdx + 2));
+      } else {
+        arryPage = allPages.slice(lastIdx - 6, lastIdx - 1);
+      }
+      return arryPage;
     },
-  },
-  methods: {
   },
 };
 </script>
@@ -104,6 +108,17 @@ export default {
   .pageNation {
     &__items {
       display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      & > li {
+        margin-left: 20px;
+        :first-child {
+          margin-left: 0;
+        }
+      }
+      &__text {
+        color: $disabled-color;
+      }
     }
   }
 </style>

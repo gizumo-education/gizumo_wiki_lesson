@@ -13,7 +13,6 @@
       <app-page-nation
         :last-page="lastPage"
         :page-num="pageNum"
-        @current-page="getCurrentPage"
       />
     </div>
   </div>
@@ -30,8 +29,10 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const { page } = to.query.page;
+    this.fetchArticles(page);
     next();
+    this.fetchArticles();
   },
   data() {
     return {
@@ -57,17 +58,11 @@ export default {
   },
   created() {
     this.fetchArticles();
-    this.$store.dispatch('articles/getAllTotalPage', this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
-    },
-    getCurrentPage() {
-      const page = this.$route.query.pageId;
-      console.log(page);
-      this.$store.dispatch('articles/getCurrentPage', page);
     },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
@@ -99,6 +94,8 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
+      } else if (this.$route.query.page) {
+        this.$store.dispatch('articles/getCurrentPage', this.$route.query.page);
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }

@@ -117,7 +117,7 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    getAllTotalPage(state, payload) {
+    getCurrentPage(state, payload) {
       state.pageNum = payload.currentPage;
       state.lastPage = payload.lastPage;
       state.articleList = [...payload.articles];
@@ -291,19 +291,6 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    getAllTotalPage({ commit, rootGetters }, pageId) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: `/article?page=${pageId}`,
-      }).then(res => {
-        const payload = {
-          currentPage: res.data.meta.current_page,
-          lastPage: res.data.meta.last_page,
-          articles: res.data.articles,
-        };
-        commit('getAllTotalPage', payload);
-      });
-    },
     getCurrentPage({ commit, rootGetters }, pageId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -314,6 +301,7 @@ export default {
           lastPage: res.data.meta.last_page,
           articles: res.data.articles,
         };
+        commit('getCurrentPage', payload);
       });
     },
   },
