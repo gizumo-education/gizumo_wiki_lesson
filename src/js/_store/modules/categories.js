@@ -68,26 +68,22 @@ export default {
       commit({ type: 'updateValue', name });
     },
     postCategory({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
-        commit('clearMessage');
+      commit('clearMessage');
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', rootGetters['categories/targetCategory'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(response => {
+        commit('donePostCategory', response.data.category);
+        commit('initTargetCategory');
         commit('toggleLoading');
-        const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategory'].name);
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data,
-        }).then(response => {
-          commit('donePostCategory', response.data.category);
-          commit('initTargetCategory');
-          commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          resolve();
-        }).catch(err => {
-          commit('toggleLoading');
-          commit('failRequest', { message: err.message });
-          reject();
-        });
+        commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {
