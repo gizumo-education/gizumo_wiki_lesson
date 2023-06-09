@@ -46,13 +46,9 @@ export default {
         name: '',
       };// targetCategoryを初期化
     },
-    clearMessage(state) {
-      state.doneMessage = '';
-      state.errorMessage = '';
-    },
-    donePostCategory(state, payload){
+    donePostCategory(state, payload) {
       state.categoryList.unshift(payload);
-    }
+    },
   },
   actions: {
     // カテゴリー全件取得

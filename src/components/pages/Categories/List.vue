@@ -4,7 +4,7 @@
       class="category-item-post"
       :category="categoryName"
       :access="access"
-      :doneMessage="doneMessage"
+      :done-message="doneMessage"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
