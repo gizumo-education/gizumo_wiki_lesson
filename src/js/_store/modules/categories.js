@@ -83,6 +83,7 @@ export default {
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           const postCategory = response.data.category;
+          commit('initCategory');
           commit('toggleLoading');
           commit('donePostCategory', postCategory);
           resolve();
