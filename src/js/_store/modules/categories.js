@@ -37,7 +37,7 @@ export default {
     updateValue(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
-    initPostCategory(state) {
+    initTargetCategory(state) {
       state.targetCategory = {
         id: null,
         name: '',
@@ -79,7 +79,7 @@ export default {
           data,
         }).then(response => {
           commit('donePostCategory', response.data.category);
-          commit('initPostCategory');
+          commit('initTargetCategory');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           resolve();
