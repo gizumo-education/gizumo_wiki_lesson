@@ -21,7 +21,7 @@ export default {
       state.loading = true;
     },
     doneGetAllCategories(state, categories) {
-      state.categoryList = categories;
+      state.categoryList = categories.reverse();
     },
     toggleLoading(state) {
       state.loading = !state.loading;
