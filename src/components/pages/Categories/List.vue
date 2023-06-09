@@ -57,15 +57,11 @@ export default {
   methods: {
     updateValue($event) {
       this.$store.dispatch('categories/updateCategory', $event.target.value);
-      // this[$event.name] = $event.target.value;
     },
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory').then(() => {
-        this.$router.push({
-          path: '/categories',
-          query: { redirect: '/category' },
-        });
+        this.$store.dispatch('categories/getAllCategories');
       });
     },
   },
