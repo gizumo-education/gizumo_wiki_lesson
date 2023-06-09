@@ -69,14 +69,11 @@ export default {
         commit('toggleLoading');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/category'].name);
-        // const category = rootGetters['categories/category'].name;
-        // console.log(category);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
         }).then(response => {
-          // console.log(response);
           if (response.data.code === 0) throw new Error(response.data.message);
           const postCategory = response.data.category;
           commit('donePostCategory', postCategory);
