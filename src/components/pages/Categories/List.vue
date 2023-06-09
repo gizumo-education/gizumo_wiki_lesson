@@ -56,7 +56,6 @@ export default {
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value);
-      this[$event.target.name] = $event.target.value;
     },
   },
 };
