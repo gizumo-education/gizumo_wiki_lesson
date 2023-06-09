@@ -38,8 +38,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     categoryName() {
-      const category = this.$store.state.categories.category.name;
-      return category;
+      return this.$store.state.categories.category.name;
     },
     categories() {
       return this.$store.state.categories.categoryList;
