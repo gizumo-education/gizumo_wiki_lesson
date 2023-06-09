@@ -81,7 +81,7 @@
         削除
       </app-button>
     </app-modal>
-    <app-pagination class="pagination">
+    <div class="pagination">
       <app-button
         class="pagination__button"
         :disabled="currentPage === 1"
@@ -111,7 +111,7 @@
       >
         {{ totalPages }}
       </app-button>
-    </app-pagination>
+    </div>
   </div>
 </template>
 
@@ -163,18 +163,12 @@ export default {
     },
     totalPages: {
       type: Number,
-      default: 10,
-      // defaultは仮
+      default: null,
     },
     visiblePages: {
       type: Number,
       default: 7,
     },
-  },
-  data() {
-    return {
-      pageNumbers: [],
-    };
   },
   computed: {
     articleTitle() {
@@ -190,55 +184,49 @@ export default {
       this.$emit('open-modal', articleId);
     },
     goToPage(pageNumber) {
+      if (pageNumber === this.currentPage) {
+        return;
+      }
       this.$emit('go-to-page', pageNumber);
     },
-    generatePageNumbers() {
-      this.$emit('generate-page-numbers');
-      // console.log(99)
+    isFirstPageVisible() {
+      return this.currentPage > Math.floor(this.visiblePages / 2) + 1;
     },
-    // goToPage(pageNumber) {
-    //   this.currentPage = pageNumber;
-    // },
-    // isFirstPageVisible() {
-    //   return this.currentPage > Math.floor(this.visiblePages / 2) + 1;
-    // },
-    // isLastPageVisible() {
-    //   return this.totalPages - this.currentPage >= Math.floor(this.visiblePages / 2);
-    // },
-    // generatePageNumbers() {
-    //   const pageNumbers = [];
-    //   let startPage = 1;
-    //   let endPage = this.totalPages;
+    isLastPageVisible() {
+      return this.totalPages - this.currentPage >= Math.floor(this.visiblePages / 2);
+    },
+    generatePageNumbers() {
+      const pageNumbers = [];
+      let startPage = 1;
+      let endPage = this.totalPages;
 
-    //   if (this.totalPages > this.visiblePages) {
-    //     const maxVisiblePages = this.visiblePages - 2;
-    //     const offset = Math.floor(maxVisiblePages / 2);
+      if (this.totalPages > this.visiblePages) {
+        const maxVisiblePages = this.visiblePages - 2;
+        const offset = Math.floor(maxVisiblePages / 2);
 
-    //     if (this.isFirstPageVisible()) {
-    //       startPage = this.currentPage - offset;
-    //       endPage = this.currentPage + offset;
+        if (this.isFirstPageVisible()) {
+          startPage = this.currentPage - offset;
+          endPage = this.currentPage + offset;
 
-    //       if (endPage > this.totalPages) {
-    //         endPage = this.totalPages;
-    //         startPage = endPage - maxVisiblePages + 1;
-    //       }
-    //     } else if (this.isLastPageVisible()) {
-    //       endPage = this.currentPage + offset;
-    //       startPage = endPage - maxVisiblePages + 1;
+          if (endPage > this.totalPages) {
+            endPage = this.totalPages;
+            startPage = endPage - maxVisiblePages + 1;
+          }
+        } else if (this.isLastPageVisible()) {
+          endPage = this.currentPage + offset;
+          startPage = endPage - maxVisiblePages + 1;
 
-    //       if (startPage < 1) {
-    //         startPage = 1;
-    //         endPage = startPage + maxVisiblePages - 1;
-    //       }
-    //     }
-    //   }
-
-    //   for (let i = startPage; i <= endPage; i += 1) {
-    //     pageNumbers.push(i);
-    //   }
-
-    //   return pageNumbers;
-    // },
+          if (startPage < 1) {
+            startPage = 1;
+            endPage = startPage + maxVisiblePages - 1;
+          }
+        }
+      }
+      for (let i = startPage; i <= endPage; i += 1) {
+        pageNumbers.push(i);
+      }
+      return pageNumbers;
+    },
   },
 };
 </script>

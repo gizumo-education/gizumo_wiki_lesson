@@ -28,10 +28,14 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    // 全てのページPage
     meta: {
       current_page: '',
+      form: '',
       last_page: '',
+      path: '',
+      per_page: '',
+      to: '',
+      total: '',
     },
   },
   getters: {
@@ -120,32 +124,36 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    // 取ってきた全てのページをstateに入れる
-    // doneGetPageData(state, pageData) {
-    //   state.meta.current_page = pageData.current_page;
-    //   state.meta.current_page = pageData.last_page;
-    // },
+    doneGetMeta(state, metaData) {
+      state.meta = metaData.meta;
+    },
+    doneGetPageData(state, metaData) {
+      state.meta = metaData.meta;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
     getAllArticles({ commit, rootGetters }) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: '/article',
-      }).then(res => {
-        // console.log(res)
-        const payload = {
-          articles: res.data.articles,
-        };
-        const pageData = {
-          articles: res.data.meta,
-        };
-        commit('doneGetAllArticles', payload);
-        commit('doneGetPageData', pageData);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/article',
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+          };
+          const metaData = {
+            meta: res.data.meta,
+          };
+          commit('doneGetAllArticles', payload);
+          commit('doneGetMeta', metaData);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
       });
     },
     getArticleDetail({ commit, rootGetters }, articleId) {
@@ -299,23 +307,22 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    // 全てのページを取得する
-    // getAllPage({ commit, rootGetters }) {
-    //   axios(rootGetters['auth/token'])({
-    //     method: 'Get',
-    //     url: '/article',
-    //     data,
-    //   }).then(() => {
-    //     console.log(11)
-    //     // commit('toggleLoading');
-    //     // commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
-    //     resolve();
-    //   }).catch(err => {
-    //     console.log(err)
-    //     // commit('toggleLoading');
-    //     // commit('failRequest', { message: err.message });
-    //     reject();
-    //   });
-    // }
+    getPage({ commit, rootGetters }, pageNumber) {
+      axios(rootGetters['auth/token'])({
+        method: 'Get',
+        url: `/article/?page=${pageNumber}`,
+      }).then(res => {
+        const metaData = {
+          meta: res.data.meta,
+        };
+        const payload = {
+          articles: res.data.articles,
+        };
+        commit('doneGetPageData', metaData);
+        commit('doneGetAllArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
   },
 };
