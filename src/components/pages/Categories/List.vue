@@ -2,7 +2,11 @@
   <div class="category-item">
     <app-category-post
       class="category-item-post"
+      :category="categoryName"
       :access="access"
+      :done-message="doneMessage"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-list
       class="category-item-list"
@@ -24,6 +28,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
@@ -33,9 +38,25 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    categoryName() {
+      return this.$store.state.categories.targetCategory.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateValue', $event.target.value);
+    },
   },
 };
 </script>
