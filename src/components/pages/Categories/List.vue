@@ -39,8 +39,7 @@ export default {
       return this.$store.state.categories.categoryList;
     },
     categoryName() {
-      const { name } = this.$store.state.categories.targetCategory;
-      return name;
+      return this.$store.state.categories.targetCategory.name;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
