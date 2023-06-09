@@ -18,6 +18,7 @@ export default {
   mutations: {
     doneGetAllCategories(state, categories) {
       state.categoryList = categories;
+      state.categoryList.reverse();
       state.loading = false;
     },
     failRequest(state, { message }) {
