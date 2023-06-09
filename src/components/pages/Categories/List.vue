@@ -2,7 +2,11 @@
   <div class="wrapper">
     <div class="wrapper__post">
       <app-category-post
+        :category="categoryName"
         :access="access"
+        :done-message="doneMessage"
+        @update-value="updateValue"
+        @handle-submit="handleSubmit"
       />
     </div>
     <div class="wrapper__list">
@@ -32,12 +36,34 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    categoryName() {
+      const category = this.$store.state.categories.category.name;
+      return category;
+    },
     categories() {
       return this.$store.state.categories.categoryList;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    updateValue($event) {
+      this.$store.dispatch('categories/updateCategory', $event.target.value);
+      // this[$event.name] = $event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$router.push({
+          path: '/categories',
+          query: { redirect: '/category' },
+        });
+      });
+    },
   },
 };
 
