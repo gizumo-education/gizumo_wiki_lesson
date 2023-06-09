@@ -17,9 +17,6 @@ export default {
   },
   mutations: {
 
-    applyRequest(state) {
-      state.loading = true;
-    },
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
     },
@@ -34,13 +31,11 @@ export default {
       state.category = { ...state.category, name: payload.name };
     },
     donePostCategory(state, payload) {
-      state.loading = false;
       state.doneMessage = '新規カテゴリの追加が完了しました。';
       state.categoryList.unshift(payload);
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
   },
   actions: {
@@ -79,9 +74,11 @@ export default {
         }).then(response => {
           if (response.data.code === 0) throw new Error(response.data.message);
           const postCategory = response.data.category;
+          commit('toggleLoading');
           commit('donePostCategory', postCategory);
           resolve();
         }).catch(err => {
+          commit('toggleLoading');
           commit('failRequest', { message: err.response.data.message });
         });
       });
