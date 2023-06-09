@@ -159,7 +159,7 @@ export default {
     },
     currentPage: {
       type: Number,
-      default: 1,
+      default: null,
     },
     totalPages: {
       type: Number,
