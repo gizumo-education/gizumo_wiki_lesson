@@ -8,7 +8,6 @@ export default {
       name: '',
     },
     categoryList: [],
-    deleteCategoryId: null,
     loading: false,
     doneMessage: '',
     errorMessage: '',
