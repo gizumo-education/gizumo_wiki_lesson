@@ -90,8 +90,8 @@ export default {
         this.$store.dispatch('articles/getAllArticles').then(() => {
           this.totalPages = this.$store.state.articles.meta.last_page;
         }).catch(() => {
-            console.log(err);
-          });
+          // console.log(err);
+        });
       }
     },
     goToPage(pageNumber) {
