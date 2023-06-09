@@ -2,7 +2,11 @@
   <div class="category-item">
     <app-category-post
       class="category-item-post"
+      :category="categoryName"
       :access="access"
+      :doneMessage="doneMessage"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-list
       class="category-item-list"
@@ -24,6 +28,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
@@ -33,9 +38,32 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    // POST
+    categoryName() {
+      const { name } = this.$store.state.categories.targetCategory;
+      return name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    }, // 作成成功時のメッセージ
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$router.push({
+          path: '/categories',
+          query: { redirect: '/categories' },
+        });
+      });
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateValue', $event.target.value); // actionsのupdateValueに入力値を渡す
+      this[$event.target.name] = $event.target.value; // ここのcategoryに入力値を入れる
+    },
   },
 };
 </script>
