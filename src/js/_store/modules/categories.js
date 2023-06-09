@@ -37,6 +37,12 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
+    initCategory(state) {
+      state.category = {
+        id: null,
+        name: '',
+      };
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -51,6 +57,9 @@ export default {
         }));
         commit('doneGetAllCategories', categories);
       });
+    },
+    initCategory({ commit }) {
+      commit('initCategory');
     },
     updateCategory({ commit }, name) {
       commit({
