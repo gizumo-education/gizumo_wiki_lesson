@@ -11,9 +11,14 @@ export default {
     categoryList: [],
     doneMessage: '',
     errorMessage: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     category: state => state.category,
+    deleteCategory: state => state.deleteCategory.id,
   },
   mutations: {
 
@@ -30,9 +35,18 @@ export default {
     updateCategory(state, payload) {
       state.category = { ...state.category, name: payload.name };
     },
+    confirmDeleteCategory(state, { categoryData }) {
+      state.deleteCategory = { ...state.deleteCategory, ...categoryData };
+    },
     donePostCategory(state, payload) {
       state.doneMessage = '新規カテゴリの追加が完了しました。';
       state.categoryList.unshift(payload);
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategory = {
+        id: null,
+        name: '',
+      };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -42,6 +56,9 @@ export default {
         id: null,
         name: '',
       };
+    },
+    displayDoneMessage(state, payload) {
+      state.doneMessage = payload.message;
     },
   },
   actions: {
@@ -70,6 +87,9 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
+    confirmDeleteCategory({ commit }, categoryData) {
+      commit('confirmDeleteCategory', { categoryData });
+    },
     postCategory({ commit, rootGetters }) {
       return new Promise(resolve => {
         commit('clearMessage');
@@ -92,8 +112,27 @@ export default {
           if (err.data) {
             commit('failRequest', { message: err.response.data.message });
           } else {
-            commit('failRequest', { message: 'ネットに接続がされていないかサーバーとの接続がされていません。ご確認ください。' });
+            commit('failRequest', { message: err.message });
           }
+        });
+      });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        const data = new URLSearchParams();
+        data.append('id', rootGetters['categories/deleteCategory']);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `category/${rootGetters['categories/deleteCategory']}`,
+          data,
+        }).then(() => {
+          commit('doneDeleteCategory');
+          commit('displayDoneMessage', { message: 'カテゴリーを削除しました！' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
         });
       });
     },
