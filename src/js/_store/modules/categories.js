@@ -38,7 +38,6 @@ export default {
       state.deleteCategory = { ...state.deleteCategory, ...categoryData };
     },
     donePostCategory(state, payload) {
-      state.doneMessage = '新規カテゴリの追加が完了しました。';
       state.categoryList.unshift(payload);
     },
     doneDeleteCategory(state) {
@@ -56,7 +55,7 @@ export default {
         name: '',
       };
     },
-    displayDoneMessage(state, payload) {
+    doneDisplayMessage(state, payload) {
       state.doneMessage = payload.message;
     },
   },
@@ -105,6 +104,7 @@ export default {
           commit('initCategory');
           commit('toggleLoading');
           commit('donePostCategory', postCategory);
+          commit('doneDisplayMessage', { message: 'カテゴリーを追加しました！' });
           resolve();
         }).catch(err => {
           commit('toggleLoading');
@@ -127,7 +127,7 @@ export default {
           data,
         }).then(() => {
           commit('doneDeleteCategory');
-          commit('displayDoneMessage', { message: 'カテゴリーを削除しました！' });
+          commit('doneDisplayMessage', { message: 'カテゴリーを削除しました！' });
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
