@@ -89,8 +89,8 @@ export default {
       } else {
         this.$store.dispatch('articles/getAllArticles').then(() => {
           this.totalPages = this.$store.state.articles.meta.last_page;
-          this.currentPage = parseInt(localStorage.getItem('currentPage'), 10) || 1;
-          const pageNumber = localStorage.getItem('currentPage');
+          this.currentPage = parseInt(this.$route.query.page, 10) || 1;
+          const pageNumber = this.currentPage;
           this.$store.dispatch('articles/getPage', pageNumber);
         }).catch(() => {
           // console.log(err);
@@ -98,9 +98,9 @@ export default {
       }
     },
     goToPage(pageNumber) {
-      this.currentPage = pageNumber;
-      localStorage.setItem('currentPage', pageNumber);
-      this.$store.dispatch('articles/getPage', pageNumber);
+      const currentPath = this.$route.path;
+      const query = { ...this.$route.query, page: pageNumber };
+      this.$router.push({ path: currentPath, query });
     },
   },
 };
