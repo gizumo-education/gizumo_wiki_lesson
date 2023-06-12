@@ -21,7 +21,6 @@ export default {
     deleteCategory: state => state.deleteCategory.id,
   },
   mutations: {
-
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
     },
