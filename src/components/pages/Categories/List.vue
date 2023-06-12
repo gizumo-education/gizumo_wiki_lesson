@@ -6,6 +6,7 @@
         :access="access"
         :done-message="doneMessage"
         :error-message="errorMessage"
+        :disabled="loading"
         @update-value="updateValue"
         @handle-submit="handleSubmit"
       />
@@ -34,6 +35,9 @@ export default {
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
