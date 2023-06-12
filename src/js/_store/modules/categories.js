@@ -45,7 +45,7 @@ export default {
       state.targetCategory = {
         id: null,
         name: '',
-      };// targetCategoryを初期化
+      };
     },
     donePostCategory(state, payload) {
       state.categoryList.unshift(payload);
@@ -56,7 +56,7 @@ export default {
     },
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
-      this.deleteCategoryName = '';
+      state.deleteCategoryName = '';
     },
   },
   actions: {
@@ -105,18 +105,22 @@ export default {
       commit('confirmDeleteCategory', deleteCategory);
     },
     deleteCategory({ commit, rootGetters }) {
-      commit('clearMessage');
-      const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/deleteCategoryId']);
-      axios(rootGetters['auth/token'])({
-        method: 'DELETE',
-        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
-        data,
-      }).then(() => {
-        commit('doneDeleteCategory');
-        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        const data = new URLSearchParams();
+        data.append('id', rootGetters['categories/deleteCategoryId']);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+          data,
+        }).then(() => {
+          commit('doneDeleteCategory');
+          commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
       });
     },
   },
