@@ -2,7 +2,7 @@
   <section class="category-update">
     <app-heading :level="1">カテゴリー管理</app-heading>
 
-    <div class="category-update_back">
+    <div class="category-update__back">
       <app-router-link
         block
         underline
@@ -13,7 +13,7 @@
         カテゴリー一覧へ戻る
       </app-router-link>
 
-      <div class="category-update-form">
+      <div class="category-update__form">
         <app-input
           v-validate="'required'"
           name="name"
@@ -21,7 +21,7 @@
           white-bg
           :error-messages="errors.collect('name')"
           :value="category.name"
-          @update-value="updateValue"
+          @update-value="$emit('update-value',$event.target)"
         />
       </div>
     </div>
@@ -89,9 +89,6 @@ export default ({
     },
   },
   methods: {
-    updateValue($event) {
-      this.$emit('update-value', $event.target);
-    },
     handleSubmit() {
       if (!this.access.edit) return;
       this.$emit('clear-message');
@@ -108,9 +105,9 @@ export default ({
   &__back {
     margin-top: 16px;
   }
-    &__form {
-      margin-top: 16px;
-    }
+  &__form {
+    margin-top: 16px;
+  }
   &__button {
     margin-top: 16px;
   }

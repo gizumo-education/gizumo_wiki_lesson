@@ -124,7 +124,6 @@ export default {
         method: 'PUT',
         url: `/category/${rootGetters['categories/category'].id}`,
         data: {
-          id: categoryName.id,
           name: categoryName.name,
         },
       }).then(() => {
