@@ -2,7 +2,13 @@
   <div class="wrapper">
     <div class="wrapper__post">
       <app-category-post
+        :category="categoryName"
         :access="access"
+        :done-message="doneMessage"
+        :error-message="errorMessage"
+        :disabled="loading"
+        @update-value="updateValue"
+        @handle-submit="handleSubmit"
       />
     </div>
     <div class="wrapper__list">
@@ -29,15 +35,40 @@ export default {
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
+    },
+    categoryName() {
+      return this.$store.state.categories.category.name;
     },
     categories() {
       return this.$store.state.categories.categoryList;
     },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/initCategory');
+    this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    updateValue($event) {
+      this.$store.dispatch('categories/updateCategory', $event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+      });
+    },
   },
 };
 
