@@ -89,7 +89,11 @@ export default {
           resolve();
         }).catch(err => {
           commit('toggleLoading');
-          commit('failRequest', { message: err.response.data.message });
+          if (err.data) {
+            commit('failRequest', { message: err.response.data.message });
+          } else {
+            commit('failRequest', { message: 'ネットに接続がされていないかサーバーとの接続がされていません。ご確認ください。' });
+          }
         });
       });
     },
