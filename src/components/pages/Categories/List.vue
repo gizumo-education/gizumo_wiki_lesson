@@ -6,6 +6,8 @@
       :access="access"
       :done-message="doneMessage"
       :error-message="errorMessage"
+      :disabled="!disabled"
+      :loading="loading"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
@@ -46,6 +48,12 @@ export default {
     },
     categoryName() {
       return this.$store.state.categories.targetCategory.name;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    disabled() {
+      return this.access.create && !this.loading;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;

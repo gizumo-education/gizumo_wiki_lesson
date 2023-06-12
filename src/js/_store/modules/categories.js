@@ -51,7 +51,7 @@ export default {
     donePostCategory(state, payload) {
       state.categoryList.unshift(payload);
     },
-    confirmDeleteCategory(state, deleteCategory ) {
+    confirmDeleteCategory(state, deleteCategory) {
       state.deleteCategoryId = deleteCategory.categoryId;
       state.deleteCategoryName = deleteCategory.categoryName;
     },
