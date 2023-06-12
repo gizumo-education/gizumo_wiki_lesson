@@ -119,11 +119,6 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    // getCurrentPage(state, payload) {
-    //   state.pageNum = payload.currentPage;
-    //   state.lastPage = payload.lastPage;
-    //   state.articleList = [...payload.articles];
-    // },
   },
   actions: {
     initPostArticle({ commit }) {
