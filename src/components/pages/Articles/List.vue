@@ -29,10 +29,9 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    const { page } = to.query.page;
+    const { page } = to.query;
     this.fetchArticles(page);
     next();
-    this.fetchArticles();
   },
   data() {
     return {
@@ -57,7 +56,8 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    const { page } = this.$route.query;
+    this.fetchArticles(page);
   },
   methods: {
     openModal(articleId) {
@@ -82,7 +82,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(page) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -94,10 +94,8 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
-      } else if (this.$route.query.page) {
-        this.$store.dispatch('articles/getCurrentPage', this.$route.query.page);
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', page);
       }
     },
   },

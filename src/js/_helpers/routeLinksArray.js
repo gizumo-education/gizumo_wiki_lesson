@@ -12,7 +12,7 @@ export default [
   {
     id: 3,
     name: '記事',
-    path: '/articles',
+    path: '/articles?page=1',
   },
   {
     id: 4,

@@ -86,6 +86,8 @@ export default {
       state.articleList = [...filteredArticles];
     },
     doneGetAllArticles(state, payload) {
+      state.pageNum = payload.currentPage;
+      state.lastPage = payload.lastPage;
       state.articleList = [...payload.articles];
     },
     failRequest(state, { message }) {
@@ -117,23 +119,25 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    getCurrentPage(state, payload) {
-      state.pageNum = payload.currentPage;
-      state.lastPage = payload.lastPage;
-      state.articleList = [...payload.articles];
-    },
+    // getCurrentPage(state, payload) {
+    //   state.pageNum = payload.currentPage;
+    //   state.lastPage = payload.lastPage;
+    //   state.articleList = [...payload.articles];
+    // },
   },
   actions: {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
+    getAllArticles({ commit, rootGetters }, pageId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/article',
+        url: `/article?page=${pageId}`,
       }).then(res => {
         const payload = {
           articles: res.data.articles,
+          currentPage: res.data.meta.current_page,
+          lastPage: res.data.meta.last_page,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {
@@ -290,19 +294,6 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
-    },
-    getCurrentPage({ commit, rootGetters }, pageId) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: `/article?page=${pageId}`,
-      }).then(res => {
-        const payload = {
-          currentPage: res.data.meta.current_page,
-          lastPage: res.data.meta.last_page,
-          articles: res.data.articles,
-        };
-        commit('getCurrentPage', payload);
-      });
     },
   },
 };
