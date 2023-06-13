@@ -69,8 +69,7 @@ export default {
   },
   methods: {
     openModal(categoryId, categoryName) {
-      const categoryData = { id: categoryId, name: categoryName };
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryData);
+      this.$store.dispatch('categories/confirmDeleteCategory', { id: categoryId, name: categoryName });
       this.toggleModal();
     },
     handleClick() {

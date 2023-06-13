@@ -34,8 +34,8 @@ export default {
     updateCategory(state, payload) {
       state.category = { ...state.category, name: payload.name };
     },
-    confirmDeleteCategory(state, { categoryData }) {
-      state.deleteCategory = { ...state.deleteCategory, ...categoryData };
+    confirmDeleteCategory(state, { category }) {
+      state.deleteCategory = { ...state.deleteCategory, ...category };
     },
     donePostCategory(state, payload) {
       state.categoryList.unshift(payload);
@@ -85,8 +85,8 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDeleteCategory({ commit }, categoryData) {
-      commit('confirmDeleteCategory', { categoryData });
+    confirmDeleteCategory({ commit }, category) {
+      commit('confirmDeleteCategory', { category });
     },
     postCategory({ commit, rootGetters }) {
       return new Promise(resolve => {
