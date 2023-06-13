@@ -57,7 +57,7 @@ export default {
     },
     doneDeleteCategory(state) {
       state.deleteCategory = {
-        id: '',
+        id: null,
         name: '',
       };
     },
