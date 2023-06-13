@@ -41,6 +41,9 @@ export default {
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
     handleSubmit() {
       this.$store.dispatch('categories/updateCategory', this.category);
     },
