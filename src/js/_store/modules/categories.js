@@ -11,12 +11,16 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
     deleteCategoryId: null,
     deleteCategoryName: '',
   },
   getters: {
     targetCategory: state => state.targetCategory,
-    deleteCategoryId: state => state.deleteCategoryId,
+    deleteCategoryId: state => state.deleteCategory.id,
   },
   mutations: {
     doneGetAllCategories(state, categories) {
@@ -51,12 +55,13 @@ export default {
       state.categoryList.unshift(payload);
     },
     confirmDeleteCategory(state, deleteCategory) {
-      state.deleteCategoryId = deleteCategory.categoryId;
-      state.deleteCategoryName = deleteCategory.categoryName;
+      state.deleteCategory = deleteCategory;
     },
     doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
-      state.deleteCategoryName = '';
+      state.deleteCategory = {
+        id: '',
+        name: '',
+      };
     },
   },
   actions: {

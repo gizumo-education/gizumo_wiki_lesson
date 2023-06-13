@@ -62,7 +62,7 @@ export default {
       return this.$store.state.categories.errorMessage;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
+      return this.$store.state.categories.deleteCategory.name;
     },
   },
   created() {
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     openModal(categoryId, categoryName) {
-      const deleteCategory = { categoryId, categoryName };
+      const deleteCategory = { id: categoryId, name: categoryName };
       this.$store.dispatch('categories/confirmDeleteCategory', deleteCategory);
       this.toggleModal();
     },
