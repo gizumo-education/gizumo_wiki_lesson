@@ -15,8 +15,6 @@ export default {
       id: null,
       name: '',
     },
-    deleteCategoryId: null,
-    deleteCategoryName: '',
   },
   getters: {
     targetCategory: state => state.targetCategory,
