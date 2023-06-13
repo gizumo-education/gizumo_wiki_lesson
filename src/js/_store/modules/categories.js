@@ -11,12 +11,16 @@ export default {
     categoryList: [],
     doneMessage: '',
     errorMessage: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     category: state => state.category,
+    deleteCategory: state => state.deleteCategory.id,
   },
   mutations: {
-
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
     },
@@ -30,9 +34,17 @@ export default {
     updateCategory(state, payload) {
       state.category = { ...state.category, name: payload.name };
     },
+    confirmDeleteCategory(state, { category }) {
+      state.deleteCategory = { ...state.deleteCategory, ...category };
+    },
     donePostCategory(state, payload) {
-      state.doneMessage = '新規カテゴリの追加が完了しました。';
       state.categoryList.unshift(payload);
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategory = {
+        id: null,
+        name: '',
+      };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -42,6 +54,9 @@ export default {
         id: null,
         name: '',
       };
+    },
+    doneDisplayMessage(state, payload) {
+      state.doneMessage = payload.message;
     },
   },
   actions: {
@@ -70,6 +85,9 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
+    confirmDeleteCategory({ commit }, category) {
+      commit('confirmDeleteCategory', { category });
+    },
     postCategory({ commit, rootGetters }) {
       return new Promise(resolve => {
         commit('clearMessage');
@@ -86,14 +104,31 @@ export default {
           commit('initCategory');
           commit('toggleLoading');
           commit('donePostCategory', postCategory);
+          commit('doneDisplayMessage', { message: 'カテゴリーを追加しました！' });
           resolve();
         }).catch(err => {
           commit('toggleLoading');
           if (err.data) {
             commit('failRequest', { message: err.response.data.message });
           } else {
-            commit('failRequest', { message: 'ネットに接続がされていないかサーバーとの接続がされていません。ご確認ください。' });
+            commit('failRequest', { message: err.message });
           }
+        });
+      });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `category/${rootGetters['categories/deleteCategory']}`,
+        }).then(() => {
+          commit('doneDeleteCategory');
+          commit('doneDisplayMessage', { message: 'カテゴリーを削除しました！' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
         });
       });
     },
