@@ -30,6 +30,7 @@ import PasswordUpdate from '@Pages/Password/update.vue';
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import CategoryList from '@Pages/Categories/List.vue';
+import CategoryDetail from '@Pages/Categories/Detail.vue';
 
 import Store from '../_store';
 
@@ -79,6 +80,11 @@ const router = new VueRouter({
           name: 'categoryList',
           path: '',
           component: CategoryList,
+        },
+        {
+          name: 'categoryDetail',
+          path: ':id',
+          component: CategoryDetail,
         },
       ],
     },
