@@ -9,20 +9,28 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <div class="pagination">
+      <app-pagination
+        :last-page="lastPage"
+        :page-num="pageNum"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const { page } = to.query;
+    this.fetchArticles(page);
     next();
   },
   data() {
@@ -40,9 +48,16 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    lastPage() {
+      return this.$store.state.articles.lastPage;
+    },
+    pageNum() {
+      return this.$store.state.articles.pageNum;
+    },
   },
   created() {
-    this.fetchArticles();
+    const { page } = this.$route.query;
+    this.fetchArticles(page);
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +82,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(page) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,7 +95,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', page);
       }
     },
   },
