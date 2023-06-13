@@ -11,9 +11,14 @@ export default {
       id: null,
       name: '',
     },
+    category: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     deleteCategoryId: state => state.deleteCategory.id,
+    category: state => state.category,
   },
   mutations: {
     doneGetAllCategory(state, { categories }) {
@@ -39,6 +44,12 @@ export default {
     },
     toggleLoading(state) {
       state.loading = !state.loading;
+    },
+    updateValue(state, { name, value }) {
+      state.category = { ...state.category, [name]: value };
+    },
+    doneGetCategory(state, { category }) {
+      state.category = { ...state.category, ...category };
     },
   },
   actions: {
@@ -93,6 +104,39 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getCategory({ commit, rootGetters }, { id }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        const category = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneGetCategory', { category });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateCategory({ commit, rootGetters }, categoryName) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/category'].id}`,
+        data: {
+          name: categoryName.name,
+        },
+      }).then(() => {
+        commit('toggleLoading');
+        commit('doneCategoryMessage', { message: 'カテゴリー更新完了' });
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateValue({ commit }, target) {
+      commit('updateValue', target);
     },
   },
 };
