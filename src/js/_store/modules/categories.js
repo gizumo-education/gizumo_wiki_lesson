@@ -11,9 +11,14 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     targetCategory: state => state.targetCategory,
+    deleteCategoryId: state => state.deleteCategory.id,
   },
   mutations: {
     doneGetAllCategories(state, categories) {
@@ -42,10 +47,19 @@ export default {
       state.targetCategory = {
         id: null,
         name: '',
-      };// targetCategoryを初期化
+      };
     },
     donePostCategory(state, payload) {
       state.categoryList.unshift(payload);
+    },
+    confirmDeleteCategory(state, deleteCategory) {
+      state.deleteCategory = deleteCategory;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategory = {
+        id: null,
+        name: '',
+      };
     },
   },
   actions: {
@@ -89,6 +103,25 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    confirmDeleteCategory({ commit }, deleteCategory) {
+      commit('confirmDeleteCategory', deleteCategory);
+    },
+    deleteCategory({ commit, rootGetters }) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        }).then(() => {
+          commit('doneDeleteCategory');
+          commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
     },
   },
 };
