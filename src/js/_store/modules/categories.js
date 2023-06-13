@@ -120,6 +120,7 @@ export default {
       });
     },
     updateCategory({ commit, rootGetters }, categoryName) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${rootGetters['categories/category'].id}`,
@@ -127,8 +128,10 @@ export default {
           name: categoryName.name,
         },
       }).then(() => {
+        commit('toggleLoading');
         commit('doneCategoryMessage', { message: 'カテゴリー更新完了' });
       }).catch(err => {
+        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
     },

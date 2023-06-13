@@ -104,6 +104,7 @@ export default ({
 .category-update {
   &__back {
     margin-top: 16px;
+    display: table;
   }
   &__form {
     margin-top: 16px;
