@@ -16,7 +16,7 @@ import ArticlePost from './ArticlePost/index.vue';
 import ArticleDetail from './ArticleDetail/index.vue';
 import DeleteModal from './Modal/Delete.vue';
 import Notice from './Notice/index.vue';
-import PageNation from './PageNation/index.vue';
+import Pagination from './Pagination/index.vue';
 
 export {
   SigninForm,
@@ -37,5 +37,5 @@ export {
   ArticleDetail,
   DeleteModal,
   Notice,
-  PageNation,
+  Pagination,
 };

@@ -1,6 +1,6 @@
 <template>
-  <div class="pageNation">
-    <ul class="pageNation__items">
+  <div class="pagination">
+    <ul class="pagination__items">
       <li>
         <router-link
           :disabled="pageNum === 1"
@@ -15,14 +15,14 @@
       </li>
       <li>
         <app-text
-          class="pageNation__items__text"
+          class="pagination__items__text"
           bold
         >
           ...
         </app-text>
       </li>
       <li
-        v-for="page in totalPage"
+        v-for="page in middlePages"
         :key="page"
       >
         <router-link
@@ -38,7 +38,7 @@
       </li>
       <li>
         <app-text
-          class="pageNation__items__text"
+          class="pagination__items__text"
           bold
         >
           ...
@@ -78,34 +78,30 @@ export default {
     },
     pageNum: {
       type: Number,
-      default() {
-        return null;
-      },
+      default: null,
     },
   },
   computed: {
-    totalPage() {
+    middlePages() {
       const startIdx = this.pageNum;
       const lastIdx = this.lastPage;
       const allPages = [];
-      let arryPage = [];
-      for (let i = 0; i < lastIdx; i += 1) {
-        allPages.push(i + 1);
-      }
+      Array.from({ length: lastIdx }, (_, i) => i + 1).forEach(i => {
+        allPages.push(i);
+      });
       if (startIdx < 4) {
-        arryPage = allPages.slice(1, 6);
-      } else if (startIdx < (lastIdx - 3)) {
-        arryPage = allPages.slice((startIdx - 3), (startIdx + 2));
-      } else {
-        arryPage = allPages.slice(lastIdx - 6, lastIdx - 1);
+        return allPages.slice(1, 6);
       }
-      return arryPage;
+      if (startIdx < (lastIdx - 3)) {
+        return allPages.slice((startIdx - 3), (startIdx + 2));
+      }
+      return allPages.slice(lastIdx - 6, lastIdx - 1);
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-  .pageNation {
+  .pagination {
     &__items {
       display: flex;
       justify-content: center;

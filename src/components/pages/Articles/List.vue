@@ -9,8 +9,8 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <div class="page-nation">
-      <app-page-nation
+    <div class="pagination">
+      <app-pagination
         :last-page="lastPage"
         :page-num="pageNum"
       />
@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { ArticleList, PageNation } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
-    appPageNation: PageNation,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
