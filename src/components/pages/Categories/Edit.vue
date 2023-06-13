@@ -1,5 +1,5 @@
 <template>
-  <app-category-detail
+  <app-category-edit
     caution-message="※ 名前以外の文頭・文末・文中の全角・半角スペースは削除されます。"
     :error-message="errorMessage"
     :done-message="doneMessage"
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { CategoryDetail } from '@Components/molecules';
+import { CategoryEdit } from '@Components/molecules';
 
 export default {
   components: {
-    appCategoryDetail: CategoryDetail,
+    appCategoryEdit: CategoryEdit,
   },
   computed: {
     access() {
