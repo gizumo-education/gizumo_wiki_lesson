@@ -75,8 +75,8 @@ export default {
     handleClick() {
       this.$store.dispatch('categories/deleteCategory').then(() => {
         this.$store.dispatch('categories/getAllCategories');
+        this.toggleModal();
       });
-      this.toggleModal();
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateCategory', $event.target.value);
