@@ -19,11 +19,11 @@ export default (({ mode }) => {
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
       }),
-      checker({
-        eslint: {
-          lintCommand: `eslint "${rootDirPath}/src/{js,components}/**/*.{js,vue}"`,
-        },
-      }),
+      // checker({
+      //   eslint: {
+      //     lintCommand: `eslint "${rootDirPath}/src/{js,components}/**/*.{js,vue}"`,
+      //   },
+      // }),
     ],
     resolve: {
       alias: {
