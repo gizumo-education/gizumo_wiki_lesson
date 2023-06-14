@@ -5,10 +5,12 @@
       :target-array="articlesList"
       :done-message="doneMessage"
       :access="access"
+      border-gray
+    />
+    <app-pagination
       :current-page="currentPage"
       :total-pages="totalPages"
       :visible-pages="visiblePages"
-      border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
       @go-to-page="goToPage"
@@ -17,12 +19,13 @@
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
