@@ -136,24 +136,20 @@ export default {
       commit('initPostArticle');
     },
     getAllArticles({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/article',
-        }).then(res => {
-          const payload = {
-            articles: res.data.articles,
-          };
-          const metaData = {
-            meta: res.data.meta,
-          };
-          commit('doneGetAllArticles', payload);
-          commit('doneGetMeta', metaData);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject();
-        });
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article',
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+        };
+        const metaData = {
+          meta: res.data.meta,
+        };
+        commit('doneGetAllArticles', payload);
+        commit('doneGetMeta', metaData);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     getArticleDetail({ commit, rootGetters }, articleId) {
