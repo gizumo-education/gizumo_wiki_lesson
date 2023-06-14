@@ -151,6 +151,7 @@ export default {
         commit('doneGetCategory', { updateCategory });
         commit('doneDisplayMessage', { message: 'カテゴリーの更新が完了しました！' });
       }).catch(err => {
+        commit('toggleLoading');
         if (err.data) {
           commit('failRequest', { message: err.response.data.message });
         } else {
