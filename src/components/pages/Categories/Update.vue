@@ -47,8 +47,8 @@ export default {
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
     },
-    updateValue($event) {
-      this.$store.dispatch('categories/updateValue', $event.value);
+    updateValue($eventTarget) {
+      this.$store.dispatch('categories/updateValue', $eventTarget.value);
     },
     updateCategory() {
       this.$store.dispatch('categories/updateCategory', {
