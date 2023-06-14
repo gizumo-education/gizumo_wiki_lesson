@@ -63,7 +63,6 @@ export default {
     },
     doneGetCategory(state, category) {
       state.targetCategory = { ...state.targetCategory, ...category };
-      state.loading = false;
     },
   },
   actions: {
