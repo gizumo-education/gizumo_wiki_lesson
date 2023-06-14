@@ -48,7 +48,7 @@ export default {
       this.$store.dispatch('categories/clearMessage');
     },
     updateValue(target) {
-      if (!this.loading) this.$store.dispatch('categories/updateValue', target.value);
+      this.$store.dispatch('categories/updateValue', target.value);
     },
     editCategory() {
       this.$store.dispatch('categories/editCategory', {
