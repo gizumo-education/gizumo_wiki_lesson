@@ -24,6 +24,9 @@ export default {
     doneGetAllCategories(state, categories) {
       state.categoryList = categories.reverse();
     },
+    doneGetCategory(state, category) {
+      state.category = { ...state.category, ...category };
+    },
     toggleLoading(state) {
       state.loading = !state.loading;
     },
@@ -31,7 +34,7 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    updateCategory(state, payload) {
+    updateValue(state, payload) {
       state.category = { ...state.category, name: payload.name };
     },
     confirmDeleteCategory(state, { category }) {
@@ -73,12 +76,28 @@ export default {
         commit('doneGetAllCategories', categories);
       });
     },
+    getCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `category/${id}`,
+      }).then(response => {
+        if (response.data.code === 0) throw new Error(response.data.message);
+        const data = response.data.category;
+        const category = {
+          id: data.id,
+          name: data.name,
+        };
+        commit('doneGetCategory', category);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
     initCategory({ commit }) {
       commit('initCategory');
     },
-    updateCategory({ commit }, name) {
+    updateValue({ commit }, name) {
       commit({
-        type: 'updateCategory',
+        type: 'updateValue',
         name,
       });
     },
@@ -114,6 +133,29 @@ export default {
             commit('failRequest', { message: err.message });
           }
         });
+      });
+    },
+    updateCategory({ commit, rootGetters }, category) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `category/${category.id}`,
+        data: category,
+      }).then(response => {
+        if (response.data.code === 0) throw new Error(response.data.message);
+        const updateCategory = {
+          id: response.data.category.id,
+          name: response.data.category.name,
+        };
+        commit('toggleLoading');
+        commit('doneGetCategory', { updateCategory });
+        commit('doneDisplayMessage', { message: 'カテゴリーの更新が完了しました！' });
+      }).catch(err => {
+        if (err.data) {
+          commit('failRequest', { message: err.response.data.message });
+        } else {
+          commit('failRequest', { message: err.message });
+        }
       });
     },
     deleteCategory({ commit, rootGetters }) {

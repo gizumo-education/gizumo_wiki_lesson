@@ -82,7 +82,7 @@ export default {
       });
     },
     updateValue($event) {
-      this.$store.dispatch('categories/updateCategory', $event.target.value);
+      this.$store.dispatch('categories/updateValue', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;
