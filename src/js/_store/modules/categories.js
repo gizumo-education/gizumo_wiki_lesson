@@ -24,11 +24,9 @@ export default {
     doneGetAllCategories(state, categories) {
       state.categoryList = categories;
       state.categoryList.reverse();
-      state.loading = false;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -60,6 +58,9 @@ export default {
         id: null,
         name: '',
       };
+    },
+    doneGetCategory(state, category) {
+      state.targetCategory = { ...state.targetCategory, ...category };
     },
   },
   actions: {
@@ -101,8 +102,36 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    clearMessage({ commit }) {
-      commit('clearMessage');
+    getCategory({ commit, rootGetters }, id) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(response => {
+        if (response.data.code === 0) throw new Error(response.data.message);
+
+        const category = {
+          id: response.data.category.id,
+          name: response.data.category.name,
+        };
+        commit('doneGetCategory', category);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editCategory({ commit, rootGetters }, category) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${category.id}`,
+        data: category,
+      }).then(response => {
+        if (response.data.code === 0) throw new Error(response.data.message);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+        commit('toggleLoading');
+      });
     },
     confirmDeleteCategory({ commit }, deleteCategory) {
       commit('confirmDeleteCategory', deleteCategory);
@@ -122,6 +151,12 @@ export default {
           reject();
         });
       });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
+    clearInput({ commit }) {
+      commit('initTargetCategory');
     },
   },
 };
