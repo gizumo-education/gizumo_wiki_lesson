@@ -114,6 +114,8 @@ export default {
         method: 'GET',
         url: `/category/${id}`,
       }).then(response => {
+        if (response.data.code === 0) throw new Error(response.data.message);
+
         const data = response.data.category;
         const category = {
           id: data.id,
