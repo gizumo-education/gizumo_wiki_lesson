@@ -3,7 +3,7 @@
     :error-message="errorMessage"
     :done-message="doneMessage"
     :category="category"
-    :disabled="loading ? true : false"
+    :disabled="loading"
     :access="access"
     @clear-message="clearMessage"
     @update-value="updateValue"
