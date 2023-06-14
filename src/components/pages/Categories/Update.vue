@@ -40,9 +40,6 @@ export default {
     this.$store.dispatch('categories/getCategory', id);
     this.$store.dispatch('categories/clearMessage');
   },
-  destroyed() {
-    this.$store.dispatch('categories/clearMessage');
-  },
   methods: {
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
