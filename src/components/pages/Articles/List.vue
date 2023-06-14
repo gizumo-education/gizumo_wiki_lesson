@@ -34,7 +34,7 @@ export default {
       title: 'すべて',
       currentPage: 1,
       totalPages: null,
-      visiblePages: 7,
+      visiblePages: 5,
     };
   },
   computed: {

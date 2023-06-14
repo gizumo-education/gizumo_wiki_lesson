@@ -167,7 +167,7 @@ export default {
     },
     visiblePages: {
       type: Number,
-      default: 7,
+      default: 5,
     },
   },
   computed: {
@@ -197,27 +197,27 @@ export default {
     },
     generatePageNumbers() {
       const pageNumbers = [];
-      let startPage = 1;
-      let endPage = this.totalPages;
+      let startPage = 2;
+      let endPage = this.totalPages - 1;
 
-      if (this.totalPages > this.visiblePages) {
-        const maxVisiblePages = this.visiblePages - 2;
+      if (this.totalPages - 1 > this.visiblePages) {
+        const maxVisiblePages = this.visiblePages;
         const offset = Math.floor(maxVisiblePages / 2);
 
         if (this.isFirstPageVisible()) {
           startPage = this.currentPage - offset;
           endPage = this.currentPage + offset;
 
-          if (endPage > this.totalPages) {
-            endPage = this.totalPages;
+          if (endPage > this.totalPages - 1) {
+            endPage = this.totalPages - 1;
             startPage = endPage - maxVisiblePages + 1;
           }
         } else if (this.isLastPageVisible()) {
           endPage = this.currentPage + offset;
           startPage = endPage - maxVisiblePages + 1;
 
-          if (startPage < 1) {
-            startPage = 1;
+          if (startPage < 2) {
+            startPage = 2;
             endPage = startPage + maxVisiblePages - 1;
           }
         }
