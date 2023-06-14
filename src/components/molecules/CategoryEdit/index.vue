@@ -1,8 +1,8 @@
 <template>
-  <section class="users-detail">
+  <section class="categories-edit">
     <app-heading :level="1">カテゴリー管理</app-heading>
 
-    <div class="users-detail__back">
+    <div class="categories-edit__back">
       <app-router-link
         block
         underline
@@ -14,23 +14,21 @@
       </app-router-link>
     </div>
 
-    <form class="users-detail__info" @submit.prevent="editCategory">
-      <div class="users-detail__info__row">
-        <div class="users-detail__info__row__content">
-          <app-input
-            v-validate="'required'"
-            name="categoryName"
-            type="text"
-            placeholder="名前"
-            data-vv-as="名前"
-            :error-messages="errors.collect('categoryName')"
-            :value="category.name"
-            @update-value="updateValue"
-          />
-        </div>
+    <form class="categories-edit__text" @submit.prevent="editCategory">
+      <div class="categories-edit__text__input">
+        <app-input
+          v-validate="'required'"
+          name="categoryName"
+          type="text"
+          placeholder="カテゴリー名"
+          data-vv-as="カテゴリー名"
+          :error-messages="errors.collect('categoryName')"
+          :value="category.name"
+          @update-value="updateValue"
+        />
       </div>
 
-      <div class="users-detail__info__submit">
+      <div class="categories-edit__text__submit">
         <app-button
           button-type="submit"
           :disabled="disabled || !access.edit"
@@ -41,11 +39,11 @@
       </div>
     </form>
 
-    <div v-if="errorMessage" class="users-detail__notice">
+    <div v-if="errorMessage" class="categories-edit__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
 
-    <div v-if="doneMessage" class="users-detail__notice">
+    <div v-if="doneMessage" class="categories-edit__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
   </section>
@@ -81,10 +79,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    options: {
-      type: Array,
-      default: () => [],
-    },
     disabled: {
       type: Boolean,
       default: false,
@@ -116,35 +110,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.users-detail {
+.categories-edit {
   &__back {
     margin-top: 20px;
   }
   &__notice {
     margin-top: 20px;
   }
-  &__info {
-    margin: 0 auto;
+  &__text {
     margin-top: 20px;
-    width: 80%;
-    &__row {
-      display: flex;
-      align-items: center;
-      margin-top: 20px;
-      &:first-child {
-        margin-top: 0;
-      }
-      &__title {
-        width: 20%;
-        text-align: right;
-      }
-      &__content {
-        margin-left: 10%;
-        width: 70%;
-      }
-    }
     &__submit {
-      text-align: right;
       margin-top: 20px;
     }
   }
