@@ -1,6 +1,5 @@
 <template>
   <app-category-edit
-    caution-message="※ 名前以外の文頭・文末・文中の全角・半角スペースは削除されます。"
     :error-message="errorMessage"
     :done-message="doneMessage"
     :category="category"

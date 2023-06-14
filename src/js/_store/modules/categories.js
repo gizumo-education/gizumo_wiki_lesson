@@ -114,8 +114,6 @@ export default {
         method: 'GET',
         url: `/category/${id}`,
       }).then(response => {
-        if (response.data.code === 0) throw new Error(response.data.message);
-
         const data = response.data.category;
         const category = {
           id: data.id,
@@ -127,6 +125,7 @@ export default {
       });
     },
     editCategory({ commit, rootGetters }, category) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${category.id}`,
