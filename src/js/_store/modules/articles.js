@@ -306,7 +306,7 @@ export default {
     getPage({ commit, rootGetters }, pageNumber) {
       return new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
-          method: 'Get',
+          method: 'GET',
           url: `/article/?page=${pageNumber}`,
         }).then(res => {
           const payload = {
