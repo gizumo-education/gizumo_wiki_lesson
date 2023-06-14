@@ -24,11 +24,9 @@ export default {
     doneGetAllCategories(state, categories) {
       state.categoryList = categories;
       state.categoryList.reverse();
-      state.loading = false;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      state.loading = false;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -132,6 +130,7 @@ export default {
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(err => {
         commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
     confirmDeleteCategory({ commit }, deleteCategory) {
