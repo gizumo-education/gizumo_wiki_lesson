@@ -95,10 +95,7 @@ export default {
       commit('initCategory');
     },
     updateValue({ commit }, name) {
-      commit({
-        type: 'updateValue',
-        name,
-      });
+      commit('updateValue', { name });
     },
     clearMessage({ commit }) {
       commit('clearMessage');
