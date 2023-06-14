@@ -104,7 +104,7 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    getCategory({ commit, rootGetters }, { id }) {
+    getCategory({ commit, rootGetters }, id) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${id}`,
