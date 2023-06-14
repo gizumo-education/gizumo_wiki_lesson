@@ -49,6 +49,7 @@ export default {
     },
   },
   created() {
+    this.currentPage = parseInt(this.$route.query.page, 10) || 1;
     this.fetchArticles();
   },
   methods: {
@@ -87,17 +88,16 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles').then(() => {
+        const pageNumber = this.currentPage;
+        this.$store.dispatch('articles/getPage', pageNumber).then(() => {
           this.totalPages = this.$store.state.articles.meta.last_page;
-          this.currentPage = parseInt(this.$route.query.page, 10) || 1;
-          const pageNumber = this.currentPage;
-          this.$store.dispatch('articles/getPage', pageNumber);
         }).catch(() => {
           // console.log(err);
         });
       }
     },
     goToPage(pageNumber) {
+      this.currentPage = pageNumber;
       const currentPath = this.$route.path;
       const query = { ...this.$route.query, page: pageNumber };
       this.$router.push({ path: currentPath, query });

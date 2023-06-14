@@ -308,20 +308,24 @@ export default {
       commit('clearMessage');
     },
     getPage({ commit, rootGetters }, pageNumber) {
-      axios(rootGetters['auth/token'])({
-        method: 'Get',
-        url: `/article/?page=${pageNumber}`,
-      }).then(res => {
-        const metaData = {
-          meta: res.data.meta,
-        };
-        const payload = {
-          articles: res.data.articles,
-        };
-        commit('doneGetPageData', metaData);
-        commit('doneGetAllArticles', payload);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'Get',
+          url: `/article/?page=${pageNumber}`,
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+          };
+          const metaData = {
+            meta: res.data.meta,
+          };
+          commit('doneGetAllArticles', payload);
+          commit('doneGetPageData', metaData);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
       });
     },
   },
