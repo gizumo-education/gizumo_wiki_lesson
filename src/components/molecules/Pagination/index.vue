@@ -60,43 +60,21 @@ export default {
       }
       this.$emit('go-to-page', pageNumber);
     },
-    isFirstPageVisible() {
-      return this.currentPage > Math.floor(this.visiblePages / 2) + 1;
-    },
-    isLastPageVisible() {
-      return this.totalPages - this.currentPage >= Math.floor(this.visiblePages / 2);
-    },
     generatePageNumbers() {
       const pageNumbers = [];
-      let startPage = 2;
-      let endPage = this.totalPages - 1;
+      const visiblePages = Math.min(this.visiblePages, this.totalPages - 1);
+      const middlePage = Math.floor(visiblePages / 2);
+      let startPage = Math.max(2, this.currentPage - middlePage);
 
-      if (this.totalPages - 1 > this.visiblePages) {
-        const maxVisiblePages = this.visiblePages;
-        const offset = Math.floor(maxVisiblePages / 2);
-
-        if (this.isFirstPageVisible()) {
-          startPage = this.currentPage - offset;
-          endPage = this.currentPage + offset;
-
-          if (endPage > this.totalPages - 1) {
-            endPage = this.totalPages - 1;
-            startPage = endPage - maxVisiblePages + 1;
-          }
-        } else if (this.isLastPageVisible()) {
-          endPage = this.currentPage + offset;
-          startPage = endPage - maxVisiblePages + 1;
-
-          if (startPage < 2) {
-            startPage = 2;
-            endPage = startPage + maxVisiblePages - 1;
-          }
-        }
+      if (startPage + visiblePages > this.totalPages - 1) {
+        startPage = Math.max(2, this.totalPages - visiblePages);
       }
-      for (let i = startPage; i <= endPage; i += 1) {
+
+      for (let i = startPage; i <= startPage + visiblePages; i += 1) {
         pageNumbers.push(i);
       }
-      return pageNumbers;
+
+      return pageNumbers.slice(0, visiblePages);
     },
   },
 };
