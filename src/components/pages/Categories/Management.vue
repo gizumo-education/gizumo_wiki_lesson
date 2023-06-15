@@ -48,6 +48,10 @@ export default {
     width: 40%;
     margin-right: 20px;
   }
+  .category_list {
+    border-left: 2px solid $separator-color;
+
+  }
   .category_list.category-list {
     padding: 10px 0 20px 20px;
   }
