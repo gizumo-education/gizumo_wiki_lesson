@@ -135,11 +135,6 @@ export default {
   height: 100%;
   overflow: scroll;
   border-left: 2px solid $separator-color;
-  &__title {
-    padding: 0 10px 10px;
-    color:$theme-color;
-    font-weight:bold;
-  }
   &__table {
     width: 100%;
     text-align: left;
