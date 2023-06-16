@@ -48,10 +48,11 @@ export default {
       type: Number,
       default: null,
     },
-    visiblePages: {
-      type: Number,
-      default: 5,
-    },
+  },
+  data() {
+    return {
+      visiblePages: 5,
+    };
   },
   methods: {
     goToPage(pageNumber) {

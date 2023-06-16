@@ -10,7 +10,6 @@
     <app-pagination
       :current-page="currentPage"
       :total-pages="totalPages"
-      :visible-pages="visiblePages"
       @open-modal="openModal"
       @handle-click="handleClick"
       @go-to-page="goToPage"
@@ -37,7 +36,6 @@ export default {
       title: 'すべて',
       currentPage: 1,
       totalPages: null,
-      visiblePages: 5,
     };
   },
   computed: {
