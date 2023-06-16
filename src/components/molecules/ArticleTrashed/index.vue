@@ -39,21 +39,21 @@
             <app-text
               small
             >
-              {{ article.title | readMore(30) }}
+              {{ readMore(article.title) }}
             </app-text>
           </td>
           <td class="trash-list__table__tr__td">
             <app-text
               small
             >
-              {{ article.content | readMore(30) }}
+              {{ readMore(article.content) }}
             </app-text>
           </td>
           <td class="trash-list__table__tr__td">
             <app-text
               small
             >
-              {{ article.created_at | textLimit(10) }}
+              {{ textLimit(article.created_at) }}
             </app-text>
           </td>
         </tr>
@@ -75,17 +75,6 @@ export default {
     appRouterLink: RouterLink,
     appText: Text,
   },
-  filters: {
-    readMore(text, maxLength) {
-      if (text.length > maxLength) {
-        return `${text.substring(0, maxLength)}...`;
-      }
-      return text;
-    },
-    textLimit(text, maxLength) {
-      return text.substring(0, maxLength);
-    },
-  },
   props: {
     theads: {
       type: Array,
@@ -93,7 +82,18 @@ export default {
     },
     trashedArticles: {
       type: Array,
-      default: () => [],
+      required: true,
+    },
+  },
+  methods: {
+    readMore(text) {
+      if (text.length > 30) {
+        return `${text.substring(0, 30)}...`;
+      }
+      return text;
+    },
+    textLimit(text) {
+      return text.substring(0, 10);
     },
   },
 };
