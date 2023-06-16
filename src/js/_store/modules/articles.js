@@ -8,6 +8,7 @@ export default {
       id: null,
       title: '',
       content: '',
+      created_at: '',
       category: {
         id: null,
         name: '',
@@ -26,6 +27,7 @@ export default {
     lastPage: null,
     pageNum: null,
     articleList: [],
+    trashedList: [],
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -90,6 +92,9 @@ export default {
       state.lastPage = payload.lastPage;
       state.articleList = [...payload.articles];
     },
+    doneGetAllTrashedArticles(state, payload) {
+      state.trashedList = [...payload];
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -137,6 +142,15 @@ export default {
         commit('doneGetAllArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
+      });
+    },
+    getAllTrashedArticles({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const payload = res.data.articles;
+        commit('doneGetAllTrashedArticles', payload);
       });
     },
     getArticleDetail({ commit, rootGetters }, articleId) {
