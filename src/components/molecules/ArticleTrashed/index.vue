@@ -85,15 +85,12 @@ export default {
       required: true,
     },
   },
-  methods: {
-    readMore(text) {
-      if (text.length > 30) {
-        return `${text.substring(0, 30)}...`;
-      }
-      return text;
+  computed: {
+    readMore() {
+      return text => `${text.substring(0, 30)}...`;
     },
-    textLimit(text) {
-      return text.substring(0, 10);
+    textLimit() {
+      return text => text.substring(0, 10);
     },
   },
 };
