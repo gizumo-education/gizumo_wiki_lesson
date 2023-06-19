@@ -42,11 +42,12 @@ export default {
   props: {
     currentPage: {
       type: Number,
-      default: null,
+      required: true,
+
     },
     totalPages: {
       type: Number,
-      default: null,
+      required: true,
     },
   },
   data() {
@@ -59,7 +60,9 @@ export default {
       if (pageNumber === this.currentPage) {
         return;
       }
-      this.$emit('go-to-page', pageNumber);
+      const currentPath = this.$route.path;
+      const query = { ...this.$route.query, page: pageNumber };
+      this.$router.push({ path: currentPath, query });
     },
     generatePageNumbers() {
       const pageNumbers = [];
