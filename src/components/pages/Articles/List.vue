@@ -12,7 +12,6 @@
       :total-pages="totalPages"
       @open-modal="openModal"
       @handle-click="handleClick"
-      @go-to-page="goToPage"
     />
   </div>
 </template>
@@ -28,17 +27,22 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const pageNumber = parseInt(to.query.page, 10) || 1;
+    this.fetchArticles(pageNumber);
     next();
   },
   data() {
     return {
       title: 'すべて',
-      currentPage: 1,
-      totalPages: null,
     };
   },
   computed: {
+    currentPage() {
+      return parseInt(this.$route.query.page, 10) || 1;
+    },
+    totalPages() {
+      return this.$store.state.articles.meta.last_page;
+    },
     articlesList() {
       return this.$store.state.articles.articleList;
     },
@@ -50,7 +54,6 @@ export default {
     },
   },
   created() {
-    this.currentPage = parseInt(this.$route.query.page, 10) || 1;
     this.fetchArticles();
   },
   methods: {
@@ -76,7 +79,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageNumber) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -89,19 +92,8 @@ export default {
             // console.log(err);
           });
       } else {
-        const pageNumber = this.currentPage;
-        this.$store.dispatch('articles/getPage', pageNumber).then(() => {
-          this.totalPages = this.$store.state.articles.meta.last_page;
-        }).catch(() => {
-          // console.log(err);
-        });
+        this.$store.dispatch('articles/getPage', pageNumber);
       }
-    },
-    goToPage(pageNumber) {
-      this.currentPage = pageNumber;
-      const currentPath = this.$route.path;
-      const query = { ...this.$route.query, page: pageNumber };
-      this.$router.push({ path: currentPath, query });
     },
   },
 };
