@@ -1,21 +1,26 @@
 <template>
   <div class="categories-list">
-    <CategoryPost :class="{listWidth}" />
-    <CategoryList :categories="categories" :class="{listWidth}" />
+    <categoryPost class="post-width" />
+    <categoryList
+      :categories="categories"
+      :theads="theads"
+      class="list-width"
+    />
   </div>
 </template>
+
 <script>
-import CategoryList from '@Components/molecules/CategoryList/index.vue';
-import CategoryPost from '@Components/molecules/CategoryPost/index.vue';
+import categoryList from '@Components/molecules/CategoryList/index.vue';
+import categoryPost from '@Components/molecules/CategoryPost/index.vue';
 
 export default {
   components: {
-    CategoryList,
-    CategoryPost,
+    categoryList,
+    categoryPost,
   },
   data() {
     return {
-      listWidth: true,
+      theads: ['カテゴリー名'],
     };
   },
   computed: {
@@ -33,11 +38,15 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .categories-list{
   display:flex;
 }
-.listWidth{
-  width: 50%;
+.list-width{
+  width: 60%;
+}
+.post-width{
+  width: 40%;
 }
 </style>

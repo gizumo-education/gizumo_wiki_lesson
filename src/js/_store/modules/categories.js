@@ -3,22 +3,14 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    categories: {
-      id: null,
-      name: '',
-    },
-    categoryList: [
-      {
-        id: 1,
-        name: 'aaa',
-      },
-    ],
+    categoryList: [],
+    errorMessage: '',
   },
   mutations: {
     doneGetAllCategories(state, payload) {
-      state.categoryList = [...payload.categories];
+      state.categoryList = [...payload.categories.reverse()];
     },
-
+    failRequest(state, { message }) { state.errorMessage = message; },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -30,6 +22,8 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
