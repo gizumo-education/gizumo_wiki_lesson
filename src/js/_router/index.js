@@ -27,6 +27,10 @@ import UserCreate from '@Pages/Users/Create.vue';
 import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
+// カテゴリーページ
+import Categories from '@Pages/Categories/index.vue';
+import CategoriesList from '@Pages/Categories/List.vue';
+
 import Store from '../_store';
 
 Vue.use(VueRouter);
@@ -104,6 +108,18 @@ const router = new VueRouter({
           name: 'articleEdit',
           path: ':id/edit',
           component: ArticleEdit,
+        },
+        {
+          name: 'categories',
+          path: '/categories',
+          component: Categories,
+          children: [
+            {
+              name: 'categoriesList',
+              path: '',
+              component: CategoriesList,
+            },
+          ],
         },
       ],
     },

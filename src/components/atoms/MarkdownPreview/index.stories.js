@@ -74,7 +74,7 @@ const mockUpData = {
   mutations: {
     getArticle(state, payload) {
       state.targetArticle = Object.assign(
-        state.articleList.find(article => article.id === payload.id),
+        state..find(article => article.id === payload.id),
       );
     }
   },
