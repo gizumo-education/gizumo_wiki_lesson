@@ -31,7 +31,7 @@ export default {
     meta: {
       current_page: '',
       form: '',
-      last_page: '',
+      last_page: 0,
       path: '',
       per_page: '',
       to: '',
