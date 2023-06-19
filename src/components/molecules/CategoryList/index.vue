@@ -134,7 +134,6 @@ export default {
   padding: 10px 0 20px;
   height: 100%;
   overflow: scroll;
-  border-left: 2px solid $separator-color;
   &__table {
     width: 100%;
     text-align: left;

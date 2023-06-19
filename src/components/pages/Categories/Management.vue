@@ -42,7 +42,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss" scoped>
   .category_post {
     float: left;
     width: 40%;
@@ -50,7 +50,6 @@ export default {
   }
   .category_list {
     border-left: 2px solid $separator-color;
-
   }
   .category_list.category-list {
     padding: 10px 0 20px 20px;
