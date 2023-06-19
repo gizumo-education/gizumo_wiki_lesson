@@ -16,6 +16,17 @@
     >
       新しいドキュメントを作る
     </app-router-link>
+    <app-router-link
+      to="articles/trashed"
+      white
+      bg-lightgreen
+      small
+      round
+      hover-opacity
+      class="article-list__trashed-link"
+    >
+      削除済記事一覧
+    </app-router-link>
     <transition-group
       class="article-list__articles"
       name="fade"
@@ -160,6 +171,9 @@ export default {
     }
     &__create-link {
       margin-top: 16px;
+    }
+    &__trashed-link {
+      margin-left: 16px;
     }
     &__links {
       *:not(first-child) {
