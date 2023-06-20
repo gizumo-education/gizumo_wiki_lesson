@@ -9,6 +9,7 @@
       :categories="categories"
       :theads="theads"
       class="list-width list-border"
+      :access="access"
     />
   </div>
 </template>
