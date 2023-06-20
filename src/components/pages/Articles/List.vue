@@ -6,6 +6,10 @@
       :done-message="doneMessage"
       :access="access"
       border-gray
+    />
+    <app-pagination
+      :current-page="currentPage"
+      :total-pages="totalPages"
       @open-modal="openModal"
       @handle-click="handleClick"
     />
@@ -13,16 +17,18 @@
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const pageNumber = parseInt(to.query.page, 10) || 1;
+    this.fetchArticles(pageNumber);
     next();
   },
   data() {
@@ -31,6 +37,12 @@ export default {
     };
   },
   computed: {
+    currentPage() {
+      return parseInt(this.$route.query.page, 10) || 1;
+    },
+    totalPages() {
+      return this.$store.state.articles.meta.last_page;
+    },
     articlesList() {
       return this.$store.state.articles.articleList;
     },
@@ -67,7 +79,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageNumber) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,7 +92,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getPage', pageNumber);
       }
     },
   },

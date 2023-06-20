@@ -28,6 +28,15 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    meta: {
+      current_page: '',
+      form: '',
+      last_page: 0,
+      path: '',
+      per_page: '',
+      to: '',
+      total: '',
+    },
   },
   getters: {
     transformedArticles(state) {
@@ -115,6 +124,12 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    doneGetMeta(state, metaData) {
+      state.meta = metaData.meta;
+    },
+    doneGetPageData(state, metaData) {
+      state.meta = metaData.meta;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
@@ -128,7 +143,11 @@ export default {
         const payload = {
           articles: res.data.articles,
         };
+        const metaData = {
+          meta: res.data.meta,
+        };
         commit('doneGetAllArticles', payload);
+        commit('doneGetMeta', metaData);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -283,6 +302,27 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getPage({ commit, rootGetters }, pageNumber) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/article/?page=${pageNumber}`,
+        }).then(res => {
+          const payload = {
+            articles: res.data.articles,
+          };
+          const metaData = {
+            meta: res.data.meta,
+          };
+          commit('doneGetAllArticles', payload);
+          commit('doneGetPageData', metaData);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
     },
   },
 };
