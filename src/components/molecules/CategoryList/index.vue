@@ -45,7 +45,7 @@
               bg-danger
               small
               round
-              :disabled="!access.delete"
+              :disabled="access.delete"
               @click="openModal(category.id, category.name)"
             >
               削除

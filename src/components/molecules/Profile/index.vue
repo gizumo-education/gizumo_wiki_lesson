@@ -5,7 +5,7 @@
     <div class="profile__info">
       <div class="profile__info__row">
         <div class="profile__info__row__title">
-          <app-text theme-color bold />
+          <app-text theme-color bold>名前</app-text>
         </div>
         <div class="profile__info__row__content">
           <app-text>{{ user.full_name }}</app-text>
