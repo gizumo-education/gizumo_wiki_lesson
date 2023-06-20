@@ -117,6 +117,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    title: {
+      type: String,
+      default: 'すべて',
+    },
   },
   methods: {
     openModal(categoryId, categoryName) {

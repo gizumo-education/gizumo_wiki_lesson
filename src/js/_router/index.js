@@ -16,6 +16,7 @@ import ArticlePost from '@Pages/Articles/Post.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 import Management from '@Pages/Categories/Management.vue';
 
 // 自分のアカウントページ
@@ -115,6 +116,11 @@ const router = new VueRouter({
       path: '/categories',
       component: Categories,
       children: [
+        {
+          name: 'categoryEdit',
+          path: ':id',
+          component: CategoryEdit,
+        },
         {
           name: 'Management',
           path: '',

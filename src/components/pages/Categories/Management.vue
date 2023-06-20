@@ -71,10 +71,12 @@ export default {
         this.categoryName = '';
       });
     },
+    /* eslint-disable max-len */
     openDeleteModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/setTargetCategory', { categoryId, categoryName });
+      this.$store.dispatch('categories/setTargetDeleteCategory', { categoryId, categoryName });
       this.toggleModal();
     },
+    /* eslint-disable max-len */
     handleClick() {
       this.$store.dispatch('categories/deleteCategory').then(() => {
         this.$store.dispatch('categories/getAllCategories');
