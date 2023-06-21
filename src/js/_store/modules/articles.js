@@ -324,5 +324,18 @@ export default {
         });
       });
     },
+    getTrashedPage({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+        };
+        commit('doneGetAllArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
   },
 };
