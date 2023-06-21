@@ -1,28 +1,37 @@
 <template>
-  <div class="articles">
-    <app-article-list
-      :title="title"
-      :target-array="articlesList"
-      :done-message="doneMessage"
-      :access="access"
-      border-gray
-      @open-modal="openModal"
-      @handle-click="handleClick"
-    />
+  <div>
+    <div class="articles">
+      <app-article-list
+        :title="title"
+        :target-array="articlesList"
+        :done-message="doneMessage"
+        :access="access"
+        border-gray
+        @open-modal="openModal"
+        @handle-click="handleClick"
+      />
+    </div>
+    <div class="pagenation">
+      <app-paginate
+        :current-page="currentPage"
+        :total-count="totalCount"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Paginate } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPaginate: Paginate,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    this.fetchArticles(to.query.page);
     next();
   },
   data() {
@@ -32,7 +41,19 @@ export default {
   },
   computed: {
     articlesList() {
-      return this.$store.state.articles.articleList;
+      if (this.currentPage === 1) {
+        return this.$store.state.articles.articleList.slice(0, 10);
+      }
+      const sliceFrom = (((this.currentPage - 2) * 10) + 10);
+      const sliceTo = this.currentPage * 10;
+      return this.$store.state.articles.articleList.slice(sliceFrom, sliceTo);
+    },
+    totalCount() {
+      const totalPage = this.$store.state.articles.articleList.length;
+      return Math.ceil(totalPage / 10);
+    },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
@@ -42,7 +63,7 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +88,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageNum) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,7 +101,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', pageNum);
       }
     },
   },

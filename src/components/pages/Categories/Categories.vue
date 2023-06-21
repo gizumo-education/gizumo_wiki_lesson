@@ -19,7 +19,7 @@
         @handle-click="handleClick"
         @open-modal="openModal"
       />
-    </div>>
+    </div>
   </div>
 </template>
 
