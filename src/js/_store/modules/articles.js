@@ -24,6 +24,7 @@ export default {
       },
     },
     articleList: [],
+    trashedArticleList: [],
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -129,6 +130,9 @@ export default {
     },
     doneGetPageData(state, metaData) {
       state.meta = metaData.meta;
+    },
+    doneGetTrashedArticles(state, payload) {
+      state.trashedArticleList = [...payload.articles];
     },
   },
   actions: {
@@ -322,6 +326,19 @@ export default {
           commit('failRequest', { message: err.message });
           reject();
         });
+      });
+    },
+    getTrashedPage({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+        };
+        commit('doneGetTrashedArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
