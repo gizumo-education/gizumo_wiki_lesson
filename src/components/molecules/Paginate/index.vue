@@ -1,57 +1,43 @@
 <template>
   <div class="paginate">
-    <app-button
-      :disabled="currentPage === 1"
-      class="paginate-padding"
+    <app-router-link
+      :to="`${path}?page=1`"
+      :exact-active-class="currentPage === 1 ? 'is-disable' : ''"
+      class="paginate__link"
     >
-      <app-router-link
-        :to="`${path}?page=1`"
-        class="paginate__link"
-      >
-        1
-      </app-router-link>
-    </app-button>
+      1
+    </app-router-link>
     <span class="paginate__dots paginate-margin-left">...</span>
-    <app-button
+    <app-router-link
       v-for="page in pages"
       :key="page"
-      :disabled="currentPage === page"
-      class="paginate-padding paginate-margin-left"
+      :to="`${path}?page=${page}`"
+      :exact-active-class="page === currentPage ? 'is-disable' : ''"
+      class="paginate__link paginate-margin-left"
     >
-      <app-router-link
-        :to="`${path}?page=${page}`"
-        :exact-active-class="page === currentPage ? 'is-disable' : ''"
-        class="paginate__link"
-      >
-        {{ page }}
-      </app-router-link>
-    </app-button>
+      {{ page }}
+    </app-router-link>
     <span
       v-if="currentPage <= totalCount - 3"
       class="paginate__dots paginate-margin-left"
     >
       ...
     </span>
-    <app-button
-      :disabled="currentPage === totalCount"
-      class="paginate-padding paginate-margin-left"
+    <app-router-link
+      :to="`${path}?page=${totalCount}`"
+      :exact-active-class="currentPage === totalCount ? 'is-disable' : ''"
+      class="paginate__link paginate-margin-left"
     >
-      <app-router-link
-        :to="`${path}?page=${totalCount}`"
-        class="paginate__link"
-      >
-        {{ totalCount }}
-      </app-router-link>
-    </app-button>
+      {{ totalCount }}
+    </app-router-link>
   </div>
 </template>
 
 <script>
-import { Button, RouterLink } from '@Components/atoms';
+import { RouterLink } from '@Components/atoms';
 
 export default {
   components: {
-    appButton: Button,
     appRouterLink: RouterLink,
   },
   props: {
@@ -89,6 +75,7 @@ export default {
 
   &__link {
     padding: 8px 20px;
+    background-color: $theme-color;
     color: #ffffff;
   }
   &__dots {
@@ -106,7 +93,7 @@ export default {
   }
 }
 .is-disable {
-  cursor: default;
+  cursor: auto;
   background-color: $disabled-color;
 }
 </style>

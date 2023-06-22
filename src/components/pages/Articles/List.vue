@@ -43,7 +43,6 @@ export default {
       return this.$store.state.articles.lastPage;
     },
     currentPage() {
-      console.log(this.$route.query);
       return this.$store.state.articles.currentPage;
     },
     doneMessage() {
