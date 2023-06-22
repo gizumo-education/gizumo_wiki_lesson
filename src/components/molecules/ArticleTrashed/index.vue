@@ -1,5 +1,5 @@
 <template>
-  <div class="Trashed">
+  <div class="article-trashed">
     <app-heading :level="1">{{ '削除済み記事一覧' }}</app-heading>
     <app-router-link
       to="/articles"
@@ -9,11 +9,11 @@
       small
       round
       hover-opacity
-      class="Trashed__btn"
+      class="article-trashed__btn"
     >
       すべての記事一覧へ戻る
     </app-router-link>
-    <div class="Trashed__main">
+    <div class="article-trashed__main">
       <table>
         <thead>
           <tr>
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Trashed {
+.article-trashed {
   &__btn {
     margin-top: 16px;
   }
