@@ -336,7 +336,6 @@ export default {
         const payload = {
           articles: res.data.articles,
         };
-        // commit('doneGetAllArticles', payload);
         commit('doneGetTrashedArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
