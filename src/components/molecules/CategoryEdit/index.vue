@@ -20,7 +20,7 @@
             name="name"
             type="text"
             white-bg
-            :error-messages="errors.collect('targetCategory.id, targetCategory.name')"
+            :error-messages="errors.collect('name')"
             :value="editDetail"
             @update-value="inputCategory"
           />
@@ -60,10 +60,6 @@ export default {
     appText: Text,
   },
   props: {
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     categoryName: {
       type: String,
       default: '',

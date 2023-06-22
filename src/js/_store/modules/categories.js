@@ -16,7 +16,6 @@ export default {
       name: '',
     },
     editDetail: '',
-    updateCategory: '',
   },
   getters: {
     deleteCategoryId: state => state.deleteCategory.id,
@@ -127,9 +126,10 @@ export default {
         commit('updateCategory');
         commit('editDetail', res.data.category.name);
         commit('toggleLoading');
-        commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(err => {
         commit('failRequest', { message: err.message });
+        commit('afterDoneClearMessage');
         commit('toggleLoading');
       });
     },

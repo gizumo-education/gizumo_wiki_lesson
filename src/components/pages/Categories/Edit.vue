@@ -1,7 +1,5 @@
 <template>
-  <!-- :category="categoryName" -->
   <app-category-edit
-    :category-id="categoryId"
     :loading="loading"
     :error-message="errorMessage"
     :done-message="doneMessage"
@@ -42,7 +40,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/editDetail', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/editDetail', this.categoryId);
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {
@@ -50,7 +48,7 @@ export default {
       if (!this.loading) this.$store.dispatch('categories/inputCategory', target);
     },
     updateCategory() {
-      this.$store.dispatch('categories/updateCategory', parseInt(this.categoryId, 10));
+      this.$store.dispatch('categories/updateCategory', this.categoryId);
     },
   },
 };
