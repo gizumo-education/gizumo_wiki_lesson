@@ -72,7 +72,10 @@ export default {
       });
     },
     openDeleteModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/setTargetCategory', { categoryId, categoryName });
+      this.$store.dispatch(
+        'categories/setTargetDeleteCategory',
+        { categoryId, categoryName },
+      );
       this.toggleModal();
     },
     handleClick() {
