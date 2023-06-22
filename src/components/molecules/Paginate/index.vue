@@ -20,6 +20,7 @@
     >
       <app-router-link
         :to="`${path}?page=${page}`"
+        :exact-active-class="page === currentPage ? 'is-disable' : ''"
         class="paginate__link"
       >
         {{ page }}
@@ -60,11 +61,7 @@ export default {
     },
     totalCount: {
       type: Number,
-      default: 36, // 設計書の数(仮の数字)
-    },
-    pagePath: {
-      type: String,
-      default: '',
+      required: true,
     },
   },
   computed: {
@@ -107,5 +104,9 @@ export default {
   &-margin-left {
     margin-left: 20px;
   }
+}
+.is-disable {
+  cursor: default;
+  background-color: $disabled-color;
 }
 </style>

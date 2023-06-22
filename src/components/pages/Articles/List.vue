@@ -1,22 +1,18 @@
 <template>
   <div>
-    <div class="articles">
-      <app-article-list
-        :title="title"
-        :target-array="articlesList"
-        :done-message="doneMessage"
-        :access="access"
-        border-gray
-        @open-modal="openModal"
-        @handle-click="handleClick"
-      />
-    </div>
-    <div class="pagenation">
-      <app-paginate
-        :current-page="currentPage"
-        :total-count="totalCount"
-      />
-    </div>
+    <app-article-list
+      :title="title"
+      :target-array="articlesList"
+      :done-message="doneMessage"
+      :access="access"
+      border-gray
+      @open-modal="openModal"
+      @handle-click="handleClick"
+    />
+    <app-paginate
+      :current-page="currentPage"
+      :total-count="totalCount"
+    />
   </div>
 </template>
 
@@ -47,6 +43,7 @@ export default {
       return this.$store.state.articles.lastPage;
     },
     currentPage() {
+      console.log(this.$route.query);
       return this.$store.state.articles.currentPage;
     },
     doneMessage() {

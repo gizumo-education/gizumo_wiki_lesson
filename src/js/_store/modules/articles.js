@@ -123,7 +123,7 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }, pageNum) {
+    getAllArticles({ commit, rootGetters }, pageNum = 1) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/article?page=${pageNum}`,
