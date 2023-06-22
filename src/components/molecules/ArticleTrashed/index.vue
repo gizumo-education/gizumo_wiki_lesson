@@ -1,5 +1,8 @@
 <template>
   <div class="article-trashed">
+    <div v-if="doneMessage" class="article-trashed__notice--create">
+      <app-text bg-success>{{ doneMessage }}</app-text>
+    </div>
     <app-heading :level="1">削除済み記事一覧</app-heading>
     <app-router-link
       to="/articles"
@@ -69,6 +72,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    doneMessage: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     truncatedTitle() {
@@ -121,6 +128,9 @@ export default {
   }
   tr {
     border-bottom: 1px solid $separator-color;
+  }
+  &__notice--create {
+    margin-top: 16px;
   }
 }
 </style>
