@@ -8,6 +8,7 @@ export default {
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoriesList = [...payload.categories];
+      state.categoriesList = state.categoriesList.reverse();
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
