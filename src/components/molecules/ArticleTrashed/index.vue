@@ -31,17 +31,17 @@
           <tr v-for="article in targetArray" :key="article.id">
             <td>
               <app-text tag="span" small>
-                {{ truncateText(article.title, 30) }}
+                {{ truncatedTitle(article.title) }}
               </app-text>
             </td>
             <td>
               <app-text tag="span" small>
-                {{ truncateText(article.content, 30) }}
+                {{ truncatedContent(article.content) }}
               </app-text>
             </td>
             <td>
               <app-text tag="span" small>
-                {{ formatDate(article.created_at) }}
+                {{ formattedDate(article.created_at) }}
               </app-text>
             </td>
           </tr>
@@ -68,6 +68,17 @@ export default {
     targetArray: {
       type: Array,
       default: () => [],
+    },
+  },
+  computed: {
+    truncatedTitle() {
+      return title => this.truncateText(title, 30);
+    },
+    truncatedContent() {
+      return content => this.truncateText(content, 30);
+    },
+    formattedDate() {
+      return date => this.formatDate(date);
     },
   },
   methods: {
