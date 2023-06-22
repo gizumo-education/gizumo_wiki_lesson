@@ -25,6 +25,7 @@ export default {
     },
     articleList: [],
     currentPage: null,
+    lastPage: null,
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -87,6 +88,7 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
       state.currentPage = payload.currentPage;
+      state.lastPage = payload.lastPage;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -129,6 +131,7 @@ export default {
         const payload = {
           articles: res.data.articles,
           currentPage: res.data.meta.current_page,
+          lastPage: res.data.meta.last_page,
         };
         commit('doneGetAllArticles', payload);
       }).catch(err => {

@@ -41,16 +41,10 @@ export default {
   },
   computed: {
     articlesList() {
-      if (this.currentPage === 1) {
-        return this.$store.state.articles.articleList.slice(0, 10);
-      }
-      const sliceFrom = (((this.currentPage - 2) * 10) + 10);
-      const sliceTo = this.currentPage * 10;
-      return this.$store.state.articles.articleList.slice(sliceFrom, sliceTo);
+      return this.$store.state.articles.articleList;
     },
     totalCount() {
-      const totalPage = this.$store.state.articles.articleList.length;
-      return Math.ceil(totalPage / 10);
+      return this.$store.state.articles.lastPage;
     },
     currentPage() {
       return this.$store.state.articles.currentPage;

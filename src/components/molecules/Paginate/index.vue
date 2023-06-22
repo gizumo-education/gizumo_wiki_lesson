@@ -2,7 +2,7 @@
   <div class="paginate">
     <app-button
       :disabled="currentPage === 1"
-      style="padding: 0;"
+      class="paginate-padding"
     >
       <app-router-link
         :to="`${path}?page=1`"
@@ -16,7 +16,7 @@
       v-for="page in pages"
       :key="page"
       :disabled="currentPage === page"
-      style="padding: 0; margin-left: 20px;"
+      class="paginate-padding paginate-margin-left"
     >
       <app-router-link
         :to="`${path}?page=${page}`"
@@ -33,7 +33,7 @@
     </span>
     <app-button
       :disabled="currentPage === totalCount"
-      style="padding: 0; margin-left: 20px;"
+      class="paginate-padding paginate-margin-left"
     >
       <app-router-link
         :to="`${path}?page=${totalCount}`"
@@ -99,6 +99,12 @@ export default {
     top: -5px;
     color: #757474;
     font-size: 20px;
+    margin-left: 20px;
+  }
+  &-padding {
+    padding: 0;
+  }
+  &-margin-left {
     margin-left: 20px;
   }
 }
