@@ -1,6 +1,6 @@
 <template>
   <app-article-trashed
-    :target-array="articlesList"
+    :target-array="trashedArticleList"
     :done-message="doneMessage"
   />
 </template>
@@ -13,8 +13,8 @@ export default {
     appArticleTrashed: ArticleTrashed,
   },
   computed: {
-    articlesList() {
-      return this.$store.state.articles.articleList;
+    trashedArticleList() {
+      return this.$store.state.articles.trashedArticleList;
     },
     doneMessage() {
       return this.$store.state.articles.doneMessage;

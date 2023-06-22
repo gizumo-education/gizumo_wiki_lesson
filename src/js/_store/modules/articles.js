@@ -24,6 +24,7 @@ export default {
       },
     },
     articleList: [],
+    trashedArticleList: [],
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -129,6 +130,9 @@ export default {
     },
     doneGetPageData(state, metaData) {
       state.meta = metaData.meta;
+    },
+    doneGetTrashedArticles(state, payload) {
+      state.trashedArticleList = [...payload.articles];
     },
   },
   actions: {
@@ -332,7 +336,8 @@ export default {
         const payload = {
           articles: res.data.articles,
         };
-        commit('doneGetAllArticles', payload);
+        // commit('doneGetAllArticles', payload);
+        commit('doneGetTrashedArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
