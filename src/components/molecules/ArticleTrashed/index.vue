@@ -1,7 +1,7 @@
 <template>
   <div class="article-trashed">
-    <div v-if="doneMessage" class="article-trashed__notice--create">
-      <app-text bg-success>{{ doneMessage }}</app-text>
+    <div v-if="errorMessage" class="category-management-list__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
     <app-heading :level="1">削除済み記事一覧</app-heading>
     <app-router-link
@@ -72,7 +72,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    doneMessage: {
+    errorMessage: {
       type: String,
       default: '',
     },

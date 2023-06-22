@@ -1,7 +1,7 @@
 <template>
   <app-article-trashed
     :target-array="trashedArticleList"
-    :done-message="doneMessage"
+    :error-message="errorMessage"
   />
 </template>
 
@@ -16,8 +16,8 @@ export default {
     trashedArticleList() {
       return this.$store.state.articles.trashedArticleList;
     },
-    doneMessage() {
-      return this.$store.state.articles.doneMessage;
+    errorMessage() {
+      return this.$store.state.articles.errorMessage;
     },
   },
   created() {
