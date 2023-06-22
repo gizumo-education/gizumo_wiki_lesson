@@ -3,7 +3,6 @@
     <app-heading :level="1">削除済み記事一覧</app-heading>
     <app-router-link
       to="/articles"
-      key-color
       white
       bg-lightgreen
       small
