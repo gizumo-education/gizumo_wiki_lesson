@@ -116,7 +116,6 @@ export default {
     updateCategory({ commit, rootGetters }, categoryId) {
       commit('toggleLoading');
       const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/targetCategoryId']);
       data.append('name', rootGetters['categories/targetCategoryName']);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
