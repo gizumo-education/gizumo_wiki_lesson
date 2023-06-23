@@ -24,7 +24,7 @@ export default {
       },
     },
     articleList: [],
-    currentPage: null,
+    currentPage: 1,
     lastPage: null,
     deleteArticleId: null,
     loading: false,

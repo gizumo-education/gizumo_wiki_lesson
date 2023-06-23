@@ -2,7 +2,7 @@
   <div class="paginate">
     <app-router-link
       :to="`${path}?page=1`"
-      :exact-active-class="currentPage === 1 ? 'is-disable' : ''"
+      :class="{'is-disable': currentPage === 1}"
       class="paginate__link"
     >
       1
@@ -12,7 +12,7 @@
       v-for="page in pages"
       :key="page"
       :to="`${path}?page=${page}`"
-      :exact-active-class="page === currentPage ? 'is-disable' : ''"
+      :class="{'is-disable': currentPage === page}"
       class="paginate__link paginate-margin-left"
     >
       {{ page }}
@@ -25,7 +25,7 @@
     </span>
     <app-router-link
       :to="`${path}?page=${totalCount}`"
-      :exact-active-class="currentPage === totalCount ? 'is-disable' : ''"
+      :class="{'is-disable': currentPage === totalCount}"
       class="paginate__link paginate-margin-left"
     >
       {{ totalCount }}
