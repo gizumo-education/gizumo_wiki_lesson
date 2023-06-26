@@ -1,5 +1,5 @@
 <template>
-  <div class="articles">
+  <div>
     <app-article-list
       :title="title"
       :target-array="articlesList"
@@ -9,20 +9,25 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-paginate
+      :current-page="currentPage"
+      :total-count="totalCount"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, Paginate } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appPaginate: Paginate,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    this.fetchArticles(to.query.page);
     next();
   },
   data() {
@@ -34,6 +39,12 @@ export default {
     articlesList() {
       return this.$store.state.articles.articleList;
     },
+    totalCount() {
+      return this.$store.state.articles.lastPage;
+    },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
+    },
     doneMessage() {
       return this.$store.state.articles.doneMessage;
     },
@@ -42,7 +53,7 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +78,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(pageNum) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -80,7 +91,7 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', pageNum);
       }
     },
   },
