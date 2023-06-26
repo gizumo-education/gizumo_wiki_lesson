@@ -3,7 +3,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    targetCategories: {
+    targetCategory: {
       name: '',
       id: null,
     },
@@ -14,7 +14,7 @@ export default {
   },
   mutations: {
     initPostCategories(state) {
-      state.targetCategories = {
+      state.targetCategory = {
         id: null,
         name: '',
       };
@@ -23,7 +23,7 @@ export default {
       state.categoryList = [...payload.categories.reverse()];
     },
     doneGetCategory(state, payload) {
-      state.targetCategories = { ...payload };
+      state.targetCategory = { ...payload };
       state.categoryList.unshift(payload);
     },
     failRequest(state, { message }) { state.errorMessage = message; },
@@ -38,13 +38,10 @@ export default {
       state.doneMessage = payload.message;
     },
     updateCategories(state, categoryName) {
-      state.targetCategories = { ...state.targetCategories, ...categoryName };
+      state.targetCategory = { ...state.targetCategory, ...categoryName };
     },
   },
   actions: {
-    initPostCategories({ commit }) {
-      commit('initPostCategories');
-    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -59,8 +56,9 @@ export default {
       });
     },
     postCategories({ commit, rootGetters, state }) {
-      const data = { name: state.targetCategories.name };
+      const data = { name: state.targetCategory.name };
       commit('toggleLoading');
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
@@ -80,7 +78,10 @@ export default {
       const categoryName = {
         name: payload,
       };
-      commit('categories/updateCategories', categoryName, { root: true });
+      commit('updateCategories', categoryName);
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };

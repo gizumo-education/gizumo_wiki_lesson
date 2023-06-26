@@ -62,11 +62,15 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
-      return this.disabled ? '作成中...' : '作成';
+      return this.loading ? '作成中...' : '作成';
     },
   },
   methods: {
@@ -74,9 +78,7 @@ export default {
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) {
-          this.$emit('handle-submit');
-        }
+        if (valid) this.$emit('handle-submit');
       });
     },
   },

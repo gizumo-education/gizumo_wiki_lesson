@@ -1,15 +1,16 @@
 <template>
   <div class="categories-list">
-    <categoryPost
+    <category-post
       class="post-width"
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
       :category="category"
+      :loading="loading"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
-    <categoryList
+    <category-list
       :categories="categories"
       :theads="theads"
       class="list-width list-border"
@@ -46,7 +47,7 @@ export default {
       return this.$store.state.categories.loading;
     },
     category() {
-      return this.$store.state.categories.targetCategories.name;
+      return this.$store.state.categories.targetCategory.name;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
@@ -54,6 +55,7 @@ export default {
   },
   created() {
     this.getCategories();
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     getCategories() {
