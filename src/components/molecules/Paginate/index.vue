@@ -95,5 +95,6 @@ export default {
 .is-disable {
   cursor: auto;
   background-color: $disabled-color;
+  pointer-events: none;
 }
 </style>
