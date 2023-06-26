@@ -2,8 +2,12 @@
   <div class="categories-list">
     <categoryPost
       class="post-width"
+      :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
+      :category="category"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <categoryList
       :categories="categories"
@@ -38,6 +42,15 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    category() {
+      return this.$store.state.categories.targetCategories.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.getCategories();
@@ -45,6 +58,13 @@ export default {
   methods: {
     getCategories() {
       this.$store.dispatch('categories/getAllCategories');
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategories');
+    },
+    updateValue(event) {
+      this.$store.dispatch('categories/updateCategories', event.target.value);
     },
   },
 };
