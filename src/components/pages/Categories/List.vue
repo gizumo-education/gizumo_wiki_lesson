@@ -1,11 +1,17 @@
 <template>
   <div class="categories-list">
-    <categoryPost
+    <category-post
       class="post-width"
+      :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
+      :category="category"
+      :loading="loading"
+      :disabled="loading ? true: false"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
-    <categoryList
+    <category-list
       :categories="categories"
       :theads="theads"
       class="list-width list-border"
@@ -38,13 +44,30 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    category() {
+      return this.$store.state.categories.targetCategory.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.getCategories();
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     getCategories() {
       this.$store.dispatch('categories/getAllCategories');
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategories');
+    },
+    updateValue(event) {
+      this.$store.dispatch('categories/updateCategories', event.target.value);
     },
   },
 };
