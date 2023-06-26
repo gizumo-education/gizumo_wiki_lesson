@@ -7,6 +7,7 @@
       :access="access"
       :category="category"
       :loading="loading"
+      :disabled="loading ? true: false"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />

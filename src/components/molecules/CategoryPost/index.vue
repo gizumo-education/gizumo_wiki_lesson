@@ -62,15 +62,11 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
   },
   computed: {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
-      return this.loading ? '作成中...' : '作成';
+      return this.disabled ? '作成中...' : '作成';
     },
   },
   methods: {
