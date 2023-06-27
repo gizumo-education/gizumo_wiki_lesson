@@ -11,7 +11,7 @@
       hover-opacity
       class="article__trashed margin-top"
     >
-      記事一覧へ戻る
+      すべての記事一覧へ戻る
     </app-router-link>
     <table class="article-table">
       <thead class="article-table__head">

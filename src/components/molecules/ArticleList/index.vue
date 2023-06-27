@@ -26,7 +26,7 @@
       hover-opacity
       class="article-list__create-link margin-left"
     >
-      削除済記事一覧
+      削除済み記事一覧
     </app-router-link>
     <transition-group
       class="article-list__articles"
