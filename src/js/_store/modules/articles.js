@@ -118,6 +118,9 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    doneGetTrashedArticles(state, payload) {
+      state.articleList = [...payload.articles];
+    },
   },
   actions: {
     initPostArticle({ commit }) {
@@ -288,6 +291,17 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getTrashedArticles({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const payload = res.data;
+        commit('doneGetTrashedArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };
