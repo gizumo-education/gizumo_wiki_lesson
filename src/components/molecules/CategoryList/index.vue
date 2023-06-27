@@ -150,6 +150,7 @@ export default {
       td {
         padding: 10px;
         vertical-align: middle;
+        white-space: nowrap;
         &.is-disabled {
           color: $disabled-color;
           font-size: 12px;
