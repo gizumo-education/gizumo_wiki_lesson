@@ -16,6 +16,11 @@
       :theads="theads"
       class="list-width list-border"
       :access="access"
+      :category="category"
+      :delete-category-name="deleteCategoryName"
+      @handle-click="handleClick"
+      @open-modal="openModal"
+      @toggle-modal="toggleModal"
     />
   </div>
 </template>
@@ -23,12 +28,14 @@
 <script>
 import CategoryList from '@Components/molecules/CategoryList/index.vue';
 import CategoryPost from '@Components/molecules/CategoryPost/index.vue';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     categoryList: CategoryList,
     categoryPost: CategoryPost,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -53,6 +60,9 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    },
   },
   created() {
     this.getCategories();
@@ -68,6 +78,19 @@ export default {
     },
     updateValue(event) {
       this.$store.dispatch('categories/updateCategories', event.target.value);
+    },
+    openModal(categoryId, categoryName) {
+      const payload = {
+        categoryId,
+        categoryName,
+      };
+      this.$store.dispatch('categories/confirmDeleteCategory', payload);
+      this.toggleModal();
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory').then(() => {
+        this.toggleModal();
+      });
     },
   },
 };
