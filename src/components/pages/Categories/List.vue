@@ -16,11 +16,9 @@
       :theads="theads"
       class="list-width list-border"
       :access="access"
-      :category="category"
       :delete-category-name="deleteCategoryName"
       @handle-click="handleClick"
       @open-modal="openModal"
-      @toggle-modal="toggleModal"
     />
   </div>
 </template>
@@ -61,7 +59,7 @@ export default {
       return this.$store.state.categories.doneMessage;
     },
     deleteCategoryName() {
-      return this.$store.state.categories.deleteCategoryName;
+      return this.$store.state.categories.deleteCategory.name;
     },
   },
   created() {
@@ -80,11 +78,10 @@ export default {
       this.$store.dispatch('categories/updateCategories', event.target.value);
     },
     openModal(categoryId, categoryName) {
-      const payload = {
-        categoryId,
-        categoryName,
-      };
-      this.$store.dispatch('categories/confirmDeleteCategory', payload);
+      this.$store.dispatch(
+        'categories/confirmDeleteCategory',
+        { categoryId, categoryName },
+      );
       this.toggleModal();
     },
     handleClick() {
