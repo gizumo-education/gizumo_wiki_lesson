@@ -2,6 +2,7 @@
   <app-article-trashed
     :theads="theads"
     :target-array="articleList"
+    :error-message="errorMessage"
   />
 </template>
 
@@ -14,13 +15,15 @@ export default {
   },
   data() {
     return {
-      title: '削除済み記事',
       theads: ['タイトル', '本文', '作成日'],
     };
   },
   computed: {
     articleList() {
       return this.$store.state.articles.articleList;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
   },
   created() {

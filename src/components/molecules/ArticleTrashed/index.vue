@@ -1,9 +1,11 @@
 <template>
   <div class="article__trashed">
-    <app-heading :level="1"> {{ articleTitle }} </app-heading>
+    <div v-if="errorMessage" class="category-management-post__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
+    <app-heading :level="1">削除済み記事一覧</app-heading>
     <app-router-link
       :to="'/articles'"
-      key-color
       white
       bg-lightgreen
       small
@@ -27,36 +29,14 @@
         <tr v-for="article in targetArray" :key="article.id">
           <td>
             <!-- タイトル -->
-            <app-text
-              v-if="article.title.length > 30"
-              tag="span"
-              small
-            >
-              {{ article.title.slice(0, 30) + '...' }}
-            </app-text>
-            <app-text
-              v-if="article.title.length <= 30"
-              tag="span"
-              small
-            >
-              {{ article.title.slice(0, 30) }}
+            <app-text tag="span" small>
+              {{ sliceString(article.title) }}
             </app-text>
           </td>
           <td>
             <!-- 本文 -->
-            <app-text
-              v-if="article.content.length > 30"
-              tag="span"
-              small
-            >
-              {{ article.content.slice(0, 30) + '...' }}
-            </app-text>
-            <app-text
-              v-if="article.content.length <= 30"
-              tag="span"
-              small
-            >
-              {{ article.content.slice(0, 30) }}
+            <app-text tag="span" small>
+              {{ sliceString(article.content) }}
             </app-text>
           </td>
           <td>
@@ -97,10 +77,17 @@ export default {
       type: Array,
       default: () => [],
     },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
-    articleTitle() {
-      return `${this.title}一覧`;
+    sliceString() {
+      return string => {
+        if (string.length <= 30) return string;
+        return `${string.slice(0, 30)}...`;
+      };
     },
   },
 };
@@ -125,6 +112,9 @@ export default {
       padding: 10px;
       vertical-align: middle;
     }
+  }
+  &__notice--create {
+    margin-bottom: 16px;
   }
 }
 .margin-top {

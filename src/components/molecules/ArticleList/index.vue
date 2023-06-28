@@ -18,7 +18,6 @@
     </app-router-link>
     <app-router-link
       to="articles/trashed"
-      key-color
       white
       bg-lightgreen
       small

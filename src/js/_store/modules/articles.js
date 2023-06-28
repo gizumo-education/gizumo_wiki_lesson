@@ -60,7 +60,6 @@ export default {
         },
         user: {
           account_name: '',
-          created_at: '',
           email: '',
           full_name: '',
           id: '',
@@ -119,7 +118,7 @@ export default {
       state.doneMessage = payload.message;
     },
     doneGetTrashedArticles(state, payload) {
-      state.articleList = [...payload.articles];
+      state.articleList = [...payload];
     },
   },
   actions: {
@@ -297,7 +296,7 @@ export default {
         method: 'GET',
         url: '/article/trashed',
       }).then(res => {
-        const payload = res.data;
+        const payload = res.data.articles;
         commit('doneGetTrashedArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
