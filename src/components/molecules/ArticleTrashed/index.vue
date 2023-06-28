@@ -1,17 +1,17 @@
 <template>
-  <div class="article__trashed">
+  <div>
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
     <app-heading :level="1">削除済み記事一覧</app-heading>
     <app-router-link
-      :to="'/articles'"
+      to="/articles"
       white
       bg-lightgreen
       small
       round
       hover-opacity
-      class="article__trashed margin-top"
+      class="margin-top"
     >
       すべての記事一覧へ戻る
     </app-router-link>
@@ -65,10 +65,6 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    title: {
-      type: String,
-      default: '削除済み記事',
-    },
     theads: {
       type: Array,
       default: () => [],
@@ -85,7 +81,9 @@ export default {
   computed: {
     sliceString() {
       return string => {
-        if (string.length <= 30) return string;
+        if (string.length <= 30) {
+          return string;
+        }
         return `${string.slice(0, 30)}...`;
       };
     },
