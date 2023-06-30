@@ -1,13 +1,11 @@
 <template>
   <div>
     <category-detail
-      :category-id="categoryId"
       :done-message="doneMessage"
       :error-message="errorMessage"
       :access="access"
       :category="category"
       :loading="loading"
-      :disabled="loading ? true: false"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
       @edited-category="editedCategory"
@@ -26,17 +24,12 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
-    selectCategoryName() {
-      const selectCategoryName = this.$store.state.categories.targetCategory.name;
-      return selectCategoryName;
-    },
     categoryId() {
       const { id } = this.$route.params;
       return id;
     },
     category() {
-      const category = this.$store.state.categories.targetCategory.name;
-      return category;
+      return this.$store.state.categories.targetCategory.name;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
@@ -65,6 +58,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

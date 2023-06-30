@@ -9,7 +9,7 @@
       underline
       key-color
       hover-opacity
-      :to="'/categories'"
+      to="/categories"
     >
       カテゴリー一覧へ戻る
     </app-router-link>
@@ -69,14 +69,6 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
-    },
-    selectCategoryName: {
-      type: String,
-      default: '',
-    },
-    categoryId: {
-      type: String,
-      default: null,
     },
     doneMessage: {
       type: String,
