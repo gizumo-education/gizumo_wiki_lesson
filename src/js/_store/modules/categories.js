@@ -52,12 +52,8 @@ export default {
       state.targetCategory.name = payload;
     },
     doneGetCategoryDetail(state, category) {
-      state.targetCategory.name = category
+      state.targetCategory.name = category;
     },
-    clearCategory(state){
-      console.log(state.targetCategory)
-    }
-
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -128,42 +124,40 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    getCategoryDetail({commit,rootGetters},categoryId){
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${categoryId}`,
-      }).then(res=>{
-        const category =res.data.category.name
-        commit('doneGetCategoryDetail',category)
-      })
+      }).then(res => {
+        const category = res.data.category.name;
+        commit('doneGetCategoryDetail', category);
+      });
     },
-
-    updateCategory({commit, rootGetters,state},categoryId){
-      commit('clearMessage')
+    updateCategory({ commit, rootGetters, state }, categoryId) {
+      commit('clearMessage');
       commit('toggleLoading');
-      const data =state.targetCategory
-      axios(rootGetters['auth/token'])
-      ({
+      const data = state.targetCategory;
+      axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url:`/category/${categoryId}`,
+        url: `/category/${categoryId}`,
         data,
-      }).then(()=>{
+      }).then(() => {
         commit('toggleLoading');
-        commit('displayDoneMessage',{
-          message: 'カテゴリーを更新しました'
+        commit('displayDoneMessage', {
+          message: 'カテゴリーを更新しました',
         });
-      }).catch(err=>{
+      }).catch(err => {
         commit('toggleLoading');
-        commit('failRequest',{
-          message: err.message
+        commit('failRequest', {
+          message: err.message,
         });
-      })
+      });
     },
-    editedContent({commit},payload){
-      commit('editedContent',payload)
+    editedContent({ commit }, payload) {
+      commit('editedContent', payload);
     },
-    clearCategory({commit}){
-      commit('initPostCategories')
-    }
+    clearCategory({ commit }) {
+      commit('initPostCategories');
+    },
   },
 };

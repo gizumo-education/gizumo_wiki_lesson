@@ -1,13 +1,13 @@
 <template>
   <div>
     <category-detail
-      :access="access"
-      :loading="loading"
-      :disabled="loading ? true: false"
-      :category="category"
       :category-id="categoryId"
       :done-message="doneMessage"
       :error-message="errorMessage"
+      :access="access"
+      :category="category"
+      :loading="loading"
+      :disabled="loading ? true: false"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
       @edited-category="editedCategory"
@@ -27,50 +27,43 @@ export default {
       return this.$store.getters['auth/access'];
     },
     selectCategoryName() {
-      const selectCategoryName = this.$store.state.categories.targetCategory.name
-      return selectCategoryName
+      const selectCategoryName = this.$store.state.categories.targetCategory.name;
+      return selectCategoryName;
     },
     categoryId() {
-      let  id =this.$route.params.id;
+      const { id } = this.$route.params;
       return id;
     },
-    
     category() {
-      // let  category =this.$store.state.categories.targetCategory.name
-      let category=''
+      const category = this.$store.state.categories.targetCategory.name;
       return category;
     },
     doneMessage() {
-        return this.$store.state.categories.doneMessage;
+      return this.$store.state.categories.doneMessage;
     },
     loading() {
       return this.$store.state.categories.loading;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
-    }
+    },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetail',parseInt(this.categoryId,10))
+    this.$store.dispatch('categories/getCategoryDetail', parseInt(this.categoryId, 10));
   },
-
   methods: {
     handleSubmit() {
-      if(this.loading)return;
-      this.$store.dispatch('categories/updateCategory',parseInt(this.categoryId,10));
+      if (this.loading) return;
+      this.$store.dispatch('categories/updateCategory', parseInt(this.categoryId, 10));
     },
-
     editedCategory($event) {
-      this.$store.dispatch('categories/editedContent',$event.target.value);
-      console.log($event.target.value)
+      this.$store.dispatch('categories/editedContent', $event.target.value);
     },
     clearMessage() {
-      this.$store.dispatch('categories/clearMessage')
-    }
+      this.$store.dispatch('categories/clearMessage');
+    },
   },
- 
-}
-
+};
 </script>
 
 <style lang="scss" scoped>

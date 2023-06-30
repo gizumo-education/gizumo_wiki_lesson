@@ -15,44 +15,47 @@
     </app-router-link>
     <form @submit.prevent="handleSubmit">
       <app-input
-        class="category-update__input"
         v-validate="'required'"
         name="category"
         type="text"
         data-vv-as="カテゴリー名"
+        :error-messages="errors.collect('category')"
         :value="category"
-        @update-value="$emit('edited-category',$event)"
-        :error-message="errors.collect('category')"
-        />
-        <app-button
-          class="category-update__button"
-          button-type="submit"
-          round
-          :disabled = "!disabled"
-        >
-          {{ buttonText }}
-        </app-button>
-  </form>
+        class="category-update__input"
+        @update-value="$emit('edited-category', $event)"
+      />
+      <app-button
+        class="category-update__button"
+        button-type="submit"
+        round
+        :disabled="!disabled"
+      >
+        {{ buttonText }}
+      </app-button>
+    </form>
 
-    <div v-if="doneMessage"
-      class="category-update__success">
-        <app-text bg-success>
-            {{ doneMessage }}
-        </app-text>
+    <div
+      v-if="doneMessage"
+      class="category-update__success"
+    >
+      <app-text bg-success>
+        {{ doneMessage }}
+      </app-text>
     </div>
-        <div v-if="errorMessage"
-          class="category-update__notice"
-         >
-        <app-text bg-error>
-          {{ errorMessage }}
-        </app-text>
-      </div>
-</div>
+    <div
+      v-if="errorMessage"
+      class="category-update__notice"
+    >
+      <app-text bg-error>
+        {{ errorMessage }}
+      </app-text>
+    </div>
+  </div>
 </template>
 <script>
-import{
-  Heading, Button, RouterLink,Input,Text
-}from '@Components/atoms';
+import {
+  Heading, Button, RouterLink, Input, Text,
+} from '@Components/atoms';
 
 export default {
   components: {
@@ -64,8 +67,8 @@ export default {
   },
   props: {
     access: {
-      type:Object,
-      default:()=>({})
+      type: Object,
+      default: () => ({}),
     },
     selectCategoryName: {
       type: String,
@@ -73,46 +76,46 @@ export default {
     },
     categoryId: {
       type: String,
-      default: 0,
+      default: null,
     },
     doneMessage: {
       type: String,
       default: '',
     },
-    errorMessage:{
+    errorMessage: {
       type: String,
       default: '',
     },
-    loading:{
+    loading: {
       type: Boolean,
       default: false,
     },
-    category:{
+    category: {
       type: String,
       required: true,
     },
   },
-  computed:{
+  computed: {
     buttonText() {
-      if(!this.access.edit)return'更新権限がありません';
-      return this.loading ? '更新中...' :'更新';
+      if (!this.access.edit) return '更新権限がありません';
+      return this.loading ? '更新中...' : '更新';
     },
     disabled() {
       return this.access.edit && !this.loading;
-    }
+    },
   },
   methods: {
     handleSubmit() {
-      console.log(this.category)
       if (!this.access.edit) return;
-      this.$emit('clear-message')
+      this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if(valid) this.$emit('handle-submit');
+        if (valid) this.$emit('handle-submit');
       });
-    }
+    },
   },
-}
+};
 </script>
+
 <style lang="scss" scoped>
 .category-update{
   &__link{
