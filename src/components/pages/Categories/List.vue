@@ -65,6 +65,7 @@ export default {
   created() {
     this.getCategories();
     this.$store.dispatch('categories/clearMessage');
+    this.$store.dispatch('categories/clearCategory');
   },
   methods: {
     getCategories() {
