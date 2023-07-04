@@ -3,6 +3,9 @@
     <app-category-post
       class="category_post"
       :access="access"
+      :category="targetCategory"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="category_list"
@@ -33,10 +36,31 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    targetCategory() {
+      return this.$store.state.categories.targetCategory.title;
+    }
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
+  method: {
+    updateValue($event) {
+      this.$store.dispatch('categories/updateValue', $event.target.value);
+    },
+    // handleSubmit() {
+    //   console.log("押された");
+      // if (this.loading) return;
+      // this.$store.dispatch('categories/postCategory').then(() => {
+      //   this.$router.push({
+      //     path: '/categories',
+      //     query: { redirect: '/article/post' },
+      //   });
+      // });
+    // },
+    handleSubmit() {
+      console.log('実行')
+    },
+  }
 
 };
 
