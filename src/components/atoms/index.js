@@ -9,6 +9,7 @@ import MarkdownPreview from './MarkdownPreview/index.vue';
 import Select from './Select/index.vue';
 import Modal from './Modal/index.vue';
 import MarkdownIndex from './MarkdownIndex/index.vue';
+import Pagenation from './Pagenation/index.vue';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   MarkdownIndex,
   Select,
   Modal,
+  Pagenation,
 };
