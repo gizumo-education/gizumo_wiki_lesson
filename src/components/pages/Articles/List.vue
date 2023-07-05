@@ -48,7 +48,6 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
-
     showPages() {
       return this.$store.state.articles.showPages;
     },
@@ -101,8 +100,9 @@ export default {
             // console.log(err);
           });
       } else {
-        this.$store.dispatch('articles/getAllArticles');
-        this.$store.dispatch('articles/getArticlesPage');
+        const { currentPage } = this.$store.state.articles;
+        this.$store.dispatch('articles/getAllArticles', currentPage);
+        this.$store.dispatch('articles/getArticlesPage', currentPage);
       }
     },
     getCurrentPage(currentPage) {

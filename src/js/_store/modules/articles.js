@@ -120,13 +120,10 @@ export default {
       state.doneMessage = payload.message;
     },
     setArticlesPage(state, payload) {
-      state.currentPage = payload.data.meta.current_page;
-      state.perPage = payload.data.meta.per_page;
-      state.totalPages = payload.data.meta.last_page;
-      state.pageNum = payload.data.meta.current_page;
-    },
-    setArticles(state, payload) {
-      state.articleList = [...payload.data.articles];
+      state.currentPage = payload.current_page;
+      state.perPage = payload.per_page;
+      state.totalPages = payload.last_page;
+      state.pageNum = payload.current_page;
     },
     setCurrentPage(state, payload) {
       state.currentPage = payload;
@@ -136,10 +133,10 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
+    getAllArticles({ commit, rootGetters }, currentPage) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/article',
+        url: `/article?page=${currentPage}`,
       }).then(res => {
         const payload = {
           articles: res.data.articles,
@@ -149,16 +146,13 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    getArticlesPage({ commit, rootGetters }) {
+    getArticlesPage({ commit, rootGetters }, currentPage) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/article',
+        url: `/article?page=${currentPage}`,
       }).then(res => {
-        commit('setArticlesPage', res);
-        const payload = {
-          articles: res.data.articles,
-        };
-        commit('doneGetAllArticles', payload);
+        const payload = res.data.meta;
+        commit('setArticlesPage', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -169,7 +163,10 @@ export default {
         method: 'GET',
         url: `/article?page=${currentPage}`,
       }).then(res => {
-        commit('setArticles', res);
+        const payload = {
+          articles: res.data.articles,
+        };
+        commit('doneGetAllArticles', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
