@@ -13,7 +13,6 @@
       :show-pages="showPages"
       :current-page="currentPage"
       :total-pages="totalPages"
-      :per-page="perPage"
       @current-page="getCurrentPage"
     />
   </div>
@@ -56,9 +55,6 @@ export default {
     },
     totalPages() {
       return this.$store.state.articles.totalPages;
-    },
-    perPage() {
-      return this.$store.state.articles.perPage;
     },
   },
   created() {

@@ -50,10 +50,6 @@ export default {
       type: Number,
       default: 1,
     },
-    perPage: {
-      type: Number,
-      default: 1,
-    },
   },
   computed: {
     numFix() {

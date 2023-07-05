@@ -30,7 +30,6 @@ export default {
     errorMessage: '',
     currentPage: 1,
     showPages: 5,
-    perPage: null,
     totalPages: null,
   },
   getters: {
@@ -121,9 +120,7 @@ export default {
     },
     setArticlesPage(state, payload) {
       state.currentPage = payload.current_page;
-      state.perPage = payload.per_page;
       state.totalPages = payload.last_page;
-      state.pageNum = payload.current_page;
     },
     setCurrentPage(state, payload) {
       state.currentPage = payload;
