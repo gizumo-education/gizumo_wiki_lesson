@@ -90,6 +90,7 @@ export default {
     font-size: 16px;
     &__first {
       padding: 5px 20px;
+      background-color: $theme-color;
     }
     &__btn {
       display: flex;
@@ -98,13 +99,14 @@ export default {
       margin-right: 20px;
       text-align: center;
       color: $white;
-      background-color: $theme-color;
       & a {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 5px 20px;
       color: $white;
+      @include hoverOpacity;
+      background-color: $theme-color;
       }
       &:nth-child(1) {
         margin-right: 0;
@@ -124,6 +126,7 @@ export default {
     &__last {
       padding: 5px 20px;
       margin-right: 0;
+      background-color: $theme-color;
     }
     &__disabled {
       padding: 5px 20px;
