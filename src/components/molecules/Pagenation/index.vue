@@ -112,7 +112,10 @@ export default {
         height: 100%;
         color: $white;
       }
-      &:last-child {
+      &:nth-child(1) {
+        margin-right: 0;
+      }
+      &:nth-child(7) {
         margin-right: 0;
       }
     }
@@ -122,7 +125,6 @@ export default {
       justify-content: center;
       width: 4.5rem;
       height: 3.5rem;
-      margin-right: 20px;
       text-align: center;
       color: $disabled-color;
     }
