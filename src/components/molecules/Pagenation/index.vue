@@ -3,9 +3,7 @@
     <div>
       <nav class="pagenation">
         <ul class="pagenation__list">
-          <li class="pagenation__list__btn">
-            1
-          </li>
+          <li class="pagenation__list__btn">1</li>
           <li class="pagenation__list__skip">…</li>
           <li
             v-for="num in showPagesFix"
