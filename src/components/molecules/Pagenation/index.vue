@@ -92,14 +92,14 @@ export default {
   &__list {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    font-size: 1.5rem;
+    margin-top: 30px;
+    font-size: 16px;
     &__btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 4.5rem;
-      height: 3.5rem;
+      width: 45px;
+      height: 35px;
       margin-right: 20px;
       text-align: center;
       color: $white;
@@ -108,9 +108,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-        width: 100%;
-        height: 100%;
-        color: $white;
+      width: 100%;
+      height: 100%;
+      color: $white;
       }
       &:nth-child(1) {
         margin-right: 0;
@@ -123,8 +123,8 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 4.5rem;
-      height: 3.5rem;
+      width: 45px;
+      height: 35px;
       text-align: center;
       color: $disabled-color;
     }
