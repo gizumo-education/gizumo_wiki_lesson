@@ -102,6 +102,7 @@ export default {
       }
     },
     getCurrentPage(currentPage) {
+      this.$store.dispatch('articles/getArticlesPage', currentPage);
       this.$store.dispatch('articles/getArticles', currentPage);
     },
   },
