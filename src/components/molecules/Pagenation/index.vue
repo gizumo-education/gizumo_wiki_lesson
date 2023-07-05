@@ -93,13 +93,14 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    font-size: 1.5rem;
     &__btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 3.5rem;
-      height: 3rem;
-      margin-right: 10px;
+      width: 4.5rem;
+      height: 3.5rem;
+      margin-right: 20px;
       text-align: center;
       color: $white;
       background-color: $theme-color;
@@ -111,14 +112,17 @@ export default {
         height: 100%;
         color: $white;
       }
+      &:last-child {
+        margin-right: 0;
+      }
     }
     &__skip {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 3.5rem;
-      height: 3rem;
-      margin-right: 10px;
+      width: 4.5rem;
+      height: 3.5rem;
+      margin-right: 20px;
       text-align: center;
       color: $disabled-color;
     }
