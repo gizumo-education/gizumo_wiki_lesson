@@ -3,7 +3,7 @@
     <div>
       <nav class="pagenation">
         <ul class="pagenation__list">
-          <li class="pagenation__list__btn">1</li>
+          <li class="pagenation__list__btn pagenation__list__first">1</li>
           <li class="pagenation__list__skip">…</li>
           <li
             v-for="num in showPagesFix"
@@ -18,7 +18,7 @@
           </li>
           <li class="pagenation__list__skip">…</li>
           <li
-            class="pagenation__list__btn"
+            class="pagenation__list__btn  pagenation__list__last"
             :class="{'disabled': currentPage == totalPages}"
           >
             {{ totalPages }}
@@ -88,12 +88,13 @@ export default {
     justify-content: center;
     margin-top: 30px;
     font-size: 16px;
+    &__first {
+      padding: 5px 20px;
+    }
     &__btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 45px;
-      height: 35px;
       margin-right: 20px;
       text-align: center;
       color: $white;
@@ -102,8 +103,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      height: 100%;
+      padding: 5px 20px;
       color: $white;
       }
       &:nth-child(1) {
@@ -117,12 +117,16 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 45px;
-      height: 35px;
+      padding: 5px 20px;
       text-align: center;
       color: $disabled-color;
     }
+    &__last {
+      padding: 5px 20px;
+      margin-right: 0;
+    }
     &__disabled {
+      padding: 5px 20px;
       background-color: $disabled-color;
     }
   }
