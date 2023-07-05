@@ -28,6 +28,10 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    currentPage: 1,
+    showPages: 5,
+    perPage: 0,
+    totalPages: 0,
   },
   getters: {
     transformedArticles(state) {
@@ -115,6 +119,18 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    setArticlesPage(state, payload) {
+      state.currentPage = payload.data.meta.current_page;
+      state.perPage = payload.data.meta.per_page;
+      state.totalPages = payload.data.meta.last_page;
+      state.pageNum = payload.data.meta.current_page;
+    },
+    setArticles(state, payload) {
+      state.articleList = [...payload.data.articles];
+    },
+    setCurrentPage(state, payload) {
+      state.currentPage = payload;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
@@ -129,6 +145,31 @@ export default {
           articles: res.data.articles,
         };
         commit('doneGetAllArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getArticlesPage({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article',
+      }).then(res => {
+        commit('setArticlesPage', res);
+        const payload = {
+          articles: res.data.articles,
+        };
+        commit('doneGetAllArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getArticles({ commit, rootGetters }, currentPage) {
+      commit('setCurrentPage', currentPage);
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/article?page=${currentPage}`,
+      }).then(res => {
+        commit('setArticles', res);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
