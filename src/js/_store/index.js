@@ -20,7 +20,7 @@ export default new Vuex.Store({
 
       // 管理対象のステートを指定。pathsを書かない時は`modules`に書いたモジュールに含まれるステート全て。`[]`の時はどれも保存されない
       paths: [
-        'articles.pagenation',
+        'articles.pagenation.current_page',
       ],
 
       // ストレージの種類を指定する。デフォルトではローカルストレージ
