@@ -30,8 +30,8 @@ export default {
     errorMessage: '',
     currentPage: 1,
     showPages: 5,
-    perPage: 0,
-    totalPages: 0,
+    perPage: null,
+    totalPages: null,
   },
   getters: {
     transformedArticles(state) {
