@@ -84,7 +84,7 @@ export default {
       } else {
         this.$store.dispatch('articles/setCurrentPage', page);
       }
-      return this.$store.dispatch('articles/getPerPageArticles');
+      return this.$store.dispatch('articles/getAllArticles');
     },
   },
 };

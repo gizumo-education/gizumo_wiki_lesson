@@ -141,14 +141,13 @@ export default {
       commit('initPostArticle');
     },
     getAllArticles({ commit, rootGetters }) {
+      const pageNum = rootGetters['articles/currentPage'].current_page;
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/article',
+        url: `/article?page=${pageNum}`,
       }).then(res => {
-        const payload = {
-          articles: res.data.articles,
-        };
-        commit('doneGetAllArticles', payload);
+        commit('doneGetPerPageArticles', res);
+        commit('doneGetAllArticles', res.data);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -303,17 +302,6 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
-    },
-    getPerPageArticles({ commit, rootGetters }) {
-      const pageNum = rootGetters['articles/currentPage'].current_page;
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: `/article?page=${pageNum}`,
-      }).then(res => {
-        commit('doneGetAllArticles', res.data);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
-      });
     },
     setCurrentPage({ commit }, currentPage) {
       commit('setCurrentPage', currentPage);
