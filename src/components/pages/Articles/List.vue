@@ -68,7 +68,9 @@ export default {
       }
     },
     fetchArticles() {
+      console.log(this.$route)
       if (this.$route.query.category) {
+        console.log('true article')
         const { category } = this.$route.query;
         this.title = category;
         this.$store.dispatch('articles/filteredArticles', category)
@@ -80,6 +82,7 @@ export default {
             // console.log(err);
           });
       } else {
+        console.log('false article')
         this.$store.dispatch('articles/getAllArticles');
       }
     },

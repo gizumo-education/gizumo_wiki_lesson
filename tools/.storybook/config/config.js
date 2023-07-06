@@ -22,6 +22,8 @@ import AppTextarea from '@Components/atoms/Textarea/index.vue';
 import AppSidebarList from '@Components/molecules/SidebarList/index.vue';
 import AppArticleList from '@Components/molecules/ArticleList/index.vue';
 import AppMarkdownView from '@Components/molecules/MarkdownView/index.vue';
+// import AppCategoryList from '@Components/molecules/categoryList/index.vue';
+// import AppCategoryPost from '@Components/molecules/categoryPost/index.vue';
 
 //globals
 import AppHeader from '@Components/globals/Header/index.vue';
@@ -47,6 +49,8 @@ Vue.component('app-textarea', AppTextarea);
 Vue.component('app-sidebar-list', AppSidebarList);
 Vue.component('app-article-list', AppArticleList);
 Vue.component('app-markdown-view', AppMarkdownView);
+// Vue.component('app-category-list', AppCategoryList);
+// Vue.component('app-category-post', AppCategoryPost);
 
 //globals
 Vue.component('app-header', AppHeader);
