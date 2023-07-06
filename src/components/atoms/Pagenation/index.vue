@@ -79,12 +79,12 @@ export default {
     numfix() {
       return num => {
         const ajust = 1 + (this.showPages - 1) / 2;
-        let result = num;
-        if (this.currentPage > this.showPages / 2) {
+        let result = num + 1;
+        if (this.currentPage > this.showPages / 2 && this.currentPage !== 3) {
           result = num + this.currentPage - ajust;
         }
         if (this.currentPage + this.showPages / 2 > this.lastPage) {
-          result = this.lastPage - this.showPages + num;
+          result = this.lastPage - this.showPages + num - 1;
         }
         if (this.lastPage <= this.showPages) {
           result = num;
