@@ -1,7 +1,18 @@
 <template>
   <div class="container">
     <ul class="pagenation">
-      <li class="page-item nolink">1</li>
+      <li
+        class="page-item"
+        :class="{disabled: 1 == currentPage }"
+      >
+        <span v-if="1 == currentPage">1</span>
+        <a
+          v-else
+          href=""
+          @click.prevent="setPage(1)"
+        >1
+        </a>
+      </li>
       <li class="page-item point">…</li>
       <li
         v-for="num in showPagesfix"
@@ -21,7 +32,19 @@
         >{{ numfix(num) }}</a>
       </li>
       <li class="page-item point">…</li>
-      <li class="page-item nolink">{{ lastPage }}</li>
+      <li
+        class="page-item"
+        :class="{disabled: lastPage == currentPage }"
+      >
+        <span v-if="lastPage == currentPage">{{ lastPage }}</span>
+        <a
+          v-else
+          href=""
+          @click.prevent="setPage(lastPage)"
+        >
+          {{ lastPage }}
+        </a>
+      </li>
     </ul>
   </div>
 </template>
