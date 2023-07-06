@@ -3,7 +3,21 @@
     <div>
       <nav class="pagenation">
         <ul class="pagenation__list">
-          <li class="pagenation__list__btn pagenation__list__first">1</li>
+          <li
+            class="pagenation__list__btn pagenation__list__first"
+            :class="{ 'pagenation__list__disabled': 1 === currentPage }"
+          >
+            <template v-if="1 === currentPage">
+              <span>1</span>
+            </template>
+            <app-router-link
+              v-else
+              :to="`/articles?page=${1}`"
+              @click.prevent="setPage(1)"
+            >
+              1
+            </app-router-link>
+          </li>
           <li class="pagenation__list__skip">…</li>
           <li
             v-for="num in showPagesFix"
@@ -11,22 +25,34 @@
             class="pagenation__list__btn"
             :class="{ 'pagenation__list__disabled': numFix(num) === currentPage }"
           >
-            <template v-if="numFix(num) == currentPage">
+            <template v-if="numFix(num) === currentPage">
               <span>{{ numFix(num) }}</span>
             </template>
             <app-router-link
               v-else
-              :to="`/articles?page=${currentPage}`"
+              :to="`/articles?page=${numFix(num)}`"
+              @click.prevent="setPage(numFix(num))"
             >
-              <a href="#" @click.prevent="setPage(numFix(num))">{{ numFix(num) }}</a>
+              {{ numFix(num) }}
             </app-router-link>
           </li>
           <li class="pagenation__list__skip">…</li>
           <li
             class="pagenation__list__btn pagenation__list__last"
-            :class="{'disabled': currentPage == totalPages}"
+            :class="{'pagenation__list__disabled': totalPages === currentPage}"
           >
-            {{ totalPages }}
+            <template
+              v-if="totalPages === currentPage"
+            >
+              <span>{{ totalPages }}</span>
+            </template>
+            <app-router-link
+              v-else
+              :to="`/articles?page=${totalPages}`"
+              @click.prevent="setPage(totalPages)"
+            >
+              {{ totalPages }}
+            </app-router-link>
           </li>
         </ul>
       </nav>
@@ -63,12 +89,12 @@ export default {
     numFix() {
       return num => {
         const ajust = 1 + (this.showPages - 1) / 2;
-        let result = num;
-        if (this.currentPage > this.showPages / 2) {
+        let result = num + 1;
+        if (this.currentPage >= this.showPages / 2 && this.currentPage !== 3) {
           result = num + this.currentPage - ajust;
         }
         if (this.currentPage + this.showPages / 2 > this.totalPages) {
-          result = this.totalPages - this.showPages + num;
+          result = this.totalPages - this.showPages + num - 1;
         }
         if (this.totalPages <= this.showPages) {
           result = num;
@@ -86,8 +112,6 @@ export default {
   methods: {
     setPage(page) {
       this.$emit('current-page', page);
-      const newUrl = `/articles?page=${page}`;
-      this.$router.push(newUrl);
     },
   },
 };
@@ -100,10 +124,6 @@ export default {
     justify-content: center;
     margin-top: 30px;
     font-size: 16px;
-    &__first {
-      padding: 5px 20px;
-      background-color: $theme-color;
-    }
     &__btn {
       display: flex;
       align-items: center;
@@ -136,9 +156,7 @@ export default {
       color: $disabled-color;
     }
     &__last {
-      padding: 5px 20px;
       margin-right: 0;
-      background-color: $theme-color;
     }
     &__disabled {
       padding: 5px 20px;

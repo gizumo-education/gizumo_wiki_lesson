@@ -29,7 +29,8 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const currentPage = parseInt(to.query.page, 10) || 1;
+    this.fetchArticles(currentPage);
     next();
   },
   data() {
@@ -83,7 +84,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(currentPage) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -96,14 +97,11 @@ export default {
             // console.log(err);
           });
       } else {
-        const { currentPage } = this.$store.state.articles;
         this.$store.dispatch('articles/getAllArticles', currentPage);
-        this.$store.dispatch('articles/getArticlesPage', currentPage);
       }
     },
     getCurrentPage(currentPage) {
-      this.$store.dispatch('articles/getArticlesPage', currentPage);
-      this.$store.dispatch('articles/getArticles', currentPage);
+      this.$store.dispatch('articles/getAllArticles', currentPage);
     },
   },
 };
