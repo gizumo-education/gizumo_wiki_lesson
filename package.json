@@ -27,8 +27,7 @@
     "vue": "^2.7.8",
     "vue-router": "^3.6.4",
     "vue-smoothscroll": "^0.2.0",
-    "vuex": "^3.6.2",
-    "vuex-persistedstate": "^4.1.0"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.0.10",

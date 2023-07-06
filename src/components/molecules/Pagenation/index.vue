@@ -14,11 +14,16 @@
             <template v-if="numFix(num) == currentPage">
               <span>{{ numFix(num) }}</span>
             </template>
-            <a v-else href="#" @click.prevent="setPage(numFix(num))">{{ numFix(num) }}</a>
+            <app-router-link
+              v-else
+              :to="`/articles?page=${currentPage}`"
+            >
+              <a href="#" @click.prevent="setPage(numFix(num))">{{ numFix(num) }}</a>
+            </app-router-link>
           </li>
           <li class="pagenation__list__skip">…</li>
           <li
-            class="pagenation__list__btn  pagenation__list__last"
+            class="pagenation__list__btn pagenation__list__last"
             :class="{'disabled': currentPage == totalPages}"
           >
             {{ totalPages }}
@@ -30,7 +35,12 @@
 </template>
 
 <script>
+import { RouterLink } from '@Components/atoms';
+
 export default {
+  components: {
+    appRouterLink: RouterLink,
+  },
   props: {
     showPages: {
       type: Number,
@@ -76,6 +86,8 @@ export default {
   methods: {
     setPage(page) {
       this.$emit('current-page', page);
+      const newUrl = `/articles?page=${page}`;
+      this.$router.push(newUrl);
     },
   },
 };
