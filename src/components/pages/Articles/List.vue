@@ -59,7 +59,8 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    const currentPage = parseInt(this.$route.query.page, 10 || 1);
+    this.fetchArticles(currentPage);
   },
   methods: {
     openModal(articleId) {
