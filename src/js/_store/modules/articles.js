@@ -33,7 +33,6 @@ export default {
       last_page: null,
       per_page: null,
       total: null,
-      show_pages: 5,
     },
   },
   getters: {
@@ -129,7 +128,6 @@ export default {
         last_page: payload.data.meta.last_page,
         per_page: payload.data.meta.per_page,
         total: payload.data.meta.total,
-        show_pages: 5,
       };
     },
     setCurrentPage(state, payload) {

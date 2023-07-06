@@ -30,10 +30,6 @@
 
 export default {
   props: {
-    showPages: {
-      type: Number,
-      default: null,
-    },
     currentPage: {
       type: Number,
       default: null,
@@ -50,6 +46,11 @@ export default {
       type: Number,
       default: null,
     },
+  },
+  data() {
+    return {
+      showPages: 5,
+    };
   },
   computed: {
     numfix() {
