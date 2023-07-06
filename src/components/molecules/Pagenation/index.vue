@@ -68,10 +68,6 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    showPages: {
-      type: Number,
-      default: 1,
-    },
     currentPage: {
       type: Number,
       default: 1,
@@ -84,6 +80,11 @@ export default {
       type: Number,
       default: 1,
     },
+  },
+  data() {
+    return {
+      showPages: 5,
+    };
   },
   computed: {
     numFix() {

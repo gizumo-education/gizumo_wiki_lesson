@@ -29,7 +29,6 @@ export default {
     doneMessage: '',
     errorMessage: '',
     currentPage: 1,
-    showPages: 5,
     totalPages: null,
   },
   getters: {

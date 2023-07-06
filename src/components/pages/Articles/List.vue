@@ -10,7 +10,6 @@
       @handle-click="handleClick"
     />
     <app-pagenation
-      :show-pages="showPages"
       :current-page="currentPage"
       :total-pages="totalPages"
       @current-page="getCurrentPage"
@@ -47,9 +46,6 @@ export default {
     },
     access() {
       return this.$store.getters['auth/access'];
-    },
-    showPages() {
-      return this.$store.state.articles.showPages;
     },
     currentPage() {
       return this.$store.state.articles.currentPage;
