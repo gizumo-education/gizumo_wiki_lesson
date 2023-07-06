@@ -125,6 +125,7 @@ export default {
     justify-content: center;
     margin-top: 30px;
     font-size: 16px;
+    line-height: 1;
     &__btn {
       display: flex;
       align-items: center;
