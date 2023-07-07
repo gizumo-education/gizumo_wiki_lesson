@@ -22,13 +22,7 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    // if (from.query) {
-    //   console.log('和紙だよ');
-    //   console.log(to.query.page);
-    //   this.fetchArticles(to.query.page);
-    // } else {
-    //   this.fetchArticles(1);
-    // } 後でいじるかもしれない
+    this.fetchArticles(to.query.page);
     next();
   },
   data() {
@@ -48,11 +42,7 @@ export default {
     },
   },
   created() {
-    if (this.$route.query.page) {
-      this.fetchArticles(this.$route.query.page);
-    } else {
-      this.fetchArticles(1);
-    }
+    this.fetchArticles(this.$route.query.page);
   },
   methods: {
     openModal(articleId) {
