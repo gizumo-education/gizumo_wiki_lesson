@@ -12,7 +12,7 @@
             </template>
             <app-router-link
               v-else
-              :to="`/articles?page=${1}`"
+              :to="`/articles?page=1`"
               @click.prevent="setPage(1)"
             >
               1
