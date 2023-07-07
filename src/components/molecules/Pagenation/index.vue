@@ -81,12 +81,10 @@ export default {
       default: 1,
     },
   },
-  data() {
-    return {
-      showPages: 5,
-    };
-  },
   computed: {
+    showPages() {
+      return 5;
+    },
     numFix() {
       return num => {
         const ajust = 1 + (this.showPages - 1) / 2;
