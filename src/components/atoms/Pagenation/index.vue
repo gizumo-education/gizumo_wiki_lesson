@@ -70,12 +70,10 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      showPages: 5,
-    };
-  },
   computed: {
+    showPages() {
+      return 5;
+    },
     numfix() {
       return num => {
         const ajust = 1 + (this.showPages - 1) / 2;
