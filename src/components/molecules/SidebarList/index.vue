@@ -39,10 +39,9 @@ export default {
   },
   methods: {
     itemPath(item) {
-      const { page } = this.$route.query;
       const { path } = item;
       if (path === '/articles') {
-        return { path: '/articles', query: { page } };
+        return { path: '/articles', query: { page: 1 } };
       }
       return path;
     },

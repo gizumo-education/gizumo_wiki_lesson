@@ -129,7 +129,6 @@ export default {
     },
     getAllArticles({ commit, rootGetters }, currentPage) {
       commit('setCurrentPage', currentPage);
-      console.log(currentPage);
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/article?page=${currentPage}`,
