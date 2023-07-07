@@ -12,7 +12,7 @@
             </template>
             <app-router-link
               v-else
-              :to="`/articles?page=1`"
+              :to="getArticlePath(1)"
               @click.prevent="setPage(1)"
             >
               1
@@ -30,7 +30,7 @@
             </template>
             <app-router-link
               v-else
-              :to="`/articles?page=${numFix(num)}`"
+              :to="getArticlePath(numFix(num))"
               @click.prevent="setPage(numFix(num))"
             >
               {{ numFix(num) }}
@@ -48,7 +48,7 @@
             </template>
             <app-router-link
               v-else
-              :to="`/articles?page=${totalPages}`"
+              :to="getArticlePath(totalPages)"
               @click.prevent="setPage(totalPages)"
             >
               {{ totalPages }}
@@ -109,6 +109,9 @@ export default {
     },
   },
   methods: {
+    getArticlePath(page) {
+      return `/articles?page=${page}`;
+    },
     setPage(page) {
       this.$emit('current-page', page);
     },
