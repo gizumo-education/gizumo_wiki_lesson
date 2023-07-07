@@ -138,11 +138,13 @@ export default {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
-      const pageNum = rootGetters['articles/currentPage'].current_page;
+    getAllArticles({ commit, rootGetters }, pageNum) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: `/article?page=${pageNum}`,
+        url: '/article',
+        params: {
+          page: pageNum,
+        },
       }).then(res => {
         commit('doneGetPerPageArticles', res);
         commit('doneGetAllArticles', res.data);

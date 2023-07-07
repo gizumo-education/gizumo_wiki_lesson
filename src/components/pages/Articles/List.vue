@@ -22,7 +22,13 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    // if (from.query) {
+    //   console.log('和紙だよ');
+    //   console.log(to.query.page);
+    //   this.fetchArticles(to.query.page);
+    // } else {
+    //   this.fetchArticles(1);
+    // } 後でいじるかもしれない
     next();
   },
   data() {
@@ -42,7 +48,11 @@ export default {
     },
   },
   created() {
-    this.fetchArticles();
+    if (this.$route.query.page) {
+      this.fetchArticles(this.$route.query.page);
+    } else {
+      this.fetchArticles(1);
+    }
   },
   methods: {
     openModal(articleId) {
@@ -67,7 +77,7 @@ export default {
         this.$store.dispatch('articles/getAllArticles');
       }
     },
-    fetchArticles() {
+    fetchArticles(currentPage) {
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
@@ -79,8 +89,12 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
+      } else if (this.$route.query.page) {
+        this.$store.dispatch('articles/getAllArticles', currentPage);
       } else {
-        this.$store.dispatch('articles/getAllArticles');
+        this.$store.dispatch('articles/getAllArticles', currentPage).then(() => {
+          this.$router.push({ path: '/articles', query: { page: currentPage } });
+        });
       }
     },
   },

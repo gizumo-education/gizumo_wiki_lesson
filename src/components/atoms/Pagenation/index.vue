@@ -108,7 +108,9 @@ export default {
       } else {
         this.$store.dispatch('articles/setCurrentPage', page);
       }
-      return this.$store.dispatch('articles/getAllArticles');
+      this.$store.dispatch('articles/getAllArticles', page).then(() => {
+        this.$router.push({ path: '/articles', query: { page: this.currentPage } });
+      });
     },
   },
 };
@@ -154,10 +156,5 @@ export default {
 
 li:nth-child(3) {
   margin-left: 0;
-}
-
-.nolink {
-  background-color: $theme-color;
-  padding: 1rem 2rem;
 }
 </style>
