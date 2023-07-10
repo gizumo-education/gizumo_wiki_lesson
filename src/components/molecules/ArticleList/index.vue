@@ -68,7 +68,7 @@
         </div>
       </app-list-item>
     </transition-group>
-    <app-pagenation
+    <app-pagination
       :show-pages="showPages"
       :current-page="currentPage"
       :per-page="perPage"
@@ -98,7 +98,7 @@ import {
   RouterLink,
   Button,
   Text,
-  Pagenation,
+  Pagination,
 } from '@Components/atoms';
 
 export default {
@@ -108,7 +108,7 @@ export default {
     appRouterLink: RouterLink,
     appButton: Button,
     appText: Text,
-    appPagenation: Pagenation,
+    appPagination: Pagination,
   },
   props: {
     className: {
@@ -144,19 +144,19 @@ export default {
       return this.access.delete ? '削除' : '削除権限がありません';
     },
     showPages() {
-      return this.$store.state.articles.pagenation.show_pages;
+      return this.$store.state.articles.pagination.show_pages;
     },
     currentPage() {
-      return this.$store.state.articles.pagenation.current_page;
+      return this.$store.state.articles.pagination.current_page;
     },
     perPage() {
-      return this.$store.state.articles.pagenation.per_page;
+      return this.$store.state.articles.pagination.per_page;
     },
     lastPage() {
-      return this.$store.state.articles.pagenation.last_page;
+      return this.$store.state.articles.pagination.last_page;
     },
     totalPage() {
-      return this.$store.state.articles.pagenation.total;
+      return this.$store.state.articles.pagination.total;
     },
   },
   methods: {

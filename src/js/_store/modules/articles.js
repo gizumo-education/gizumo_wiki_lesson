@@ -28,7 +28,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    pagenation: {
+    pageiation: {
       current_page: null,
       last_page: null,
       per_page: null,
@@ -51,7 +51,7 @@ export default {
     },
     targetArticle: state => state.targetArticle,
     deleteArticleId: state => state.deleteArticleId,
-    currentPage: state => state.pagenation,
+    currentPage: state => state.pagination,
   },
   mutations: {
     initPostArticle(state) {
@@ -123,7 +123,7 @@ export default {
       state.doneMessage = payload.message;
     },
     doneGetPerPageArticles(state, payload) {
-      state.pagenation = {
+      state.pagination = {
         current_page: payload.data.meta.current_page,
         last_page: payload.data.meta.last_page,
         per_page: payload.data.meta.per_page,
@@ -131,7 +131,7 @@ export default {
       };
     },
     setCurrentPage(state, payload) {
-      state.pagenation.current_page = payload;
+      state.pagination.current_page = payload;
     },
   },
   actions: {
