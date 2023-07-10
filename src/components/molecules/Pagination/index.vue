@@ -1,11 +1,11 @@
 <template>
   <div v-if="totalPages">
     <div>
-      <nav class="pagenation">
-        <ul class="pagenation__list">
+      <nav class="pagination">
+        <ul class="pagination__list">
           <li
-            class="pagenation__list__btn pagenation__list__first"
-            :class="{ 'pagenation__list__disabled': 1 === currentPage }"
+            class="pagination__list__btn pagination__list__first"
+            :class="{ 'pagination__list__disabled': 1 === currentPage }"
           >
             <template v-if="1 === currentPage">
               <span>1</span>
@@ -18,12 +18,12 @@
               1
             </app-router-link>
           </li>
-          <li class="pagenation__list__skip">…</li>
+          <li class="pagination__list__skip">…</li>
           <li
             v-for="num in showPagesFix"
             :key="num"
-            class="pagenation__list__btn"
-            :class="{ 'pagenation__list__disabled': numFix(num) === currentPage }"
+            class="pagination__list__btn"
+            :class="{ 'pagination__list__disabled': numFix(num) === currentPage }"
           >
             <template v-if="numFix(num) === currentPage">
               <span>{{ numFix(num) }}</span>
@@ -36,10 +36,10 @@
               {{ numFix(num) }}
             </app-router-link>
           </li>
-          <li class="pagenation__list__skip">…</li>
+          <li class="pagination__list__skip">…</li>
           <li
-            class="pagenation__list__btn pagenation__list__last"
-            :class="{'pagenation__list__disabled': totalPages === currentPage}"
+            class="pagination__list__btn pagination__list__last"
+            :class="{'pagination__list__disabled': totalPages === currentPage}"
           >
             <template
               v-if="totalPages === currentPage"
@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pagenation {
+.pagination {
   &__list {
     display: flex;
     justify-content: center;

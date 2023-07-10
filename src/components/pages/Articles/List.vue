@@ -9,7 +9,7 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
-    <app-pagenation
+    <app-pagination
       :current-page="currentPage"
       :total-pages="totalPages"
       @current-page="getCurrentPage"
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import { ArticleList, Pagenation } from '@Components/molecules';
+import { ArticleList, Pagination } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
-    appPagenation: Pagenation,
+    appPagination: Pagination,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
