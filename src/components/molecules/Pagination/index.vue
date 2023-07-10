@@ -63,6 +63,8 @@
 <script>
 import { RouterLink } from '@Components/atoms';
 
+const showPages = 5;
+
 export default {
   components: {
     appRouterLink: RouterLink,
@@ -82,30 +84,27 @@ export default {
     },
   },
   computed: {
-    showPages() {
-      return 5;
-    },
     numFix() {
       return num => {
-        const ajust = 1 + (this.showPages - 1) / 2;
+        const ajust = 1 + (showPages - 1) / 2;
         let result = num + 1;
-        if (this.currentPage >= this.showPages / 2 && this.currentPage !== 3) {
+        if (this.currentPage >= showPages / 2 && this.currentPage !== 3) {
           result = num + this.currentPage - ajust;
         }
-        if (this.currentPage + this.showPages / 2 > this.totalPages) {
-          result = this.totalPages - this.showPages + num - 1;
+        if (this.currentPage + showPages / 2 > this.totalPages) {
+          result = this.totalPages - showPages + num - 1;
         }
-        if (this.totalPages <= this.showPages) {
+        if (this.totalPages <= showPages) {
           result = num;
         }
         return result;
       };
     },
     showPagesFix() {
-      if (this.totalPages < this.showPages) {
+      if (this.totalPages < showPages) {
         return this.totalPages;
       }
-      return this.showPages;
+      return showPages;
     },
   },
   methods: {
