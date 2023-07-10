@@ -5,9 +5,9 @@
         <ul class="pagination__list">
           <li
             class="pagination__list__btn pagination__list__first"
-            :class="{ 'pagination__list__disabled': 1 === currentPage }"
+            :class="{ 'pagination__list__disabled': currentPage === 1 }"
           >
-            <template v-if="1 === currentPage">
+            <template v-if="currentPage === 1">
               <span>1</span>
             </template>
             <app-router-link
@@ -23,9 +23,9 @@
             v-for="num in showPagesFix"
             :key="num"
             class="pagination__list__btn"
-            :class="{ 'pagination__list__disabled': numFix(num) === currentPage }"
+            :class="{ 'pagination__list__disabled': currentPage === numFix(num) }"
           >
-            <template v-if="numFix(num) === currentPage">
+            <template v-if="currentPage === numFix(num)">
               <span>{{ numFix(num) }}</span>
             </template>
             <app-router-link
@@ -39,10 +39,10 @@
           <li class="pagination__list__skip">…</li>
           <li
             class="pagination__list__btn pagination__list__last"
-            :class="{'pagination__list__disabled': totalPages === currentPage}"
+            :class="{'pagination__list__disabled': currentPage === totalPages }"
           >
             <template
-              v-if="totalPages === currentPage"
+              v-if="currentPage === totalPages "
             >
               <span>{{ totalPages }}</span>
             </template>
