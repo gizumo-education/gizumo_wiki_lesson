@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <ul class="pagenation">
+    <ul class="pagination">
       <li
         class="page-item"
         :class="{disabled: 1 == currentPage }"
@@ -91,7 +91,7 @@ export default {
       if (this.lastPage < showPages) {
         return this.lastPage;
       }
-      return this.showPages;
+      return showPages;
     },
   },
   methods: {
@@ -117,7 +117,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.pagenation {
+.pagination {
   display: flex;
 }
 .page-item {

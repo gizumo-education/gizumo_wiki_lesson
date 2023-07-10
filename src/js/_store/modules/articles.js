@@ -28,7 +28,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    pageiation: {
+    pagination: {
       current_page: null,
       last_page: null,
       per_page: null,
