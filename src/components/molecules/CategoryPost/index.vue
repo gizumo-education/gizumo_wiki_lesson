@@ -71,7 +71,6 @@ export default {
   },
   methods: {
     addCategory() {
-      console.log('押されました');
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
