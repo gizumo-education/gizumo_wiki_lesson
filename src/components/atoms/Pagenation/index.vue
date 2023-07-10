@@ -50,7 +50,7 @@
 </template>
 
 <script>
-
+const showPages = 5;
 export default {
   props: {
     currentPage: {
@@ -71,27 +71,24 @@ export default {
     },
   },
   computed: {
-    showPages() {
-      return 5;
-    },
     numfix() {
       return num => {
-        const ajust = 1 + (this.showPages - 1) / 2;
+        const ajust = 1 + (showPages - 1) / 2;
         let result = num + 1;
-        if (this.currentPage > this.showPages / 2 && this.currentPage !== 3) {
+        if (this.currentPage > showPages / 2 && this.currentPage !== 3) {
           result = num + this.currentPage - ajust;
         }
-        if (this.currentPage + this.showPages / 2 > this.lastPage) {
-          result = this.lastPage - this.showPages + num - 1;
+        if (this.currentPage + showPages / 2 > this.lastPage) {
+          result = this.lastPage - showPages + num - 1;
         }
-        if (this.lastPage <= this.showPages) {
+        if (this.lastPage <= showPages) {
           result = num;
         }
         return result;
       };
     },
     showPagesfix() {
-      if (this.lastPage < this.showPages) {
+      if (this.lastPage < showPages) {
         return this.lastPage;
       }
       return this.showPages;
