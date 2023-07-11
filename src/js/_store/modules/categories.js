@@ -16,6 +16,12 @@ export default {
     targetCategory: state => state.targetCategory,
   },
   mutations: {
+    initPostCategory(state) {
+      state.targetCategory = {
+        id: null,
+        name: '',
+      };
+    },
     doneGetAllCategories(state, payload) {
       state.categoriesList = [...payload.categories];
       state.categoriesList = state.categoriesList.reverse();
@@ -75,6 +81,7 @@ export default {
         commit('updateCategory', payload);
         commit('toggleDisabled');
         commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+        commit('initPostCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
