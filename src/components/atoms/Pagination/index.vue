@@ -53,11 +53,11 @@ export default {
   props: {
     currentPage: {
       type: Number,
-      default: null,
+      required: true,
     },
     lastPage: {
       type: Number,
-      default: null,
+      required: true,
     },
   },
   computed: {
