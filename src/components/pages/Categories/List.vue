@@ -8,7 +8,7 @@
     </div>
     <div class="category-separator" />
     <div class="category-list">
-      <category-list
+      <app-category-list
         :theads="theads"
         :categories="categories"
         :access="access"
@@ -22,7 +22,7 @@ import { CategoryList, CategoryPost } from '@Components/molecules';
 
 export default {
   components: {
-    CategoryList, // CategoryList コンポーネントを直接インポート
+    appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
   data() {
