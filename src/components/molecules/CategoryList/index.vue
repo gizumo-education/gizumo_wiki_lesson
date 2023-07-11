@@ -104,10 +104,7 @@ export default {
     categories: {
       type: Array,
       default() {
-        return [{
-          id: '',
-          name: '',
-        }];
+        return [];
       },
     },
     deleteCategoryName: {
