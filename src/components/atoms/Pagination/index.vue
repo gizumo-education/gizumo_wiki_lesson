@@ -2,9 +2,9 @@
   <ul class="pagination">
     <li
       class="page-item"
-      :class="{disabled: 1 == currentPage }"
+      :class="{disabled: 1 === currentPage }"
     >
-      <span v-if="1 == currentPage">1</span>
+      <span v-if="1 === currentPage">1</span>
       <a
         v-else
         href=""
@@ -17,10 +17,10 @@
       v-for="num in showPagesfix"
       :key="num"
       class="page-item link"
-      :class="{disabled: numfix(num) == currentPage }"
+      :class="{disabled: numfix(num) === currentPage }"
     >
       <template
-        v-if="numfix(num) == currentPage"
+        v-if="numfix(num) === currentPage"
       >
         <span>{{ numfix(num) }}</span>
       </template>
@@ -33,9 +33,9 @@
     <li class="page-item point">…</li>
     <li
       class="page-item"
-      :class="{disabled: lastPage == currentPage }"
+      :class="{disabled: lastPage === currentPage }"
     >
-      <span v-if="lastPage == currentPage">{{ lastPage }}</span>
+      <span v-if="lastPage === currentPage">{{ lastPage }}</span>
       <a
         v-else
         href=""
