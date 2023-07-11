@@ -7,7 +7,7 @@ export default {
     errorMessage: '',
   },
   mutations: {
-    SET_CATEGORIES(state, categories) {
+    setCategories(state, categories) {
       state.categories = categories;
     },
     failRequest(state, { message }) {
