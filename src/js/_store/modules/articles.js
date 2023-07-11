@@ -31,8 +31,6 @@ export default {
     pagination: {
       current_page: null,
       last_page: null,
-      per_page: null,
-      total: null,
     },
   },
   getters: {
@@ -126,8 +124,6 @@ export default {
       state.pagination = {
         current_page: payload.data.meta.current_page,
         last_page: payload.data.meta.last_page,
-        per_page: payload.data.meta.per_page,
-        total: payload.data.meta.total,
       };
     },
     setCurrentPage(state, payload) {

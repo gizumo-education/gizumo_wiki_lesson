@@ -71,9 +71,7 @@
     <app-pagination
       :show-pages="showPages"
       :current-page="currentPage"
-      :per-page="perPage"
       :last-page="lastPage"
-      :total-page="totalPage"
     />
     <app-modal>
       <app-text
@@ -149,14 +147,8 @@ export default {
     currentPage() {
       return this.$store.state.articles.pagination.current_page;
     },
-    perPage() {
-      return this.$store.state.articles.pagination.per_page;
-    },
     lastPage() {
       return this.$store.state.articles.pagination.last_page;
-    },
-    totalPage() {
-      return this.$store.state.articles.pagination.total;
     },
   },
   methods: {

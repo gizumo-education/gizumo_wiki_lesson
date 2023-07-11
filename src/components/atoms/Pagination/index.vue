@@ -55,15 +55,7 @@ export default {
       type: Number,
       default: null,
     },
-    totalPage: {
-      type: Number,
-      default: null,
-    },
     lastPage: {
-      type: Number,
-      default: null,
-    },
-    perPage: {
       type: Number,
       default: null,
     },
