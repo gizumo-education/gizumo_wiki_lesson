@@ -6,6 +6,7 @@
       :category="targetCategory"
       :done-message="doneMessage"
       :error-message="errorMessage"
+      :disabled="disabled"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
@@ -46,6 +47,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
     },
   },
   created() {

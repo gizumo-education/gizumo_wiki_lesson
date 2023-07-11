@@ -10,6 +10,7 @@ export default {
     categoriesList: [],
     doneMessage: '',
     errorMessage: '',
+    disabled: false,
   },
   getters: {
     targetCategory: state => state.targetCategory,
@@ -35,6 +36,9 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    toggleDisabled(state) {
+      state.disabled = !state.disabled;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -59,6 +63,7 @@ export default {
     },
     postCategory({ commit, state, rootGetters }) {
       commit('clearMessage');
+      commit('toggleDisabled');
       axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',
@@ -68,6 +73,7 @@ export default {
           newCategories: res.data,
         };
         commit('updateCategory', payload);
+        commit('toggleDisabled');
         commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
       }).catch(err => {
         commit('failRequest', { message: err.message });
