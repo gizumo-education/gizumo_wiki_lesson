@@ -93,9 +93,7 @@ export default {
       } else {
         this.$store.dispatch('articles/setCurrentPage', page);
       }
-      this.$store.dispatch('articles/getAllArticles', page).then(() => {
-        this.$router.push({ path: '/articles', query: { page: this.currentPage } });
-      });
+      this.$router.push({ path: '/articles', query: { page } });
     },
   },
 };
