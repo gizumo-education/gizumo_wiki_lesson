@@ -15,18 +15,20 @@ export default {
     },
   },
   actions: {
-    async fetchCategories({ commit, getters }) {
-      try {
-        const token = getters['auth/token'];
-
-        const response = await axios(token).get('/category');
-        const { categories } = response.data;
-        categories.reverse();
-
-        commit('SET_CATEGORIES', categories);
-      } catch (error) {
-        commit('failRequest', { message: 'カテゴリ一覧の取得中にエラーが発生しました' });
-      }
+    fetchCategories({ commit, rootGetters }) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: '/category',
+        }).then(res => {
+          const { categories } = res.data;
+          commit('setCategories', categories);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject(err);
+        });
+      });
     },
   },
 };
