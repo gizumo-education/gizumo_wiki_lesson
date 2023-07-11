@@ -1,0 +1,168 @@
+<template>
+  <div v-if="totalPages">
+    <div>
+      <nav class="pagination">
+        <ul class="pagination__list">
+          <li
+            class="pagination__list__btn pagination__list__first"
+            :class="{ 'pagination__list__disabled': currentPage === 1 }"
+          >
+            <template v-if="currentPage === 1">
+              <span>1</span>
+            </template>
+            <app-router-link
+              v-else
+              :to="getArticlePath(1)"
+              @click.prevent="setPage(1)"
+            >
+              1
+            </app-router-link>
+          </li>
+          <li class="pagination__list__skip">…</li>
+          <li
+            v-for="num in showPagesFix"
+            :key="num"
+            class="pagination__list__btn"
+            :class="{ 'pagination__list__disabled': currentPage === numFix(num) }"
+          >
+            <template v-if="currentPage === numFix(num)">
+              <span>{{ numFix(num) }}</span>
+            </template>
+            <app-router-link
+              v-else
+              :to="getArticlePath(numFix(num))"
+              @click.prevent="setPage(numFix(num))"
+            >
+              {{ numFix(num) }}
+            </app-router-link>
+          </li>
+          <li class="pagination__list__skip">…</li>
+          <li
+            class="pagination__list__btn pagination__list__last"
+            :class="{'pagination__list__disabled': currentPage === totalPages }"
+          >
+            <template
+              v-if="currentPage === totalPages "
+            >
+              <span>{{ totalPages }}</span>
+            </template>
+            <app-router-link
+              v-else
+              :to="getArticlePath(totalPages)"
+              @click.prevent="setPage(totalPages)"
+            >
+              {{ totalPages }}
+            </app-router-link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</template>
+
+<script>
+import { RouterLink } from '@Components/atoms';
+
+const showPages = 5;
+
+export default {
+  components: {
+    appRouterLink: RouterLink,
+  },
+  props: {
+    currentPage: {
+      type: Number,
+      default: 1,
+    },
+    totalCount: {
+      type: Number,
+      default: 1,
+    },
+    totalPages: {
+      type: Number,
+      default: 1,
+    },
+  },
+  computed: {
+    numFix() {
+      return num => {
+        const ajust = 1 + (showPages - 1) / 2;
+        if (this.currentPage + showPages / 2 > this.totalPages) {
+          return this.totalPages - showPages + num - 1;
+        }
+        if (this.currentPage >= showPages / 2 && this.currentPage !== 3) {
+          return num + this.currentPage - ajust;
+        }
+        if (this.totalPages <= showPages) {
+          return num;
+        }
+        return num + 1;
+      };
+    },
+    showPagesFix() {
+      if (this.totalPages < showPages) {
+        return this.totalPages;
+      }
+      return showPages;
+    },
+  },
+  methods: {
+    getArticlePath(page) {
+      return `/articles?page=${page}`;
+    },
+    setPage(page) {
+      this.$emit('current-page', page);
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.pagination {
+  &__list {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    font-size: 16px;
+    line-height: 1;
+    &__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      text-align: center;
+      color: $white;
+      & a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 20px;
+      color: $white;
+      @include hoverOpacity;
+      background-color: $theme-color;
+      }
+      &:nth-child(1) {
+        margin-right: 0;
+      }
+      &:nth-child(7) {
+        margin-right: 0;
+      }
+    }
+    &__skip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 20px;
+      text-align: center;
+      color: $disabled-color;
+    }
+    &__last {
+      margin-right: 0;
+    }
+    &__disabled {
+      padding: 5px 20px;
+      background-color: $disabled-color;
+    }
+  }
+}
+</style>
