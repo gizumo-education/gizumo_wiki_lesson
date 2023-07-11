@@ -21,7 +21,6 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      console.log(state.errorMessage);
     },
     updateValue(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
@@ -71,7 +70,6 @@ export default {
         commit('updateCategory', payload);
         commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
       }).catch(err => {
-        console.log(err);
         commit('failRequest', { message: err.message });
       });
     },

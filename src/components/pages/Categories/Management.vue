@@ -6,7 +6,6 @@
       :category="targetCategory"
       :done-message="doneMessage"
       :error-message="errorMessage"
-      :clear-message="clearMessage"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
@@ -61,17 +60,9 @@ export default {
     },
     handleSubmit() {
       this.$store.dispatch('categories/postCategory');
-      // if (this.loading) return;
-      // this.$store.dispatch('categories/postCategory').then(() => {
-      //   this.$router.push({
-      //     path: '/categories',
-      //     query: { redirect: '/article/post' },
-      //   });
-      // });
     },
   },
 };
-
 </script>
 
 <style lang="scss" scoped>
