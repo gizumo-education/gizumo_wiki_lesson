@@ -40,7 +40,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('fetchCategories');
+    this.$store.dispatch('categories/fetchCategories');
   },
 };
 </script>
