@@ -1,22 +1,42 @@
 import axios from '@Helpers/axiosDefault';
 
 export default {
-  
   state: {
     namespaced: true,
+    category: '',
+    errorMessage: '',
+    doneMessage: '',
+    disabled: '',
     categoryList: [],
   },
   getters: {
     
   },
-  mutaions: {
-    // doneFilteredCategories(state, payload) {
-    //   const filteredCategories = payload.categories.filter(
-    //     category => category.category && category.category.name === payload.category,
-    //   );
-    //   state.categoryList = [...filteredCategories];
-    // },
+  mutations: {
+    initPostCategory(state) {
+      state.targetArticle = {
+        id: null,
+        title: '',
+        content: '',
+        category: {
+          id: null,
+          name: '',
+        },
+        user: {
+          account_name: '',
+          created_at: '',
+          email: '',
+          full_name: '',
+          id: '',
+          password_reset_flg: null,
+          role: '',
+          updated_at: '',
+        },
+      };
+    },
     doneGetAllCategories(state, payload) {
+      console.log('category payload')
+      console.log(payload)
       state.categoryList = [...payload.categories];
     },
     failRequest(state, { message }) {
@@ -24,6 +44,9 @@ export default {
     },
   },
   actions: {
+    initPostCategory({ commit }) {
+      commit('initPostCategory');
+    },
     filteredCategories({ commit, rootGetters }, category) {
       return new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
@@ -43,6 +66,7 @@ export default {
       });
     },
     getAllCategories({ commit, rootGetters }) {
+      namespaced: true,
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
@@ -51,7 +75,8 @@ export default {
         const payload = {
         categories: res.data.categories,
         };
-        commit('doneGetAllCategories', payload.id);
+        commit('doneGetAllCategories', payload);
+        // console.log(payload)
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

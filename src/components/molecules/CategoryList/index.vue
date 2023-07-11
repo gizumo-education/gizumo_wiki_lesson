@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <transition-group name="fade" tag="tbody" class="category-list__table__body">
-        <tr v-for="category in categories" :key="category.id">
+        <tr v-for="category in categories" :key="category">
           <td>
             <app-text tag="span">
               {{ category.name }}
@@ -99,14 +99,16 @@ export default {
       type: Array,
       default() {
         return [
-
+        
         ]
       },
     },
     categories: {
       type: Array,
       default() {
-        return [];
+        return [
+
+      ];
       },
     },
     deleteCategoryName: {

@@ -84,6 +84,8 @@ export default {
       state.articleList = [...filteredArticles];
     },
     doneGetAllArticles(state, payload) {
+      console.log('article payload')
+      // console.log(payload)
       state.articleList = [...payload.articles];
     },
     failRequest(state, { message }) {
@@ -129,6 +131,7 @@ export default {
           articles: res.data.articles,
         };
         commit('doneGetAllArticles', payload);
+        console.log(payload)
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

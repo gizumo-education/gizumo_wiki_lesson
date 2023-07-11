@@ -1,49 +1,63 @@
 
 <template>
+  <div     class="list-contents">
+    <app-category-post
+    :category="Category"
+    :error-message="errorMessage"
+    :done-message="doneMessage"
+    :disabled="disabled"
+    :access="access"
+    class="list-content list-post"
+      />
     <app-category-list
-    :target-array="categoryList"
+    :categories="categoriesList"
+    class="list-content list-list"
+    :theads="theads"
     />
+  </div>
 </template>
 <script>
 import {CategoryList} from '@Components/molecules';
+import {CategoryPost} from '@Components/molecules'
 import Mixins from '@Helpers/mixins';
   
   export default {
-    data() {
-      return {
-      
-      categoryList: [{
-          // id: 1,
-          // name:'yay'
-        }],
-        thead: [{
-          // id: 1,
-          // name:'yay'
-        }],
-      };
-    },
     components: {
       appCategoryList: CategoryList,
+      appCategoryPost: CategoryPost,
     },
-    state: {
-      // targetCategory: {
-      //   category: {
-      //     id: null,
-      //     name: '',
-      //   },
-      // },
-      // categoryList: [],
-    },
+    data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
+  },
     computed: {
-      categoryList() {
+      categoriesList() {
+        // console.log(this.$store.state)
       return this.$store.state.categories.categoryList;
+    },
+    //以下post
+    category(){
+      return this.$store.state.categories.category;
+    },
+    errorMessage(){
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage(){
+      return this.$store.state.categories.doneMessage;
+    },
+    disabled(){
+      return this.$store.state.categories.disabled;
+    },
+    access() {
+      return this.$store.getters['auth/access'];
     },
     },
     props: {
-      targetArray: {
-      type: Array,
-      default: () => [],
-    },
+    //   targetArray: {
+    //   type: Array,
+    //   default: () => [],
+    // },
     },
     mutations: {
     // doneGetAllCategories(state, payload) {
@@ -74,9 +88,42 @@ import Mixins from '@Helpers/mixins';
       } else {
         console.log('false cate');
         console.log(this.$store);
-        this.$store.dispatch('categories/getAllCategories');
+        this.$store.dispatch('getAllCategories');
       }
     },
     }
   }
 </script>
+
+<style lang="scss" scoped>
+
+.list-contents {
+  display: flex;
+  
+}
+.list-content {
+  // display: inline-block;
+}
+
+.list-post {
+  width:40%;
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
+}
+
+// .list-post::after {
+//   position: absolute;
+//   top: 0;
+//   left: 100%;
+//   margin: 0 1rem;
+//   content: "";
+//   width: 1px;
+//   height: 100%;
+//   background-color: #ccc;
+// }
+
+.list-list {
+  width: 60%;
+  padding-left: 20px;
+}
+</style>

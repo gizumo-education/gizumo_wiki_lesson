@@ -82,7 +82,7 @@ export default {
             // console.log(err);
           });
       } else {
-        console.log('false article')
+        console.log('article')
         this.$store.dispatch('articles/getAllArticles');
       }
     },
