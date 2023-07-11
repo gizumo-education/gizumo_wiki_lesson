@@ -4,13 +4,11 @@
       <app-category-post
         :access="access"
         :category="newCategoryName"
-        @update-value="updateNewCategoryName"
-        @handle-submit="createCategory"
       />
     </div>
     <div class="category-separator" />
     <div class="category-list">
-      <app-category-list
+      <category-list
         :theads="theads"
         :categories="categories"
         :access="access"
@@ -21,20 +19,15 @@
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
-import axios from '@Helpers/axiosDefault';
-import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
-    appCategoryList: CategoryList,
+    CategoryList, // CategoryList コンポーネントを直接インポート
     appCategoryPost: CategoryPost,
   },
-  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
-      categories: [],
-      deleteCategoryName: '',
       newCategoryName: '',
     };
   },
@@ -42,49 +35,25 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    categories() {
+      return this.$store.state.categories.categories; // Vuexのストアからカテゴリ一覧を取得
+    },
   },
   created() {
-    this.fetchCategories();
-  },
-  methods: {
-    updateNewCategoryName(event) {
-      this.newCategoryName = event.target.value;
-    },
-    fetchCategories() {
-      const token = this.$store.getters['auth/token'];
-
-      axios(token)
-        .get('/category')
-        .then(response => {
-          this.categories = response.data.categories;
-          this.categories.reverse();
-        });
-    },
-    createCategory() {
-      const token = this.$store.getters['auth/token'];
-
-      const data = {
-        name: this.newCategoryName,
-      };
-      axios(token)
-        .post('/category', data)
-        .then(response => {
-          const createdCategory = response.data.category;
-          this.categories.unshift(createdCategory);
-          this.newCategoryName = ''; // 入力フィールドをリセット
-        });
-    },
+    this.$store.dispatch('fetchCategories');
   },
 };
 </script>
 
 <style scoped>
 .category {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
 }
 .category-post {
   width: 40%;
+}
+.category-list {
+  width: 100%;
 }
 .category-separator {
   width: 1px;
