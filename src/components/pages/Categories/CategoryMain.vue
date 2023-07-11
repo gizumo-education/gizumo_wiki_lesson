@@ -37,15 +37,6 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
-  methods: {
-    createCategory() {
-      if (this.loading) return;
-      this.$store.dispatch('users/createCategory', {
-        name: this.name,
-      }).then(() => {
-      });
-    },
-  },
 };
 </script>
 <style lang="scss" scoped>
