@@ -1,52 +1,50 @@
 <template>
-  <div class="container">
-    <ul class="pagination">
-      <li
-        class="page-item"
-        :class="{disabled: 1 == currentPage }"
+  <ul class="pagination">
+    <li
+      class="page-item"
+      :class="{disabled: 1 == currentPage }"
+    >
+      <span v-if="1 == currentPage">1</span>
+      <a
+        v-else
+        href=""
+        @click.prevent="setPage(1)"
+      >1
+      </a>
+    </li>
+    <li class="page-item point">…</li>
+    <li
+      v-for="num in showPagesfix"
+      :key="num"
+      class="page-item link"
+      :class="{disabled: numfix(num) == currentPage }"
+    >
+      <template
+        v-if="numfix(num) == currentPage"
       >
-        <span v-if="1 == currentPage">1</span>
-        <a
-          v-else
-          href=""
-          @click.prevent="setPage(1)"
-        >1
-        </a>
-      </li>
-      <li class="page-item point">…</li>
-      <li
-        v-for="num in showPagesfix"
-        :key="num"
-        class="page-item link"
-        :class="{disabled: numfix(num) == currentPage }"
+        <span>{{ numfix(num) }}</span>
+      </template>
+      <a
+        v-else
+        href="#"
+        @click.prevent="setPage(numfix(num))"
+      >{{ numfix(num) }}</a>
+    </li>
+    <li class="page-item point">…</li>
+    <li
+      class="page-item"
+      :class="{disabled: lastPage == currentPage }"
+    >
+      <span v-if="lastPage == currentPage">{{ lastPage }}</span>
+      <a
+        v-else
+        href=""
+        @click.prevent="setPage(lastPage)"
       >
-        <template
-          v-if="numfix(num) == currentPage"
-        >
-          <span>{{ numfix(num) }}</span>
-        </template>
-        <a
-          v-else
-          href="#"
-          @click.prevent="setPage(numfix(num))"
-        >{{ numfix(num) }}</a>
-      </li>
-      <li class="page-item point">…</li>
-      <li
-        class="page-item"
-        :class="{disabled: lastPage == currentPage }"
-      >
-        <span v-if="lastPage == currentPage">{{ lastPage }}</span>
-        <a
-          v-else
-          href=""
-          @click.prevent="setPage(lastPage)"
-        >
-          {{ lastPage }}
-        </a>
-      </li>
-    </ul>
-  </div>
+        {{ lastPage }}
+      </a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -112,13 +110,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.pagination {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
-}
-.pagination {
-  display: flex;
 }
 .page-item {
   color: white;
