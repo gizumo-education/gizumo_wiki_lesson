@@ -87,7 +87,7 @@ export default {
     numFix() {
       return num => {
         const ajust = 1 + (showPages - 1) / 2;
-        const result = num + 1;
+        let result = num + 1;
         if (this.currentPage >= showPages / 2 && this.currentPage !== 3) {
           result = num + this.currentPage - ajust;
         }
