@@ -87,17 +87,16 @@ export default {
     numFix() {
       return num => {
         const ajust = 1 + (showPages - 1) / 2;
-        let result = num + 1;
-        if (this.currentPage >= showPages / 2 && this.currentPage !== 3) {
-          result = num + this.currentPage - ajust;
-        }
         if (this.currentPage + showPages / 2 > this.totalPages) {
-          result = this.totalPages - showPages + num - 1;
+          return this.totalPages - showPages + num - 1;
+        }
+        if (this.currentPage >= showPages / 2 && this.currentPage !== 3) {
+          return num + this.currentPage - ajust;
         }
         if (this.totalPages <= showPages) {
-          result = num;
+          return num;
         }
-        return result;
+        return num + 1;
       };
     },
     showPagesFix() {
