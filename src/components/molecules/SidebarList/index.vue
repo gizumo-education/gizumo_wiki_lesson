@@ -5,7 +5,7 @@
       :key="item.id"
     >
       <app-router-link
-        :to="item.path"
+        :to="itemPath(item)"
         exact-active-class="is-active"
         hover-opacity
         block
@@ -35,6 +35,15 @@ export default {
     targetArray: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    itemPath(item) {
+      const { path } = item;
+      if (path === '/articles') {
+        return { path: '/articles', query: { page: 1 } };
+      }
+      return path;
     },
   },
 };

@@ -68,6 +68,11 @@
         </div>
       </app-list-item>
     </transition-group>
+    <app-pagination
+      :show-pages="showPages"
+      :current-page="currentPage"
+      :last-page="lastPage"
+    />
     <app-modal>
       <app-text
         ex-large
@@ -91,6 +96,7 @@ import {
   RouterLink,
   Button,
   Text,
+  Pagination,
 } from '@Components/atoms';
 
 export default {
@@ -100,6 +106,7 @@ export default {
     appRouterLink: RouterLink,
     appButton: Button,
     appText: Text,
+    appPagination: Pagination,
   },
   props: {
     className: {
@@ -133,6 +140,15 @@ export default {
     },
     buttonText() {
       return this.access.delete ? '削除' : '削除権限がありません';
+    },
+    showPages() {
+      return this.$store.state.articles.pagination.show_pages;
+    },
+    currentPage() {
+      return this.$store.state.articles.pagination.current_page;
+    },
+    lastPage() {
+      return this.$store.state.articles.pagination.last_page;
     },
   },
   methods: {

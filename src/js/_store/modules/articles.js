@@ -28,6 +28,10 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    pagination: {
+      current_page: null,
+      last_page: null,
+    },
   },
   getters: {
     transformedArticles(state) {
@@ -45,6 +49,7 @@ export default {
     },
     targetArticle: state => state.targetArticle,
     deleteArticleId: state => state.deleteArticleId,
+    currentPage: state => state.pagination,
   },
   mutations: {
     initPostArticle(state) {
@@ -115,20 +120,30 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
+    doneGetPerPageArticles(state, payload) {
+      state.pagination = {
+        current_page: payload.data.meta.current_page,
+        last_page: payload.data.meta.last_page,
+      };
+    },
+    setCurrentPage(state, payload) {
+      state.pagination.current_page = payload;
+    },
   },
   actions: {
     initPostArticle({ commit }) {
       commit('initPostArticle');
     },
-    getAllArticles({ commit, rootGetters }) {
+    getAllArticles({ commit, rootGetters }, pageNum) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/article',
+        params: {
+          page: pageNum,
+        },
       }).then(res => {
-        const payload = {
-          articles: res.data.articles,
-        };
-        commit('doneGetAllArticles', payload);
+        commit('doneGetPerPageArticles', res);
+        commit('doneGetAllArticles', res.data);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -283,6 +298,9 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    setCurrentPage({ commit }, currentPage) {
+      commit('setCurrentPage', currentPage);
     },
   },
 };
