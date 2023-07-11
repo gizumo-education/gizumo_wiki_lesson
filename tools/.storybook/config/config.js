@@ -23,7 +23,6 @@ import AppSidebarList from '@Components/molecules/SidebarList/index.vue';
 import AppArticleList from '@Components/molecules/ArticleList/index.vue';
 import AppMarkdownView from '@Components/molecules/MarkdownView/index.vue';
 
-
 //globals
 import AppHeader from '@Components/globals/Header/index.vue';
 import Sidebar from '@Components/globals/Sidebar/index.vue';
