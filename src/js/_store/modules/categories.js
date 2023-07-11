@@ -16,18 +16,14 @@ export default {
   },
   actions: {
     fetchCategories({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: '/category',
-        }).then(res => {
-          const { categories } = res.data;
-          commit('setCategories', categories);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject(err);
-        });
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/category',
+      }).then(res => {
+        const { categories } = res.data;
+        commit('setCategories', categories);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
