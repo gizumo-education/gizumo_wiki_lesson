@@ -7,6 +7,9 @@ import Signout from '@Pages/Signout/index.vue';
 import NotFound from '@Pages/NotFound/index.vue';
 import Home from '@Pages/Home/index.vue';
 
+// // カテゴリー
+import CategoryMain from '@Pages/Categories/CategoryMain.vue';
+
 // 記事
 import Articles from '@Pages/Articles/index.vue';
 import ArticleList from '@Pages/Articles/List.vue';
@@ -106,6 +109,10 @@ const router = new VueRouter({
           component: ArticleEdit,
         },
       ],
+    },
+    {
+      path: '/categories',
+      component: CategoryMain,
     },
     {
       path: '/users',
