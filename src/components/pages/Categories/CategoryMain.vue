@@ -19,7 +19,6 @@
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
-// import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
