@@ -5,6 +5,7 @@ export default {
   state: {
     categories: [],
     errorMessage: '',
+    creatingCategory: false,
   },
   mutations: {
     setCategories(state, categories) {

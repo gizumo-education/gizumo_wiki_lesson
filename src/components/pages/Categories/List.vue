@@ -32,7 +32,6 @@ export default {
     return {
       theads: ['カテゴリー名'],
       newCategoryName: '',
-      creatingCategory: false,
     };
   },
   computed: {
