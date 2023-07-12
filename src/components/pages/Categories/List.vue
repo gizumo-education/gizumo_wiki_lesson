@@ -5,7 +5,6 @@
         :access="access"
         :category="newCategoryName"
         :disabled="creatingCategory"
-        :buttontext="buttonText"
         @update-value="updateNewCategoryName"
         @handle-submit="createCategory"
       />
