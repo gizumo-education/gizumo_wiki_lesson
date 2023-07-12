@@ -4,11 +4,14 @@
       <app-category-post
         class="category__post"
         :category="name"
+        :access="access"
       />
       <app-category-list
         class="category__list"
         :theads="theads"
+        :access="access"
         :categories="categoryList"
+        @openModal="openDeleteModal"
       />
     </div>
   </section>
@@ -33,9 +36,19 @@ export default {
     categoryList() {
       return this.$store.state.categories.categories;
     },
+    access() {
+      return this.$store.getters['auth/access'];
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    openDeleteModal(id) {
+      this.toggleModal();
+      this.$store.dispatch('categories/clearMessage');
+      this.$store.dispatch('categories/openDeleteModal', { id });
+    },
   },
 };
 </script>

@@ -9,35 +9,15 @@ export default {
     category: {
       id: null,
       name: '',
+      role: '',
     },
+    deleteCategoryId: null,
     categories: [],
-  },
-  getters: {
-    // userListLength: state => state.userList.length,
+    roleList: [],
   },
   mutations: {
-    clearMessage(state) {
-      state.errorMessage = '';
-      state.doneMessage = '';
-    },
-    applyRequest(state) {
-      state.loading = true;
-    },
     doneGetAllCategories(state, { categories }) {
-      state.categories = categories;
-      state.loading = false;
-    },
-    doneCreateCategory(state) {
-      state.loading = false;
-      state.doneMessage = '新規カテゴリーの追加が完了しました。';
-    },
-    doneEditUser(state, { user }) {
-      state.user = { ...state.user, ...user };
-      state.loading = false;
-      state.doneMessage = 'カテゴリーの更新が完了しました。';
-    },
-    failRequest(state, { message }) {
-      state.errorMessage = message;
+      state.categories = categories.reverse();
       state.loading = false;
     },
   },
@@ -113,48 +93,44 @@ export default {
     },
 
     // カテゴリー更新
-    editUser({ commit, rootGetters }, user) {
+    editUser({ commit, rootGetters }, category) {
       commit('applyRequest');
 
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${user.id}`,
-        data: user,
+        url: `/category/${category.id}`,
+        data: category,
       }).then(response => {
         // NOTE: エラー時はresponse.data.codeが0で返ってくる。
         if (response.data.code === 0) throw new Error(response.data.message);
 
-        const editedUser = {
-          id: response.data.user.id,
-          fullName: response.data.user.full_name,
-          accountName: response.data.user.account_name,
-          email: response.data.user.email,
-          role: response.data.user.role,
+        const editedCategory = {
+          id: response.data.category.id,
+          Name: response.data.category.account_name,
         };
 
-        commit('doneEditUser', { editedUser });
+        commit('doneEditUser', { editedCategory });
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
     },
-
     // ユーザー削除のモーダルを開く
     openDeleteModal({ commit }, { id }) {
       commit('openDeleteModal', { id });
     },
-    // ユーザー削除
-    deleteUser({ commit, rootGetters }, { id }) {
+    // カテゴリー削除
+    openModal({ commit, rootGetters }, { id }) {
       commit('applyRequest');
 
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/user/${id}`,
+          url: `/category/${id}`,
         }).then(response => {
           // NOTE: エラー時はresponse.data.codeが0で返ってくる。
           if (response.data.code === 0) throw new Error(response.data.message);
 
-          commit('doneDeleteUser');
+          commit('doneDeleteCategory');
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });

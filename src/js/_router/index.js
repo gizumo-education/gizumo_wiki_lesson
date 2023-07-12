@@ -8,6 +8,7 @@ import NotFound from '@Pages/NotFound/index.vue';
 import Home from '@Pages/Home/index.vue';
 
 // // カテゴリー
+import Categories from '@Pages/Categories/index.vue';
 import CategoryMain from '@Pages/Categories/CategoryMain.vue';
 
 // 記事
@@ -31,6 +32,7 @@ import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
 import Store from '../_store';
+// import { categories } from '../_store/modules';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -112,7 +114,14 @@ const router = new VueRouter({
     },
     {
       path: '/categories',
-      component: CategoryMain,
+      component: Categories,
+      children: [
+        {
+          name: 'categoryMain',
+          path: '',
+          component: CategoryMain,
+        },
+      ],
     },
     {
       path: '/users',
