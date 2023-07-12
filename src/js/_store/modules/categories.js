@@ -15,6 +15,10 @@ export default {
       state.categories = categories.reverse();
       state.loading = false;
     },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
+      state.loading = false;
+    },
   },
   actions: {
     // カテゴリー全件取得
