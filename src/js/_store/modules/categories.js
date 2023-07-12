@@ -4,15 +4,10 @@ export default {
   namespaced: true,
   state: {
     loading: false,
-    errorMessage: '',
-    doneMessage: '',
     category: {
       id: null,
       name: '',
-      role: '',
     },
-    deleteCategoryId: null,
-    categories: [],
     roleList: [],
   },
   mutations: {
