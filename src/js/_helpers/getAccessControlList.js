@@ -1,9 +1,4 @@
 const acl = {
-  category: {
-    create: true,
-    edit: true,
-    delete: true,
-  },
   user: {
     create: false,
     edit: false,
