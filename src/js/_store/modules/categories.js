@@ -9,9 +9,6 @@ export default {
     disabled: '',
     categoryList: [],
   },
-  getters: {
-    
-  },
   mutations: {
     initPostCategory(state) {
       state.targetArticle = {
@@ -35,8 +32,6 @@ export default {
       };
     },
     doneGetAllCategories(state, payload) {
-      console.log('category payload')
-      console.log(payload)
       state.categoryList = [...payload.categories];
     },
     failRequest(state, { message }) {
@@ -66,14 +61,12 @@ export default {
       });
     },
     getAllCategories({ commit, rootGetters }) {
-      namespaced: true,
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
       }).then(res => {
-        console.log(res);
         const payload = {
-        categories: res.data.categories,
+          categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
         // console.log(payload)
@@ -82,4 +75,4 @@ export default {
       });
     },
   },
-}
+};

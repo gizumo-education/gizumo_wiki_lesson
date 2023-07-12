@@ -27,7 +27,6 @@ import UserCreate from '@Pages/Users/Create.vue';
 import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
-//カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import categoryList from '@Pages/Categories/List.vue';
 // import categoryPost from '@Pages/Categories/Post.vue';
@@ -57,7 +56,7 @@ const router = new VueRouter({
       name: 'signin',
       path: '/signin',
       component: Signin,
-       meta: {
+      meta: {
         isPublic: true,
       },
     },

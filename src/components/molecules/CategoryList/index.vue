@@ -99,8 +99,7 @@ export default {
       type: Array,
       default() {
         return [
-        
-        ]
+        ];
       },
     },
     categories: {
@@ -108,7 +107,7 @@ export default {
       default() {
         return [
 
-      ];
+        ];
       },
     },
     deleteCategoryName: {
