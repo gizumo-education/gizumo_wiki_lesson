@@ -41,6 +41,9 @@ export default {
     categories() {
       return this.$store.state.categories.categories; // Vuexのストアからカテゴリ一覧を取得
     },
+    creatingCategory() {
+      return this.$store.state.categories.creatingCategory;
+    },
   },
   created() {
     this.$store.dispatch('categories/fetchCategories');
@@ -50,19 +53,11 @@ export default {
       this.newCategoryName = event.target.value;
     },
     createCategory() {
-      const token = this.$store.getters['auth/token'];
-
-      const data = {
-        name: this.newCategoryName,
-      };
-      this.creatingCategory = true;
-      this.$store.dispatch('categories/createCategory', { token, data })
-        .then(() => {
+      this.$store.commit('categories/setCreatingCategory', true);
+      this.$store.dispatch('categories/createCategory', this.newCategoryName)
+        .finally(() => {
+          this.$store.commit('categories/setCreatingCategory', false);
           this.newCategoryName = '';
-          this.creatingCategory = false;
-        })
-        .catch(() => {
-          this.creatingCategory = false;
         });
     },
   },

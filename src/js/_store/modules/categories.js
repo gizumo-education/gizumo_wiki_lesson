@@ -5,6 +5,7 @@ export default {
   state: {
     categories: [],
     errorMessage: '',
+    newCategoryName: '',
     creatingCategory: false,
   },
   mutations: {
@@ -16,6 +17,9 @@ export default {
     },
     addCategory(state, category) {
       state.categories.unshift(category);
+    },
+    setCreatingCategory(state, value) {
+      state.creatingCategory = value;
     },
   },
   actions: {
@@ -30,17 +34,19 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    createCategory({ commit }, { token, data }) {
-      return new Promise((resolve, reject) => {
-        axios(token)
-          .post('/category', data)
-          .then(response => {
-            const createdCategory = response.data.category;
-            commit('addCategory', createdCategory);
-          })
-          .catch(error => {
-            reject(error);
-          });
+    createCategory({ commit, rootGetters }, categoryName) {
+      const data = {
+        name: categoryName,
+      };
+      return axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(response => {
+        const createdCategory = response.data.category;
+        commit('addCategory', createdCategory);
+      }).catch(error => {
+        throw error;
       });
     },
   },
