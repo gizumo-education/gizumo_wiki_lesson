@@ -35,8 +35,7 @@ export default {
           .post('/category', data)
           .then(response => {
             const createdCategory = response.data.category;
-            commit('addCategory', createdCategory); // addCategoryミューテーションをコミット
-            resolve(createdCategory);
+            commit('addCategory', createdCategory);
           })
           .catch(error => {
             reject(error);
