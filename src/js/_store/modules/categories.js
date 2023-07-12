@@ -5,12 +5,12 @@ export default {
   state: {
     categoryList: [],
   },
-  getters: {
-
-  },
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
+    },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
     },
   },
   actions: {
@@ -19,7 +19,6 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(res => {
-        // console.log(res);
         const payload = {
           categories: res.data.categories.reverse(),
         };

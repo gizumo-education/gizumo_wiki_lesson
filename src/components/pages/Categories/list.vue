@@ -1,5 +1,5 @@
 <template>
-  <div class="category clearfix">
+  <div class="category">
     <app-category-post
       category=""
       class="category__post"
@@ -26,12 +26,6 @@ export default {
     return {
       theads: ['カテゴリー名'],
     };
-    // return {
-    //   categoryPost: [{
-    //     id: 1,
-    //     name:"Vueむずすぎる"
-    //   }],
-    // };
   },
   computed: {
     categoriesList() {
@@ -40,11 +34,6 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
-    // sortedCategoriesById() {
-    //     return this.Categories.sort((a, b) => {
-    //       return b.id - a.id;
-    //     });
-    // },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -53,11 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.clearfix::after{
-  display: block;
-  content: "";
-  clear: both;
-}
 .category {
   &__post {
     float: left;
