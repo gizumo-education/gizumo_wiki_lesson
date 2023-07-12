@@ -1,18 +1,16 @@
 <template>
-  <section class="category-list">
-    <div class="category">
-      <app-category-post
-        class="category__post"
-        :category="name"
-        :access="access"
-      />
-      <app-category-list
-        class="category__list"
-        :theads="theads"
-        :access="access"
-        :categories="categoryList"
-      />
-    </div>
+  <section class="category-list category">
+    <app-category-post
+      class="category__post"
+      :category="name"
+      :access="access"
+    />
+    <app-category-list
+      class="category__list"
+      :theads="theads"
+      :access="access"
+      :categories="categoryList"
+    />
   </section>
 </template>
 
