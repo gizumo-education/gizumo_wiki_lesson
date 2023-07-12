@@ -39,7 +39,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     categories() {
-      return this.$store.state.categories.categories; // Vuexのストアからカテゴリ一覧を取得
+      return this.$store.state.categories.categories;
     },
     creatingCategory() {
       return this.$store.state.categories.creatingCategory;
