@@ -2,7 +2,7 @@
   <section class="category-list category">
     <app-category-post
       class="category__post"
-      :category="name"
+      :category="categoryName"
       :access="access"
     />
     <app-category-list
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      name: '',
+      categoryName: '',
     };
   },
   computed: {
