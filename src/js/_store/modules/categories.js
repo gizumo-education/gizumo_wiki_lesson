@@ -21,7 +21,7 @@ export default {
       }).then(res => {
         console.log(res)
         const payload = {
-          categories: res.data.categories,
+          categories: res.data.categories.reverse(),
         };
         commit('doneGetAllCategories', payload);
       }).catch(err => {

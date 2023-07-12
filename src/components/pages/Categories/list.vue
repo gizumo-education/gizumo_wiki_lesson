@@ -39,6 +39,11 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    // sortedCategoriesById() {
+    //     return this.Categories.sort((a, b) => {
+    //       return b.id - a.id;
+    //     });
+    // },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
