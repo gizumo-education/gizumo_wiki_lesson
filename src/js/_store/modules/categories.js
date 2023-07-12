@@ -8,10 +8,13 @@ export default {
   },
   mutations: {
     setCategories(state, categories) {
-      state.categories = categories;
+      state.categories = categories.reverse();
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+    },
+    addCategory(state, category) {
+      state.categories.unshift(category);
     },
   },
   actions: {
@@ -24,6 +27,20 @@ export default {
         commit('setCategories', categories);
       }).catch(err => {
         commit('failRequest', { message: err.message });
+      });
+    },
+    createCategory({ commit }, { token, data }) {
+      return new Promise((resolve, reject) => {
+        axios(token)
+          .post('/category', data)
+          .then(response => {
+            const createdCategory = response.data.category;
+            commit('addCategory', createdCategory); // addCategoryミューテーションをコミット
+            resolve(createdCategory);
+          })
+          .catch(error => {
+            reject(error);
+          });
       });
     },
   },

@@ -4,6 +4,10 @@
       <app-category-post
         :access="access"
         :category="newCategoryName"
+        :disabled="creatingCategory"
+        :buttontext="buttonText"
+        @update-value="updateNewCategoryName"
+        @handle-submit="createCategory"
       />
     </div>
     <div class="category-separator" />
@@ -29,6 +33,7 @@ export default {
     return {
       theads: ['カテゴリー名'],
       newCategoryName: '',
+      creatingCategory: false,
     };
   },
   computed: {
@@ -41,6 +46,27 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/fetchCategories');
+  },
+  methods: {
+    updateNewCategoryName(event) {
+      this.newCategoryName = event.target.value;
+    },
+    createCategory() {
+      const token = this.$store.getters['auth/token'];
+
+      const data = {
+        name: this.newCategoryName,
+      };
+      this.creatingCategory = true;
+      this.$store.dispatch('categories/createCategory', { token, data })
+        .then(() => {
+          this.newCategoryName = '';
+          this.creatingCategory = false;
+        })
+        .catch(() => {
+          this.creatingCategory = false;
+        });
+    },
   },
 };
 </script>
