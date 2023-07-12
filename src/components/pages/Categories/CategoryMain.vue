@@ -11,7 +11,6 @@
         :theads="theads"
         :access="access"
         :categories="categoryList"
-        @openModal="openDeleteModal"
       />
     </div>
   </section>
@@ -41,13 +40,6 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
-  },
-  methods: {
-    openDeleteModal(id) {
-      this.toggleModal();
-      this.$store.dispatch('categories/clearMessage');
-      this.$store.dispatch('categories/openDeleteModal', { id });
-    },
   },
 };
 </script>
