@@ -5,7 +5,8 @@
       class="category__post"
       :access="access"
     />
-    <app-category-list class="category__list"
+    <app-category-list
+      class="category__list"
       :categories="categoriesList"
       :theads="theads"
       :access="access"
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-import { CategoryList,CategoryPost } from '@Components/molecules';
+import { CategoryList, CategoryPost } from '@Components/molecules';
 
 export default {
   components: {
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-    }
+    };
     // return {
     //   categoryPost: [{
     //     id: 1,
@@ -48,7 +49,7 @@ export default {
   created() {
     this.$store.dispatch('categories/getAllCategories');
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

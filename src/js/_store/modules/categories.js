@@ -11,7 +11,7 @@ export default {
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
-    }
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -19,7 +19,7 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(res => {
-        console.log(res)
+        // console.log(res);
         const payload = {
           categories: res.data.categories.reverse(),
         };
@@ -27,6 +27,6 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
-    }
-  }
-}
+    },
+  },
+};
