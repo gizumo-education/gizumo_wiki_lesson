@@ -9,7 +9,7 @@ export default {
   },
   mutations: {
     doneGetAllCategories(state, payload) {
-      state.categories = [...payload.categories].reverse();
+      state.categories = [...payload.categories.reverse()];
       state.loading = false;
     },
     failRequest(state, { message }) {
