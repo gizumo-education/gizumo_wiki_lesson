@@ -24,6 +24,7 @@ export default {
       },
     },
     articleList: [],
+    trashedList: [],
     deleteArticleId: null,
     loading: false,
     doneMessage: '',
@@ -121,6 +122,9 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    doneGetAllTrashed(state, { trashed }) {
+      state.trashedList = trashed;
     },
   },
   actions: {
@@ -289,6 +293,22 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getAllTrashed({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const trashed = res.data.articles.map(data => ({
+          id: data.id,
+          title: data.title,
+          content: data.content,
+          createdAt: data.created_at,
+        }));
+        commit('doneGetAllTrashed', { trashed });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };
