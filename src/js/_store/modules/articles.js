@@ -32,6 +32,7 @@ export default {
       current_page: null,
       last_page: null,
     },
+    trashedArticleList: [],
   },
   getters: {
     transformedArticles(state) {
@@ -128,6 +129,10 @@ export default {
     },
     setCurrentPage(state, payload) {
       state.pagination.current_page = payload;
+    },
+    doneGetTrashArticles(state, { trashedArticles }) {
+      state.trashedArticleList = trashedArticles;
+      state.loading = false;
     },
   },
   actions: {
@@ -301,6 +306,22 @@ export default {
     },
     setCurrentPage({ commit }, currentPage) {
       commit('setCurrentPage', currentPage);
+    },
+    getTrashArticles({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        if (res.data.code === 0) throw new Error(res.data.message);
+        const trashedArticles = res.data.articles.map(data => ({
+          title: data.title,
+          content: data.content,
+          created_at: data.created_at,
+        }));
+        commit('doneGetTrashArticles', { trashedArticles });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };

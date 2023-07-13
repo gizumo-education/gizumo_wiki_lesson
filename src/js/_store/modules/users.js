@@ -77,7 +77,6 @@ export default {
       }).then(response => {
         // NOTE: エラー時はresponse.data.codeが0で返ってくる。
         if (response.data.code === 0) throw new Error(response.data.message);
-
         const users = response.data.users.map(data => ({
           id: data.id,
           fullName: data.full_name,
