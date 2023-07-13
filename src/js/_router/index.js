@@ -79,6 +79,10 @@ const router = new VueRouter({
           name: 'categoryList',
           path: '/category',
           component: CategoryList,
+          beforeEnter(next) {
+            Store.dispatch('categories/clearMessages');
+            next();
+          },
         },
       ],
     },

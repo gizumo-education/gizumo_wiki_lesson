@@ -63,5 +63,8 @@ export default {
         commit('setIsLoading', false);
       });
     },
+    clearMessages({ commit }) {
+      commit('clearMessages');
+    },
   },
 };
