@@ -4,11 +4,14 @@ export default {
   namespaced: true,
   state: {
     loading: false,
+    errorMessage: '',
+    doneMessage: '',
     category: {
       id: null,
       name: '',
     },
     roleList: [],
+    categories: [],
   },
   mutations: {
     doneGetAllCategories(state, { categories }) {
