@@ -82,16 +82,6 @@ export default {
     td {
       padding: 10px;
       vertical-align: middle;
-      &.is-disabled {
-        color: $disabled-color;
-        font-size: 12px;
-      }
-    }
-    .fade-enter-active, .fade-leave-active {
-      transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to {
-      opacity: 0;
     }
   }
 }
