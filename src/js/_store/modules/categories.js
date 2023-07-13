@@ -14,8 +14,8 @@ export default {
     categories: [],
   },
   mutations: {
-    doneGetAllCategories(state, { categories }) {
-      state.categories = categories.reverse();
+    doneGetAllCategories(state, payload) {
+      state.categories = [...payload.categories];
       state.loading = false;
     },
     failRequest(state, { message }) {
@@ -30,17 +30,10 @@ export default {
         method: 'GET',
         url: '/category',
       }).then(response => {
-        // NOTE: エラー時はresponse.data.codeが0で返ってくる。
-        if (response.data.code === 0) throw new Error(response.data.message);
-
-        const categories = [];
-        response.data.categories.forEach(data => {
-          categories.push({
-            id: data.id,
-            name: data.name,
-          });
-        });
-        commit('doneGetAllCategories', { categories });
+        const payload = {
+          categories: response.data.categories.reverse(),
+        };
+        commit('doneGetAllCategories', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
