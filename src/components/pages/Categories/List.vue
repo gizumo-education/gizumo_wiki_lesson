@@ -4,6 +4,12 @@
       <app-category-post
         :access="access"
         :category="newCategoryName"
+        :disabled="isLoading"
+        :error-message="errorMessage"
+        :done-message="doneMessage"
+        @clear-message="clearMessage"
+        @update-value="updateNewCategoryName"
+        @handle-submit="createCategory"
       />
     </div>
     <div class="category-separator" />
@@ -36,11 +42,34 @@ export default {
       return this.$store.getters['auth/access'];
     },
     categories() {
-      return this.$store.state.categories.categories; // Vuexのストアからカテゴリ一覧を取得
+      return this.$store.state.categories.categories;
+    },
+    isLoading() {
+      return this.$store.state.categories.isLoading;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
   },
   created() {
     this.$store.dispatch('categories/fetchCategories');
+    this.$store.commit('categories/clearMessages');
+  },
+  methods: {
+    updateNewCategoryName(event) {
+      this.newCategoryName = event.target.value;
+    },
+    createCategory() {
+      this.$store.commit('categories/setIsLoading', true);
+      this.$store.dispatch('categories/createCategory', this.newCategoryName);
+      this.newCategoryName = '';
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessages');
+    },
   },
 };
 </script>
