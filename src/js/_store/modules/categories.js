@@ -30,10 +30,13 @@ export default {
         // NOTE: エラー時はresponse.data.codeが0で返ってくる。
         if (response.data.code === 0) throw new Error(response.data.message);
 
-        const categories = response.data.categories.map(data => ({
-          id: data.id,
-          name: data.name,
-        }));
+        const categories = [];
+        response.data.categories.forEach(data => {
+          categories.push({
+            id: data.id,
+            name: data.name,
+          });
+        });
         commit('doneGetAllCategories', { categories });
       }).catch(err => {
         commit('failRequest', { message: err.message });
