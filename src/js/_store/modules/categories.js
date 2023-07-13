@@ -6,8 +6,7 @@ export default {
     categories: [],
     errorMessage: '',
     newCategoryName: '',
-    creatingCategory: false,
-    successMessage: '',
+    isLoading: false,
   },
   mutations: {
     setSuccessMessage(state, message) {
@@ -29,8 +28,8 @@ export default {
     addCategory(state, category) {
       state.categories.unshift(category);
     },
-    setCreatingCategory(state, value) {
-      state.creatingCategory = value;
+    setIsLoading(state, value) {
+      state.isLoading = value;
     },
   },
   actions: {
@@ -47,9 +46,8 @@ export default {
     },
     createCategory({ commit, rootGetters }, categoryName) {
       commit('clearMessages');
-      const data = {
-        name: categoryName,
-      };
+      const data = new URLSearchParams();
+      data.append('name', categoryName);
       return axios(rootGetters['auth/token'])({
         method: 'POST',
         url: '/category',

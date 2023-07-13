@@ -4,14 +4,10 @@
       <app-category-post
         :access="access"
         :category="newCategoryName"
-        :disabled="creatingCategory"
+        :disabled="isLoading"
         @update-value="updateNewCategoryName"
         @handle-submit="createCategory"
       />
-      <div class="message-container">
-        <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-      </div>
     </div>
     <div class="category-separator" />
     <div class="category-list">
@@ -45,8 +41,8 @@ export default {
     categories() {
       return this.$store.state.categories.categories;
     },
-    creatingCategory() {
-      return this.$store.state.categories.creatingCategory;
+    isLoading() {
+      return this.$store.state.categories.isLoading;
     },
     successMessage() {
       return this.$store.state.categories.successMessage;
@@ -63,10 +59,10 @@ export default {
       this.newCategoryName = event.target.value;
     },
     createCategory() {
-      this.$store.commit('categories/setCreatingCategory', true);
+      this.$store.commit('categories/setIsLoading', true);
       this.$store.dispatch('categories/createCategory', this.newCategoryName)
         .finally(() => {
-          this.$store.commit('categories/setCreatingCategory', false);
+          this.$store.commit('categories/setIsLoading', false);
           this.newCategoryName = '';
         });
     },
