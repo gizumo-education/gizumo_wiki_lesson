@@ -32,7 +32,6 @@ import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
 import Store from '../_store';
-// import { categories } from '../_store/modules';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
