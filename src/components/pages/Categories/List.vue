@@ -8,6 +8,10 @@
         @update-value="updateNewCategoryName"
         @handle-submit="createCategory"
       />
+      <div class="message-container">
+        <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+      </div>
     </div>
     <div class="category-separator" />
     <div class="category-list">
@@ -44,6 +48,12 @@ export default {
     creatingCategory() {
       return this.$store.state.categories.creatingCategory;
     },
+    successMessage() {
+      return this.$store.state.categories.successMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/fetchCategories');
@@ -70,6 +80,23 @@ export default {
 }
 .category-post {
   width: 40%;
+  .message-container {
+    display: inline-block;
+    font-size: 13px;
+    margin-top: 20px;
+    .success-message {
+      background-color: #17abe6;
+      opacity: 0.8;
+      color: white;
+      padding: 10px;
+    }
+    .error-message {
+      background-color: #e61717;
+      opacity: 0.8;
+      color: white;
+      padding: 10px;
+    }
+  }
 }
 .category-list {
   width: 100%;

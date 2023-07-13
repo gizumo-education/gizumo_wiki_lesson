@@ -7,8 +7,19 @@ export default {
     errorMessage: '',
     newCategoryName: '',
     creatingCategory: false,
+    successMessage: '',
   },
   mutations: {
+    setSuccessMessage(state, message) {
+      state.successMessage = message;
+    },
+    setErrorMessage(state, message) {
+      state.errorMessage = message;
+    },
+    clearMessages(state) {
+      state.successMessage = '';
+      state.errorMessage = '';
+    },
     setCategories(state, categories) {
       state.categories = categories.reverse();
     },
@@ -35,6 +46,7 @@ export default {
       });
     },
     createCategory({ commit, rootGetters }, categoryName) {
+      commit('clearMessages');
       const data = {
         name: categoryName,
       };
@@ -45,8 +57,9 @@ export default {
       }).then(response => {
         const createdCategory = response.data.category;
         commit('addCategory', createdCategory);
-      }).catch(error => {
-        throw error;
+        commit('setSuccessMessage', 'カテゴリ追加に成功！');
+      }).catch(() => {
+        commit('setErrorMessage', 'カテゴリ追加に失敗！');
       });
     },
   },
