@@ -9,7 +9,7 @@ export default {
   },
   mutations: {
     doneGetAllCategories(state, payload) {
-      state.categories = [...payload.categories];
+      state.categories = [...payload.categories].reverse();
       state.loading = false;
     },
     failRequest(state, { message }) {
@@ -25,7 +25,7 @@ export default {
         url: '/category',
       }).then(response => {
         const payload = {
-          categories: response.data.categories.reverse(),
+          categories: response.data.categories,
         };
         commit('doneGetAllCategories', payload);
       }).catch(err => {
