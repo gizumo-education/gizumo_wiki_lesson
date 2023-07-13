@@ -5,12 +5,6 @@ export default {
   state: {
     loading: false,
     errorMessage: '',
-    doneMessage: '',
-    category: {
-      id: null,
-      name: '',
-    },
-    roleList: [],
     categories: [],
   },
   mutations: {
