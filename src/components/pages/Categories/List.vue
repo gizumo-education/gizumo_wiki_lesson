@@ -5,6 +5,8 @@
         :access="access"
         :category="newCategoryName"
         :disabled="isLoading"
+        :error-message="errorMessage"
+        :done-message="doneMessage"
         @update-value="updateNewCategoryName"
         @handle-submit="createCategory"
       />
@@ -44,8 +46,8 @@ export default {
     isLoading() {
       return this.$store.state.categories.isLoading;
     },
-    successMessage() {
-      return this.$store.state.categories.successMessage;
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
@@ -60,11 +62,8 @@ export default {
     },
     createCategory() {
       this.$store.commit('categories/setIsLoading', true);
-      this.$store.dispatch('categories/createCategory', this.newCategoryName)
-        .finally(() => {
-          this.$store.commit('categories/setIsLoading', false);
-          this.newCategoryName = '';
-        });
+      this.$store.dispatch('categories/createCategory', this.newCategoryName);
+      this.newCategoryName = '';
     },
   },
 };

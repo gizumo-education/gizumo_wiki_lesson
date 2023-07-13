@@ -5,18 +5,19 @@ export default {
   state: {
     categories: [],
     errorMessage: '',
+    doneMessage: '',
     newCategoryName: '',
     isLoading: false,
   },
   mutations: {
-    setSuccessMessage(state, message) {
-      state.successMessage = message;
+    setDoneMessage(state, message) {
+      state.doneMessage = message;
     },
     setErrorMessage(state, message) {
       state.errorMessage = message;
     },
     clearMessages(state) {
-      state.successMessage = '';
+      state.doneMessage = '';
       state.errorMessage = '';
     },
     setCategories(state, categories) {
@@ -55,9 +56,11 @@ export default {
       }).then(response => {
         const createdCategory = response.data.category;
         commit('addCategory', createdCategory);
-        commit('setSuccessMessage', 'カテゴリ追加に成功！');
+        commit('setDoneMessage', 'カテゴリ追加に成功！');
       }).catch(() => {
         commit('setErrorMessage', 'カテゴリ追加に失敗！');
+      }).finally(() => {
+        commit('setIsLoading', false);
       });
     },
   },
