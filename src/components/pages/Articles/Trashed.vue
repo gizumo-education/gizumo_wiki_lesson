@@ -1,7 +1,7 @@
 <template>
   <section>
-    <appArticleTrashList />
-    <appArticleTrashTable
+    <app-article-trash-list />
+    <app-article-trash-table
       :target-array="articleTrashed"
       :theads="theads"
     />

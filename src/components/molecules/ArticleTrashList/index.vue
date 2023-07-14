@@ -1,8 +1,8 @@
 <template>
   <div class="article-trashed">
-    <appHeading :level="1">削除済み記事一覧</appHeading>
+    <app-heading :level="1">削除済み記事一覧</app-heading>
     <div class="article-trashed__back">
-      <appRouterLink
+      <app-router-link
         :to="{ path: '/articles', query: { page: 1 } }"
         hover-opacity
         small
@@ -11,7 +11,7 @@
         bg-lightgreen
       >
         全ての記事一覧へ戻る
-      </appRouterLink>
+      </app-router-link>
     </div>
   </div>
 </template>
