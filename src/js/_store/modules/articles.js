@@ -130,7 +130,7 @@ export default {
     setCurrentPage(state, payload) {
       state.pagination.current_page = payload;
     },
-    doneGetTrashArticles(state, { trashedArticles }) {
+    doneGetTrashArticles(state, trashedArticles) {
       state.trashedArticleList = trashedArticles;
       state.loading = false;
     },
@@ -318,7 +318,7 @@ export default {
           content: data.content,
           created_at: data.created_at,
         }));
-        commit('doneGetTrashArticles', { trashedArticles });
+        commit('doneGetTrashArticles', trashedArticles);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
