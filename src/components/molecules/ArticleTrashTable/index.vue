@@ -13,12 +13,12 @@
       <tr v-for="article in targetArray" :key="article.id">
         <td>
           <app-text tag="span" small>
-            {{ article.title | truncate(30) }}
+            {{ truncate(article.title,30) }}
           </app-text>
         </td>
         <td>
           <app-text tag="span" small>
-            {{ article.content | truncate(30) }}
+            {{ truncate(article.content,30) }}
           </app-text>
         </td>
         <td>
@@ -38,14 +38,6 @@ export default {
   components: {
     appText: Text,
   },
-  filters: {
-    truncate(value, length) {
-      if (value.length > length) {
-        return `${value.slice(0, length)}...`;
-      }
-      return value;
-    },
-  },
   props: {
     targetArray: {
       type: Array,
@@ -54,6 +46,14 @@ export default {
     theads: {
       type: Array,
       default: () => [],
+    },
+  },
+  computed: {
+    truncate: () => (value, length) => {
+      if (value.length > length) {
+        return `${value.slice(0, length)}...`;
+      }
+      return value;
     },
   },
   methods: {
