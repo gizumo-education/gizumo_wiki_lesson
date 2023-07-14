@@ -7,7 +7,17 @@ export default {
     errorMessage: '',
     doneMessage: '',
     newCategoryName: '',
+    deleteCategoryName: '',
     isLoading: false,
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
+    deleteCategoryId: null,
+    categoryList: [],
+  },
+  getters: {
+    deleteCategoryId: state => state.deleteCategoryId,
   },
   mutations: {
     setDoneMessage(state, message) {
@@ -20,8 +30,8 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    setCategories(state, categories) {
-      state.categories = categories.reverse();
+    setCategories(state, payload) {
+      state.categories = payload.reverse();
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -32,8 +42,44 @@ export default {
     setIsLoading(state, value) {
       state.isLoading = value;
     },
+    confirmDeleteCategory(state, { payload }) {
+      state.deleteCategory.id = payload.categoryId;
+      state.deleteCategory.name = payload.categoryName;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
+    },
+    displayDoneMessage(state, payload) {
+      state.doneMessage = payload.message;
+    },
   },
   actions: {
+    confirmDeleteCategory({ commit }, payload) {
+      commit('confirmDeleteCategory', { payload });
+    },
+    deleteCategory({ commit, rootGetters, state }) {
+      return new Promise(resolve => {
+        commit('clearMessages');
+        const data = parseInt(state.deleteCategory.id, 10);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${data}`,
+        }).then(() => {
+          axios(rootGetters['auth/token'])({
+            method: 'GET',
+            url: '/category',
+          }).then(res => {
+            commit('setCategories', res.data.categories);
+            commit('displayDoneMessage', {
+              message: 'カテゴリーの削除が完了しました',
+            });
+            resolve();
+          });
+        });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
     fetchCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
