@@ -12,10 +12,10 @@
     <transition-group name="fade" tag="tbody" class="trashed-table__body">
       <tr v-for="trashed in targetArray" :key="trashed.id">
         <td>
-          <app-text tag="span" small>{{ trashed.title | truncate(30) }}</app-text>
+          <app-text tag="span" small>{{ truncatedValue(trashed.title) }}</app-text>
         </td>
         <td>
-          <app-text tag="span" small>{{ trashed.content | truncate(30) }}</app-text>
+          <app-text tag="span" small>{{ truncatedValue(trashed.content) }}</app-text>
         </td>
         <td>
           <app-text tag="span" small>{{ formatDate(trashed.createdAt) }}</app-text>
@@ -34,14 +34,6 @@ export default {
   components: {
     appText: Text,
   },
-  filters: {
-    truncate(value, limit) {
-      if (value.length > limit) {
-        return `${value.substring(0, limit)}...`;
-      }
-      return value;
-    },
-  },
   props: {
     targetArray: {
       type: Array,
@@ -50,6 +42,16 @@ export default {
     theads: {
       type: Array,
       default: () => [],
+    },
+  },
+  computed: {
+    truncatedValue() {
+      return value => {
+        if (value.length > 30) {
+          return `${value.substring(0, 30)}...`;
+        }
+        return value;
+      };
     },
   },
   methods: {
