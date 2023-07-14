@@ -7,17 +7,12 @@ export default {
     errorMessage: '',
     doneMessage: '',
     newCategoryName: '',
-    deleteCategoryName: '',
     isLoading: false,
     deleteCategory: {
       id: null,
       name: '',
     },
     deleteCategoryId: null,
-    categoryList: [],
-  },
-  getters: {
-    deleteCategoryId: state => state.deleteCategoryId,
   },
   mutations: {
     setDoneMessage(state, message) {
