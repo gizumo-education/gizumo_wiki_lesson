@@ -4,7 +4,7 @@
 
     <div class="articles-list__back">
       <app-router-link
-        to="/articles"
+        to="/articles?page=1"
         hover-opacity
         small
         white
