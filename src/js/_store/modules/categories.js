@@ -40,9 +40,6 @@ export default {
       state.deleteCategory.id = payload.categoryId;
       state.deleteCategory.name = payload.categoryName;
     },
-    displayDoneMessage(state, payload) {
-      state.doneMessage = payload.message;
-    },
   },
   actions: {
     confirmDeleteCategory({ commit }, payload) {
@@ -61,9 +58,7 @@ export default {
             url: '/category',
           }).then(res => {
             commit('setCategories', res.data.categories);
-            commit('displayDoneMessage', {
-              message: 'カテゴリーの削除が完了しました',
-            });
+            commit('setDoneMessage', 'カテゴリーの削除が完了しました');
             resolve();
           });
         });
