@@ -25,7 +25,6 @@ export default {
     appHeading: Heading,
   },
 };
-
 </script>
 
 <style lang="scss" scoped>

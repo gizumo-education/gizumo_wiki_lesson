@@ -13,12 +13,12 @@
       <tr v-for="article in targetArray" :key="article.id">
         <td>
           <app-text tag="span" small>
-            {{ truncate(article.title,30) }}
+            {{ truncate(article.title, 30) }}
           </app-text>
         </td>
         <td>
           <app-text tag="span" small>
-            {{ truncate(article.content,30) }}
+            {{ truncate(article.content, 30) }}
           </app-text>
         </td>
         <td>
@@ -66,7 +66,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang="scss" scoped>
