@@ -123,7 +123,7 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    doneGetAllTrashed(state, { trashed }) {
+    doneGetAllTrashed(state, trashed) {
       state.trashedList = trashed;
     },
   },
@@ -305,7 +305,7 @@ export default {
           content: data.content,
           createdAt: data.created_at,
         }));
-        commit('doneGetAllTrashed', { trashed });
+        commit('doneGetAllTrashed', trashed);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
