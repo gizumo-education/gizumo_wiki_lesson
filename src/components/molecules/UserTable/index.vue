@@ -105,6 +105,8 @@ export default {
     td {
       padding: 10px;
       vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
       &.is-disabled {
         color: $disabled-color;
         font-size: 12px;
