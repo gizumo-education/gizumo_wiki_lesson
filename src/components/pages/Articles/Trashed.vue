@@ -1,12 +1,11 @@
 <template>
   <section class="trashed-list">
     <app-trashed-list />
-    <div class="trashed-list__table">
-      <app-trashed-table
-        :target-array="trashedList"
-        :theads="theads"
-      />
-    </div>
+    <app-trashed-table
+      class="trashed-list__table"
+      :target-array="trashedList"
+      :theads="theads"
+    />
   </section>
 </template>
 
