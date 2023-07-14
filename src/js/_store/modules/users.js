@@ -98,7 +98,6 @@ export default {
       }).then(response => {
         // NOTE: エラー時はresponse.data.codeが0で返ってくる。
         if (response.data.code === 0) throw new Error(response.data.message);
-
         const data = response.data.user;
         const user = {
           id: data.id,
@@ -125,7 +124,6 @@ export default {
         }).then(response => {
           // NOTE: エラー時はresponse.data.codeが0で返ってくる。
           if (response.data.code === 0) throw new Error(response.data.message);
-
           commit('doneCreateUser');
           resolve();
         }).catch(err => {
@@ -145,7 +143,6 @@ export default {
       }).then(response => {
         // NOTE: エラー時はresponse.data.codeが0で返ってくる。
         if (response.data.code === 0) throw new Error(response.data.message);
-
         const editedUser = {
           id: response.data.user.id,
           fullName: response.data.user.full_name,
@@ -175,7 +172,6 @@ export default {
         }).then(response => {
           // NOTE: エラー時はresponse.data.codeが0で返ってくる。
           if (response.data.code === 0) throw new Error(response.data.message);
-
           commit('doneDeleteUser');
           resolve();
         }).catch(err => {
