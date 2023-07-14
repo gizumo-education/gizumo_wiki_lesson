@@ -132,7 +132,6 @@ export default {
     },
     doneGetTrashArticles(state, trashedArticles) {
       state.trashedArticleList = trashedArticles;
-      state.loading = false;
     },
   },
   actions: {
@@ -319,8 +318,10 @@ export default {
           created_at: data.created_at,
         }));
         commit('doneGetTrashArticles', trashedArticles);
+        commit('toggleLoading');
       }).catch(err => {
         commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
   },
