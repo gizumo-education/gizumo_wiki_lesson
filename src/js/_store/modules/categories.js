@@ -12,7 +12,6 @@ export default {
       id: null,
       name: '',
     },
-    deleteCategoryId: null,
   },
   mutations: {
     setDoneMessage(state, message) {
@@ -40,9 +39,6 @@ export default {
     confirmDeleteCategory(state, { payload }) {
       state.deleteCategory.id = payload.categoryId;
       state.deleteCategory.name = payload.categoryName;
-    },
-    doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
     },
     displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
