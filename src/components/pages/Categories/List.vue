@@ -76,7 +76,11 @@ export default {
     },
     handleClick() {
       this.$store.dispatch('categories/deleteCategory').then(() => {
-        this.toggleModal();
+        this.$store.dispatch('categories/fetchCategories')
+          .then(() => {
+            this.$store.commit('categories/setDoneMessage', 'カテゴリーを削除しました');
+            this.toggleModal();
+          });
       });
     },
     updateNewCategoryName(event) {

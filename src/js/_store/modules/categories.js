@@ -57,19 +57,10 @@ export default {
           url: `/category/${rootGetters['categories/deleteCategoryId']}`,
           data,
         }).then(() => {
-          axios(rootGetters['auth/token'])({
-            method: 'GET',
-            url: '/category',
-          }).then(res => {
-            commit('setCategories', res.data.categories);
-            commit('displayDoneMessage', {
-              message: 'カテゴリーの削除が完了しました',
-            });
-            resolve();
-          });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
         });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
       });
     },
     fetchCategories({ commit, rootGetters }) {
