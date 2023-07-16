@@ -13,6 +13,9 @@ export default {
       name: '',
     },
   },
+  getters: {
+    deleteCategoryId: state => state.deleteCategory.id,
+  },
   mutations: {
     setDoneMessage(state, message) {
       state.doneMessage = message;
@@ -45,20 +48,23 @@ export default {
     confirmDeleteCategory({ commit }, payload) {
       commit('confirmDeleteCategory', { payload });
     },
-    deleteCategory({ commit, rootGetters, state }) {
+    deleteCategory({ commit, rootGetters }) {
       return new Promise(resolve => {
         commit('clearMessages');
-        const data = parseInt(state.deleteCategory.id, 10);
+        const data = parseInt(rootGetters['categories/deleteCategoryId'], 10);
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/category/${data}`,
+          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+          data,
         }).then(() => {
           axios(rootGetters['auth/token'])({
             method: 'GET',
             url: '/category',
           }).then(res => {
             commit('setCategories', res.data.categories);
-            commit('setDoneMessage', 'カテゴリーの削除が完了しました');
+            commit('displayDoneMessage', {
+              message: 'カテゴリーの削除が完了しました',
+            });
             resolve();
           });
         });
