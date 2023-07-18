@@ -8,6 +8,13 @@ export default {
     doneMessage: '',
     newCategoryName: '',
     isLoading: false,
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
+  },
+  getters: {
+    deleteCategoryId: state => state.deleteCategory.id,
   },
   mutations: {
     setDoneMessage(state, message) {
@@ -20,8 +27,8 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    setCategories(state, categories) {
-      state.categories = categories.reverse();
+    setCategories(state, payload) {
+      state.categories = payload.reverse();
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -32,8 +39,30 @@ export default {
     setIsLoading(state, value) {
       state.isLoading = value;
     },
+    confirmDeleteCategory(state, { payload }) {
+      state.deleteCategory.id = payload.categoryId;
+      state.deleteCategory.name = payload.categoryName;
+    },
   },
   actions: {
+    confirmDeleteCategory({ commit }, payload) {
+      commit('confirmDeleteCategory', { payload });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      return new Promise(resolve => {
+        commit('clearMessages');
+        const data = parseInt(rootGetters['categories/deleteCategoryId'], 10);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+          data,
+        }).then(() => {
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
+    },
     fetchCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
