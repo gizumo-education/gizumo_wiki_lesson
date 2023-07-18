@@ -37,7 +37,7 @@
       "ignoreComments": true,
       "ignoreTrailingComments": true,
       "ignoreTemplateLiterals": true,
-      "ignoreUrls": true
+      "ignoreUrls": true、
     }],
     "no-irregular-whitespace": [
       "error",
