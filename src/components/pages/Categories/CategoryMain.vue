@@ -2,7 +2,7 @@
   <section class="category-list category">
     <app-category-post
       class="category__post"
-      :category="categoryName"
+      :category="newCategory"
       :access="access"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
@@ -28,10 +28,12 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      categoryName: '',
     };
   },
   computed: {
+    newCategory() {
+      return this.$store.state.categories.targetCategory.name;
+    },
     categoryList() {
       return this.$store.state.categories.categories;
     },

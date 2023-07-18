@@ -20,6 +20,9 @@ export default {
       state.errorMessage = '';
       state.doneMessage = '';
     },
+    clearCategory(state) {
+      state.targetCategory.name = '';
+    },
     doneGetAllCategories(state, payload) {
       state.categories = [...payload.categories.reverse()];
       state.loading = false;
@@ -76,6 +79,7 @@ export default {
           category: response.data.category,
         };
         commit('donePostCategory', payload);
+        commit('clearCategory');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
