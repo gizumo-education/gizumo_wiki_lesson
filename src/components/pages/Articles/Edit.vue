@@ -65,7 +65,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/fetchCategories');
     this.$store.dispatch('articles/getArticleDetail', parseInt(this.articleId, 10));
   },
   methods: {

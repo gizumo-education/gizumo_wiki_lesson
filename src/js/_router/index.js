@@ -20,6 +20,7 @@ import Profile from '@Pages/Profile/index.vue';
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import CategoryList from '@Pages/Categories/List.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 
 // ユーザー
 import Users from '@Pages/Users/index.vue';
@@ -79,6 +80,11 @@ const router = new VueRouter({
           name: 'categoryList',
           path: '/category',
           component: CategoryList,
+        },
+        {
+          name: 'categoryEdit',
+          path: '/categories/:id',
+          component: CategoryEdit,
         },
       ],
     },

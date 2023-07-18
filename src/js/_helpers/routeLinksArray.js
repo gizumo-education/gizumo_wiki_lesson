@@ -6,13 +6,13 @@ export default [
   },
   {
     id: 2,
-    name: '記事',
-    path: '/articles',
+    name: 'カテゴリー',
+    path: '/category',
   },
   {
     id: 3,
-    name: 'カテゴリー',
-    path: '/category',
+    name: '記事',
+    path: '/articles',
   },
   {
     id: 4,
