@@ -98,8 +98,7 @@ export default {
     theads: {
       type: Array,
       default() {
-        return [
-        ];
+        return [];
       },
     },
     categories: {

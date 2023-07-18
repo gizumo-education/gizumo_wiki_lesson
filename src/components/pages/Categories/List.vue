@@ -11,6 +11,7 @@
       :categories="categoriesList"
       class="list-content list-list"
       :theads="theads"
+      :access="access"
     />
   </div>
 </template>
