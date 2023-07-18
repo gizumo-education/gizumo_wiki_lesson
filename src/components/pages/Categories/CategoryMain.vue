@@ -4,6 +4,9 @@
       class="category__post"
       :category="categoryName"
       :access="access"
+      @clear-message="clearMessage"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-list
       class="category__list"
@@ -26,11 +29,18 @@ export default {
     return {
       theads: ['カテゴリー名'],
       categoryName: '',
+      targetCategory: {
+        name: '',
+        id: null,
+      },
     };
   },
   computed: {
     categoryList() {
       return this.$store.state.categories.categories;
+    },
+    errorMessage() {
+      return this.$store.state.users.errorMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -38,6 +48,15 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postArticle');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateCategoryName', $event.target.value);
+    },
   },
 };
 </script>

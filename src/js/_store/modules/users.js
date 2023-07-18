@@ -117,7 +117,6 @@ export default {
     // ユーザー作成
     createUser({ commit, rootGetters }, user) {
       commit('applyRequest');
-
       return new Promise(resolve => {
         axios(rootGetters['auth/token'])({
           method: 'POST',
