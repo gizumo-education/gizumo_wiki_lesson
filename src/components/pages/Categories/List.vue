@@ -4,7 +4,6 @@
       :category="Category"
       :error-message="errorMessage"
       :done-message="doneMessage"
-      :disabled="disabled"
       :access="access"
       class="list-content list-post"
     />
@@ -52,11 +51,6 @@ export default {
       return this.$store.getters['auth/access'];
     },
   },
-  mutations: {
-    // doneGetAllCategories(state, payload) {
-    //   state.categoryList = [...payload.category];
-    //   },
-  },
   created() {
     this.fetchCategories();
   },
@@ -65,14 +59,6 @@ export default {
       if (this.$route.query.categories) {
         const { category } = this.$route.query;
         this.title = category;
-        this.$store.dispatch('categories/filteredCategories', category)
-          .then(() => {
-            if (this.$store.state.categories.categoryList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          }).catch(() => {
-            // console.log(err);
-          });
       } else {
         this.$store.dispatch('getAllCategories');
       }
@@ -86,26 +72,12 @@ export default {
 .list-contents {
   display: flex;
 }
-.list-content {
-  // display: inline-block;
-}
 
 .list-post {
   width:40%;
   border-right: 1px solid #ccc;
   padding-right: 20px;
 }
-
-// .list-post::after {
-//   position: absolute;
-//   top: 0;
-//   left: 100%;
-//   margin: 0 1rem;
-//   content: "";
-//   width: 1px;
-//   height: 100%;
-//   background-color: #ccc;
-// }
 
 .list-list {
   width: 60%;

@@ -49,8 +49,6 @@ Vue.component('app-textarea', AppTextarea);
 Vue.component('app-sidebar-list', AppSidebarList);
 Vue.component('app-article-list', AppArticleList);
 Vue.component('app-markdown-view', AppMarkdownView);
-Vue.component('app-category-list', AppCategoryList);
-Vue.component('app-category-post', AppCategoryPost);
 
 //globals
 Vue.component('app-header', AppHeader);
