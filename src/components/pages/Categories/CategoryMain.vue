@@ -29,10 +29,6 @@ export default {
     return {
       theads: ['カテゴリー名'],
       categoryName: '',
-      targetCategory: {
-        name: '',
-        id: null,
-      },
     };
   },
   computed: {
@@ -56,6 +52,9 @@ export default {
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateCategoryName', $event.target.value);
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
