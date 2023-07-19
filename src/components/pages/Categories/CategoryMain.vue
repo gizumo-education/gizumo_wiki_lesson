@@ -6,7 +6,7 @@
       :done-message="doneMessage"
       :category="newCategory"
       :access="access"
-      :loading="loading"
+      :disabled="loading"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
