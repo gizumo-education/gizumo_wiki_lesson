@@ -16,9 +16,6 @@ export default {
     targetCategory: state => state.targetCategory,
   },
   mutations: {
-    onLoadingChange(state) {
-      state.loading = !state.loading;
-    },
     clearMessage(state) {
       state.errorMessage = '';
       state.doneMessage = '';
@@ -73,7 +70,7 @@ export default {
     // 新規カテゴリー作成
     postCategory({ commit, rootGetters, state }) {
       commit('clearMessage');
-      commit('onLoadingChange');
+      commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', state.targetCategory.name);
       data.append('user_id', rootGetters['auth/user'].id);
