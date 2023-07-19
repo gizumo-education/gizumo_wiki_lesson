@@ -4,6 +4,7 @@
       class="category__post"
       :category="newCategory"
       :access="access"
+      :disabled="disabled"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
@@ -31,6 +32,9 @@ export default {
     };
   },
   computed: {
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
     newCategory() {
       return this.$store.state.categories.targetCategory.name;
     },

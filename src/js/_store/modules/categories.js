@@ -3,6 +3,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    disabled: false,
     loading: false,
     errorMessage: '',
     doneMessage: '',
@@ -16,6 +17,9 @@ export default {
     targetCategory: state => state.targetCategory,
   },
   mutations: {
+    onDisabledChange(state) {
+      state.disabled = !state.disabled;
+    },
     clearMessage(state) {
       state.errorMessage = '';
       state.doneMessage = '';
@@ -32,7 +36,6 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
-      // state.loading = false;
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -71,6 +74,7 @@ export default {
     // 新規カテゴリー作成
     postArticle({ commit, rootGetters, state }) {
       return new Promise((resolve, reject) => {
+        commit('onDisabledChange');
         const data = new URLSearchParams();
         data.append('name', state.targetCategory.name);
         data.append('user_id', rootGetters['auth/user'].id);
@@ -86,10 +90,12 @@ export default {
           commit('clearCategory');
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          commit('onDisabledChange');
           resolve();
         }).catch(err => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
+          commit('onDisabledChange');
           reject();
         });
       });
