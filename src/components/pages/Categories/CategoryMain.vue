@@ -2,6 +2,8 @@
   <section class="category-list category">
     <app-category-post
       class="category__post"
+      :error-message="errorMessage"
+      :done-message="doneMessage"
       :category="newCategory"
       :access="access"
       :disabled="disabled"
@@ -42,7 +44,10 @@ export default {
       return this.$store.state.categories.categories;
     },
     errorMessage() {
-      return this.$store.state.users.errorMessage;
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
     access() {
       return this.$store.getters['auth/access'];

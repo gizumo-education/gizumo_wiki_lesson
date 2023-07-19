@@ -74,6 +74,7 @@ export default {
     // 新規カテゴリー作成
     postArticle({ commit, rootGetters, state }) {
       return new Promise((resolve, reject) => {
+        commit('clearMessage');
         commit('onDisabledChange');
         const data = new URLSearchParams();
         data.append('name', state.targetCategory.name);
