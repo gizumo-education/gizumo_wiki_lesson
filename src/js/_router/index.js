@@ -37,8 +37,8 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     {
-      name: 'categories',
-      path: '/category',
+      name: 'URL',
+      path: '/categories',
       component: Categories,
       children: [
         {

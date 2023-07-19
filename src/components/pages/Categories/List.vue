@@ -1,9 +1,6 @@
 <template>
   <div class="list-contents">
     <app-category-post
-      :category="Category"
-      :error-message="errorMessage"
-      :done-message="doneMessage"
       :access="access"
       class="list-content list-post"
     />
@@ -36,18 +33,6 @@ export default {
     categoriesList() {
       return this.$store.state.categories.categoryList;
     },
-    category() {
-      return this.$store.state.categories.category;
-    },
-    errorMessage() {
-      return this.$store.state.categories.errorMessage;
-    },
-    doneMessage() {
-      return this.$store.state.categories.doneMessage;
-    },
-    disabled() {
-      return this.$store.state.categories.disabled;
-    },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -57,12 +42,7 @@ export default {
   },
   methods: {
     fetchCategories() {
-      if (this.$route.query.categories) {
-        const { category } = this.$route.query;
-        this.title = category;
-      } else {
-        this.$store.dispatch('getAllCategories');
-      }
+      this.$store.dispatch('getAllCategories');
     },
   },
 };
