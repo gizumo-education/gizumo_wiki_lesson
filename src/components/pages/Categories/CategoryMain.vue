@@ -6,7 +6,7 @@
       :done-message="doneMessage"
       :category="newCategory"
       :access="access"
-      :disabled="disabled"
+      :loading="loading"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
@@ -34,8 +34,8 @@ export default {
     };
   },
   computed: {
-    disabled() {
-      return this.$store.state.categories.disabled;
+    loading() {
+      return this.$store.state.categories.loading;
     },
     newCategory() {
       return this.$store.state.categories.targetCategory.name;

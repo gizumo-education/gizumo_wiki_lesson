@@ -3,7 +3,6 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    disabled: false,
     loading: false,
     errorMessage: '',
     doneMessage: '',
@@ -17,8 +16,8 @@ export default {
     targetCategory: state => state.targetCategory,
   },
   mutations: {
-    onDisabledChange(state) {
-      state.disabled = !state.disabled;
+    onLoadingChange(state) {
+      state.loading = !state.loading;
     },
     clearMessage(state) {
       state.errorMessage = '';
@@ -73,32 +72,26 @@ export default {
     },
     // 新規カテゴリー作成
     postCategory({ commit, rootGetters, state }) {
-      return new Promise((resolve, reject) => {
-        commit('clearMessage');
-        commit('onDisabledChange');
-        const data = new URLSearchParams();
-        data.append('name', state.targetCategory.name);
-        data.append('user_id', rootGetters['auth/user'].id);
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data,
-        }).then(response => {
-          const payload = {
-            category: response.data.category,
-          };
-          commit('donePostCategory', payload);
-          commit('clearCategory');
-          commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
-          commit('onDisabledChange');
-          resolve();
-        }).catch(err => {
-          commit('toggleLoading');
-          commit('failRequest', { message: err.message });
-          commit('onDisabledChange');
-          reject();
-        });
+      commit('clearMessage');
+      commit('onLoadingChange');
+      const data = new URLSearchParams();
+      data.append('name', state.targetCategory.name);
+      data.append('user_id', rootGetters['auth/user'].id);
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(response => {
+        const payload = {
+          category: response.data.category,
+        };
+        commit('donePostCategory', payload);
+        commit('clearCategory');
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+      }).catch(err => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
       });
     },
   },
