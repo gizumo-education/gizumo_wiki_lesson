@@ -12,9 +12,6 @@ export default {
       name: '',
     },
   },
-  getters: {
-    targetCategory: state => state.targetCategory,
-  },
   mutations: {
     clearMessage(state) {
       state.errorMessage = '';
