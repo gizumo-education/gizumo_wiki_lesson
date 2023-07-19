@@ -72,7 +72,7 @@ export default {
       });
     },
     // 新規カテゴリー作成
-    postArticle({ commit, rootGetters, state }) {
+    postCategory({ commit, rootGetters, state }) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
         commit('onDisabledChange');

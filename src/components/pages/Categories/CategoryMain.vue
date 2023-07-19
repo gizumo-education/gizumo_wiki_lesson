@@ -59,7 +59,7 @@ export default {
   methods: {
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/postArticle');
+      this.$store.dispatch('categories/postCategory');
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateCategoryName', $event.target.value);
