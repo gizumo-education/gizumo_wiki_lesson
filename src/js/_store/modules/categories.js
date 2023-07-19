@@ -83,11 +83,11 @@ export default {
         };
         commit('donePostCategory', payload);
         commit('clearCategory');
-        commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
       }).catch(err => {
-        commit('toggleLoading');
         commit('failRequest', { message: err.message });
+      }).finally(() => {
+        commit('toggleLoading');
       });
     },
   },
