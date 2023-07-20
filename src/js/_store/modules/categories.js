@@ -83,7 +83,6 @@ export default {
         },
       }).then(() => {
         commit('setIsLoading');
-      }).then(() => {
         commit('setDoneMessage', 'カテゴリー更新に成功しました');
       }).catch(() => {
         commit('setErrorMessage', 'カテゴリー更新に失敗しました');
