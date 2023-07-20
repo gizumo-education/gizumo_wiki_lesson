@@ -12,11 +12,22 @@ export default {
       id: null,
       name: '',
     },
+    category: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
+    category: state => state.category,
     deleteCategoryId: state => state.deleteCategory.id,
   },
   mutations: {
+    updateValue(state, { name, value }) {
+      state.category = { ...state.category, [name]: value };
+    },
+    doneGetCategory(state, { category }) {
+      state.category = { ...state.category, ...category };
+    },
     setDoneMessage(state, message) {
       state.doneMessage = message;
     },
@@ -36,8 +47,8 @@ export default {
     addCategory(state, category) {
       state.categories.unshift(category);
     },
-    setIsLoading(state, value) {
-      state.isLoading = value;
+    setIsLoading(state) {
+      state.isLoading = !state.isLoading;
     },
     confirmDeleteCategory(state, { payload }) {
       state.deleteCategory.id = payload.categoryId;
@@ -45,6 +56,39 @@ export default {
     },
   },
   actions: {
+    getCategory({ commit, rootGetters }, { id }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(res => {
+        const category = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneGetCategory', { category });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateValue({ commit }, target) {
+      commit('updateValue', target);
+    },
+    updateCategory({ commit, rootGetters }, categoryName) {
+      commit('setIsLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/category'].id}`,
+        data: {
+          name: categoryName.name,
+        },
+      }).then(() => {
+        commit('setIsLoading');
+      }).then(() => {
+        commit('setDoneMessage', 'カテゴリー更新に成功しました');
+      }).catch(() => {
+        commit('setErrorMessage', 'カテゴリー更新に失敗しました');
+      });
+    },
     confirmDeleteCategory({ commit }, payload) {
       commit('confirmDeleteCategory', { payload });
     },
