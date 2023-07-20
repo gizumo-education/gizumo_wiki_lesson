@@ -25,7 +25,7 @@ export default {
     updateValue(state, { name, value }) {
       state.category = { ...state.category, [name]: value };
     },
-    doneGetCategory(state, { category }) {
+    doneGetCategory(state, category) {
       state.category = { ...state.category, ...category };
     },
     setDoneMessage(state, message) {
@@ -65,7 +65,7 @@ export default {
           id: res.data.category.id,
           name: res.data.category.name,
         };
-        commit('doneGetCategory', { category });
+        commit('doneGetCategory', category);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
