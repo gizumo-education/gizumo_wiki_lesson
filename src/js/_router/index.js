@@ -90,7 +90,6 @@ const router = new VueRouter({
               next();
             } else {
               Store.dispatch('articles/clearMessage');
-              Store.dispatch('categories/clearMessage');
               next();
             }
           },

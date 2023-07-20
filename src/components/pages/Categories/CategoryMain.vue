@@ -55,6 +55,7 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     handleSubmit() {
