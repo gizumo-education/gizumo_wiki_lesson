@@ -7,7 +7,7 @@
         underline
         key-color
         hover-opacity
-        to="/category"
+        to="/categories"
       >
         カテゴリー一覧へ戻る
       </app-router-link>

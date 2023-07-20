@@ -73,12 +73,12 @@ const router = new VueRouter({
       component: Profile,
     },
     {
-      path: '/category',
+      path: '/categories',
       component: Categories,
       children: [
         {
           name: 'categoryList',
-          path: '/category',
+          path: '/categories',
           component: CategoryList,
         },
         {
