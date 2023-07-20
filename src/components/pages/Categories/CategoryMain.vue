@@ -2,8 +2,14 @@
   <section class="category-list category">
     <app-category-post
       class="category__post"
-      :category="categoryName"
+      :error-message="errorMessage"
+      :done-message="doneMessage"
+      :category="newCategory"
       :access="access"
+      :disabled="loading"
+      @clear-message="clearMessage"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-list
       class="category__list"
@@ -25,12 +31,23 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      categoryName: '',
     };
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    newCategory() {
+      return this.$store.state.categories.targetCategory.name;
+    },
     categoryList() {
       return this.$store.state.categories.categories;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -38,6 +55,19 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateCategoryName', $event.target.value);
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
   },
 };
 </script>
