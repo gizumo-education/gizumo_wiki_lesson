@@ -1,7 +1,7 @@
 <template>
   <app-category-edit
     :category="category"
-    :disabled="isLoading ? true : false"
+    :disabled="isLoading"
     :access="access"
     :done-message="doneMessage"
     :error-message="errorMessage"
