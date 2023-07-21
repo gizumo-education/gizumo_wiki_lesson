@@ -57,12 +57,12 @@ const router = new VueRouter({
       component: Home,
     },
     {
-      path: '/category',
+      path: '/categories',
       component: Categories,
       children: [
         {
           name: 'CategoryList',
-          path: '',
+          path: '/categories',
           component: CategoryList,
         },
       ],
