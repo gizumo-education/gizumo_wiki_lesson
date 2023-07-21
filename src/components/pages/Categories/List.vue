@@ -1,26 +1,22 @@
 <template>
   <div class="categories-list-mask">
-    <div class="categories-list-mask-common">
-      <app-category-post
-        :category="category"
-        :error-message="errorMessage"
-        :done-message="doneMessage"
-        :disabled="disabled"
-        :access="access"
-        @update-value="updateCategory"
-        @clear-message="clearMessage"
-        @handle-submit="handleSubmit"
-      />
-    </div>
-    <div>
-      <app-category-list
-        :theads="theads"
-        :categories="categoriesList"
-        :delete-category-name="name"
-        :access="access"
-        :error-message="errorMessage"
-      />
-    </div>
+    <app-category-post
+      :category="category"
+      :error-message="errorMessage"
+      :done-message="doneMessage"
+      :disabled="disabled"
+      :access="access"
+      @update-value="updateCategory"
+      @clear-message="clearMessage"
+      @handle-submit="handleSubmit"
+    />
+    <app-category-list
+      :theads="theads"
+      :categories="categoriesList"
+      :delete-category-name="name"
+      :access="access"
+      :error-message="errorMessage"
+    />
   </div>
 </template>
 
@@ -78,10 +74,5 @@ export default {
 .categories-list-mask {
   display: flex;
   justify-content: space-between;
-    &-common {
-      width: 39%;
-      padding-right: 14px;
-      border-right: 1px solid #eaeaea;
-    }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form class="categories-list-mask-common" @submit.prevent="addCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-input
       v-validate="'required'"
@@ -81,7 +81,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.categories-list-mask-common{
+  width: 41%;
+  padding-right: 18px;
+  border-right: 1px solid #eaeaea;
+}
 .category-management-post {
+  width: 39%;
   &__input {
     margin-top: 16px;
   }
