@@ -1,17 +1,20 @@
 <template>
   <div class="categories-list-mask">
-    <app-category-post
-      :category="category"
-      :disabled="disabled"
-      :access="access"
-      :class="{ 'categories-list-mask-common': true }"
-      @update-value="updateCategory"
-    />
-    <app-category-list
-      :theads="theads"
-      :categories="categoriesList"
-      :access="access"
-    />
+    <div class="categories-list-mask-input">
+      <app-category-post
+        :category="category"
+        :disabled="disabled"
+        :access="access"
+        @update-value="updateCategory"
+      />
+    </div>
+    <div class="categories-list-mask-confirm">
+      <app-category-list
+        :theads="theads"
+        :categories="categoriesList"
+        :access="access"
+      />
+    </div>
   </div>
 </template>
 
@@ -28,6 +31,8 @@ export default {
       theads: ['カテゴリー名'],
       category: '',
       disabled: false,
+      categories: [],
+      list: [],
     };
   },
   computed: {
@@ -56,10 +61,14 @@ export default {
 .categories-list-mask {
   display: flex;
   justify-content: space-between;
-  &-common {
-    width: 40%;
-    padding-right: 4px;
+  &-input {
+    width: 30%;
+    padding-right: 20px;
     border-right: 1px solid #eaeaea;
+  }
+  &-confirm {
+    width: 70%;
+    padding-left: 20px;
   }
 }
 </style>

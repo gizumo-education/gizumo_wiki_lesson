@@ -2,6 +2,9 @@ import axios from '@Helpers/axiosDefault';
 
 export default {
   namespaced: true,
+  state: {
+    categoryList: [],
+  },
   mutations: {
     doneAllCategories(state, payload) {
       state.categoryList = [...payload.categories].reverse();
