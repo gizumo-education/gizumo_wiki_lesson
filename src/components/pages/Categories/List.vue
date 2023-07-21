@@ -54,8 +54,6 @@ export default {
       this.errorMessage = '';
       this.doneMessage = '';
     },
-    handleSubmit() {
-    },
     getAllCategories() {
       this.$store.dispatch('getAllCategories')
         .then(() => {
