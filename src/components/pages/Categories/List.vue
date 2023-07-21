@@ -8,7 +8,7 @@
         @update-value="updateCategory"
       />
     </div>
-    <div class="categories-list-mask-confirm">
+    <div class="categories-list-mask--confirm">
       <app-category-list
         :theads="theads"
         :categories="categoriesList"
@@ -66,7 +66,7 @@ export default {
     padding-right: 20px;
     border-right: 1px solid #eaeaea;
   }
-  &-confirm {
+  &--confirm {
     width: 70%;
     padding-left: 20px;
   }
