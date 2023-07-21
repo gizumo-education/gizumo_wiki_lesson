@@ -64,5 +64,10 @@ export default {
 .categories-list-mask {
   display: flex;
   justify-content: space-between;
+  &-common {
+    width: 40%;
+    padding-right: 24px;
+    border-right: 1px solid #eaeaea;
+  }
 }
 </style>

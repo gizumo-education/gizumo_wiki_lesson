@@ -81,11 +81,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.categories-list-mask-common{
-  width: 40%;
-  padding-right: 8px;
-  border-right: 1px solid #eaeaea;
-}
 .category-management-post {
   width: 39%;
   &__input {
