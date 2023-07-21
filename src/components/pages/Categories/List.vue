@@ -59,7 +59,7 @@ export default {
   justify-content: space-between;
   &-common {
     width: 40%;
-    padding-right: 24px;
+    padding-right: 4px;
     border-right: 1px solid #eaeaea;
   }
 }

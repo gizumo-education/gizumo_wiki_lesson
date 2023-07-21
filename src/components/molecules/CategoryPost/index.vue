@@ -82,7 +82,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category-management-post {
-  width: 39%;
   &__input {
     margin-top: 16px;
   }
