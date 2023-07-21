@@ -3,7 +3,6 @@
     <app-category-post
       :category="category"
       :error-message="errorMessage"
-      :done-message="doneMessage"
       :disabled="disabled"
       :access="access"
       @update-value="updateCategory"
@@ -14,7 +13,6 @@
       :theads="theads"
       :categories="categoriesList"
       :access="access"
-      :error-message="errorMessage"
     />
   </div>
 </template>
