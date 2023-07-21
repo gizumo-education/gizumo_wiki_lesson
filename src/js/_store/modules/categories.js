@@ -22,14 +22,8 @@ export default {
       state.deleteCategoryId = categoryId;
       state.deleteCategoryName = categoryName;
     },
-    doneDeleteCategory(state, { categoryId }) {
+    doneDeleteCategory(state) {
       state.deleteArticleId = null;
-      const indexToRemove = state.categories.findIndex(
-        category => category.id === categoryId,
-      );
-      if (indexToRemove !== -1) {
-        state.categories.splice(indexToRemove, 1);
-      }
     },
     clearMessage(state) {
       state.errorMessage = '';
@@ -113,15 +107,18 @@ export default {
       commit('clearMessage');
       const data = new URLSearchParams();
       data.append('id', rootGetters['categories/deleteCategoryId']);
-      axios(rootGetters['auth/token'])({
-        method: 'DELETE',
-        url: `/category/${state.deleteCategoryId}`,
-        data,
-      }).then(response => {
-        commit('doneDeleteCategory', { categoryId: response.data.category.id });
-        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise(resolve => {
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${state.deleteCategoryId}`,
+          data,
+        }).then(response => {
+          commit('doneDeleteCategory', { categoryId: response.data.category.id });
+          commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
       });
     },
   },
