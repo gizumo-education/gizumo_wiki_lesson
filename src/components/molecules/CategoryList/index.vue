@@ -68,7 +68,7 @@
           theme-color
           tag="p"
         >
-          {{ deleteName }}
+          {{ deleteCategoryName }}
         </app-text>
         <app-button
           class="category-list__modal__button"
@@ -114,11 +114,6 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
-    },
-  },
-  computed: {
-    deleteName() {
-      return this.$store.state.categories.deleteCategoryName;
     },
   },
   methods: {

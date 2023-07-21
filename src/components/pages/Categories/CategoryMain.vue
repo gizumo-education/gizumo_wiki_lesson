@@ -16,6 +16,7 @@
       :theads="theads"
       :access="access"
       :categories="categoryList"
+      :delete-category-name="deleteCategoryName"
       @open-modal="openModal"
       @handle-click="handleClick"
     />
@@ -38,6 +39,9 @@ export default {
     };
   },
   computed: {
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    },
     deleteCategoryId() {
       return this.$store.state.categories.deleteCategoryId;
     },
