@@ -48,10 +48,6 @@ export default {
     updateCategory(value) {
       this.category = value;
     },
-    clearMessage() {
-      this.errorMessage = '';
-      this.doneMessage = '';
-    },
     getAllCategories() {
       this.$store.dispatch('category/getAllCategories');
     },
