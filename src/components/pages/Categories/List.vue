@@ -32,7 +32,6 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      errorMessage: '',
       doneMessage: '',
       disabled: false,
     };
