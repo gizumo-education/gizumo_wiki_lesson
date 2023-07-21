@@ -33,7 +33,6 @@ export default {
       theads: ['カテゴリー名'],
       category: '',
       doneMessage: '',
-      disabled: false,
     };
   },
   computed: {

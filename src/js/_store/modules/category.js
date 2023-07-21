@@ -4,6 +4,7 @@ export default {
   state: {
     categoryList: [],
     errorMessage: '',
+    disabled: false,
   },
   mutations: {
     doneAllCategories(state, payload) {
