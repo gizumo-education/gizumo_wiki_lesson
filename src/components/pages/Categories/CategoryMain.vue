@@ -70,7 +70,10 @@ export default {
   },
   methods: {
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmCategory', { categoryId, categoryName });
+      this.$store.dispatch('categories/confirmDeleteCategory', {
+        categoryId,
+        categoryName,
+      });
       this.toggleModal();
     },
     handleClick() {

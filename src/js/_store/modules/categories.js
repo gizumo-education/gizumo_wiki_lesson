@@ -99,7 +99,7 @@ export default {
         commit('toggleLoading');
       });
     },
-    confirmCategory({ commit }, { categoryId, categoryName }) {
+    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
       commit('confirmDeleteCategory', { categoryId, categoryName });
     },
     // カテゴリー削除
