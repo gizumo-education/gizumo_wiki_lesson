@@ -54,12 +54,7 @@ export default {
       this.doneMessage = '';
     },
     getAllCategories() {
-      this.$store.dispatch('getAllCategories')
-        .then(() => {
-          this.categoryList = this.$store.state.categoryList;
-        }).catch(() => {
-          // console.log(err);
-        });
+      this.$store.dispatch('category/getAllCategories');
     },
   },
 };
