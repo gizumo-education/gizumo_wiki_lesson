@@ -5,6 +5,7 @@
       :error-message="errorMessage"
       :disabled="disabled"
       :access="access"
+      :class="{ 'categories-list-mask-common': true }"
       @update-value="updateCategory"
       @clear-message="clearMessage"
       @handle-submit="handleSubmit"

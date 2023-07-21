@@ -1,5 +1,5 @@
 <template>
-  <form class="categories-list-mask-common" @submit.prevent="addCategory">
+  <form @submit.prevent="addCategory">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-input
       v-validate="'required'"
