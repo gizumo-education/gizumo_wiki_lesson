@@ -32,10 +32,6 @@ export default {
     appCategoryPost: CategoryPost,
   },
   mixins: [Mixins],
-  beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
-    next();
-  },
   data() {
     return {
       theads: ['カテゴリー名'],
