@@ -13,7 +13,6 @@
     <app-category-list
       :theads="theads"
       :categories="categoriesList"
-      :delete-category-name="name"
       :access="access"
       :error-message="errorMessage"
     />
