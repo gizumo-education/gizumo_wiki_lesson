@@ -77,8 +77,8 @@ export default {
       this.$store.dispatch('categories/deleteCategory')
         .then(() => {
           this.$store.dispatch('categories/getAllCategories');
+          this.toggleModal();
         });
-      this.toggleModal();
     },
     handleSubmit() {
       if (this.loading) return;
