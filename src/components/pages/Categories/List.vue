@@ -2,13 +2,10 @@
   <div class="categories-list-mask">
     <app-category-post
       :category="category"
-      :error-message="errorMessage"
       :disabled="disabled"
       :access="access"
       :class="{ 'categories-list-mask-common': true }"
       @update-value="updateCategory"
-      @clear-message="clearMessage"
-      @handle-submit="handleSubmit"
     />
     <app-category-list
       :theads="theads"
@@ -30,6 +27,7 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
+      disabled: false,
     };
   },
   computed: {
