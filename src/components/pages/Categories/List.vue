@@ -20,10 +20,6 @@ export default {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchCategories();
-    next();
-  },
   data() {
     return {
       theads: ['カテゴリー名'],
