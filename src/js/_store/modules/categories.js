@@ -3,10 +3,14 @@ import axios from '@Helpers/axiosDefault';
 export default {
   state: {
     categoryList: [],
+    errorMessage: '',
   },
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
+    },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
     },
   },
   actions: {

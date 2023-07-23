@@ -74,7 +74,6 @@ export default {
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        console.log(valid); // eslint-disable-line no-console
         if (valid) this.$emit('handle-submit');
       });
     },
