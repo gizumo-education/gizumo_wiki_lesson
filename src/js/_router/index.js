@@ -27,12 +27,26 @@ import UserCreate from '@Pages/Users/Create.vue';
 import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
+import Categories from '@Pages/Categories/index.vue';
+import categoryList from '@Pages/Categories/List.vue';
+
 import Store from '../_store';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    {
+      name: 'URL',
+      path: '/categories',
+      component: Categories,
+      children: [
+        {
+          path: '',
+          component: categoryList,
+        },
+      ],
+    },
     {
       name: 'signin',
       path: '/signin',
