@@ -30,9 +30,9 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      disabled: false,
       categories: [],
       list: [],
+      disabled: false1,
     };
   },
   computed: {
