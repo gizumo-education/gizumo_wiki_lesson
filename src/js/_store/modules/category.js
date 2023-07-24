@@ -4,7 +4,6 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    errorMessage: '',
   },
   mutations: {
     doneAllCategories(state, payload) {
