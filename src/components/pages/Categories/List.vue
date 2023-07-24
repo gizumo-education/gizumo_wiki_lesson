@@ -5,7 +5,6 @@
         :category="category"
         :disabled="disabled"
         :access="access"
-        @update-value="updateCategory"
       />
     </div>
     <div class="categories-list-mask--confirm">
