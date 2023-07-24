@@ -32,7 +32,7 @@ export default {
       category: '',
       categories: [],
       list: [],
-      disabled: false1,
+      disabled: false,
     };
   },
   computed: {
