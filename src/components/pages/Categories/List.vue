@@ -3,7 +3,6 @@
     <div class="categories-list-mask-input">
       <app-category-post
         :category="category"
-        :disabled="disabled"
         :access="access"
       />
     </div>
@@ -29,7 +28,6 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      disabled: false,
     };
   },
   computed: {
