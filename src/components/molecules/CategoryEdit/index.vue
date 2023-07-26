@@ -57,10 +57,6 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    categoryId: {
-      type: Number,
-      default: 0,
-    },
     category: {
       type: String,
       required: true,
