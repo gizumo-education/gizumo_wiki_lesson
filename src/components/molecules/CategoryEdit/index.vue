@@ -15,12 +15,12 @@
 
     <app-input
       v-validate="'required'"
-      name="name"
+      name="category"
       type="text"
       placeholder="更新するカテゴリー名を入力してください"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
-      :value="categoryName"
+      :value="category"
       @update-value="$emit('edited-name', $event)"
     />
     <app-button
@@ -61,7 +61,7 @@ export default {
       type: Number,
       default: 0,
     },
-    categoryName: {
+    category: {
       type: String,
       required: true,
     },

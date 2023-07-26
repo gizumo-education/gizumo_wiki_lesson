@@ -5,7 +5,7 @@
     :loading="loading"
     :done-message="doneMessage"
     :access="access"
-    :category-name="categoryName"
+    :category="categoryName"
     @edited-name="editedName($event)"
     @handle-submit="handleSubmit"
   />
