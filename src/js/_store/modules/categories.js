@@ -152,8 +152,9 @@ export default {
         commit('updateCategory', payload);
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
-      }).catch(() => {
+      }).catch(err => {
         commit('toggleLoading');
+        commit('failRequest', { message: err.message });
       });
     },
     // 更新画面遷移時に名前を取得

@@ -1,6 +1,7 @@
 <template>
   <app-category-edit
     :category-id="categoryId"
+    :error-message="errorMessage"
     :loading="loading"
     :done-message="doneMessage"
     :access="access"
@@ -38,6 +39,9 @@ export default {
     },
     loading() {
       return this.$store.state.categories.loading;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
