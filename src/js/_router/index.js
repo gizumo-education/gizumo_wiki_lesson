@@ -10,7 +10,7 @@ import Home from '@Pages/Home/index.vue';
 // // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import CategoryMain from '@Pages/Categories/CategoryMain.vue';
-
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 // 記事
 import Articles from '@Pages/Articles/index.vue';
 import ArticleList from '@Pages/Articles/List.vue';
@@ -119,6 +119,11 @@ const router = new VueRouter({
           name: 'categoryMain',
           path: '',
           component: CategoryMain,
+        },
+        {
+          name: 'CategoryEdit',
+          path: ':id',
+          component: CategoryEdit,
         },
       ],
     },
