@@ -13,10 +13,14 @@ export default {
       id: null,
       name: '',
     },
+    editCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     deleteCategoryId: state => state.deleteCategoryId,
-    targetCategory: state => state.targetCategory,
+    editCategory: state => state.editCategory,
   },
   mutations: {
     confirmDeleteCategory(state, { categoryId, categoryName }) {
@@ -50,13 +54,13 @@ export default {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
     editedName(state, payload) {
-      state.targetCategory = { ...state.targetCategory, name: payload.name };
+      state.editCategory = { ...state.editCategory, name: payload.name };
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
     doneGetCategory(state, payload) {
-      state.targetCategory = { ...state.targetCategory, ...payload.category };
+      state.editCategory = { ...state.editCategory, ...payload.category };
     },
     updateCategory(state, { name }) {
       state.targetCategory = { ...state.targetCategory, ...name };
@@ -138,10 +142,10 @@ export default {
     updateCategory({ commit, rootGetters }) {
       commit('toggleLoading');
       const data = new URLSearchParams();
-      data.append('name', rootGetters['categories/targetCategory'].name);
+      data.append('name', rootGetters['categories/editCategory'].name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${rootGetters['categories/targetCategory'].id}`,
+        url: `/category/${rootGetters['categories/editCategory'].id}`,
         data,
       }).then(res => {
         const payload = {

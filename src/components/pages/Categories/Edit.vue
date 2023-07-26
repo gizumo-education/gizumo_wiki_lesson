@@ -25,10 +25,10 @@ export default {
       return id;
     },
     categoryName() {
-      return this.$store.state.categories.targetCategory.name;
+      return this.$store.state.categories.editCategory.name;
     },
     currentCategoryName() {
-      const { name } = this.$store.state.categories.targetCategory.category;
+      const { name } = this.$store.state.categories.editCategory.category;
       return name;
     },
     loading() {
