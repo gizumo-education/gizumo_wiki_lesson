@@ -47,27 +47,27 @@ export default {
     deleteArticleId: state => state.deleteArticleId,
   },
   mutations: {
-    // initPostArticle(state) {
-    //   state.targetArticle = {
-    //     id: null,
-    //     title: '',
-    //     content: '',
-    //     category: {
-    //       id: null,
-    //       name: '',
-    //     },
-    //     user: {
-    //       account_name: '',
-    //       created_at: '',
-    //       email: '',
-    //       full_name: '',
-    //       id: '',
-    //       password_reset_flg: null,
-    //       role: '',
-    //       updated_at: '',
-    //     },
-    //   };
-    // },
+    initPostArticle(state) {
+      state.targetArticle = {
+        id: null,
+        title: '',
+        content: '',
+        category: {
+          id: null,
+          name: '',
+        },
+        user: {
+          account_name: '',
+          created_at: '',
+          email: '',
+          full_name: '',
+          id: '',
+          password_reset_flg: null,
+          role: '',
+          updated_at: '',
+        },
+      };
+    },
     doneGetArticle(state, payload) {
       state.targetArticle = { ...state.targetArticle, ...payload.article };
     },
@@ -105,9 +105,9 @@ export default {
     doneDeleteArticle(state) {
       state.deleteArticleId = null;
     },
-    // toggleLoading(state) {
-    //   state.loading = !state.loading;
-    // },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
     clearMessage(state) {
       state.doneMessage = '';
       state.errorMessage = '';
@@ -117,9 +117,9 @@ export default {
     },
   },
   actions: {
-    // initPostArticle({ commit }) {
-    //   commit('initPostArticle');
-    // },
+    initPostArticle({ commit }) {
+      commit('initPostArticle');
+    },
     getAllArticles({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -255,32 +255,32 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    // postArticle({ commit, rootGetters }) {
-    //   return new Promise((resolve, reject) => {
-    //     commit('clearMessage');
-    //     commit('toggleLoading');
-    //     const data = new URLSearchParams();
-    //     data.append('title', rootGetters['articles/targetArticle'].title);
-    //     data.append('content', rootGetters['articles/targetArticle'].content);
-    //     data.append('user_id', rootGetters['auth/user'].id);
-    //     if (rootGetters['articles/targetArticle'].category.id !== null) {
-    //       data.append('category_id', rootGetters['articles/targetArticle'].category.id);
-    //     }
-    //     axios(rootGetters['auth/token'])({
-    //       method: 'POST',
-    //       url: '/article',
-    //       data,
-    //     }).then(() => {
-    //       commit('toggleLoading');
-    //       commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
-    //       resolve();
-    //     }).catch(err => {
-    //       commit('toggleLoading');
-    //       commit('failRequest', { message: err.message });
-    //       reject();
-    //     });
-    //   });
-    // },
+    postArticle({ commit, rootGetters }) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        commit('toggleLoading');
+        const data = new URLSearchParams();
+        data.append('title', rootGetters['articles/targetArticle'].title);
+        data.append('content', rootGetters['articles/targetArticle'].content);
+        data.append('user_id', rootGetters['auth/user'].id);
+        if (rootGetters['articles/targetArticle'].category.id !== null) {
+          data.append('category_id', rootGetters['articles/targetArticle'].category.id);
+        }
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/article',
+          data,
+        }).then(() => {
+          commit('toggleLoading');
+          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
     clearMessage({ commit }) {
       commit('clearMessage');
     },
