@@ -16,6 +16,7 @@ export default {
   },
   getters: {
     deleteCategoryId: state => state.deleteCategoryId,
+    targetCategory: state => state.targetCategory,
   },
   mutations: {
     confirmDeleteCategory(state, { categoryId, categoryName }) {
@@ -48,8 +49,17 @@ export default {
     updateCategoryName(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
+    editedName(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
+    },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    doneGetCategory(state, payload) {
+      state.targetCategory = { ...state.targetCategory, ...payload.category };
+    },
+    updateCategory(state, { name }) {
+      state.targetCategory = { ...state.targetCategory, ...name };
     },
   },
   actions: {
@@ -115,6 +125,55 @@ export default {
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
+        });
+      });
+    },
+    // カテゴリー更新
+    editedName({ commit }, name) {
+      commit({
+        type: 'editedName',
+        name,
+      });
+    },
+    updateCategory({ commit, rootGetters }) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/targetCategory'].id);
+      data.append('name', rootGetters['categories/targetCategory'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/targetCategory'].id}`,
+        data,
+      }).then(res => {
+        const payload = {
+          id: res.data.category.id,
+          name: res.data.category.title,
+        };
+        commit('updateCategory', payload);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
+    },
+    // 更新画面遷移時に名前を取得
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/category/${categoryId}`,
+        }).then(res => {
+          const payload = {
+            category: {
+              id: res.data.category.id,
+              name: res.data.category.name,
+            },
+          };
+          commit('doneGetCategory', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
         });
       });
     },
