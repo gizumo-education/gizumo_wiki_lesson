@@ -157,23 +157,19 @@ export default {
     },
     // 更新画面遷移時に名前を取得
     getCategoryDetail({ commit, rootGetters }, categoryId) {
-      return new Promise((resolve, reject) => {
-        axios(rootGetters['auth/token'])({
-          method: 'GET',
-          url: `/category/${categoryId}`,
-        }).then(res => {
-          const payload = {
-            category: {
-              id: res.data.category.id,
-              name: res.data.category.name,
-            },
-          };
-          commit('doneGetCategory', payload);
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-          reject();
-        });
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneGetCategory', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
