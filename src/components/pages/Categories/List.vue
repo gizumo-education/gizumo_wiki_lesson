@@ -52,6 +52,9 @@ export default {
     errorMessage() {
       return this.$store.state.category.errorMessage;
     },
+    clearNewCategory() {
+      return this.$store.state.category.newCategoryName;
+    },
   },
   created() {
     this.$store.dispatch('category/getAllCategories');
@@ -60,8 +63,12 @@ export default {
   methods: {
     createCategory() {
       this.$store.dispatch('category/loading', true);
-      this.$store.dispatch('category/createCategory', this.newCategoryName);
-      this.newCategoryName = '';
+      this.$store.dispatch('category/createCategory', this.newCategoryName)
+        .then(response => {
+          if (response.doneMessage === '成功') {
+            this.newCategoryName = '';
+          }
+        });
     },
     updateNewCategoryName(event) {
       this.newCategoryName = event.target.value;

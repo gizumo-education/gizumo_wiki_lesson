@@ -51,6 +51,7 @@ export default {
         const createdCategory = response.data.category;
         commit('addCategory', createdCategory);
         commit('doneMessage', 'カテゴリー名一覧に追加成功');
+        return { doneMessage: '成功' };
       }).catch(() => {
         commit('errorMessage', 'カテゴリー名一覧に追加失敗');
       }).finally(() => {
