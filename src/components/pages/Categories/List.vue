@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     createCategory() {
-      this.$store.commit('category/loading', true);
+      this.$store.dispatch('category/loading', true);
       this.$store.dispatch('category/createCategory', this.newCategoryName);
       this.newCategoryName = '';
     },

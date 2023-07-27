@@ -36,6 +36,9 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
+    loading({ commit }) {
+      commit('loading');
+    },
     createCategory({ commit, rootGetters }, categoryName) {
       commit('clearMessage');
       const data = new URLSearchParams();
