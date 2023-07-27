@@ -51,7 +51,7 @@ export default {
       }).catch(() => {
         commit('errorMessage', '追加失敗');
       }).finally(() => {
-        commit('loading', false);
+        commit('loading');
       });
     },
     getAllCategories({ commit, rootGetters }) {
