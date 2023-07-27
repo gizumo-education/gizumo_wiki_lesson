@@ -18,9 +18,6 @@ export default {
     doneAllCategories(state, payload) {
       state.categoryList = [...payload.categories].reverse();
     },
-    failRequest(state, { message }) {
-      state.errorMessage = message;
-    },
     errorMessage(state, message) {
       state.errorMessage = message;
     },
