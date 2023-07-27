@@ -47,7 +47,7 @@ export default {
       }).then(response => {
         const createdCategory = response.data.category;
         commit('addCategory', createdCategory);
-        commit('doneMessage', '追加成功');
+        commit('doneMessage', 'カテゴリー名一覧に追加成功');
       }).catch(() => {
         commit('errorMessage', '追加失敗');
       }).finally(() => {
