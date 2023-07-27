@@ -52,9 +52,6 @@ export default {
     errorMessage() {
       return this.$store.state.category.errorMessage;
     },
-    clearNewCategory() {
-      return this.$store.state.category.newCategoryName;
-    },
   },
   created() {
     this.$store.dispatch('category/getAllCategories');
