@@ -49,7 +49,7 @@ export default {
         commit('addCategory', createdCategory);
         commit('doneMessage', 'カテゴリー名一覧に追加成功');
       }).catch(() => {
-        commit('errorMessage', '追加失敗');
+        commit('errorMessage', 'カテゴリー名一覧に追加失敗');
       }).finally(() => {
         commit('loading');
       });
