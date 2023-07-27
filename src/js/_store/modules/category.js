@@ -33,6 +33,9 @@ export default {
     },
   },
   actions: {
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
     createCategory({ commit, rootGetters }, categoryName) {
       commit('clearMessage');
       const data = new URLSearchParams();

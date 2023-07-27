@@ -55,7 +55,7 @@ export default {
   },
   created() {
     this.$store.dispatch('category/getAllCategories');
-    this.$store.commit('category/clearMessage');
+    this.$store.dispatch('category/clearMessage');
   },
   methods: {
     createCategory() {
