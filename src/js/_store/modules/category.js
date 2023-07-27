@@ -40,19 +40,22 @@ export default {
       commit('clearMessage');
       const data = new URLSearchParams();
       data.append('name', categoryName);
-      return axios(rootGetters['auth/token'])({
-        method: 'POST',
-        url: '/category',
-        data,
-      }).then(response => {
-        const createdCategory = response.data.category;
-        commit('addCategory', createdCategory);
-        commit('doneMessage', 'カテゴリー名一覧に追加成功');
-        return { doneMessage: '成功' };
-      }).catch(() => {
-        commit('errorMessage', 'カテゴリー名一覧に追加失敗');
-      }).finally(() => {
-        commit('loading');
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data,
+        }).then(response => {
+          const createdCategory = response.data.category;
+          commit('addCategory', createdCategory);
+          commit('doneMessage', 'カテゴリー名一覧に追加成功');
+          resolve({ doneMessage: '成功' });
+        }).catch(() => {
+          commit('errorMessage', 'カテゴリー名一覧に追加失敗');
+          reject();
+        }).finally(() => {
+          commit('loading');
+        });
       });
     },
     getAllCategories({ commit, rootGetters }) {
