@@ -12,9 +12,6 @@ export default {
     addCategory(state, category) {
       state.categoryList.unshift(category);
     },
-    doneGetCategory(state, payload) {
-      state.targetCategory = { ...state.targetCategory, ...payload.categories };
-    },
     doneAllCategories(state, payload) {
       state.categoryList = [...payload.categories].reverse();
     },
