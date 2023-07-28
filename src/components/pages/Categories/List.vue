@@ -61,10 +61,8 @@ export default {
     createCategory() {
       this.$store.dispatch('category/loading', true);
       this.$store.dispatch('category/createCategory', this.newCategoryName)
-        .then(response => {
-          if (response.doneMessage === '成功') {
-            this.newCategoryName = '';
-          }
+        .then(() => {
+          this.newCategoryName = '';
         });
     },
     updateNewCategoryName(event) {

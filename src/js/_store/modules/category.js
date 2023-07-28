@@ -49,7 +49,7 @@ export default {
           const createdCategory = response.data.category;
           commit('addCategory', createdCategory);
           commit('doneMessage', 'カテゴリー名一覧に追加成功');
-          resolve({ doneMessage: '成功' });
+          resolve();
         }).catch(() => {
           commit('errorMessage', 'カテゴリー名一覧に追加失敗');
           reject();
