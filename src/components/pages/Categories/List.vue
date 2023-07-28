@@ -2,8 +2,14 @@
   <div class="categories-list-mask">
     <div class="categories-list-mask-input">
       <app-category-post
-        :category="category"
+        :done-message="doneMessage"
+        :category="newCategoryName"
         :access="access"
+        :disabled="loading"
+        :error-message="errorMessage"
+        @update-value="updateNewCategoryName"
+        @handle-submit="createCategory"
+        @clear-message="clearMessage"
       />
     </div>
     <div class="categories-list-mask--confirm">
@@ -27,26 +33,46 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      category: '',
+      newCategoryName: '',
     };
   },
   computed: {
     categoriesList() {
       return this.$store.state.category.categoryList;
     },
+    doneMessage() {
+      return this.$store.state.category.doneMessage;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.category.loading;
+    },
+    errorMessage() {
+      return this.$store.state.category.errorMessage;
+    },
   },
   created() {
-    this.getAllCategories();
+    this.$store.dispatch('category/getAllCategories');
+    this.$store.dispatch('category/clearMessage');
   },
   methods: {
-    updateCategory(value) {
-      this.category = value;
+    createCategory() {
+      this.$store.dispatch('category/loading', true);
+      this.$store.dispatch('category/createCategory', this.newCategoryName)
+        .then(() => {
+          this.newCategoryName = '';
+        });
+    },
+    updateNewCategoryName(event) {
+      this.newCategoryName = event.target.value;
     },
     getAllCategories() {
       this.$store.dispatch('category/getAllCategories');
+    },
+    clearMessage() {
+      this.$store.dispatch('category/clearMessage');
     },
   },
 };
