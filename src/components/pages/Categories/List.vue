@@ -72,7 +72,7 @@ export default {
       this.$store.dispatch('category/getAllCategories');
     },
     clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
+      this.$store.dispatch('category/clearMessage');
     },
   },
 };

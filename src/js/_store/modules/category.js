@@ -37,10 +37,10 @@ export default {
       commit('loading');
     },
     createCategory({ commit, rootGetters }, categoryName) {
-      commit('clearMessage');
-      const data = new URLSearchParams();
-      data.append('name', categoryName);
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        const data = new URLSearchParams();
+        data.append('name', categoryName);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
@@ -52,7 +52,6 @@ export default {
           resolve();
         }).catch(() => {
           commit('errorMessage', 'カテゴリー名一覧に追加失敗');
-          reject();
         }).finally(() => {
           commit('loading');
         });
