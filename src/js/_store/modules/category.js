@@ -42,25 +42,19 @@ export default {
       commit('confirmDeleteCategory', { payload });
     },
     deleteCategory({ commit, rootGetters, state }) {
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         commit('clearMessage');
         const data = parseInt(state.deleteCategory.id.categoryId, 10);
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
           url: `/category/${data}`,
         }).then(() => {
-          axios(rootGetters['auth/token'])({
-            method: 'GET',
-            url: '/category',
-          }).then(res => {
-            const payload = { categories: res.data.categories };
-            commit('doneAllCategories', payload);
-            commit('doneMessage', 'カテゴリーの削除が完了しました。');
-            resolve();
-          });
+          commit('doneMessage', 'カテゴリーの削除が完了しました。');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject(err);
         });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {
