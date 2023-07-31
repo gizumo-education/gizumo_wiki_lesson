@@ -67,11 +67,10 @@ export default {
   },
   methods: {
     openModal(categoryId, categoryName) {
-      const payload = {
+      this.$store.dispatch('category/confirmDeleteCategory', {
         categoryId,
         categoryName,
-      };
-      this.$store.dispatch('category/confirmDeleteCategory', payload);
+      });
       this.toggleModal();
     },
     handleClick() {
