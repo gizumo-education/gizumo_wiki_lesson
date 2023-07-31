@@ -42,7 +42,7 @@ export default {
       commit('confirmDeleteCategory', { payload });
     },
     deleteCategory({ commit, rootGetters, state }) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit('clearMessage');
         const data = parseInt(state.deleteCategory.id.categoryId, 10);
         axios(rootGetters['auth/token'])({
@@ -53,7 +53,6 @@ export default {
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
-          reject(err);
         });
       });
     },

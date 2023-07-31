@@ -75,8 +75,9 @@ export default {
     },
     handleClick() {
       this.$store.dispatch('category/deleteCategory').then(() => {
-        this.toggleModal();
+        this.$store.dispatch('category/getAllCategories');
       });
+      this.toggleModal();
     },
     createCategory() {
       this.$store.dispatch('category/loading', true);
