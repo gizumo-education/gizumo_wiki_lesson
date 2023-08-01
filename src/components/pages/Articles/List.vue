@@ -1,5 +1,9 @@
 <template>
   <div class="articles">
+    <app-article-pagination
+      :last-page="lastPage"
+      :current-page="currentPage"
+    />
     <app-article-list
       :title="title"
       :target-array="articlesList"
@@ -13,12 +17,13 @@
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, ArticlePagiNation } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appArticlePagination: ArticlePagiNation,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
@@ -39,6 +44,12 @@ export default {
     },
     access() {
       return this.$store.getters['auth/access'];
+    },
+    lastPage() {
+      return this.$store.state.articles.lastPage;
+    },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
     },
   },
   created() {
