@@ -1,5 +1,5 @@
 <template>
-  <section class="">
+  <section>
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
       block
