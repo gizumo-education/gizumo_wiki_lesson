@@ -1,16 +1,14 @@
 <template>
-  <div class="">
-    <app-category-update
-      :access="access"
-      :loading="loading"
-      :category="rikonameid"
-      :error-message="errorMessage"
-      :done-message="doneMessage"
-      @update-value="updateValue($event)"
-      @clear-message="clearMessage"
-      @up-date-category="updateCategory"
-    />
-  </div>
+  <app-category-update
+    :access="access"
+    :loading="loading"
+    :category="rikonameid"
+    :error-message="errorMessage"
+    :done-message="doneMessage"
+    @update-value="updateValue($event)"
+    @clear-message="clearMessage"
+    @up-date-category="updateCategory"
+  />
 </template>
 
 <script>
