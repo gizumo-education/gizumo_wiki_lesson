@@ -141,10 +141,10 @@ export default {
         data,
       }).then(() => {
         commit('loading');
-        commit('doneMessage', 'カテゴリーを追加しました！');
+        commit('doneMessage', 'カテゴリーの更新に成功しました');
       }).catch(() => {
         commit('loading');
-        commit('errorMessage', 'カテゴリー名一覧に追加失敗');
+        commit('errorMessage', 'カテゴリーの更新に失敗しました');
       });
     },
     updateValue({ commit }, name) {
