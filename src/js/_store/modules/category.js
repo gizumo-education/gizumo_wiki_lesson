@@ -11,6 +11,17 @@ export default {
       id: null,
       name: '',
     },
+    category: {
+      id: null,
+      name: '',
+    },
+    upCategory: {
+      id: null,
+      name: '',
+    },
+  },
+  getters: {
+    upCategory: state => state.upCategory,
   },
   mutations: {
     addCategory(state, category) {
@@ -36,31 +47,29 @@ export default {
       state.deleteCategory.id = payload;
       state.deleteCategory.name = payload.categoryName;
     },
+    updateValue(state, payload) {
+      state.upCategory = { ...state.upCategory, name: payload.name };
+    },
+    doneGetCategory(state, upCategory) {
+      state.upCategory = { ...state.upCategory, ...upCategory };
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
   },
   actions: {
-    confirmDeleteCategory({ commit }, payload) {
-      commit('confirmDeleteCategory', { payload });
-    },
-    deleteCategory({ commit, rootGetters, state }) {
-      return new Promise(resolve => {
-        commit('clearMessage');
-        const data = parseInt(state.deleteCategory.id.categoryId, 10);
-        axios(rootGetters['auth/token'])({
-          method: 'DELETE',
-          url: `/category/${data}`,
-        }).then(() => {
-          commit('doneMessage', 'カテゴリーの削除が完了しました。');
-          resolve();
-        }).catch(err => {
-          commit('failRequest', { message: err.message });
-        });
+    getAllCategories({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/category',
+      }).then(res => {
+        const payload = {
+          categories: res.data.categories,
+        };
+        commit('doneAllCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
-    },
-    clearMessage({ commit }) {
-      commit('clearMessage');
-    },
-    loading({ commit }) {
-      commit('loading');
     },
     createCategory({ commit, rootGetters }, categoryName) {
       return new Promise(resolve => {
@@ -83,18 +92,63 @@ export default {
         });
       });
     },
-    getAllCategories({ commit, rootGetters }) {
+    deleteCategory({ commit, rootGetters, state }) {
+      return new Promise(resolve => {
+        commit('clearMessage');
+        const data = parseInt(state.deleteCategory.id.categoryId, 10);
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${data}`,
+        }).then(() => {
+          commit('doneMessage', 'カテゴリーの削除が完了しました。');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
+    },
+    loading({ commit }) {
+      commit('loading');
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
+    confirmDeleteCategory({ commit }, payload) {
+      commit('confirmDeleteCategory', { payload });
+    },
+    getUpdateCategory({ commit, rootGetters }, id) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/category',
-      }).then(res => {
-        const payload = {
-          categories: res.data.categories,
+        url: `category/${id}`,
+      }).then(response => {
+        const upCategory = {
+          id: response.data.category.id,
+          name: response.data.category.name,
         };
-        commit('doneAllCategories', payload);
+        commit('doneGetCategory', upCategory);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+    },
+    updateCategory({ commit, rootGetters }) {
+      commit('loading');
+      commit('clearMessage');
+      const data = new URLSearchParams();
+      data.append('name', rootGetters['category/upCategory'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `category/${rootGetters['category/upCategory'].id}`,
+        data,
+      }).then(() => {
+        commit('loading');
+        commit('doneMessage', 'カテゴリーを追加しました！');
+      }).catch(() => {
+        commit('loading');
+        commit('errorMessage', 'カテゴリー名一覧に追加失敗');
+      });
+    },
+    updateValue({ commit }, name) {
+      commit('updateValue', { name });
     },
   },
 };
