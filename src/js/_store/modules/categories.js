@@ -11,6 +11,8 @@ export default {
     doneMessage: '',
     errorMessage: '',
     disabled: false,
+    deleteCategoryId: null,
+    deleteCategoryName: null,
   },
   getters: {
     targetCategory: state => state.targetCategory,
@@ -44,6 +46,10 @@ export default {
     },
     toggleDisabled(state) {
       state.disabled = !state.disabled;
+    },
+    confirmDeleteCategory(state, { categoryId, categoryName }) {
+      state.deleteCategoryId = categoryId;
+      state.deleteCategoryName = categoryName;
     },
   },
   actions: {
@@ -88,6 +94,9 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('confirmDeleteCategory', { categoryId, categoryName });
     },
   },
 };
