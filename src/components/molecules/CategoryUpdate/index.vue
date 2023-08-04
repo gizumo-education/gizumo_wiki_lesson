@@ -2,6 +2,7 @@
   <section>
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
+      class="update-info-input"
       block
       underline
       key-color
@@ -14,6 +15,7 @@
     <form @submit.prevent="updateCategory">
       <app-input
         v-validate="'required'"
+        class="update-info-input"
         name="category"
         type="text"
         :value="category"
@@ -21,6 +23,7 @@
         @update-value="$emit('update-value', $event)"
       />
       <app-button
+        class="update-info-input"
         button-type="submit"
         round
         :disabled="!disabled"
@@ -99,3 +102,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.update-info-input {
+  margin-top: 15px;
+}
+</style>
