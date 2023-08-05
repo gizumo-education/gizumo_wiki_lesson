@@ -15,13 +15,13 @@ export default {
       id: null,
       name: '',
     },
-    upCategory: {
+    newNmaeIdCategory: {
       id: null,
       name: '',
     },
   },
   getters: {
-    upCategory: state => state.upCategory,
+    newNmaeIdCategory: state => state.newNmaeIdCategory,
   },
   mutations: {
     addCategory(state, category) {
@@ -48,10 +48,10 @@ export default {
       state.deleteCategory.name = payload.categoryName;
     },
     updateValue(state, payload) {
-      state.upCategory = { ...state.upCategory, name: payload.name };
+      state.newNmaeIdCategory = { ...state.newNmaeIdCategory, name: payload.name };
     },
-    doneGetCategory(state, upCategory) {
-      state.upCategory = { ...state.upCategory, ...upCategory };
+    doneGetCategory(state, newNmaeIdCategory) {
+      state.newNmaeIdCategory = { ...state.newNmaeIdCategory, ...newNmaeIdCategory };
     },
     toggleLoading(state) {
       state.loading = !state.loading;
@@ -121,11 +121,11 @@ export default {
         method: 'GET',
         url: `category/${id}`,
       }).then(response => {
-        const upCategory = {
+        const newNmaeIdCategory = {
           id: response.data.category.id,
           name: response.data.category.name,
         };
-        commit('doneGetCategory', upCategory);
+        commit('doneGetCategory', newNmaeIdCategory);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -134,10 +134,10 @@ export default {
       commit('loading');
       commit('clearMessage');
       const data = new URLSearchParams();
-      data.append('name', rootGetters['category/upCategory'].name);
+      data.append('name', rootGetters['category/newNmaeIdCategory'].name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `category/${rootGetters['category/upCategory'].id}`,
+        url: `category/${rootGetters['category/newNmaeIdCategory'].id}`,
         data,
       }).then(() => {
         commit('loading');
