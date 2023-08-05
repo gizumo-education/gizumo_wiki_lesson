@@ -2,7 +2,7 @@
   <app-category-update
     :access="access"
     :loading="loading"
-    :category="rikonameid"
+    :category="upCategory"
     :error-message="errorMessage"
     :done-message="doneMessage"
     @update-value="updateValue($event)"
@@ -34,7 +34,7 @@ export default {
     doneMessage() {
       return this.$store.state.category.doneMessage;
     },
-    rikonameid() {
+    upCategory() {
       return this.$store.state.category.upCategory.name;
     },
   },
