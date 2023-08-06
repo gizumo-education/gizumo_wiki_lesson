@@ -53,9 +53,6 @@ export default {
     doneGetCategory(state, newNmaeIdCategory) {
       state.newNmaeIdCategory = { ...state.newNmaeIdCategory, ...newNmaeIdCategory };
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
-    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
