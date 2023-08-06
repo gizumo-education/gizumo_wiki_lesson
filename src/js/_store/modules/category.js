@@ -92,10 +92,10 @@ export default {
     deleteCategory({ commit, rootGetters, state }) {
       return new Promise(resolve => {
         commit('clearMessage');
-        const data = parseInt(state.deleteCategory.id.categoryId, 10);
+        const deletedataid = parseInt(state.deleteCategory.id.categoryId, 10);
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/category/${data}`,
+          url: `/category/${deletedataid}`,
         }).then(() => {
           commit('doneMessage', 'カテゴリーの削除が完了しました。');
           resolve();
