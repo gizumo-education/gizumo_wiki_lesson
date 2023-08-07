@@ -105,9 +105,6 @@ export default {
         });
       });
     },
-    // loading({ commit }) {
-    //   commit('loading');
-    // },
     clearMessage({ commit }) {
       commit('clearMessage');
     },
