@@ -71,6 +71,7 @@ export default {
     createCategory({ commit, rootGetters }, categoryName) {
       return new Promise(resolve => {
         commit('clearMessage');
+        commit('loading');
         const data = new URLSearchParams();
         data.append('name', categoryName);
         axios(rootGetters['auth/token'])({
@@ -103,9 +104,6 @@ export default {
           commit('failRequest', { message: err.message });
         });
       });
-    },
-    loading({ commit }) {
-      commit('loading');
     },
     clearMessage({ commit }) {
       commit('clearMessage');

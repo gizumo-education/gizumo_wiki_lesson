@@ -26,7 +26,7 @@
         class="update-info-input"
         button-type="submit"
         round
-        :disabled="!disabled"
+        :disabled="disabled"
       >
         {{ buttonText }}
       </app-button>
@@ -68,10 +68,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
     errorMessage: {
       type: String,
       default: '',
@@ -80,14 +76,15 @@ export default {
       type: String,
       default: '',
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     buttonText() {
       if (!this.access.edit) return '更新権限がありません';
-      return this.loading ? '更新中...' : '更新';
-    },
-    disabled() {
-      return this.access.edit && !this.loading;
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {

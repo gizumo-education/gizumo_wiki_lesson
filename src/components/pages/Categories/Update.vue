@@ -1,7 +1,7 @@
 <template>
   <app-category-update
     :access="access"
-    :loading="loading"
+    :disabled="loading"
     :category="newNmaeIdCategory"
     :error-message="errorMessage"
     :done-message="doneMessage"
