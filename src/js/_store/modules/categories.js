@@ -11,12 +11,14 @@ export default {
     doneMessage: '',
     errorMessage: '',
     disabled: false,
-    deleteCategoryId: null,
-    deleteCategoryName: null,
+    deleteCategory: {
+      id: null,
+      name: null,
+    },
   },
   getters: {
     targetCategory: state => state.targetCategory,
-    deleteCategoryId: state => state.deleteCategoryId,
+    deleteCategory: state => state.deleteCategory,
   },
   mutations: {
     initPostCategory(state) {
@@ -49,11 +51,11 @@ export default {
       state.disabled = !state.disabled;
     },
     confirmDeleteCategory(state, { categoryId, categoryName }) {
-      state.deleteCategoryId = categoryId;
-      state.deleteCategoryName = categoryName;
+      state.deleteCategory.id = categoryId;
+      state.deleteCategory.name = categoryName;
     },
     doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
+      state.deleteCategory.id = null;
       state.doneMessage = 'カテゴリーを削除しました';
     },
   },
