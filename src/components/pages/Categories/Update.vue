@@ -2,7 +2,7 @@
   <app-category-update
     :access="access"
     :disabled="loading"
-    :category="newNameIdCategory"
+    :category="category"
     :error-message="errorMessage"
     :done-message="doneMessage"
     @update-value="updateValue($event)"
@@ -26,16 +26,13 @@ export default {
       return this.$store.state.category.loading;
     },
     category() {
-      return this.$store.state.category.category;
+      return this.$store.state.category.category.name;
     },
     errorMessage() {
       return this.$store.state.category.errorMessage;
     },
     doneMessage() {
       return this.$store.state.category.doneMessage;
-    },
-    newNameIdCategory() {
-      return this.$store.state.category.newNameIdCategory.name;
     },
   },
   created() {
