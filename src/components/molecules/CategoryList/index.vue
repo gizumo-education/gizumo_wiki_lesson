@@ -68,7 +68,7 @@
           theme-color
           tag="p"
         >
-          {{ deleteCategoryName }}
+          {{ deleteCategory.name }}
         </app-text>
         <app-button
           class="category-list__modal__button"
@@ -107,9 +107,9 @@ export default {
         return [];
       },
     },
-    deleteCategoryName: {
-      type: String,
-      default: '',
+    deleteCategory: {
+      type: Object,
+      default: () => ({}),
     },
     access: {
       type: Object,

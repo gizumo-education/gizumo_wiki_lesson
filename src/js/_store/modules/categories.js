@@ -11,9 +11,14 @@ export default {
     doneMessage: '',
     errorMessage: '',
     disabled: false,
+    deleteCategory: {
+      id: null,
+      name: null,
+    },
   },
   getters: {
     targetCategory: state => state.targetCategory,
+    deleteCategory: state => state.deleteCategory,
   },
   mutations: {
     initPostCategory(state) {
@@ -35,7 +40,7 @@ export default {
     updateCategory(state, payload) {
       state.categoriesList = [payload.newCategories.category, ...state.categoriesList];
     },
-    displayDoneMessage(state, payload) {
+    displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
     clearMessage(state) {
@@ -45,10 +50,17 @@ export default {
     toggleDisabled(state) {
       state.disabled = !state.disabled;
     },
+    confirmDeleteCategory(state, { categoryId, categoryName }) {
+      state.deleteCategory.id = categoryId;
+      state.deleteCategory.name = categoryName;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategory.id = null;
+      state.doneMessage = 'カテゴリーを削除しました';
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
-      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
@@ -88,6 +100,24 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('confirmDeleteCategory', { categoryId, categoryName });
+    },
+    deleteCategory({ commit, rootGetters }, { id }) {
+      commit('clearMessage');
+      return new Promise(resolve => {
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${id}`,
+        }).then(res => {
+          if (res.data.code === 0) throw new Error(res.data.message);
+          commit('doneDeleteCategory');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+        });
+      });
     },
   },
 };
