@@ -92,7 +92,7 @@ export default {
       if (!this.access.edit) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('up-date-category');
+        if (valid) this.$emit('update-category');
       });
     },
   },

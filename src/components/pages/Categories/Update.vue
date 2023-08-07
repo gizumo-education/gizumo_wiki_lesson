@@ -7,7 +7,7 @@
     :done-message="doneMessage"
     @update-value="updateValue($event)"
     @clear-message="clearMessage"
-    @up-date-category="updateCategory"
+    @update-category="updateCategory"
   />
 </template>
 
