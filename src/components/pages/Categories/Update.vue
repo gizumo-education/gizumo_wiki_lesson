@@ -40,7 +40,7 @@ export default {
   },
   created() {
     const { id } = this.$route.params;
-    this.$store.dispatch('category/getUpdateCategory', id);
+    this.$store.dispatch('category/getCategory', id);
     this.$store.dispatch('category/clearMessage');
   },
   methods: {

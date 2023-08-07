@@ -111,7 +111,7 @@ export default {
     confirmDeleteCategory({ commit }, payload) {
       commit('confirmDeleteCategory', { payload });
     },
-    getUpdateCategory({ commit, rootGetters }, id) {
+    getCategory({ commit, rootGetters }, id) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `category/${id}`,
