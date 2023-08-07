@@ -3,10 +3,10 @@
     <div class="categories-list-mask-input">
       <app-category-post
         :done-message="doneMessage"
+        :error-message="errorMessage"
         :category="newCategoryName"
         :access="access"
         :disabled="loading"
-        :error-message="errorMessage"
         @update-value="updateNewCategoryName"
         @handle-submit="createCategory"
         @clear-message="clearMessage"
@@ -80,7 +80,6 @@ export default {
       this.toggleModal();
     },
     createCategory() {
-      this.$store.dispatch('category/loading', true);
       this.$store.dispatch('category/createCategory', this.newCategoryName)
         .then(() => {
           this.newCategoryName = '';
