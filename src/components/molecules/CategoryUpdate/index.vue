@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     updateCategory() {
-      // console.log(this.$validator);
       if (!this.access.edit) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
