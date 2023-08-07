@@ -2,7 +2,7 @@
   <app-category-update
     :access="access"
     :disabled="loading"
-    :category="newNmaeIdCategory"
+    :category="newNameIdCategory"
     :error-message="errorMessage"
     :done-message="doneMessage"
     @update-value="updateValue($event)"
@@ -34,8 +34,8 @@ export default {
     doneMessage() {
       return this.$store.state.category.doneMessage;
     },
-    newNmaeIdCategory() {
-      return this.$store.state.category.newNmaeIdCategory.name;
+    newNameIdCategory() {
+      return this.$store.state.category.newNameIdCategory.name;
     },
   },
   created() {

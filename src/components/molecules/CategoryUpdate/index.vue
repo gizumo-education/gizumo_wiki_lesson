@@ -23,7 +23,7 @@
         @update-value="$emit('update-value', $event)"
       />
       <app-button
-        class="update-info-input"
+        class="update-info-input update-info-input-bottom"
         button-type="submit"
         round
         :disabled="disabled"
@@ -103,5 +103,8 @@ export default {
 <style lang="scss" scoped>
 .update-info-input {
   margin-top: 15px;
+}
+.update-info-input-bottom {
+  margin-bottom: 15px;
 }
 </style>

@@ -15,13 +15,13 @@ export default {
       id: null,
       name: '',
     },
-    newNmaeIdCategory: {
+    newNameIdCategory: {
       id: null,
       name: '',
     },
   },
   getters: {
-    newNmaeIdCategory: state => state.newNmaeIdCategory,
+    newNameIdCategory: state => state.newNameIdCategory,
   },
   mutations: {
     addCategory(state, category) {
@@ -48,10 +48,10 @@ export default {
       state.deleteCategory.name = payload.categoryName;
     },
     updateValue(state, payload) {
-      state.newNmaeIdCategory = { ...state.newNmaeIdCategory, name: payload.name };
+      state.newNameIdCategory = { ...state.newNameIdCategory, name: payload.name };
     },
-    doneGetCategory(state, newNmaeIdCategory) {
-      state.newNmaeIdCategory = { ...state.newNmaeIdCategory, ...newNmaeIdCategory };
+    doneGetCategory(state, newNameIdCategory) {
+      state.newNameIdCategory = { ...state.newNameIdCategory, ...newNameIdCategory };
     },
   },
   actions: {
@@ -116,11 +116,11 @@ export default {
         method: 'GET',
         url: `category/${id}`,
       }).then(response => {
-        const newNmaeIdCategory = {
+        const newNameIdCategory = {
           id: response.data.category.id,
           name: response.data.category.name,
         };
-        commit('doneGetCategory', newNmaeIdCategory);
+        commit('doneGetCategory', newNameIdCategory);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
@@ -129,10 +129,10 @@ export default {
       commit('loading');
       commit('clearMessage');
       const data = new URLSearchParams();
-      data.append('name', rootGetters['category/newNmaeIdCategory'].name);
+      data.append('name', rootGetters['category/newNameIdCategory'].name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `category/${rootGetters['category/newNmaeIdCategory'].id}`,
+        url: `category/${rootGetters['category/newNameIdCategory'].id}`,
         data,
       }).then(() => {
         commit('loading');
