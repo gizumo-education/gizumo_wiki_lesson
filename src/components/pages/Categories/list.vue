@@ -1,9 +1,10 @@
 <template>
   <div class="category">
     <app-category-post
-      category=""
       class="category__post"
+      :category="category"
       :access="access"
+      @update-value="updateValue"
     />
     <app-category-list
       class="category__list"
@@ -25,6 +26,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
@@ -34,9 +36,19 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    // category() {
+    //   const { title } = this.$store.state.categories.targetCategory;
+    //   return title;
+    // },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    // this.$store.dispatch('categories/postAddCategory');
+  },
+  methods: {
+    updateValue($event) {
+      this.category = $event.target.value;
+    },
   },
 };
 </script>
@@ -45,7 +57,7 @@ export default {
 .category {
   &__post {
     float: left;
-    width: 38%;
+    width: 35%;
     padding-right: 20px;
   }
   &__list {
