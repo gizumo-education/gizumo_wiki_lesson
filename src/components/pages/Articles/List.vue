@@ -3,6 +3,7 @@
     <app-article-pagination
       :last-page="lastPage"
       :current-page="currentPage"
+      @change-page="getCurrentPage"
     />
     <app-article-list
       :title="title"
@@ -60,6 +61,11 @@ export default {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
     },
+    getCurrentPage($event) {
+      const pageId = Number($event.target.innerHTML);
+      this.$router.push({ path: 'articles', query: { page: pageId } }).catch(() => {});
+      this.$store.dispatch('articles/getCurrentPage', pageId);
+    },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
       this.toggleModal();
@@ -90,8 +96,8 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
-      } else {
-        this.$store.dispatch('articles/getAllArticles');
+      } else { // if (this.$route.query.page) {
+        this.$store.dispatch('articles/getCurrentPage', this.$route.query.page);
       }
     },
   },

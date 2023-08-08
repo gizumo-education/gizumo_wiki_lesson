@@ -25,6 +25,8 @@ export default {
     },
     articleList: [],
     deleteArticleId: null,
+    currentPage: null,
+    lastPage: null,
     loading: false,
     doneMessage: '',
     errorMessage: '',
@@ -86,12 +88,17 @@ export default {
     doneGetAllArticles(state, payload) {
       state.articleList = [...payload.articles];
     },
+    doneGetCurrentPage(state, payload) {
+      state.articleList = [...payload.articles];
+      state.currentPage = payload.currentPage;
+      state.lastPage = payload.lastPage;
+      // console.log(state.currentPage);
+    },
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
     selectedArticleCategory(state, payload) {
       state.targetArticle.category = {
-
         ...state.targetArticle.category,
         ...payload.category,
       };
@@ -129,6 +136,22 @@ export default {
           articles: res.data.articles,
         };
         commit('doneGetAllArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    getCurrentPage({ commit, rootGetters }, pageId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/article?page=${pageId}`,
+      }).then(res => {
+        const payload = {
+          articles: res.data.articles,
+          currentPage: res.data.meta.current_page,
+          lastPage: res.data.meta.last_page,
+        };
+        // console.log(payload);
+        commit('doneGetCurrentPage', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
