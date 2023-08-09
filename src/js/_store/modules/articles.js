@@ -92,7 +92,6 @@ export default {
       state.articleList = [...payload.articles];
       state.currentPage = payload.currentPage;
       state.lastPage = payload.lastPage;
-      // console.log(state.currentPage);
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -152,8 +151,6 @@ export default {
         };
         // console.log(payload);
         commit('doneGetCurrentPage', payload);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
       });
     },
     getArticleDetail({ commit, rootGetters }, articleId) {

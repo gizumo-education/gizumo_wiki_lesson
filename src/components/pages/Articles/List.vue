@@ -1,10 +1,5 @@
 <template>
   <div class="articles">
-    <app-article-pagination
-      :last-page="lastPage"
-      :current-page="currentPage"
-      @change-page="getCurrentPage"
-    />
     <app-article-list
       :title="title"
       :target-array="articlesList"
@@ -13,6 +8,11 @@
       border-gray
       @open-modal="openModal"
       @handle-click="handleClick"
+    />
+    <app-article-pagination
+      :last-page="lastPage"
+      :current-page="currentPage"
+      @change-page="getCurrentPage"
     />
   </div>
 </template>
@@ -28,8 +28,10 @@ export default {
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const { page } = to.query.page;
+    // console.log(to);
     next();
+    this.fetchArticles(page);
   },
   data() {
     return {
@@ -55,6 +57,9 @@ export default {
   },
   created() {
     this.fetchArticles();
+    if (!this.$route.query.page) {
+      this.$router.push({ path: 'articles', query: { page: 1 } }).catch(() => {});
+    }
   },
   methods: {
     openModal(articleId) {
@@ -64,7 +69,6 @@ export default {
     getCurrentPage($event) {
       const pageId = Number($event.target.innerHTML);
       this.$router.push({ path: 'articles', query: { page: pageId } }).catch(() => {});
-      this.$store.dispatch('articles/getCurrentPage', pageId);
     },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
@@ -96,8 +100,10 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
-      } else { // if (this.$route.query.page) {
+      } else if (this.$route.query.page) {
         this.$store.dispatch('articles/getCurrentPage', this.$route.query.page);
+      } else {
+        this.$store.dispatch('articles/getAllArticles');
       }
     },
   },
