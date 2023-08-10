@@ -13,6 +13,7 @@
       class="category-update__input"
       name="category"
       type="text"
+      :value="categoryName"
     />
     <app-button
       class="category-update__button"
@@ -34,6 +35,16 @@ export default {
     appHeading: Heading,
     appInput: Input,
     appButton: Button,
+  },
+  props: {
+    updateCategory: {
+      type: String,
+      default: '',
+    },
+    categoryName: {
+      type: String,
+      default: '',
+    },
   },
 };
 </script>

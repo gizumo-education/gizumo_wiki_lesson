@@ -7,6 +7,10 @@ export default {
       id: null,
       name: '',
     },
+    updateCategory: {
+      id: null,
+      name: '',
+    },
     categoriesList: [],
     doneMessage: '',
     errorMessage: '',
@@ -57,6 +61,9 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategory.id = null;
       state.doneMessage = 'カテゴリーを削除しました';
+    },
+    doneUpdateCategory(state, payload) {
+      state.updateCategory = payload.updateCategory;
     },
   },
   actions: {
@@ -117,6 +124,22 @@ export default {
         }).catch(err => {
           commit('failRequest', { message: err.message });
         });
+      });
+    },
+    getUpdateCategory({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const payload = {
+          updateCategory: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneUpdateCategory', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
