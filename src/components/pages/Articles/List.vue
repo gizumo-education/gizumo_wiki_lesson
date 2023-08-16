@@ -101,8 +101,6 @@ export default {
           });
       } else if (this.$route.query.page) {
         this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
-      } else {
-        this.$store.dispatch('articles/getAllArticles');
       }
     },
   },
