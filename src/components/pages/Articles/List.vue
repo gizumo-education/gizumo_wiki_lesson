@@ -18,18 +18,17 @@
 </template>
 
 <script>
-import { ArticleList, ArticlePagiNation } from '@Components/molecules';
+import { ArticleList, PagiNation } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
-    appArticlePagination: ArticlePagiNation,
+    appArticlePagination: PagiNation,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
     const { page } = to.query.page;
-    // console.log(to);
     next();
     this.fetchArticles(page);
   },
@@ -58,7 +57,7 @@ export default {
   created() {
     this.fetchArticles();
     if (!this.$route.query.page) {
-      this.$router.push({ path: 'articles', query: { page: 1 } }).catch(() => {});
+      this.$router.push({ path: 'articles', query: { page: 1 } });
     }
   },
   methods: {
@@ -68,7 +67,7 @@ export default {
     },
     getCurrentPage($event) {
       const pageId = Number($event.target.innerHTML);
-      this.$router.push({ path: 'articles', query: { page: pageId } }).catch(() => {});
+      this.$router.push({ path: 'articles', query: { page: pageId } });
     },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');

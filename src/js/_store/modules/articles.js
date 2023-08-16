@@ -149,7 +149,6 @@ export default {
           currentPage: res.data.meta.current_page,
           lastPage: res.data.meta.last_page,
         };
-        // console.log(payload);
         commit('doneGetCurrentPage', payload);
       });
     },
