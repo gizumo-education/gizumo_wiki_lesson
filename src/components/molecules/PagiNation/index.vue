@@ -50,11 +50,6 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      range: '',
-    };
-  },
   computed: {
     middlePageRange() {
       const range = 5;
