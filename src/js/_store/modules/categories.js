@@ -15,6 +15,7 @@ export default {
     doneMessage: '',
     errorMessage: '',
     disabled: false,
+    loading: false,
     deleteCategory: {
       id: null,
       name: null,
@@ -22,11 +23,16 @@ export default {
   },
   getters: {
     targetCategory: state => state.targetCategory,
+    updateCategory: state => state.updateCategory,
     deleteCategory: state => state.deleteCategory,
   },
   mutations: {
     initPostCategory(state) {
       state.targetCategory = {
+        id: null,
+        name: '',
+      };
+      state.updateCategory = {
         id: null,
         name: '',
       };
@@ -54,6 +60,9 @@ export default {
     toggleDisabled(state) {
       state.disabled = !state.disabled;
     },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
     confirmDeleteCategory(state, { categoryId, categoryName }) {
       state.deleteCategory.id = categoryId;
       state.deleteCategory.name = categoryName;
@@ -64,6 +73,17 @@ export default {
     },
     doneUpdateCategory(state, payload) {
       state.updateCategory = payload.updateCategory;
+    },
+    editName(state, payload) {
+      state.updateCategory = { ...state.updateCategory, name: payload.name };
+    },
+    updateCategoryName(state, payload) {
+      state.categoriesList = [payload.updateCategory.category, ...state.categoriesList];
+    },
+    doneEditCategory(state, { updateCategory }) {
+      state.updateCategory = { ...state.updateCategory, ...updateCategory };
+      state.loading = false;
+      state.doneMessage = 'ユーザーの更新が完了しました。';
     },
   },
   actions: {
@@ -138,6 +158,28 @@ export default {
           },
         };
         commit('doneUpdateCategory', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editName({ commit }, name) {
+      commit({
+        type: 'editName',
+        name,
+      });
+    },
+    updateName({ commit, rootGetters }, updateCategory) {
+      commit('toggleLoading');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${updateCategory.id}`,
+        data: updateCategory,
+      }).then(res => {
+        const editCategory = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneEditCategory', { editCategory });
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
