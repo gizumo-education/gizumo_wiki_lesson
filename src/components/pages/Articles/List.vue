@@ -100,7 +100,7 @@ export default {
             // console.log(err);
           });
       } else if (this.$route.query.page) {
-        this.$store.dispatch('articles/getCurrentPage', this.$route.query.page);
+        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }

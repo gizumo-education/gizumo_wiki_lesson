@@ -52,23 +52,23 @@ export default {
   },
   data() {
     return {
-      range: 5,
+      range: '',
     };
   },
   computed: {
-    // 中央
     middlePageRange() {
+      const range = 5;
       let start = '';
       let last = this.lastPage;
-      if (this.currentPage <= this.range - 1) {
+      if (this.currentPage <= range - 1) {
         start = 2;
-        last = this.range + 1;
-      } else if (this.currentPage > this.lastPage - (this.range - 2)) {
-        start = this.lastPage - this.range;
+        last = range + 1;
+      } else if (this.currentPage > this.lastPage - (range - 2)) {
+        start = this.lastPage - range;
         last = this.lastPage - 1;
       } else {
-        start = this.currentPage - Math.floor(this.range / 2);
-        last = this.currentPage + Math.floor(this.range / 2);
+        start = this.currentPage - 2;
+        last = this.currentPage + 2;
       }
       return this.calRange(start, last);
     },
