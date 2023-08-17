@@ -52,7 +52,6 @@ export default {
       this.$store.dispatch('categories/editName', $event.target.value);
     },
     handleSubmit() {
-      console.log(this.access);
       this.$store.dispatch(
         'categories/updateCategory',
         {
