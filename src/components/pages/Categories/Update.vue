@@ -2,14 +2,13 @@
   <div>
     <app-category-update
       class="category-update"
-      :category-id="categoryId"
       :category-name="categoryName"
       :access="access"
       :disabled="disabled"
       :done-message="doneMessage"
       :error-message="errorMessage"
       @edit-name="editName"
-      @handle-submit="handleSubmit"
+      @put-category="putCategory"
     />
   </div>
 </template>
@@ -51,7 +50,7 @@ export default {
     editName($event) {
       this.$store.dispatch('categories/editName', $event.target.value);
     },
-    handleSubmit() {
+    putCategory() {
       this.$store.dispatch(
         'categories/updateCategory',
         {

@@ -59,9 +59,6 @@ export default {
     toggleDisabled(state) {
       state.disabled = !state.disabled;
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
-    },
     confirmDeleteCategory(state, { categoryId, categoryName }) {
       state.deleteCategory.id = categoryId;
       state.deleteCategory.name = categoryName;
