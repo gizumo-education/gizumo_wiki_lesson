@@ -57,11 +57,19 @@ export default {
   },
   computed: {
     pages() {
-      const start = Math.max(this.currentPage - 2, 2);
-      const end = Math.min(this.totalCount - 1, start + 4);
       const pages = [];
-      for (let i = start; i <= end; i += 1) {
-        pages.push(i);
+      if (this.currentPage === this.totalCount) {
+        const start = Math.max(this.totalCount - 5, 1);
+        const end = this.totalCount - 1;
+        for (let i = start; i <= end; i += 1) {
+          pages.push(i);
+        }
+      } else {
+        const start = Math.max(this.currentPage - 2, 2);
+        const end = Math.min(this.totalCount - 1, start + 4);
+        for (let i = start; i <= end; i += 1) {
+          pages.push(i);
+        }
       }
       return pages;
     },
