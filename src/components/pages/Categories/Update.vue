@@ -8,7 +8,7 @@
       :done-message="doneMessage"
       :error-message="errorMessage"
       @edit-name="editName"
-      @put-category="putCategory"
+      @handle-submit="handleSubmit"
     />
   </div>
 </template>
@@ -50,7 +50,7 @@ export default {
     editName($event) {
       this.$store.dispatch('categories/editName', $event.target.value);
     },
-    putCategory() {
+    handleSubmit() {
       this.$store.dispatch(
         'categories/updateCategory',
         {

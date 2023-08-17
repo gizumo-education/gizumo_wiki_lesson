@@ -22,7 +22,7 @@
       class="category-update__button"
       :disabled="disabled || !access.edit"
       round
-      @click="putCategory"
+      @click="handleSubmit"
     >
       {{ buttonText }}
     </app-button>
@@ -79,10 +79,10 @@ export default {
     },
   },
   methods: {
-    putCategory() {
+    handleSubmit() {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('put-category');
+        if (valid) this.$emit('handle-submit');
       });
     },
   },
