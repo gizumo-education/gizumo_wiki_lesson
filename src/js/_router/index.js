@@ -8,6 +8,7 @@ import NotFound from '@Pages/NotFound/index.vue';
 import Home from '@Pages/Home/index.vue';
 import Categories from '@Pages/Categories/index.vue';
 import Management from '@Pages/Categories/Management.vue';
+import Update from '@Pages/Categories/Update.vue';
 
 // 記事
 import Articles from '@Pages/Articles/index.vue';
@@ -63,6 +64,11 @@ const router = new VueRouter({
           name: 'management',
           path: '',
           component: Management,
+        },
+        {
+          name: 'update',
+          path: ':id',
+          component: Update,
         },
       ],
     },
