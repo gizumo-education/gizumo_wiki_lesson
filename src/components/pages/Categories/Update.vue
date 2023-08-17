@@ -5,8 +5,7 @@
       :category-id="categoryId"
       :category-name="categoryName"
       :access="access"
-      :loading="loading"
-      :update-category="updateCategory"
+      :disabled="disabled"
       :done-message="doneMessage"
       :error-message="errorMessage"
       @edit-name="editName"
@@ -27,11 +26,10 @@ export default {
       return this.$store.state.categories.updateCategory.name;
     },
     categoryId() {
-      const id = parseInt(this.$route.params.id, 10);
-      return id;
+      return parseInt(this.$route.params.id, 10);
     },
-    loading() {
-      return this.$store.state.categories.loading;
+    disabled() {
+      return this.$store.state.categories.disabled;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -47,15 +45,16 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getUpdateCategory', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/getUpdateCategory', this.categoryId);
   },
   methods: {
     editName($event) {
       this.$store.dispatch('categories/editName', $event.target.value);
     },
     handleSubmit() {
+      console.log(this.access);
       this.$store.dispatch(
-        'categories/updateName',
+        'categories/updateCategory',
         {
           id: this.updateCategory.id,
           name: this.updateCategory.name,

@@ -20,7 +20,7 @@
     />
     <app-button
       class="category-update__button"
-      :disabled="!disabled"
+      :disabled="disabled || !access.edit"
       round
       @click="handleSubmit"
     >
@@ -51,10 +51,6 @@ export default {
     appText: Text,
   },
   props: {
-    updateCategory: {
-      type: Object,
-      default: () => ({}),
-    },
     categoryName: {
       type: String,
       default: '',
@@ -71,7 +67,7 @@ export default {
       type: String,
       default: '',
     },
-    loading: {
+    disabled: {
       type: Boolean,
       default: false,
     },
@@ -79,10 +75,7 @@ export default {
   computed: {
     buttonText() {
       if (!this.access.edit) return '更新権限がありません';
-      return this.loading ? '更新中...' : '更新';
-    },
-    disabled() {
-      return this.access.edit && !this.loading;
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {

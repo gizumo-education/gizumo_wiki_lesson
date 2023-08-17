@@ -15,7 +15,6 @@ export default {
     doneMessage: '',
     errorMessage: '',
     disabled: false,
-    loading: false,
     deleteCategory: {
       id: null,
       name: null,
@@ -82,8 +81,7 @@ export default {
     },
     doneEditCategory(state, { updateCategory }) {
       state.updateCategory = { ...state.updateCategory, ...updateCategory };
-      state.loading = false;
-      state.doneMessage = 'ユーザーの更新が完了しました。';
+      state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
   },
   actions: {
@@ -168,8 +166,9 @@ export default {
         name,
       });
     },
-    updateName({ commit, rootGetters }, updateCategory) {
-      commit('toggleLoading');
+    updateCategory({ commit, rootGetters }, updateCategory) {
+      commit('toggleDisabled');
+      commit('clearMessage');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${updateCategory.id}`,
@@ -179,8 +178,10 @@ export default {
           id: res.data.category.id,
           name: res.data.category.name,
         };
+        commit('toggleDisabled');
         commit('doneEditCategory', { editCategory });
       }).catch(err => {
+        commit('toggleDisabled');
         commit('failRequest', { message: err.message });
       });
     },
