@@ -9,21 +9,28 @@
       @open-modal="openModal"
       @handle-click="handleClick"
     />
+    <app-article-pagination
+      :last-page="lastPage"
+      :current-page="currentPage"
+      @change-page="getCurrentPage"
+    />
   </div>
 </template>
 
 <script>
-import { ArticleList } from '@Components/molecules';
+import { ArticleList, PagiNation } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appArticleList: ArticleList,
+    appArticlePagination: PagiNation,
   },
   mixins: [Mixins],
   beforeRouteUpdate(to, from, next) {
-    this.fetchArticles();
+    const { page } = to.query.page;
     next();
+    this.fetchArticles(page);
   },
   data() {
     return {
@@ -40,14 +47,27 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    lastPage() {
+      return this.$store.state.articles.lastPage;
+    },
+    currentPage() {
+      return this.$store.state.articles.currentPage;
+    },
   },
   created() {
     this.fetchArticles();
+    if (!this.$route.query.page) {
+      this.$router.push({ path: 'articles', query: { page: 1 } });
+    }
   },
   methods: {
     openModal(articleId) {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
+    },
+    getCurrentPage($event) {
+      const pageId = Number($event.target.innerHTML);
+      this.$router.push({ path: 'articles', query: { page: pageId } });
     },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
@@ -79,8 +99,8 @@ export default {
           }).catch(() => {
             // console.log(err);
           });
-      } else {
-        this.$store.dispatch('articles/getAllArticles');
+      } else if (this.$route.query.page) {
+        this.$store.dispatch('articles/getAllArticles', this.$route.query.page);
       }
     },
   },
