@@ -83,6 +83,7 @@ export default {
   }
 }
 .disable{
+    pointer-events: none;
     background-color: $disabled-color;
   }
 </style>
