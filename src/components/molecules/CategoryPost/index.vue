@@ -1,6 +1,8 @@
 <template>
   <form @submit.prevent="addCategory">
-    <app-heading :level="1">カテゴリー管理</app-heading>
+    <app-heading :level="1">
+      カテゴリー管理
+    </app-heading>
     <app-input
       v-validate="'required'"
       name="category"
@@ -19,7 +21,6 @@
     >
       {{ buttonText }}
     </app-button>
-
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
