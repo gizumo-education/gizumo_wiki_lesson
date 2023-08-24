@@ -48,19 +48,20 @@ export default {
       default: () => [],
     },
   },
-  methods: {
-    textLimit(text) {
-      if (text.length > 30) {
-        return `${text.slice(0, 30)}…`;
-      }
-      return text;
+  computed: {
+    textLimit() {
+      return text => {
+        if (text.length > 30) {
+          return `${text.slice(0, 30)}…`;
+        }
+        return text;
+      };
     },
-    customFormat(dateValue) {
-      const date = new Date(dateValue);
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      return `${year}-${month}-${day}`;
+    customFormat() {
+      return dateValue => {
+        const date = new Date(dateValue);
+        return date.toLocaleDateString('sv-SE');
+      };
     },
   },
 };
