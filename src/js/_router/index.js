@@ -16,7 +16,7 @@ import ArticlePost from '@Pages/Articles/Post.vue';
 
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
-import CategoryList from '@Components/molecules/CategoryList/index.vue';
+import CategoryList from '@Pages/Categories/CategoryList.vue';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
@@ -77,7 +77,7 @@ const router = new VueRouter({
       children: [
         {
           name: 'CategoryList',
-          path: '',
+          path: 'list',
           component: CategoryList,
         },
       ],
