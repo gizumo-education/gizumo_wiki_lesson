@@ -77,7 +77,7 @@ const router = new VueRouter({
       children: [
         {
           name: 'CategoryList',
-          path: 'list',
+          path: '/categories',
           component: CategoryList,
         },
       ],
