@@ -1,5 +1,6 @@
 <template>
   <div class="category-list">
+    <app-Category-Post></app-Category-Post>
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
@@ -88,11 +89,14 @@ import {
   RouterLink, Button, Text,
 } from '@Components/atoms';
 
+import { CategoryPost } from '@Components/molecules';
+
 export default {
   components: {
     appRouterLink: RouterLink,
     appButton: Button,
     appText: Text,
+    appCategoryPost: CategoryPost,
   },
   props: {
     theads: {
@@ -100,6 +104,10 @@ export default {
       default() {
         return [];
       },
+    },
+    CategoryPost: {
+      type: String,
+      required: true,
     },
     categories: {
       type: Array,

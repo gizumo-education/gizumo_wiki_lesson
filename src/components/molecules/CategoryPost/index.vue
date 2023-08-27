@@ -43,9 +43,19 @@ export default {
     appText: Text,
   },
   props: {
+    categories: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
     category: {
       type: String,
       required: true,
+    },
+    CategoryList: {
+      type: String,
+      default: '',
     },
     errorMessage: {
       type: String,
