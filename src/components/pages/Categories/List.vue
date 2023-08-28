@@ -2,7 +2,12 @@
   <div class="list-contents">
     <app-category-post
       :access="access"
+      :category="category"
+      :loading="loading"
+      :value="categoryName"
       class="list-content list-post"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :categories="categoriesList"
@@ -23,6 +28,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
@@ -32,13 +38,28 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    categoryName() {
+      return this.$store.state.categories.targetCategory.category.name;
+    },
   },
   created() {
     this.fetchCategories();
   },
   methods: {
     fetchCategories() {
-      this.$store.dispatch('getAllCategories');
+      this.$store.dispatch('categories/getAllCategories');
+    },
+    updateValue($event) {
+      const categoryName = $event.target.value ? $event.target.value : '';
+      this.$data.category = categoryName;
+      this.$store.dispatch('categories/updateValue', categoryName);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
     },
   },
 };
