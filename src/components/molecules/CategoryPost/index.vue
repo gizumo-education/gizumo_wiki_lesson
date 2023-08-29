@@ -53,10 +53,6 @@ export default {
       type: String,
       required: true,
     },
-    CategoryList: {
-      type: String,
-      default: '',
-    },
     errorMessage: {
       type: String,
       default: '',

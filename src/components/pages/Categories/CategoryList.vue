@@ -1,5 +1,6 @@
 <template>
   <div>
+    <app-Category-List />
     <app-Category-Post />
   </div>
 </template>
