@@ -1,7 +1,7 @@
 <template>
   <div>
-    <app-Category-List />
     <app-Category-Post />
+    <app-Category-List />
   </div>
 </template>
 

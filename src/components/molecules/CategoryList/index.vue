@@ -98,13 +98,18 @@ export default {
     theads: {
       type: Array,
       default() {
-        return [];
+        return ['カテゴリー名'];
       },
     },
     categories: {
       type: Array,
       default() {
-        return [];
+        return [
+          {
+            id: 1,
+            name: 'aaa',
+          },
+        ];
       },
     },
     deleteCategoryName: {
