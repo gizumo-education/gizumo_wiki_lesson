@@ -9,7 +9,7 @@ export default {
         name: '',
       },
     },
-    categoryList: [''],
+    categoryList: [],
     errorMessage: '',
     doneMessage: '',
     loading: false,
@@ -36,11 +36,11 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    editedCategory(state, payload) {
-      state.targetCategory = { ...state.targetCategory, category: payload.category.name };
-    },
     updateValue(state, payload) {
       state.targetCategory.category.name = payload.category;
+    },
+    newCategory(state, payload) {
+      state.categoryList.unshift(payload);
     },
   },
   actions: {
@@ -61,21 +61,15 @@ export default {
           method: 'POST',
           url: '/category',
           data,
-        }).then(() => {
+        }).then(res => {
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
-          window.location.reload(false);
+          commit('newCategory', res.data.category);
           return resolve();
         }).catch(() => {
           commit('toggleLoading');
           return reject();
         });
-      });
-    },
-    editedCategory({ commit }, category) {
-      commit({
-        type: 'editedCategory',
-        category,
       });
     },
     getAllCategories({ commit, rootGetters }) {

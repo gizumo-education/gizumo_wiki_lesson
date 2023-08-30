@@ -4,6 +4,7 @@
       :access="access"
       :category="category"
       :loading="loading"
+      :done-message="doneMessage"
       :value="categoryName"
       class="list-content list-post"
       @update-value="updateValue"
@@ -43,6 +44,9 @@ export default {
     },
     categoryName() {
       return this.$store.state.categories.targetCategory.category.name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
