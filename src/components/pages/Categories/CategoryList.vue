@@ -1,7 +1,9 @@
 <template>
   <div>
     <app-Category-Post />
-    <app-Category-List />
+    <app-Category-List
+      :theads="theads"
+    />
   </div>
 </template>
 
@@ -12,6 +14,11 @@ export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
+  },
+  data() {
+    return {
+      theads: ['カテゴリー名'],
+    };
   },
 };
 
