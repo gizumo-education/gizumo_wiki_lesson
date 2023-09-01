@@ -3,6 +3,7 @@
     <app-Category-Post />
     <app-Category-List
       :theads="theads"
+      :target-array="categoriesList"
     />
   </div>
 </template>
@@ -20,6 +21,9 @@ export default {
       theads: ['カテゴリー名'],
     };
   },
+  computed: {
+    CategoryList
+  }
 };
 
 </script>
