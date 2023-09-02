@@ -1,5 +1,4 @@
 import axios from '@Helpers/axiosDefault';
-// import Cookies from 'js-cookie';
 
 export default {
   namespaced: true,
@@ -12,7 +11,6 @@ export default {
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
-    loading: false,
   },
   getters: {
     targetCategory: state => state.targetCategory,
@@ -30,10 +28,10 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
-    },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
+      state.doneMessage = payload.message;
+    },
+    displayErrorMessage(state, payload = { message: '失敗しました' }) {
       state.doneMessage = payload.message;
     },
     updateValue(state, payload) {
@@ -54,7 +52,6 @@ export default {
     postCategory({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
         commit('clearMessage');
-        commit('toggleLoading');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/targetCategory'].category.name);
         axios(rootGetters['auth/token'])({
@@ -62,12 +59,11 @@ export default {
           url: '/category',
           data,
         }).then(res => {
-          commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
           commit('newCategory', res.data.category);
           return resolve();
         }).catch(() => {
-          commit('toggleLoading');
+          commit('displayErrorMessage', { message: 'カテゴリー取得に失敗しました' });
           return reject();
         });
       });

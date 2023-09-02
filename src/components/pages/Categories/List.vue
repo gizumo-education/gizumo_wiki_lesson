@@ -4,6 +4,7 @@
       :access="access"
       :category="category"
       :loading="loading"
+      :disabled="disabled"
       :done-message="doneMessage"
       :value="categoryName"
       class="list-content list-post"
@@ -30,6 +31,7 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
+      disabled: false,
     };
   },
   computed: {
@@ -57,13 +59,16 @@ export default {
       this.$store.dispatch('categories/getAllCategories');
     },
     updateValue($event) {
-      const categoryName = $event.target.value ? $event.target.value : '';
+      const categoryName = $event.target.value;
       this.$data.category = categoryName;
       this.$store.dispatch('categories/updateValue', categoryName);
     },
     handleSubmit() {
-      if (this.loading) return;
+      if (this.disabled) return;
       this.$store.dispatch('categories/postCategory');
+      this.$data.category = '';
+      this.$data.disabled = true;
+      if (!this.$data.category) this.$data.disabled = false;
     },
   },
 };
