@@ -22,8 +22,8 @@ export default {
     };
   },
   computed: {
-    CategoryList
-  }
+    CategoryList,
+  },
 };
 
 </script>
