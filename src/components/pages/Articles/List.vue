@@ -48,6 +48,7 @@ export default {
     openModal(articleId) {
       this.$store.dispatch('articles/confirmDeleteArticle', articleId);
       this.toggleModal();
+      console.log(this); // eslint-disable-line no-console
     },
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');

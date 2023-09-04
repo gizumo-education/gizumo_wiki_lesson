@@ -16,17 +16,22 @@
       class="list-content list-list"
       :theads="theads"
       :access="access"
+      @open-modal="openModal"
+      @close-modal="toggleModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -69,6 +74,15 @@ export default {
       this.$data.category = '';
       this.$data.disabled = true;
       if (!this.$data.category) this.$data.disabled = false;
+    },
+    openModal(categoryId, categoryName) {
+      this.$store.dispatch('categories/confirmDeleteName', categoryName);
+      this.$store.dispatch('categories/confirmDeleteId', categoryId);
+      this.toggleModal();
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
     },
   },
 };
