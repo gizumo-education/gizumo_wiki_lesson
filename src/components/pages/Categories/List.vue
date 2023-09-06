@@ -2,11 +2,9 @@
   <div class="list-contents">
     <app-category-post
       :access="access"
-      :category="category"
-      :loading="loading"
-      :disabled="disabled"
+      :category="categoryName"
+      :disabled="loading"
       :done-message="doneMessage"
-      :value="categoryName"
       class="list-content list-post"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
@@ -31,7 +29,7 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      disabled: false,
+      // disabled: false,
     };
   },
   computed: {
@@ -44,17 +42,20 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
-    categoryName() {
-      return this.$store.state.categories.targetCategory.category.name;
-    },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    categoryName() {
+      return this.$store.state.categories.targetCategory.category.name;
     },
   },
   created() {
     this.fetchCategories();
   },
   methods: {
+    againFetchCategories() {
+      this.$store.dispatch('categories/getAgainCategories');
+    },
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
     },
@@ -64,11 +65,8 @@ export default {
       this.$store.dispatch('categories/updateValue', categoryName);
     },
     handleSubmit() {
-      if (this.disabled) return;
+      if (this.loading) return;
       this.$store.dispatch('categories/postCategory');
-      this.$data.category = '';
-      this.$data.disabled = true;
-      if (!this.$data.category) this.$data.disabled = false;
     },
   },
 };

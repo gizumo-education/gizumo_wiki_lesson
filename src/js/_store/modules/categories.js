@@ -11,6 +11,7 @@ export default {
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
+    loading: false,
   },
   getters: {
     targetCategory: state => state.targetCategory,
@@ -25,8 +26,7 @@ export default {
       state.errorMessage = message;
     },
     clearMessage(state) {
-      state.doneMessage = '';
-      state.errorMessage = '';
+      state.targetCategory.category.name = '';
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -40,6 +40,9 @@ export default {
     newCategory(state, payload) {
       state.categoryList.unshift(payload);
     },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
   },
   actions: {
     updateValue({ commit }, categoryName) {
@@ -50,23 +53,26 @@ export default {
       commit('updateValue', payload);
     },
     postCategory({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', rootGetters['categories/targetCategory'].category.name);
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(res => {
+        commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+        commit('newCategory', res.data.category);
+        commit('toggleLoading');
         commit('clearMessage');
-        const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategory'].category.name);
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data,
-        }).then(res => {
-          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
-          commit('newCategory', res.data.category);
-          return resolve();
-        }).catch(() => {
-          commit('displayErrorMessage', { message: 'カテゴリー取得に失敗しました' });
-          return reject();
-        });
+      }).catch(() => {
+        commit('displayErrorMessage', { message: 'カテゴリー取得に失敗しました' });
+        commit('toggleLoading');
+        commit('clearMessage');
       });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
@@ -77,12 +83,10 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+        this.state.targetCategory.category.name = '';
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
-    },
-    clearMessage({ commit }) {
-      commit('clearMessage');
     },
   },
 };
