@@ -1,4 +1,3 @@
 {
   "liveServer.settings.root": "/dist",
-  "typescript.tsdk": "node_modules/typescript/lib"
 }

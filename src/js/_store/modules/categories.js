@@ -43,8 +43,15 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
+    resetView(state, payload = { message: '' }) {
+      state.doneMessage = payload.message;
+      state.errorMessage = payload.message;
+    },
   },
   actions: {
+    resetView({ commit }) {
+      commit('resetView', { message: null });
+    },
     updateValue({ commit }, categoryName) {
       const name = categoryName;
       const payload = {

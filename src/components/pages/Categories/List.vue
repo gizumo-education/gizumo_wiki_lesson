@@ -51,10 +51,11 @@ export default {
   },
   created() {
     this.fetchCategories();
+    this.resetView();
   },
   methods: {
-    againFetchCategories() {
-      this.$store.dispatch('categories/getAgainCategories');
+    resetView() {
+      this.$store.dispatch('categories/resetView');
     },
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
