@@ -29,7 +29,6 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      // disabled: false,
     };
   },
   computed: {
