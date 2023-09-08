@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      category: '',
     };
   },
   computed: {
