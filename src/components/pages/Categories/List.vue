@@ -2,10 +2,12 @@
   <div class="categories">
     <app-category-Post
       class="categories__post"
+      :category="getCategoryName"
       :error-message="errorMessage"
+      :loading="loading"
       :done-message="doneMessage"
-      :category="categoryName"
       :access="access"
+      @handle-submit="handleSubmit"
     />
     <app-category-List
       class="categories__list"
@@ -30,11 +32,14 @@ export default {
     };
   },
   computed: {
-    categoryName() {
+    getCategoryName() {
       return this.$store.getters['categories/getCategory'];
     },
     categoryList() {
       return this.$store.getters['categories/transformedCategories'];
+    },
+    loading() {
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -48,6 +53,12 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/updateCategory');
+    },
   },
 };
 </script>
