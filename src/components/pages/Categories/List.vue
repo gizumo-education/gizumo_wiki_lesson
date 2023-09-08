@@ -2,18 +2,18 @@
   <div class="categories">
     <app-category-Post
       class="categories__post"
-      :category="getCategoryName"
+      :category="categoryName"
       :error-message="errorMessage"
       :loading="loading"
       :done-message="doneMessage"
       :access="access"
+      @edited-category="editedCategory"
       @handle-submit="handleSubmit"
     />
     <app-category-List
       class="categories__list"
       :categories="categoryList"
       :access="access"
-      :theads="theads"
     />
   </div>
 </template>
@@ -28,12 +28,13 @@ export default {
   },
   data() {
     return {
-      theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
-    getCategoryName() {
-      return this.$store.getters['categories/getCategory'];
+    categoryName() {
+      const { name } = this.$store.state.categories.category;
+      return name;
     },
     categoryList() {
       return this.$store.getters['categories/transformedCategories'];
@@ -55,6 +56,9 @@ export default {
     this.$store.dispatch('categories/getAllCategories');
   },
   methods: {
+    editedCategory($event) {
+      this.$store.dispatch('categories/editedTitle', $event.category.value);
+    },
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/updateCategory');

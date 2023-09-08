@@ -26,7 +26,7 @@ export default {
       return state.categoryList.reverse();
     },
     editedCategory(state, payload) {
-      state.category = { ...state.category, name: payload.name };
+      state.category = { ...state.category.name, name: payload.name };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
