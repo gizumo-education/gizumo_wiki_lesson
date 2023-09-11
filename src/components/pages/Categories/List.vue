@@ -2,27 +2,39 @@
   <div class="list-contents">
     <app-category-post
       :access="access"
+      :category="categoryName"
+      :disabled="loading"
+      :done-message="doneMessage"
       class="list-content list-post"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :categories="categoriesList"
       class="list-content list-list"
       :theads="theads"
+      :delete-category-name="deleteCategoryName"
       :access="access"
+      @open-modal="openModal"
+      @close-modal="toggleModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
+      deleteCategoryName: '',
     };
   },
   computed: {
@@ -32,13 +44,44 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    categoryName() {
+      return this.$store.state.categories.targetCategory.category.name;
+    },
   },
   created() {
     this.fetchCategories();
+    this.resetView();
   },
   methods: {
+    resetView() {
+      this.$store.dispatch('categories/resetView');
+    },
     fetchCategories() {
-      this.$store.dispatch('getAllCategories');
+      this.$store.dispatch('categories/getAllCategories');
+    },
+    openModal(categoryId, categoryName) {
+      this.$data.deleteCategoryName = categoryName;
+      this.$store.dispatch('categories/confirmDeleteId', categoryId);
+      this.toggleModal();
+    },
+    updateValue($event) {
+      const categoryName = $event.target.value;
+      this.$data.category = categoryName;
+      this.$store.dispatch('categories/updateValue', categoryName);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
     },
   },
 };
