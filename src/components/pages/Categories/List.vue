@@ -2,7 +2,12 @@
   <div class="list-contents">
     <app-category-post
       :access="access"
+      :category="categoryName"
+      :disabled="loading"
+      :done-message="doneMessage"
       class="list-content list-post"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :categories="categoriesList"
@@ -32,13 +37,35 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    categoryName() {
+      return this.$store.state.categories.targetCategory.category.name;
+    },
   },
   created() {
     this.fetchCategories();
+    this.resetView();
   },
   methods: {
+    resetView() {
+      this.$store.dispatch('categories/resetView');
+    },
     fetchCategories() {
-      this.$store.dispatch('getAllCategories');
+      this.$store.dispatch('categories/getAllCategories');
+    },
+    updateValue($event) {
+      const categoryName = $event.target.value;
+      this.$data.category = categoryName;
+      this.$store.dispatch('categories/updateValue', categoryName);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
     },
   },
 };
