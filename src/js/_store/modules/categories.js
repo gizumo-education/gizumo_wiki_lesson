@@ -90,7 +90,6 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
-        this.state.targetCategory.category.name = '';
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
