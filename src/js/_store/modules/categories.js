@@ -14,6 +14,9 @@ export default {
     //   id: null,
     //   name: '',
     // },
+    doneGetAllCategories(state, payload) {
+      state.categoryList = [...payload.categories];
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -24,6 +27,7 @@ export default {
         const payload = {
           categories: res.data.categories,
         };
+        console.log(payload);
         commit('doneGetAllCategories', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
