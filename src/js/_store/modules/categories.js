@@ -47,7 +47,6 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
- },
   actions: {
     resetView({ commit }) {
       commit('resetView');
