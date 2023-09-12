@@ -4,8 +4,7 @@
       class="category__post"
       :category="category"
       :access="access"
-      :loading="loading"
-      :value="categoryName"
+      :disabled="loading"
       :done-message="doneMessage"
       :error-message="errorMessage"
       @update-value="updateValue"
@@ -44,9 +43,6 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
-    categoryName() {
-      return this.$store.state.categories.targetCategory.category.name;
-    },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
@@ -56,8 +52,7 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
-    this.$store.state.categories.doneMessage = '';
-    this.$store.state.categories.errorMessage = '';
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     updateValue($event) {
