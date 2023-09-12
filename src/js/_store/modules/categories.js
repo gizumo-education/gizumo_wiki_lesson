@@ -56,9 +56,6 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
-    deletedCategoryList(state, payload) {
-      return state.categoryList.splice(payload, 1);
-    },
   },
   actions: {
     resetView({ commit }) {
@@ -109,7 +106,7 @@ export default {
     confirmDeleteId({ commit }, categoryId) {
       commit('confirmDeleteId', { categoryId });
     },
-    deleteCategory({ commit, rootGetters }) {
+    deleteCategory({ commit, rootGetters, dispatch }) {
       const data = new URLSearchParams();
       data.append('id', rootGetters['categories/deleteCategoryId']);
       axios(rootGetters['auth/token'])({
@@ -119,7 +116,7 @@ export default {
       }).then(() => {
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
-        commit('deletedCategoryList', rootGetters['categories/deleteCategoryId']);
+        dispatch('getAllCategories');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
