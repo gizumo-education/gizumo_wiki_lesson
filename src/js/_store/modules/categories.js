@@ -12,10 +12,13 @@ export default {
     errorMessage: '',
     doneMessage: '',
     loading: false,
+    deleteCategoryId: null,
   },
   getters: {
     targetCategory: state => state.targetCategory,
     categoryList: state => state.categoryList,
+    deleteCategoryId: state => state.deleteCategoryId,
+
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -47,11 +50,20 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    confirmDeleteId(state, { categoryId }) {
+      state.deleteCategoryId = categoryId;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
+    },
+    deletedCategoryList(state, payload) {
+      return state.categoryList.splice(payload, 1);
+    },
+  },
   actions: {
     resetView({ commit }) {
       commit('resetView');
     },
-  },
     updateValue({ commit }, categoryName) {
       const name = categoryName;
       const payload = {
@@ -109,7 +121,7 @@ export default {
         commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
         commit('deletedCategoryList', rootGetters['categories/deleteCategoryId']);
       }).catch(err => {
-        commit('displayErrorMessage', { message: 'カテゴリー削除に失敗しました' });
+        commit('failRequest', { message: err.message });
       });
     },
   },
