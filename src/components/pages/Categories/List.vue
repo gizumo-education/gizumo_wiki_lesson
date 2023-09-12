@@ -65,11 +65,6 @@ export default {
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
     },
-    openModal(categoryId, categoryName) {
-      this.$data.deleteCategoryName = categoryName;
-      this.$store.dispatch('categories/confirmDeleteId', categoryId);
-      this.toggleModal();
-    },
     updateValue($event) {
       const categoryName = $event.target.value;
       this.$data.category = categoryName;
@@ -78,10 +73,6 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory');
-    },
-    handleClick() {
-      this.$store.dispatch('categories/deleteCategory');
-      this.toggleModal();
     },
   },
 };
