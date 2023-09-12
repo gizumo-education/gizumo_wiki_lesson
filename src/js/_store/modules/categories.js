@@ -51,6 +51,7 @@ export default {
     resetView({ commit }) {
       commit('resetView');
     },
+  },
     updateValue({ commit }, categoryName) {
       const name = categoryName;
       const payload = {
