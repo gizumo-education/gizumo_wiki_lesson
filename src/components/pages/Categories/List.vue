@@ -5,6 +5,7 @@
       :category="categoryName"
       :disabled="loading"
       :done-message="doneMessage"
+      :error-message="errorMessage"
       class="list-content list-post"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
@@ -49,6 +50,9 @@ export default {
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
     categoryName() {
       return this.$store.state.categories.targetCategory.category.name;

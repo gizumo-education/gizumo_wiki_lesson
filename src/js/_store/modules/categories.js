@@ -13,12 +13,13 @@ export default {
     doneMessage: '',
     loading: false,
     deleteCategoryId: null,
+    deleteErrorMessage: '',
+    deleteDoneMessage: '',
   },
   getters: {
     targetCategory: state => state.targetCategory,
     categoryList: state => state.categoryList,
     deleteCategoryId: state => state.deleteCategoryId,
-
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -35,7 +36,9 @@ export default {
       state.doneMessage = payload.message;
     },
     displayErrorMessage(state, payload = { message: '失敗しました' }) {
-      state.doneMessage = payload.message;
+      console.log(payload)
+      state.errorMessage = payload.message;
+      console.log(state.errorMessage)
     },
     updateValue(state, payload) {
       state.targetCategory.category.name = payload.category;
@@ -114,12 +117,10 @@ export default {
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
         data,
       }).then(() => {
-        console.log('seikou')
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
         dispatch('getAllCategories');
       }).catch(() => {
-        console.log('shippai')
         commit('displayErrorMessage', { message: 'カテゴリーの削除に失敗しました' });
       });
     },
