@@ -114,11 +114,13 @@ export default {
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
         data,
       }).then(() => {
+        console.log('seikou')
         commit('doneDeleteCategory');
-        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
         dispatch('getAllCategories');
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      }).catch(() => {
+        console.log('shippai')
+        commit('displayErrorMessage', { message: 'カテゴリーの削除に失敗しました' });
       });
     },
   },
