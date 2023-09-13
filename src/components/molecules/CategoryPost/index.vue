@@ -63,11 +63,6 @@ export default {
       default: () => ({}),
     },
   },
-  data() {
-    return {
-      categoryName: '',
-    };
-  },
   computed: {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';

@@ -65,7 +65,7 @@ export default {
       this.$store.dispatch('categories/editedTitle', $event.category.value);
     },
     updateValue($event) {
-      this.$store.dispatch('categories/editedTitle', $event.category.value);
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;

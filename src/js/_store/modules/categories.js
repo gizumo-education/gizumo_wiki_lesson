@@ -65,9 +65,10 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    editedCategory({ commit }) {
+    editedCategory({ commit }, category) {
       commit({
         type: 'editedCategory',
+        category,
       });
     },
     updateCategory({ commit, rootGetters }) {
