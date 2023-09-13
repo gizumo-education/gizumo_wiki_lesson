@@ -36,9 +36,7 @@ export default {
       state.doneMessage = payload.message;
     },
     displayErrorMessage(state, payload = { message: '失敗しました' }) {
-      console.log(payload)
       state.errorMessage = payload.message;
-      console.log(state.errorMessage)
     },
     updateValue(state, payload) {
       state.targetCategory.category.name = payload.category;
