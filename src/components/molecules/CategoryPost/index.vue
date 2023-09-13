@@ -16,7 +16,6 @@
       button-type="submit"
       round
       :disabled="disabled || !access.create"
-      @click="addCategory"
     >
       {{ buttonText }}
     </app-button>
@@ -64,6 +63,11 @@ export default {
       default: () => ({}),
     },
   },
+  data() {
+    return {
+      categoryName: '',
+    };
+  },
   computed: {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
@@ -75,7 +79,7 @@ export default {
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('edited-category');
+        if (valid) this.$emit('handle-submit');
       });
     },
   },

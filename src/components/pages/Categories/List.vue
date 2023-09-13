@@ -10,6 +10,7 @@
       @clear-message="clearMessage"
       @addCategory="editedCategory"
       @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-List
       class="categories__list"
@@ -61,6 +62,9 @@ export default {
       this.$store.dispatch('categories/clearMessage');
     },
     editedCategory($event) {
+      this.$store.dispatch('categories/editedTitle', $event.category.value);
+    },
+    updateValue($event) {
       this.$store.dispatch('categories/editedTitle', $event.category.value);
     },
     handleSubmit() {
