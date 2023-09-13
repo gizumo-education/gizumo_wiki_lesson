@@ -119,6 +119,9 @@ export default {
       }).then(() => {
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+        if(this.state.categories.errorMessage) {
+          this.state.categories.errorMessage = '';
+        };
         dispatch('getAllCategories');
       }).catch(() => {
         commit('displayErrorMessage', { message: 'カテゴリーの削除に失敗しました' });
