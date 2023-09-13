@@ -21,6 +21,10 @@ export default {
     },
   },
   mutations: {
+    clearMessage(state) {
+      state.errorMessage = '';
+      state.doneMessage = '';
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       return state.categoryList.reverse();
@@ -45,6 +49,9 @@ export default {
     },
   },
   actions: {
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',

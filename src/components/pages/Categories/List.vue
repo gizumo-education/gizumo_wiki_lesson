@@ -7,7 +7,8 @@
       :loading="loading"
       :done-message="doneMessage"
       :access="access"
-      @edited-category="editedCategory"
+      @clear-message="clearMessage"
+      @addCategory="editedCategory"
       @handle-submit="handleSubmit"
     />
     <app-category-List
@@ -56,6 +57,9 @@ export default {
     this.$store.dispatch('categories/getAllCategories');
   },
   methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
     editedCategory($event) {
       this.$store.dispatch('categories/editedTitle', $event.category.value);
     },
