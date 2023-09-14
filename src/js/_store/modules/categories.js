@@ -123,6 +123,9 @@ export default {
         dispatch('getAllCategories');
       }).catch(() => {
         commit('displayErrorMessage', { message: 'カテゴリーの削除に失敗しました' });
+        if(this.state.categories.doneMessage) {
+          this.state.categories.doneMessage = '';
+        };
       });
     },
   },
