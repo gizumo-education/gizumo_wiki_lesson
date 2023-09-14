@@ -17,7 +17,6 @@
       :delete-category-name="deleteCategoryName"
       :access="access"
       @open-modal="openModal"
-      @close-modal="toggleModal"
       @handle-click="handleClick"
     />
   </div>
