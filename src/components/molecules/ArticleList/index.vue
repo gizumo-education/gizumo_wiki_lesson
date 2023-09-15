@@ -16,6 +16,17 @@
     >
       新しいドキュメントを作る
     </app-router-link>
+    <app-router-link
+      to="articles/trashed"
+      white
+      bg-lightgreen
+      small
+      round
+      hover-opacity
+      class="article-list__create-link margin-left"
+    >
+      削除済み記事一覧
+    </app-router-link>
     <transition-group
       class="article-list__articles"
       name="fade"
@@ -169,5 +180,8 @@ export default {
     &__notice--create {
       margin-bottom: 16px;
     }
+  }
+  .margin-left {
+    margin-left: 20px;
   }
 </style>

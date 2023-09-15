@@ -14,6 +14,7 @@ import CategoryList from './CategoryList/index.vue';
 import ArticleEdit from './ArticleEdit/index.vue';
 import ArticlePost from './ArticlePost/index.vue';
 import ArticleDetail from './ArticleDetail/index.vue';
+import ArticleTrashed from './ArticleTrashed/index.vue';
 import DeleteModal from './Modal/Delete.vue';
 import Notice from './Notice/index.vue';
 import Paginate from './Paginate/index.vue';
@@ -35,6 +36,7 @@ export {
   ArticleEdit,
   ArticlePost,
   ArticleDetail,
+  ArticleTrashed,
   DeleteModal,
   Notice,
   Paginate,

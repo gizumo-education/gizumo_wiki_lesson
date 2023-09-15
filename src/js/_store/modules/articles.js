@@ -60,7 +60,6 @@ export default {
         },
         user: {
           account_name: '',
-          created_at: '',
           email: '',
           full_name: '',
           id: '',
@@ -117,6 +116,9 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    doneGetTrashedArticles(state, payload) {
+      state.articleList = [...payload];
     },
   },
   actions: {
@@ -288,6 +290,17 @@ export default {
     },
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    getTrashedArticles({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: '/article/trashed',
+      }).then(res => {
+        const payload = res.data.articles;
+        commit('doneGetTrashedArticles', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };
