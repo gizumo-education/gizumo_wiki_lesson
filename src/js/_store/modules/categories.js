@@ -12,10 +12,14 @@ export default {
     errorMessage: '',
     doneMessage: '',
     loading: false,
+    deleteCategoryId: null,
+    deleteErrorMessage: '',
+    deleteDoneMessage: '',
   },
   getters: {
     targetCategory: state => state.targetCategory,
     categoryList: state => state.categoryList,
+    deleteCategoryId: state => state.deleteCategoryId,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -32,7 +36,7 @@ export default {
       state.doneMessage = payload.message;
     },
     displayErrorMessage(state, payload = { message: '失敗しました' }) {
-      state.doneMessage = payload.message;
+      state.errorMessage = payload.message;
     },
     updateValue(state, payload) {
       state.targetCategory.category.name = payload.category;
@@ -46,6 +50,12 @@ export default {
     resetView(state) {
       state.doneMessage = '';
       state.errorMessage = '';
+    },
+    confirmDeleteId(state, { categoryId }) {
+      state.deleteCategoryId = categoryId;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
     },
   },
   actions: {
@@ -92,6 +102,30 @@ export default {
         commit('doneGetAllCategories', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
+      });
+    },
+    confirmDeleteId({ commit }, categoryId) {
+      commit('confirmDeleteId', { categoryId });
+    },
+    deleteCategory({ commit, rootGetters, dispatch }) {
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/deleteCategoryId']);
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        data,
+      }).then(() => {
+        commit('doneDeleteCategory');
+        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+        if (this.state.categories.errorMessage) {
+          this.state.categories.errorMessage = '';
+        }
+        dispatch('getAllCategories');
+      }).catch(() => {
+        commit('displayErrorMessage', { message: 'カテゴリーの削除に失敗しました' });
+        if (this.state.categories.doneMessage) {
+          this.state.categories.doneMessage = '';
+        }
       });
     },
   },
