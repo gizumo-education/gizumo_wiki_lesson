@@ -21,12 +21,14 @@
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
+  mixins: [Mixins], // ここで定義したメソッドを使えるようにしている
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -49,6 +51,9 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    deleteCategoryName() {
+      // ここで削除するカテゴリー名を取得する
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -62,6 +67,16 @@ export default {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory', this.category);
       this.category = '';
+    },
+    openModal() {
+      // モーダルを開く処理
+      // ①カテゴリー削除モーダルを開く
+      // ②削除するカテゴリー名とカテゴリーIDをstateに保存する
+    },
+    handleClick() {
+      // モーダル内の削除ボタンを押した時の処理
+      // ①カテゴリー削除APIを叩く
+      // ②カテゴリー削除モーダルを閉じる
     },
   },
 };
