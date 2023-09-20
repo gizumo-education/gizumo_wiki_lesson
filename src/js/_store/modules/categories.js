@@ -6,6 +6,7 @@ export default {
     targetCategory: {
       category: {
         name: '',
+        id: null,
       },
     },
     categoryList: [],
@@ -20,6 +21,7 @@ export default {
     targetCategory: state => state.targetCategory,
     categoryList: state => state.categoryList,
     deleteCategoryId: state => state.deleteCategoryId,
+    category: state => state.targetCategory.category,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -56,6 +58,12 @@ export default {
     },
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
+    },
+    doneGetCategory(state, { category }) {
+      console.log('4(category.js/mutation)')
+      state.category = { ...category };
+      state.loading = false;
+      // console.log(state.category)
     },
   },
   actions: {
@@ -126,6 +134,24 @@ export default {
         if (this.state.categories.doneMessage) {
           this.state.categories.doneMessage = '';
         }
+      });
+    },
+    getCategory({ commit, rootGetters }, { id }) {
+      console.log('2(category.js/action)')
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then(response => {
+        console.log('3(category.js/action/axiosGET/then)')
+        const data = response.data.category;
+        const category = {
+          id: data.id,
+          name: data.name,
+        };
+        commit('doneGetCategory', { category });
+      }).catch(err => {
+        console.log('3.53(category.js/action/axiosGET/catch)')
+        commit('failRequest', { message: err.message });
       });
     },
   },
