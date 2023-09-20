@@ -29,13 +29,7 @@
           </app-button>
         </div>
       </form>
-      <div v-if="errorMessage" class="users-detail__notice">
-        <app-text bg-error>{{ errorMessage }}</app-text>
-      </div>
 
-      <div v-if="doneMessage" class="users-detail__notice">
-        <app-text bg-success>{{ doneMessage }}</app-text>
-      </div>
     </div>
   </section>
 </template>

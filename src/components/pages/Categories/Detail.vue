@@ -1,7 +1,5 @@
 <template>
   <app-category-detail
-    :error-message="errorMessage"
-    :done-message="doneMessage"
     :category="category"
     :access="access"
   />
@@ -21,12 +19,6 @@ export default {
     category() {
       console.log('5 ( Detail.vue/computed )')
       return this.$store.state.categories.category;
-    },
-    errorMessage() {
-      return this.$store.state.categories.errorMessage;
-    },
-    doneMessage() {
-      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
