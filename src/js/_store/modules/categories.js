@@ -60,7 +60,7 @@ export default {
       state.deleteCategoryId = null;
     },
     doneGetCategory(state, { category }) {
-      console.log('4(category.js/mutation)')
+      console.log('4( category.js/mutation )')
       state.category = { ...category };
       state.loading = false;
       // console.log(state.category)
@@ -137,12 +137,12 @@ export default {
       });
     },
     getCategory({ commit, rootGetters }, { id }) {
-      console.log('2(category.js/action)')
+      console.log('2( category.js/action )')
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${id}`,
       }).then(response => {
-        console.log('3(category.js/action/axiosGET/then)')
+        console.log('3( category.js/action/axiosGET/then )')
         const data = response.data.category;
         const category = {
           id: data.id,
