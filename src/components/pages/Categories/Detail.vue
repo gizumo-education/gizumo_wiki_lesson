@@ -17,7 +17,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     category() {
-      console.log('5( Detail.vue/computed )')
+      console.log('5 ( Detail.vue/computed )')
       return this.$store.state.categories.category;
     },
   },
