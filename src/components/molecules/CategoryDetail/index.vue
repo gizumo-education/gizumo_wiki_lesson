@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="categories-detail">
     <app-heading>カテゴリー管理</app-heading>
-    <div>
+    <div class="categories-detail__back">
       <app-router-link
         block
         underline
@@ -12,24 +12,32 @@
         カテゴリー一覧へ戻る
       </app-router-link>
     </div>
-    <div>
-      <form action="">
-        <div>
-          <app-input
-            v-validate="'required'"
-            name="name"
-            type="text"
-            placeholder="カテゴリー名"
-            :value="category.name"
-          />
-        </div>
-        <div>
-          <app-button>
-            更新
-          </app-button>
-        </div>
-      </form>
+    <form class="categories-detail__form" @submit.prevent="editCategory">
+      <div class="categories-detail__form__name">
+        <app-input
+          v-validate="'required'"
+          name="name"
+          type="text"
+          placeholder="カテゴリー名"
+          :value="category.name"
+          @update-value="updateValue"
+        />
+      </div>
+      <div class="categories-detail__form__submit">
+        <app-button
+          :disabled="disabled || !access.edit"
+          button-type="submit"
+        >
+          {{ buttonText }}
+        </app-button>
+      </div>
+    </form>
+    <div v-if="errorMessage" class="categories-detail__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
 
+    <div v-if="doneMessage" class="categories-detail__notice">
+      <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
   </section>
 </template>
@@ -40,7 +48,6 @@ import {
   RouterLink,
   Input,
   Button,
-  Text,
 } from '@Components/atoms';
 
 export default {
@@ -49,7 +56,6 @@ export default {
     appRouterLink: RouterLink,
     appInput: Input,
     appButton: Button,
-    appText: Text,
   },
   props: {
     category: {
@@ -68,10 +74,45 @@ export default {
       type: String,
       default: '',
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    buttonText() {
+      if (!this.access.edit) return '作成権限がありません';
+      return this.disabled ? '変更中...' : '変更';
+    },
+  },
+  methods: {
+    updateValue($event) {
+      this.$emit('update-value', $event.target);
+    },
+    editCategory() {
+      this.$emit('clear-message');
+      this.$validator.validate().then(valid => {
+        if (valid) this.$emit('edit-category');
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
+.categories-detail {
+  &__back {
+    margin-top: 5px;
+  }
+  &__notice {
+    margin-top: 5px;
+  }
+  &__form {
+    margin: 0;
+    margin-top: 5px;
+    &__submit {
+      margin-top: 10px;
+    }
+  }
+}
 </style>

@@ -9,6 +9,10 @@ export default {
         id: null,
       },
     },
+    category: {
+      name: '',
+      id: null,
+    },
     categoryList: [],
     errorMessage: '',
     doneMessage: '',
@@ -60,13 +64,38 @@ export default {
       state.deleteCategoryId = null;
     },
     doneGetCategory(state, { category }) {
-      console.log('4( category.js/mutation )')
-      state.category = { ...category };
+      state.category = { ...state.category, ...category };
       state.loading = false;
-      // console.log(state.category)
+    },
+    updateCategory(state, { name, value }) {
+      state.category = { ...state.category, [name]: value };
+    },
+    doneEditCategory(state, { category }) {
+      state.user = { ...state.category, ...category };
+      state.loading = false;
+      state.doneMessage = 'ユーザーの更新が完了しました。';
     },
   },
   actions: {
+    editCategory({ commit, rootGetters }, category) {
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${category.id}`,
+        data: category,
+      }).then(response => {
+        // NOTE: エラー時はresponse.data.codeが0で返ってくる。
+        const editedCategory = {
+          id: response.data.category.id,
+          name: response.data.category.name,
+        };
+        commit('doneEditCategory', { editedCategory });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateCategory({ commit }, target) {
+      commit('updateCategory', target);
+    },
     resetView({ commit }) {
       commit('resetView');
     },
@@ -137,12 +166,10 @@ export default {
       });
     },
     getCategory({ commit, rootGetters }, { id }) {
-      console.log('2( category.js/action )')
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${id}`,
       }).then(response => {
-        console.log('3( category.js/action/axiosGET/then )')
         const data = response.data.category;
         const category = {
           id: data.id,
@@ -150,7 +177,6 @@ export default {
         };
         commit('doneGetCategory', { category });
       }).catch(err => {
-        console.log('3.53(category.js/action/axiosGET/catch)')
         commit('failRequest', { message: err.message });
       });
     },

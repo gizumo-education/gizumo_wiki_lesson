@@ -2,6 +2,11 @@
   <app-category-detail
     :category="category"
     :access="access"
+    :disabled="loading ? true : false"
+    :error-message="errorMessage"
+    :done-message="doneMessage"
+    @update-value="updateValue"
+    @edit-category="editCategory"
   />
 </template>
 
@@ -13,19 +18,38 @@ export default {
     appCategoryDetail: CategoryDetail,
   },
   computed: {
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
     category() {
-      console.log('5 ( Detail.vue/computed )')
       return this.$store.state.categories.category;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
-    console.log('1( Detail.vue/created )')
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', { id });
     this.$store.dispatch('categories/resetView');
+  },
+  methods: {
+    updateValue(target) {
+      if (!this.loading) this.$store.dispatch('categories/updateCategory', target);
+    },
+    editCategory() {
+      this.$store.dispatch('categories/editCategory', {
+        id: this.category.id,
+        /* eslint-disable-next-line no-irregular-whitespace */
+        name: this.category.name,
+      });
+    },
   },
 };
 </script>

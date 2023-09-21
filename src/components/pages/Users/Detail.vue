@@ -25,7 +25,6 @@ export default {
       return this.$store.getters['auth/access'];
     },
     loading() {
-      console.log(this.$store.state.users.loading)
       return this.$store.state.users.loading;
     },
     errorMessage() {
@@ -35,7 +34,6 @@ export default {
       return this.$store.state.users.doneMessage;
     },
     user() {
-      console.log('computed!!')
       return this.$store.state.users.user;
     },
     roleList() {
@@ -58,7 +56,6 @@ export default {
       if (!this.loading) this.$store.dispatch('users/updateValue', target);
     },
     editUser() {
-      console.log('editUser!!')
       this.$store.dispatch('users/editUser', {
         id: this.user.id,
         /* eslint-disable-next-line no-irregular-whitespace */
