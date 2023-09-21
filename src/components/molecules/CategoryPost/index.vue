@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addCategory">
+  <form @submit.prevent="handleSubmit">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-input
       v-validate="'required'"
@@ -70,7 +70,7 @@ export default {
     },
   },
   methods: {
-    addCategory() {
+    handleSubmit() {
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {

@@ -8,7 +8,6 @@
       :done-message="doneMessage"
       :access="access"
       @clear-message="clearMessage"
-      @addCategory="editedCategory"
       @handle-submit="handleSubmit"
       @update-value="updateValue"
     />
@@ -60,9 +59,6 @@ export default {
   methods: {
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
-    },
-    editedCategory($event) {
-      this.$store.dispatch('categories/editedTitle', $event.category.value);
     },
     updateValue($event) {
       this.$store.dispatch('categories/editedCategory', $event.target.value);

@@ -29,11 +29,8 @@ export default {
       state.categoryList = [...payload.categories];
       return state.categoryList.reverse();
     },
-    editedCategory(state, payload) {
-      state.category = { ...state.category.name, name: payload.name };
-    },
-    failRequest(state, { message }) {
-      state.errorMessage = message;
+    editedCategory(state, category) {
+      state.category.name = category;
     },
     updateArticle(state, { category }) {
       state.category = { ...state.category, ...category };
@@ -46,6 +43,9 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
     },
   },
   actions: {
@@ -66,32 +66,27 @@ export default {
       });
     },
     editedCategory({ commit }, category) {
-      commit({
-        type: 'editedCategory',
-        category,
-      });
+      commit('editedCategory', category);
     },
     updateCategory({ commit, rootGetters }) {
-      commit('toggleLoading');
-      const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/category'].id);
-      data.append('title', rootGetters['categories/category'].name);
-      axios(rootGetters['auth/token'])({
-        method: 'PUT',
-        url: `/categories/${rootGetters['categories/category'].id}`,
-        data,
-      }).then(res => {
-        const payload = {
-          category: {
-            id: res.data.category.id,
-            name: res.data.category.title,
-          },
-        };
-        commit('updateCategory', payload);
+      return new Promise((resolve, reject) => {
         commit('toggleLoading');
-        commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
-      }).catch(() => {
         commit('toggleLoading');
+        const data = new URLSearchParams();
+        data.append('name', rootGetters['categories/category'].name);
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data,
+        }).then(() => {
+          commit('toggleLoading');
+          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+          resolve();
+        }).catch(err => {
+          commit('toggleLoading');
+          commit('failRequest', { message: err.message });
+          reject();
+        });
       });
     },
   },
