@@ -32,14 +32,12 @@ export default {
     editedCategory(state, category) {
       state.category.name = category;
     },
-    updateArticle(state, { category }) {
-      state.category = { ...state.category, ...category };
-    },
     toggleLoading(state) {
       state.loading = !state.loading;
     },
-    updateCategory(state, { article }) {
-      state.targetArticle = { ...state.targetArticle, ...article };
+    doneEditCategory(state, { name }) {
+      state.category = { ...state.category, ...name };
+      state.loading = false;
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -68,17 +66,20 @@ export default {
     editedCategory({ commit }, category) {
       commit('editedCategory', category);
     },
-    updateCategory({ commit, rootGetters }) {
+    updateCategory({ commit, rootGetters, state }) {
       return new Promise((resolve, reject) => {
         commit('toggleLoading');
-        commit('toggleLoading');
         const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/category'].name);
+        data.append('name', state.category.name);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
-        }).then(() => {
+        }).then(res => {
+          const payload = {
+            category: res.data.category.name,
+          };
+          commit('doneEditCategory', { payload });
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
           resolve();
