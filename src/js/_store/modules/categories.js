@@ -36,7 +36,7 @@ export default {
       state.loading = !state.loading;
     },
     doneEditCategory(state, { name }) {
-      state.category = { ...state.category, ...name };
+      state.categoryList = { ...state.category, ...name };
       state.loading = false;
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
@@ -75,12 +75,10 @@ export default {
           method: 'POST',
           url: '/category',
           data,
-        }).then(res => {
-          const payload = {
-            category: res.data.category.name,
-          };
-          commit('doneEditCategory', { payload });
+        }).then(() => {
+          commit('clearMessage');
           commit('toggleLoading');
+          this.$store.dispatch('getAllCategories');
           commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
           resolve();
         }).catch(err => {
