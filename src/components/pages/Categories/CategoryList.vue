@@ -7,7 +7,7 @@
       :categories="categories"
       :done-message="doneMessage"
       :access="access"
-      :disabled="loading ? true : false"
+      @open-modal="openModal"
     />
   </div>
 </template>
@@ -28,10 +28,10 @@ export default {
           id: null,
           title: '',
         },
-        {
-          id: 1,
-          title: 'aaa',
-        },
+        // {
+        //   id: 1,
+        //   title: 'aaa',
+        // },
       ],
     };
   },
@@ -47,6 +47,15 @@ export default {
     },
     loading() {
       return this.$store.state.categories.loading;
+    },
+  },
+  created() {
+    this.$store.dispatch('categories/getAllCategories');
+  },
+  methods: {
+    openModal(categoriesId) {
+      this.$store.dispatch('categories/confirmDeleteCategories', categoriesId);
+      this.toggleModal();
     },
   },
 };
