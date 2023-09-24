@@ -78,20 +78,29 @@ export default {
   },
   actions: {
     editCategory({ commit, rootGetters }, category) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${category.id}`,
         data: category,
       }).then(response => {
         // NOTE: エラー時はresponse.data.codeが0で返ってくる。
+        commit('resetView');
+        commit('toggleLoading');
         const editedCategory = {
           id: response.data.category.id,
           name: response.data.category.name,
         };
         commit('doneEditCategory', { editedCategory });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      }).catch(() => {
+        commit('resetView');
+        commit('toggleLoading');
+        commit('displayErrorMessage', { message: 'カテゴリー更新に失敗しました' });
       });
+    },
+    ifEmptyCategory({ commit }) {
+      commit('resetView');
+      commit('displayErrorMessage', { message: 'カテゴリーは必須項目です' });
     },
     updateCategory({ commit }, target) {
       commit('updateCategory', target);
@@ -122,7 +131,7 @@ export default {
       }).catch(() => {
         commit('displayErrorMessage', { message: 'カテゴリー取得に失敗しました' });
         commit('toggleLoading');
-        commit('clearMessage');
+        commit('resetView');
       });
     },
     clearMessage({ commit }) {
@@ -176,8 +185,9 @@ export default {
           name: data.name,
         };
         commit('doneGetCategory', { category });
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      }).catch(() => {
+        commit('resetView');
+        commit('displayErrorMessage', { message: 'カテゴリー取得に失敗しました' });
       });
     },
   },

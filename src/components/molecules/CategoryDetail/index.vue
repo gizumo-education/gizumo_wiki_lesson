@@ -48,6 +48,7 @@ import {
   RouterLink,
   Input,
   Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -56,6 +57,7 @@ export default {
     appRouterLink: RouterLink,
     appInput: Input,
     appButton: Button,
+    appText: Text,
   },
   props: {
     category: {
@@ -92,7 +94,11 @@ export default {
     editCategory() {
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('edit-category');
+        if (valid) {
+          this.$emit('edit-category');
+        } else {
+          this.$emit('if-empty-category');
+        }
       });
     },
   },

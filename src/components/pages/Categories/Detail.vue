@@ -7,6 +7,7 @@
     :done-message="doneMessage"
     @update-value="updateValue"
     @edit-category="editCategory"
+    @if-empty-category="ifEmptyCategory"
   />
 </template>
 
@@ -49,6 +50,9 @@ export default {
         /* eslint-disable-next-line no-irregular-whitespace */
         name: this.category.name,
       });
+    },
+    ifEmptyCategory() {
+      this.$store.dispatch('categories/ifEmptyCategory');
     },
   },
 };
