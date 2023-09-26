@@ -2,10 +2,14 @@
   <div class="categories">
     <app-category-Post
       class="categories__post"
-      :error-message="errorMessage"
-      :done-message="doneMessage"
       :category="categoryName"
+      :error-message="errorMessage"
+      :disabled="disabled"
+      :done-message="doneMessage"
       :access="access"
+      @clear-message="clearMessage"
+      @handle-submit="handleSubmit"
+      @update-value="updateValue"
     />
     <app-category-List
       class="categories__list"
@@ -31,23 +35,40 @@ export default {
   },
   computed: {
     categoryName() {
-      return this.$store.getters['categories/getCategory'];
+      const { name } = this.$store.state.categories.category;
+      return name;
     },
     categoryList() {
       return this.$store.getters['categories/transformedCategories'];
+    },
+    disabled() {
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];
     },
     errorMessage() {
-      return this.$store.state.errorMessage;
+      return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
-      return this.$store.state.doneMessage;
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
+  },
+  methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory');
+    },
   },
 };
 </script>
