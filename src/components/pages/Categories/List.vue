@@ -43,7 +43,7 @@ export default {
       return this.$store.getters['categories/transformedCategories'];
     },
     disabled() {
-      return this.$store.state.categories.disabled;
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -57,6 +57,7 @@ export default {
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     clearMessage() {
