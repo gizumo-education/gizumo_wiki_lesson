@@ -65,15 +65,13 @@ export default {
     },
     doneGetCategory(state, { category }) {
       state.category = { ...state.category, ...category };
-      state.loading = false;
     },
     updateCategory(state, { name, value }) {
       state.category = { ...state.category, [name]: value };
     },
     doneEditCategory(state, { category }) {
       state.user = { ...state.category, ...category };
-      state.loading = false;
-      state.doneMessage = 'ユーザーの更新が完了しました。';
+      state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
   },
   actions: {
@@ -84,7 +82,6 @@ export default {
         url: `/category/${category.id}`,
         data: category,
       }).then(response => {
-        // NOTE: エラー時はresponse.data.codeが0で返ってくる。
         commit('resetView');
         commit('toggleLoading');
         const editedCategory = {
@@ -97,10 +94,6 @@ export default {
         commit('toggleLoading');
         commit('displayErrorMessage', { message: 'カテゴリー更新に失敗しました' });
       });
-    },
-    ifEmptyCategory({ commit }) {
-      commit('resetView');
-      commit('displayErrorMessage', { message: 'カテゴリーは必須項目です' });
     },
     updateCategory({ commit }, target) {
       commit('updateCategory', target);
@@ -175,6 +168,7 @@ export default {
       });
     },
     getCategory({ commit, rootGetters }, { id }) {
+      commit('toggleLoading');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: `/category/${id}`,
@@ -185,6 +179,7 @@ export default {
           name: data.name,
         };
         commit('doneGetCategory', { category });
+        commit('toggleLoading');
       }).catch(() => {
         commit('resetView');
         commit('displayErrorMessage', { message: 'カテゴリー取得に失敗しました' });

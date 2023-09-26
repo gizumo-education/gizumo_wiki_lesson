@@ -2,12 +2,11 @@
   <app-category-detail
     :category="category"
     :access="access"
-    :disabled="loading ? true : false"
+    :disabled="loading"
     :error-message="errorMessage"
     :done-message="doneMessage"
     @update-value="updateValue"
     @edit-category="editCategory"
-    @if-empty-category="ifEmptyCategory"
   />
 </template>
 
@@ -36,8 +35,8 @@ export default {
     },
   },
   created() {
-    const { id } = this.$route.params;
-    this.$store.dispatch('categories/getCategory', { id });
+    const id = this.$route.params;
+    this.$store.dispatch('categories/getCategory', id);
     this.$store.dispatch('categories/resetView');
   },
   methods: {
@@ -47,12 +46,8 @@ export default {
     editCategory() {
       this.$store.dispatch('categories/editCategory', {
         id: this.category.id,
-        /* eslint-disable-next-line no-irregular-whitespace */
         name: this.category.name,
       });
-    },
-    ifEmptyCategory() {
-      this.$store.dispatch('categories/ifEmptyCategory');
     },
   },
 };

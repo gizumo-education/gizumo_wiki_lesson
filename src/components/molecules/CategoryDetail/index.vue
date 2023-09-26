@@ -16,9 +16,11 @@
       <div class="categories-detail__form__name">
         <app-input
           v-validate="'required'"
+          :error-messages="errors.collect('name')"
           name="name"
           type="text"
           placeholder="カテゴリー名"
+          data-vv-as="カテゴリー名"
           :value="category.name"
           @update-value="updateValue"
         />
@@ -84,7 +86,7 @@ export default {
   computed: {
     buttonText() {
       if (!this.access.edit) return '作成権限がありません';
-      return this.disabled ? '変更中...' : '変更';
+      return this.disabled ? '更新中...' : '更新';
     },
   },
   methods: {
@@ -96,8 +98,6 @@ export default {
       this.$validator.validate().then(valid => {
         if (valid) {
           this.$emit('edit-category');
-        } else {
-          this.$emit('if-empty-category');
         }
       });
     },
