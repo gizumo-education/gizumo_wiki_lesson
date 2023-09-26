@@ -32,11 +32,8 @@ export default {
     editedCategory(state, category) {
       state.category.name = category;
     },
-    startLoading(state) {
-      state.loading = true;
-    },
-    endLoading(state) {
-      state.loading = false;
+    toggleLoading(state) {
+      state.loading = !state.loading;
     },
     doneEditCategory(state, { name }) {
       state.categoryList = { ...state.category, ...name };
@@ -72,28 +69,24 @@ export default {
     editedCategory({ commit }, category) {
       commit('editedCategory', category);
     },
-    updateCategory({ commit, rootGetters, state }) {
-      return new Promise((resolve, reject) => {
+    postCategory({ commit, rootGetters, state }) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', state.category.name);
+      axios(rootGetters['auth/token'])({
+        method: 'POST',
+        url: '/category',
+        data,
+      }).then(() => {
+        commit('clearMessage');
+        this.dispatch('categories/getAllCategories');
+        commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+        commit('deletePostName');
+        commit('toggleLoading');
+      }).catch(err => {
         commit('startLoading');
-        const data = new URLSearchParams();
-        data.append('name', state.category.name);
-        axios(rootGetters['auth/token'])({
-          method: 'POST',
-          url: '/category',
-          data,
-        }).then(() => {
-          commit('clearMessage');
-          this.dispatch('categories/getAllCategories');
-          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
-          commit('deletePostName');
-          commit('endLoading');
-          resolve();
-        }).catch(err => {
-          commit('startLoading');
-          commit('failRequest', { message: err.message });
-          commit('endLoading');
-          reject();
-        });
+        commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
   },

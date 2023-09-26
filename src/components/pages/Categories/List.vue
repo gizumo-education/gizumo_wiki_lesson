@@ -4,7 +4,7 @@
       class="categories__post"
       :category="categoryName"
       :error-message="errorMessage"
-      :loading="loading"
+      :disabled="disabled"
       :done-message="doneMessage"
       :access="access"
       @clear-message="clearMessage"
@@ -15,6 +15,7 @@
       class="categories__list"
       :categories="categoryList"
       :access="access"
+      :theads="theads"
     />
   </div>
 </template>
@@ -30,6 +31,7 @@ export default {
   data() {
     return {
       category: '',
+      theads: [''],
     };
   },
   computed: {
@@ -40,8 +42,8 @@ export default {
     categoryList() {
       return this.$store.getters['categories/transformedCategories'];
     },
-    loading() {
-      return this.$store.state.categories.loading;
+    disabled() {
+      return this.$store.state.categories.disabled;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -65,7 +67,7 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory');
+      this.$store.dispatch('categories/postCategory');
     },
   },
 };
