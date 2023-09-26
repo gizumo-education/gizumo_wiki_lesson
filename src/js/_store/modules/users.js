@@ -89,6 +89,7 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+      //console.log(getAllUsers);
     },
 
     // ユーザー1件取得
