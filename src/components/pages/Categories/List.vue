@@ -47,10 +47,10 @@ export default {
       return this.$store.getters['auth/access'];
     },
     errorMessage() {
-      return this.$store.state.errorMessage;
+      return this.$store.state.categories.errorMessage;
     },
     doneMessage() {
-      return this.$store.state.doneMessage;
+      return this.$store.state.categories.doneMessage;
     },
   },
   created() {

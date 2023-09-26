@@ -32,8 +32,11 @@ export default {
     editedCategory(state, category) {
       state.category.name = category;
     },
-    toggleLoading(state) {
-      state.loading = !state.loading;
+    startLoading(state) {
+      state.loading = true;
+    },
+    endLoading(state) {
+      state.loading = false;
     },
     doneEditCategory(state, { name }) {
       state.categoryList = { ...state.category, ...name };
@@ -41,6 +44,9 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    deletePostName(state) {
+      state.category.name = '';
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -68,7 +74,7 @@ export default {
     },
     updateCategory({ commit, rootGetters, state }) {
       return new Promise((resolve, reject) => {
-        commit('toggleLoading');
+        commit('startLoading');
         const data = new URLSearchParams();
         data.append('name', state.category.name);
         axios(rootGetters['auth/token'])({
@@ -77,13 +83,15 @@ export default {
           data,
         }).then(() => {
           commit('clearMessage');
-          commit('toggleLoading');
-          this.$store.dispatch('getAllCategories');
+          this.dispatch('categories/getAllCategories');
           commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+          commit('deletePostName');
+          commit('endLoading');
           resolve();
         }).catch(err => {
-          commit('toggleLoading');
+          commit('startLoading');
           commit('failRequest', { message: err.message });
+          commit('endLoading');
           reject();
         });
       });
