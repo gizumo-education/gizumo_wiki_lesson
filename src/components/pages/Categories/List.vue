@@ -30,7 +30,6 @@ export default {
   },
   data() {
     return {
-      category: '',
       theads: ['カテゴリー名'],
     };
   },
