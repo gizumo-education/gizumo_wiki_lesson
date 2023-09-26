@@ -20,6 +20,7 @@ export default {
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
+      console.log('test');
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/categories',

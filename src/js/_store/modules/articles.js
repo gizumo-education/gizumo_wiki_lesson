@@ -129,10 +129,10 @@ export default {
           articles: res.data.articles,
         };
         commit('doneGetAllArticles', payload);
+        console.log(payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
-      //console.log(getAllArticles);
     },
     getArticleDetail({ commit, rootGetters }, articleId) {
       return new Promise((resolve, reject) => {
