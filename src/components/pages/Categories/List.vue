@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       category: '',
-      theads: [''],
+      theads: ['カテゴリー名'],
     };
   },
   computed: {
