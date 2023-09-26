@@ -15,7 +15,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled"
+      :disabled="disabled || !access.create"
     >
       {{ buttonText }}
     </app-button>
@@ -65,6 +65,7 @@ export default {
   },
   computed: {
     buttonText() {
+      if (!this.access.create) return '作成権限がありません';
       return this.disabled ? '作成中...' : '作成';
     },
   },
