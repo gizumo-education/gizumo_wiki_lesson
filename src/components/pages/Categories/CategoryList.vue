@@ -3,8 +3,7 @@
     <app-Category-Post />
     <app-Category-List
       :theads="theads"
-      :target-array="categoriesList"
-      :categories="categories"
+      :categories="categoryList"
       :done-message="doneMessage"
       :access="access"
       @open-modal="openModal"
@@ -36,8 +35,8 @@ export default {
     };
   },
   computed: {
-    CategoryList() {
-      return this.$store.state.categories.CategoryList;
+    categoryList() {
+      return this.$store.state.categories.categoryList;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
