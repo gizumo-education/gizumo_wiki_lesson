@@ -20,10 +20,9 @@ export default {
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
-      console.log('test');
       axios(rootGetters['auth/token'])({
         method: 'GET',
-        url: '/categories',
+        url: '/category',
       }).then(res => {
         const payload = {
           categories: res.data.categories,
@@ -33,7 +32,6 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
-      console.log({ commit, rootGetters });
     },
   },
 };
