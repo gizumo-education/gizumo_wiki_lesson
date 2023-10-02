@@ -35,7 +35,8 @@ export default {
     },
   },
   created() {
-    const id = this.$route.params;
+    const id = this.$route.params.id;
+    console.log(id)
     this.$store.dispatch('categories/getCategory', id);
     this.$store.dispatch('categories/resetView');
   },
