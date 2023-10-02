@@ -11,6 +11,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategoryName: null,
   },
   getters: {
     transformedCategories(state) {
@@ -47,6 +48,10 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+    },
+    confirmDeleteCategory(state, { categoryName }) {
+      console.log(categoryName);
+      state.deleteCategoryName = categoryName;
     },
   },
   actions: {
@@ -88,6 +93,9 @@ export default {
         commit('failRequest', { message: err.message });
         commit('toggleLoading');
       });
+    },
+    confirmDeleteCategory({ commit }, categoryName) {
+      commit('confirmDeleteCategory', { categoryName });
     },
   },
 };
