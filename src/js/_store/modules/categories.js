@@ -7,7 +7,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    deleteCategory: { // 削除するカテゴリーを管理するstate
+    deleteCategory: {
       id: null,
       name: '',
     },
@@ -35,7 +35,6 @@ export default {
     confirmDeleteCategory(state, { categoryId, categoryName }) {
       state.deleteCategory.id = categoryId;
       state.deleteCategory.name = categoryName;
-      // 削除するカテゴリーの情報をstateに保存
     },
   },
   actions: {
@@ -82,7 +81,6 @@ export default {
     },
     confDeleteCategory({ commit }, { categoryId, categoryName }) {
       commit('confirmDeleteCategory', { categoryId, categoryName });
-      // mutationのconfirmDeleteCategoryを呼び出す
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
       commit('clearMessage');
@@ -98,7 +96,6 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
-      // 削除するカテゴリーのidをstateから参照してaxiosでDELETEリクエストを送る
     },
   },
 };

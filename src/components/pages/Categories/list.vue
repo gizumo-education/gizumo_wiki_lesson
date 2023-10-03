@@ -31,7 +31,7 @@ export default {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
-  mixins: [Mixins], // ここで定義したメソッドを使えるようにしている
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -56,7 +56,6 @@ export default {
     },
     deleteCategoryName() {
       return this.$store.state.categories.deleteCategory.name;
-      // ここで削除するカテゴリー名を取得する
     },
   },
   created() {
@@ -75,16 +74,10 @@ export default {
     openModal(categoryId, categoryName) {
       this.$store.dispatch('categories/confDeleteCategory', { categoryId, categoryName });
       this.toggleModal();
-      // モーダルを開く処理
-      // ①カテゴリー削除モーダルを開く
-      // ②削除するカテゴリー名とカテゴリーIDをstateに保存する
     },
     handleClick() {
       this.$store.dispatch('categories/deleteCategory');
       this.toggleModal();
-      // モーダル内の削除ボタンを押した時の処理
-      // ①カテゴリー削除APIを叩く
-      // ②カテゴリー削除モーダルを閉じる
     },
   },
 };
