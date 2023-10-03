@@ -73,7 +73,7 @@ export default {
       this.category = '';
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategory', {categoryId, categoryName});
+      this.$store.dispatch('categories/confDeleteCategory', { categoryId, categoryName });
       this.toggleModal();
       // モーダルを開く処理
       // ①カテゴリー削除モーダルを開く
@@ -82,20 +82,6 @@ export default {
     handleClick() {
       this.$store.dispatch('categories/deleteCategory');
       this.toggleModal();
-      if (this.$route.query.category) {
-        const { category } = this.$route.query;
-        this.title = category;
-        this.$store.dispatch('categories/filteredCategories', category)
-          .then(() => {
-            if (this.$store.state.categories.categoryList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          }).catch(() => {
-
-          });
-      } else {
-        this.$store.dispatch('categories/getAllCategories');
-      }
       // モーダル内の削除ボタンを押した時の処理
       // ①カテゴリー削除APIを叩く
       // ②カテゴリー削除モーダルを閉じる

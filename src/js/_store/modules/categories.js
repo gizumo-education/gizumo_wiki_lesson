@@ -12,6 +12,9 @@ export default {
       name: '',
     },
   },
+  getters: {
+    deleteCategory: state => state.deleteCategory,
+  },
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
@@ -77,12 +80,11 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDeleteCategory({ commit }, {categoryId, categoryName}) {
-      commit('confirmDeleteCategory',{categoryId, categoryName});
+    confDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('confirmDeleteCategory', { categoryId, categoryName });
       // mutationのconfirmDeleteCategoryを呼び出す
     },
-    deleteCategory({ commit, rootGetters }) {
-      console.log(4)
+    deleteCategory({ commit, rootGetters, dispatch }) {
       commit('clearMessage');
       const data = new URLSearchParams();
       data.append('id', rootGetters['categories/deleteCategory'].id);
@@ -92,6 +94,7 @@ export default {
         data,
       }).then(() => {
         commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+        dispatch('getAllCategories');
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
