@@ -15,6 +15,9 @@
       :categories="categoriesList"
       :theads="theads"
       :access="access"
+      :delete-category-name="deleteCategoryName"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
@@ -52,6 +55,7 @@ export default {
       return this.$store.state.categories.errorMessage;
     },
     deleteCategoryName() {
+      return this.$store.state.categories.deleteCategory.name;
       // ここで削除するカテゴリー名を取得する
     },
   },
@@ -68,12 +72,30 @@ export default {
       this.$store.dispatch('categories/postCategory', this.category);
       this.category = '';
     },
-    openModal() {
+    openModal(categoryId, categoryName) {
+      this.$store.dispatch('categories/confirmDeleteCategory', {categoryId, categoryName});
+      this.toggleModal();
       // モーダルを開く処理
       // ①カテゴリー削除モーダルを開く
       // ②削除するカテゴリー名とカテゴリーIDをstateに保存する
     },
     handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
+      if (this.$route.query.category) {
+        const { category } = this.$route.query;
+        this.title = category;
+        this.$store.dispatch('categories/filteredCategories', category)
+          .then(() => {
+            if (this.$store.state.categories.categoryList.length === 0) {
+              this.$router.push({ path: '/notfound' });
+            }
+          }).catch(() => {
+
+          });
+      } else {
+        this.$store.dispatch('categories/getAllCategories');
+      }
       // モーダル内の削除ボタンを押した時の処理
       // ①カテゴリー削除APIを叩く
       // ②カテゴリー削除モーダルを閉じる

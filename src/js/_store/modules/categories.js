@@ -29,7 +29,9 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    confirmDeleteCategory(state, { payload }) {
+    confirmDeleteCategory(state, { categoryId, categoryName }) {
+      state.deleteCategory.id = categoryId;
+      state.deleteCategory.name = categoryName;
       // 削除するカテゴリーの情報をstateに保存
     },
   },
@@ -75,10 +77,24 @@ export default {
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    confirmDeleteCategory({ commit }, payload) {
+    confirmDeleteCategory({ commit }, {categoryId, categoryName}) {
+      commit('confirmDeleteCategory',{categoryId, categoryName});
       // mutationのconfirmDeleteCategoryを呼び出す
     },
-    deleteCategory({ commit }) {
+    deleteCategory({ commit, rootGetters }) {
+      console.log(4)
+      commit('clearMessage');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/deleteCategory'].id);
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategory'].id}`,
+        data,
+      }).then(() => {
+        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
       // 削除するカテゴリーのidをstateから参照してaxiosでDELETEリクエストを送る
     },
   },
