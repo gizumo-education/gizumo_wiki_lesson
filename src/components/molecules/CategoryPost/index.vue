@@ -17,7 +17,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
+      :disabled="!disabled"
     >
       {{ buttonText }}
     </app-button>
@@ -28,6 +28,7 @@
     <div v-if="doneMessage" class="category-management-post__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
+
   </form>
 </template>
 <script>
@@ -73,7 +74,10 @@ export default {
   computed: {
     buttonText() {
       if (!this.access.create) return '作成権限がありません';
-      return this.disabled ? '作成中...' : '作成';
+      return this.loading ? '作成中...' : '作成';
+    },
+    disabled() {
+      return this.access.create && !this.loading;
     },
   },
   methods: {

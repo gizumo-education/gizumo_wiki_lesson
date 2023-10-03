@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <app-Category-Post />
+  <div class="articles">
+    <app-Category-Post
+      class="form"
+      :loading="loading"
+      :access="access"
+    />
     <app-Category-List
+      class="list"
       :theads="theads"
       :categories="categoryList"
       :done-message="doneMessage"
+      :loading="loading"
       :access="access"
+      :markdown-content="markdownContent"
       @open-modal="openModal"
     />
   </div>
@@ -47,6 +54,9 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
+    markdownContent() {
+      return `# ${this.categoryTitle}\n${this.categoryContent}`;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
@@ -58,5 +68,16 @@ export default {
     },
   },
 };
-
 </script>
+
+<style lang="scss" scoped>
+  .articles {
+    display: flex;
+  }
+  .form {
+    flex-basis: 40%;
+  }
+  .list {
+    flex-basis: 60%;
+  }
+</style>
