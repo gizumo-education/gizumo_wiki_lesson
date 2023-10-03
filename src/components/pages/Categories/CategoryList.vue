@@ -76,8 +76,11 @@ export default {
   }
   .form {
     flex-basis: 40%;
+    border-right: 1px solid #ccc;
+    padding-right: 2%;
   }
   .list {
     flex-basis: 60%;
+    padding-left: 2%;
   }
 </style>
