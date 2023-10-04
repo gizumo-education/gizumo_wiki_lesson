@@ -15,6 +15,9 @@
       :categories="categoriesList"
       :theads="theads"
       :access="access"
+      :delete-category-name="deleteCategoryName"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
@@ -28,7 +31,7 @@ export default {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
-  mixins: [Mixins], // ここで定義したメソッドを使えるようにしている
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -52,7 +55,7 @@ export default {
       return this.$store.state.categories.errorMessage;
     },
     deleteCategoryName() {
-      // ここで削除するカテゴリー名を取得する
+      return this.$store.state.categories.deleteCategory.name;
     },
   },
   created() {
@@ -68,15 +71,13 @@ export default {
       this.$store.dispatch('categories/postCategory', this.category);
       this.category = '';
     },
-    openModal() {
-      // モーダルを開く処理
-      // ①カテゴリー削除モーダルを開く
-      // ②削除するカテゴリー名とカテゴリーIDをstateに保存する
+    openModal(categoryId, categoryName) {
+      this.$store.dispatch('categories/confDeleteCategory', { categoryId, categoryName });
+      this.toggleModal();
     },
     handleClick() {
-      // モーダル内の削除ボタンを押した時の処理
-      // ①カテゴリー削除APIを叩く
-      // ②カテゴリー削除モーダルを閉じる
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
     },
   },
 };
