@@ -84,12 +84,9 @@ export default {
     },
     deleteCategory({ commit, rootGetters, dispatch }) {
       commit('clearMessage');
-      const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/deleteCategory'].id);
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategory'].id}`,
-        data,
       }).then(() => {
         commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
         dispatch('getAllCategories');
