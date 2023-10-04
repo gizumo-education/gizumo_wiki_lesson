@@ -78,10 +78,12 @@ export default {
       this.$store.dispatch('categories/postCategory');
     },
     handleClick() {
-      this.$store.dispatch('categories/');
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryName);
+      this.$store.dispatch('categories/confirmDeleteCategoryId', categoryId);
+      this.$store.dispatch('categories/confirmDeleteCategoryName', categoryName);
       this.toggleModal();
     },
   },

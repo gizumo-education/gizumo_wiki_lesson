@@ -11,6 +11,7 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategoryId: null,
     deleteCategoryName: null,
   },
   getters: {
@@ -20,6 +21,8 @@ export default {
     getCategory(state) {
       return state.category.name;
     },
+    deleteCategoryId: state => state.deleteCategoryId,
+    deleteCategoryName: state => state.deleteCategoryName,
   },
   mutations: {
     clearMessage(state) {
@@ -49,9 +52,15 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
-    confirmDeleteCategory(state, { categoryName }) {
-      console.log(categoryName);
+    confirmDeleteCategoryName(state, { categoryName }) {
       state.deleteCategoryName = categoryName;
+    },
+    confirmDeleteCategoryId(state, { categoryId }) {
+      state.deleteCategoryId = categoryId;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
+      state.deleteCategoryName = null;
     },
   },
   actions: {
@@ -85,7 +94,7 @@ export default {
       }).then(() => {
         commit('clearMessage');
         this.dispatch('categories/getAllCategories');
-        commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+        commit('displayDoneMessage');
         commit('deletePostName');
         commit('toggleLoading');
       }).catch(err => {
@@ -94,8 +103,26 @@ export default {
         commit('toggleLoading');
       });
     },
-    confirmDeleteCategory({ commit }, categoryName) {
-      commit('confirmDeleteCategory', { categoryName });
+    confirmDeleteCategoryName({ commit }, categoryName) {
+      commit('confirmDeleteCategoryName', { categoryName });
+    },
+    confirmDeleteCategoryId({ commit }, categoryId) {
+      commit('confirmDeleteCategoryId', { categoryId });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/deleteCategoryId']);
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        data,
+      }).then(() => {
+        commit('doneDeleteCategory');
+        this.dispatch('categories/getAllCategories');
+        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
   },
 };
