@@ -11,6 +11,10 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     transformedCategories(state) {
@@ -19,6 +23,8 @@ export default {
     getCategory(state) {
       return state.category.name;
     },
+    deleteCategoryId: state => state.deleteCategory.id,
+    deleteCategoryName: state => state.deleteCategory.name,
   },
   mutations: {
     clearMessage(state) {
@@ -47,6 +53,16 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+    },
+    confirmDeleteCategoryName(state, { categoryName }) {
+      state.deleteCategory.name = categoryName;
+    },
+    confirmDeleteCategoryId(state, { categoryId }) {
+      state.deleteCategory.id = categoryId;
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategory.id = null;
+      state.deleteCategory.name = null;
     },
   },
   actions: {
@@ -80,13 +96,30 @@ export default {
       }).then(() => {
         commit('clearMessage');
         this.dispatch('categories/getAllCategories');
-        commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+        commit('displayDoneMessage');
         commit('deletePostName');
         commit('toggleLoading');
       }).catch(err => {
-        commit('startLoading');
         commit('failRequest', { message: err.message });
         commit('toggleLoading');
+      });
+    },
+    confirmDeleteCategoryName({ commit }, categoryName) {
+      commit('confirmDeleteCategoryName', { categoryName });
+    },
+    confirmDeleteCategoryId({ commit }, categoryId) {
+      commit('confirmDeleteCategoryId', { categoryId });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+      }).then(() => {
+        commit('doneDeleteCategory');
+        this.dispatch('categories/getAllCategories');
+        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
