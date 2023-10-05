@@ -11,8 +11,10 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    deleteCategoryId: null,
-    deleteCategoryName: null,
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     transformedCategories(state) {
@@ -21,8 +23,8 @@ export default {
     getCategory(state) {
       return state.category.name;
     },
-    deleteCategoryId: state => state.deleteCategoryId,
-    deleteCategoryName: state => state.deleteCategoryName,
+    deleteCategoryId: state => state.deleteCategory.id,
+    deleteCategoryName: state => state.deleteCategory.name,
   },
   mutations: {
     clearMessage(state) {
@@ -53,14 +55,14 @@ export default {
       state.errorMessage = message;
     },
     confirmDeleteCategoryName(state, { categoryName }) {
-      state.deleteCategoryName = categoryName;
+      state.deleteCategory.name = categoryName;
     },
     confirmDeleteCategoryId(state, { categoryId }) {
-      state.deleteCategoryId = categoryId;
+      state.deleteCategory.id = categoryId;
     },
     doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
-      state.deleteCategoryName = null;
+      state.deleteCategory.id = null;
+      state.deleteCategory.name = null;
     },
   },
   actions: {
@@ -98,7 +100,6 @@ export default {
         commit('deletePostName');
         commit('toggleLoading');
       }).catch(err => {
-        commit('startLoading');
         commit('failRequest', { message: err.message });
         commit('toggleLoading');
       });
@@ -110,12 +111,9 @@ export default {
       commit('confirmDeleteCategoryId', { categoryId });
     },
     deleteCategory({ commit, rootGetters }) {
-      const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/deleteCategoryId']);
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
-        data,
       }).then(() => {
         commit('doneDeleteCategory');
         this.dispatch('categories/getAllCategories');
