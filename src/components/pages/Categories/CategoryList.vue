@@ -34,10 +34,6 @@ export default {
           id: null,
           title: '',
         },
-        // {
-        //   id: 1,
-        //   title: 'aaa',
-        // },
       ],
     };
   },

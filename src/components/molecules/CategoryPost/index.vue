@@ -28,7 +28,6 @@
     <div v-if="doneMessage" class="category-management-post__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
-
   </form>
 </template>
 <script>

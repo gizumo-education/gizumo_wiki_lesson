@@ -1,58 +1,58 @@
 <template>
   <div class="category-list">
     <table class="category-list__table">
-        <thead class="category-list__table__head">
-          <tr>
-            <th
-              v-for="(thead, index) in theads"
-              :key="index"
+      <thead class="category-list__table__head">
+        <tr>
+          <th
+            v-for="(thead, index) in theads"
+            :key="index"
+          >
+            <app-text tag="span" theme-color bold>
+              {{ thead }}
+            </app-text>
+          </th>
+        </tr>
+      </thead>
+      <transition-group name="fade" tag="tbody" class="category-list__table__body">
+        <tr v-for="category in categories" :key="category.id">
+          <td>
+            <app-text tag="span">
+              {{ category.name }}
+            </app-text>
+          </td>
+          <td>
+            <app-router-link
+              underline
+              small
+              hover-opacity
+              :to="`/categories/${category.name}`"
             >
-              <app-text tag="span" theme-color bold>
-                {{ thead }}
-              </app-text>
-            </th>
-          </tr>
-        </thead>
-        <transition-group name="fade" tag="tbody" class="category-list__table__body">
-          <tr v-for="category in categories" :key="category.id">
-            <td>
-              <app-text tag="span">
-                {{ category.name }}
-              </app-text>
-            </td>
-            <td>
-              <app-router-link
-                underline
-                small
-                hover-opacity
-                :to="`/categories/${category.name}`"
-              >
-                このカテゴリーの記事
-              </app-router-link>
-            </td>
-            <td>
-                <app-router-link
-                theme-color
-                underline
-                hover-opacity
-                :to="`/categories/${category.id}`"
-              >
-                更新
-              </app-router-link>
-            </td>
-            <td>
-              <app-button
-                bg-danger
-                small
-                round
-                :disabled="!access.delete"
-                @click="openModal(category.id, category.name)"
-              >
-                削除
-              </app-button>
-            </td>
-          </tr>
-        </transition-group>
+              このカテゴリーの記事
+            </app-router-link>
+          </td>
+          <td>
+            <app-router-link
+            theme-color
+            underline
+            hover-opacity
+            :to="`/categories/${category.id}`"
+            >
+              更新
+            </app-router-link>
+          </td>
+          <td>
+            <app-button
+              bg-danger
+              small
+              round
+              :disabled="!access.delete"
+              @click="openModal(category.id, category.name)"
+            >
+              削除
+            </app-button>
+          </td>
+        </tr>
+      </transition-group>
     </table>
     <app-modal>
       <div class="category-list__modal">
@@ -152,6 +152,7 @@ export default {
     }
     &__body {
       td {
+
         padding: 10px;
         vertical-align: middle;
         &.is-disabled {

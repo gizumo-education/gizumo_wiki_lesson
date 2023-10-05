@@ -129,7 +129,6 @@ export default {
           articles: res.data.articles,
         };
         commit('doneGetAllArticles', payload);
-        console.log(payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });

@@ -27,7 +27,7 @@ export default {
         const payload = {
           categories: res.data.categories,
         };
-        console.log(payload);
+        this.categoryList = payload.categories.reverse();
         commit('doneGetAllCategories', payload);
       }).catch(err => {
         commit('failRequest', { message: err.message });
