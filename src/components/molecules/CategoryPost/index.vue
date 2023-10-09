@@ -1,8 +1,6 @@
 <template>
   <form @submit.prevent="addCategory">
-    <app-heading :level="1">
-      カテゴリー管理
-    </app-heading>
+    <app-heading :level="1">カテゴリー管理</app-heading>
     <app-input
       v-validate="'required'"
       name="category"
@@ -43,12 +41,6 @@ export default {
     appText: Text,
   },
   props: {
-    categories: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
     category: {
       type: String,
       required: true,

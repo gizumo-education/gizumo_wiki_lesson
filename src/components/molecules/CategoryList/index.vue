@@ -19,8 +19,6 @@
             <app-text tag="span">
               {{ category.name }}
             </app-text>
-          </td>
-          <td>
             <app-router-link
               underline
               small
@@ -29,8 +27,6 @@
             >
               このカテゴリーの記事
             </app-router-link>
-          </td>
-          <td>
             <app-router-link
               theme-color
               underline
@@ -39,8 +35,6 @@
             >
               更新
             </app-router-link>
-          </td>
-          <td>
             <app-button
               bg-danger
               small
@@ -115,10 +109,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    markdownContent: {
-      type: String,
-      default: '',
-    },
   },
   methods: {
     openModal(categoryId, categoryName) {
@@ -152,7 +142,6 @@ export default {
     }
     &__body {
       td {
-
         padding: 10px;
         vertical-align: middle;
         &.is-disabled {

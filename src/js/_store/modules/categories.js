@@ -10,12 +10,12 @@ export default {
     categoryList: [],
   },
   mutations: {
-    // category: {
-    //   id: null,
-    //   name: '',
-    // },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
+    },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
+      state.loading = false;
     },
   },
   actions: {

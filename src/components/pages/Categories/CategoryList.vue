@@ -1,11 +1,11 @@
 <template>
   <div class="articles">
-    <app-Category-Post
+    <app-category-post
       class="form"
       :loading="loading"
       :access="access"
     />
-    <app-Category-List
+    <app-category-list
       class="list"
       :theads="theads"
       :categories="categoryList"
@@ -58,10 +58,6 @@ export default {
     this.$store.dispatch('categories/getAllCategories');
   },
   methods: {
-    openModal(categoriesId) {
-      this.$store.dispatch('categories/confirmDeleteCategories', categoriesId);
-      this.toggleModal();
-    },
   },
 };
 </script>
@@ -69,6 +65,7 @@ export default {
 <style lang="scss" scoped>
   .articles {
     display: flex;
+    writing-mode: lr-tb;
   }
   .form {
     flex-basis: 40%;
@@ -78,5 +75,8 @@ export default {
   .list {
     flex-basis: 60%;
     padding-left: 2%;
+  }
+  .td {
+    padding: 40%;
   }
 </style>
