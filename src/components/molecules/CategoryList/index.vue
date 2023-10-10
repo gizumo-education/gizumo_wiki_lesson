@@ -19,6 +19,8 @@
             <app-text tag="span">
               {{ category.name }}
             </app-text>
+          </td>
+          <td>
             <app-router-link
               underline
               small
@@ -27,6 +29,8 @@
             >
               このカテゴリーの記事
             </app-router-link>
+          </td>
+          <td>
             <app-router-link
               theme-color
               underline
@@ -35,6 +39,8 @@
             >
               更新
             </app-router-link>
+          </td>
+          <td>
             <app-button
               bg-danger
               small
@@ -129,7 +135,7 @@ export default {
   height: 100%;
   overflow: scroll;
   &__table {
-    width: 100%;
+    width: 70%;
     text-align: left;
     tr {
       border-bottom: 1px solid $separator-color;
@@ -148,6 +154,7 @@ export default {
           color: $disabled-color;
           font-size: 12px;
         }
+        white-space: nowrap;
       }
       .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
