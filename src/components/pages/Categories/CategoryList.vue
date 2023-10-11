@@ -12,8 +12,6 @@
       :done-message="doneMessage"
       :loading="loading"
       :access="access"
-      :markdown-content="markdownContent"
-      @open-modal="openModal"
     />
   </div>
 </template>
@@ -49,9 +47,6 @@ export default {
     },
     loading() {
       return this.$store.state.categories.loading;
-    },
-    markdownContent() {
-      return `# ${this.categoryTitle}\n${this.categoryContent}`;
     },
   },
   created() {
