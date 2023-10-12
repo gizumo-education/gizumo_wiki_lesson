@@ -82,8 +82,7 @@ export default {
       this.toggleModal();
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategoryId', categoryId);
-      this.$store.dispatch('categories/confirmDeleteCategoryName', categoryName);
+      this.$store.dispatch('categories/confirmCategory', { categoryId, categoryName });
       this.toggleModal();
     },
   },
