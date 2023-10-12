@@ -19,6 +19,7 @@
     >
       {{ buttonText }}
     </app-button>
+    
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>

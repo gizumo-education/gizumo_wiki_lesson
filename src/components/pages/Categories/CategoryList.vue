@@ -27,12 +27,6 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
-      categories: [
-        {
-          id: null,
-          title: '',
-        },
-      ],
     };
   },
   computed: {

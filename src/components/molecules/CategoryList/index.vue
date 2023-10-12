@@ -25,7 +25,7 @@
               underline
               small
               hover-opacity
-              :to="`/categories/${category.name}`"
+              :to="`/articles?category=${category.name}`"
             >
               このカテゴリーの記事
             </app-router-link>
@@ -154,6 +154,8 @@ export default {
           color: $disabled-color;
           font-size: 12px;
         }
+      }
+      a, button {
         white-space: nowrap;
       }
       .fade-enter-active, .fade-leave-active {
