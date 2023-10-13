@@ -44,6 +44,7 @@ export default {
     doneEditCategory(state, { name }) {
       state.categoryList = { ...state.category, ...name };
       state.loading = false;
+      state.doneMessage = 'ユーザーの更新が完了しました。';
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -53,6 +54,7 @@ export default {
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
+      state.loading = false;
     },
     confirmCategory(state, { categoryName, categoryId }) {
       state.deleteCategory.name = categoryName;
@@ -70,7 +72,7 @@ export default {
       state.loading = false;
     },
     updateValue(state, { name, value }) {
-      state.user = { ...state.user, [name]: value };
+      state.category = { ...state.user, [name]: value };
     },
     deleteValue(state) {
       state.category.name = '';
@@ -157,15 +159,14 @@ export default {
     editCategory({ commit, rootGetters }, category) {
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/user/${category.id}`,
+        url: `/category/${category.id}`,
         data: category,
       }).then(res => {
-        const editedCategory = {
-          id: res.data.category.id,
-          name: res.data.category.name,
-        };
-        commit('doneEditCategory', editedCategory);
+        console.log(res.data.category.name);
+        const editedUser = res.data.category.name;
+        commit('doneEditCategory', editedUser);
       }).catch(err => {
+        console.log('err');
         commit('failRequest', { message: err.message });
       });
     },

@@ -7,7 +7,6 @@
       :done-message="doneMessage"
       :disabled="loading ? true : false"
       :access="access"
-      :update-category-name="updateCategoryName"
       @update-value="updateValue"
       @handle-Click="handleClick"
       @edit-category="editCategory"
@@ -38,16 +37,13 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
-    updateCategoryName() {
-      return this.$store.state.categories.category.name;
-    },
     categoryName() {
       return this.$store.state.categories.category.name;
     },
   },
   created() {
-    const name = this.$route.params;
-    this.$store.dispatch('categories/getCategory', name);
+    const id = this.$route.params;
+    this.$store.dispatch('categories/getCategory', id);
     this.$store.dispatch('categories/clearMessage');
   },
   destroyed() {
@@ -63,10 +59,12 @@ export default {
       if (!this.loading) this.$store.dispatch('categories/updateValue', target);
     },
     editCategory() {
-      this.$store.dispatch('editCategory', {
+      this.$store.dispatch('categories/editCategory', {
         id: this.category.id,
         name: this.category.name,
       });
+      console.log(this.category.id);
+      console.log(this.category.name);
     },
   },
 };

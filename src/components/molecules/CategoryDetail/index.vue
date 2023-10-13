@@ -22,7 +22,6 @@
         button-type="submit"
         round
         :disabled="disabled || !access.edit"
-        @click="handleClick"
       >
         {{ buttonText }}
       </app-button>
@@ -64,25 +63,18 @@ export default {
       default: () => ({}),
     },
   },
-  compted: {
+  computed: {
     buttonText() {
       if (!this.access.edit) return '変更権限がありません';
       return this.disabled ? '更新中です...' : '更新';
     },
   },
   methods: {
-    handleClick() {
-      this.$emit('handle-click');
-    },
     updateValue($event) {
       this.$emit('update-value', $event.target);
     },
     editCategory() {
-      if (!this.access.edit) return;
-      this.$emit('clear-message');
-      this.$validator.validate().then(valid => {
-        if (valid) this.$emit('edit-category');
-      });
+      this.$emit('edit-category');
     },
   },
 };
