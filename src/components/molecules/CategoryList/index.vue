@@ -135,7 +135,7 @@ export default {
   height: 100%;
   overflow: scroll;
   &__table {
-    width: 100%;
+    width: 70%;
     text-align: left;
     tr {
       border-bottom: 1px solid $separator-color;
@@ -154,6 +154,9 @@ export default {
           color: $disabled-color;
           font-size: 12px;
         }
+      }
+      a, button {
+        white-space: nowrap;
       }
       .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
