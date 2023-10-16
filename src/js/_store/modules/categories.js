@@ -46,10 +46,10 @@ export default {
       state.updateCategory.name = categoryName;
     },
     editedCategory(state, payload) {
-      state.updateCategory.name = payload.name ;
+      state.updateCategory.name = payload.name;
     },
-    updateCategory(state, { category }) {
-      state.updateCategory = { ...state.updateCategory, ...category };
+    updateCategory(state, newCategoryName) {
+      state.updateCategory = { ...state.updateCategory, ...newCategoryName };
     },
   },
   actions: {
@@ -115,7 +115,10 @@ export default {
           method: 'GET',
           url: `/category/${categoryId}`,
         }).then(res => {
-          commit('doneGetCategory', {categoryId: res.data.category.id , categoryName: res.data.category.name });
+          commit('doneGetCategory', {
+            categoryId: res.data.category.id,
+            categoryName: res.data.category.name,
+          });
           resolve();
         }).catch(err => {
           commit('failRequest', { message: err.message });
@@ -133,20 +136,13 @@ export default {
       dispatch('clearMessage');
       commit('toggleLoading');
       const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/updateCategory'].id);
       data.append('name', rootGetters['categories/updateCategory'].name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${rootGetters['categories/updateCategory'].id}`,
-        data
-      }).then( res => {
-        const payload = {
-          category: {
-            id: res.data.category.id,
-            name: res.data.category.name,
-          },
-        };
-        commit('updateCategory', payload);
+        data,
+      }).then(res => {
+        commit('updateCategory', { newCategoryName: res.data.category.name });
         commit('toggleLoading');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch(err => {

@@ -2,23 +2,24 @@
   <form>
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
-    class="category-management-edit__return"
+      class="category-management-edit__return"
       :to="`/categories`"
       hover-opacity
     >
       カテコリ一ー覧へ戻る
     </app-router-link>
-    <app-input
-    class="category-management-edit__input"
-      v-validate="'required'"
-      name="category"
-      type="text"
-      placeholder="カテゴリー名を入力してください"
-      data-vv-as="カテゴリー名"
-      :error-messages="errors.collect('title')"
-      :value="categoryName"
-      @update-value="$emit('edited-category', $event)"
-    />
+    <div class="category-management-edit__input">
+      <app-input
+        v-validate="'required'"
+        name="title"
+        type="text"
+        placeholder="カテゴリー名を入力してください"
+        data-vv-as="カテゴリー名"
+        :error-messages="errors.collect('title')"
+        :value="categoryName"
+        @update-value="$emit('edited-category', $event)"
+      />
+    </div>
     <app-button
       class="category-management-edit__submit"
       button-type="submit"
@@ -32,7 +33,6 @@
     <div v-if="errorMessage" class="category-management-edit__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
-  
     <div v-if="doneMessage" class="category-management-edit__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
@@ -41,7 +41,7 @@
 
 <script>
 import {
-  Heading, Input, Button, Text,RouterLink,
+  Heading, Input, Button, Text, RouterLink,
 } from '@Components/atoms';
 
 export default {

@@ -40,12 +40,12 @@ export default {
       return id;
     },
     categoryName() {
-      const name = this.$store.state.categories.updateCategory.name;
-      return name;
+      return this.$store.state.categories.updateCategory.name;
     },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetail', parseInt(this.categoryId, 10));
+    this.$store.dispatch('categories/getCategoryDetail', this.categoryId, 10);
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
     editedCategory($event) {
