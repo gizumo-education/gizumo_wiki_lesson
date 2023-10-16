@@ -4,6 +4,9 @@
       class="form"
       :loading="loading"
       :access="access"
+      :error-message="errorMessage"
+      :category="getCategoryName"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="list"
@@ -27,6 +30,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
@@ -39,14 +43,28 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    getCategoryName() {
+      return this.$store.getters['categories/getCategory'];
+    },
     loading() {
       return this.$store.state.categories.loading;
     },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/updateCategory');
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
+    },
   },
 };
 </script>
