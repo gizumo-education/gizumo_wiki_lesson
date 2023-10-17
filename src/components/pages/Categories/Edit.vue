@@ -44,7 +44,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getCategoryDetail', this.categoryId, 10);
+    this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {

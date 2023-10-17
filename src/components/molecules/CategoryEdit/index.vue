@@ -3,7 +3,7 @@
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
       class="category-management-edit__return"
-      :to="`/categories`"
+      :to="'/categories'"
       hover-opacity
     >
       カテコリ一ー覧へ戻る
