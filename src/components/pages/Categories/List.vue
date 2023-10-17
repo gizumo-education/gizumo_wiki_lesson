@@ -71,7 +71,7 @@ export default {
       this.$store.dispatch('categories/clearMessage');
     },
     updateValue($event) {
-      this.$store.dispatch('categories/editedCategory', $event.target.value);
+      this.$store.dispatch('categories/createCategory', $event.target.value);
     },
     handleSubmit() {
       if (this.loading) return;

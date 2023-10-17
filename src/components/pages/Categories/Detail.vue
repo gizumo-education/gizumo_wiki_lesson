@@ -8,7 +8,6 @@
       :disabled="loading ? true : false"
       :access="access"
       @update-value="updateValue"
-      @handle-Click="handleClick"
       @edit-category="editCategory"
     />
   </div>
@@ -37,34 +36,27 @@ export default {
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
-    categoryName() {
-      return this.$store.state.categories.category.name;
-    },
   },
   created() {
-    const id = this.$route.params;
-    this.$store.dispatch('categories/getCategory', id);
+    const { id } = this.$route.params;
+    this.$store.dispatch('categories/getCategory', { id });
     this.$store.dispatch('categories/clearMessage');
+    console.log(id);
   },
   destroyed() {
     this.$store.dispatch('categories/clearMessage');
     this.$store.dispatch('categories/deleteValue');
   },
   methods: {
-    handleClick(updateCategoryName) {
-      if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory', updateCategoryName);
-    },
     updateValue(target) {
       if (!this.loading) this.$store.dispatch('categories/updateValue', target);
     },
     editCategory() {
       this.$store.dispatch('categories/editCategory', {
         id: this.category.id,
-        name: this.category.name,
+        /* eslint-disable-next-line no-irregular-whitespace */
+        name: this.category.name.replace(/(　)+/, ' ').trim(),
       });
-      console.log(this.category.id);
-      console.log(this.category.name);
     },
   },
 };
