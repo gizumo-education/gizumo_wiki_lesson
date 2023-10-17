@@ -7,6 +7,7 @@
       :done-message="doneMessage"
       :disabled="loading ? true : false"
       :access="access"
+      @clear-message="clearMessage"
       @update-value="updateValue"
       @edit-category="editCategory"
     />
@@ -41,21 +42,22 @@ export default {
     const { id } = this.$route.params;
     this.$store.dispatch('categories/getCategory', { id });
     this.$store.dispatch('categories/clearMessage');
-    console.log(id);
   },
   destroyed() {
     this.$store.dispatch('categories/clearMessage');
     this.$store.dispatch('categories/deleteValue');
   },
   methods: {
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
     updateValue(target) {
       if (!this.loading) this.$store.dispatch('categories/updateValue', target);
     },
     editCategory() {
       this.$store.dispatch('categories/editCategory', {
         id: this.category.id,
-        /* eslint-disable-next-line no-irregular-whitespace */
-        name: this.category.name.replace(/(　)+/, ' ').trim(),
+        name: this.category.inputName,
       });
     },
   },

@@ -26,12 +26,20 @@
         {{ buttonText }}
       </app-button>
     </form>
+
+    <div v-if="errorMessage">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
+
+    <div v-if="doneMessage">
+      <app-text bg-success>{{ doneMessage }}</app-text>
+    </div>
   </div>
 </template>
 
 <script>
 import {
-  Heading, RouterLink, Input, Button,
+  Heading, RouterLink, Input, Button, Text,
 } from '@Components/atoms';
 
 export default {
@@ -40,6 +48,7 @@ export default {
     appRouterLink: RouterLink,
     appInput: Input,
     appButton: Button,
+    appText: Text,
   },
   props: {
     category: {
@@ -71,7 +80,11 @@ export default {
   },
   methods: {
     updateValue($event) {
-      this.$emit('update-value', $event.target);
+      if (!this.access.edit) return;
+      this.$emit('clear-message');
+      this.$validator.validate().then(valid => {
+        if (valid) this.$emit('update-value', $event.target);
+      });
     },
     editCategory() {
       this.$emit('edit-category');

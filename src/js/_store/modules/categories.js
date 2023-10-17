@@ -31,6 +31,9 @@ export default {
       state.errorMessage = '';
       state.doneMessage = '';
     },
+    applyRequest(state) {
+      state.loading = true;
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
       return state.categoryList.reverse();
@@ -70,8 +73,6 @@ export default {
     },
     updateValue(state, { name, value }) {
       state.category = { ...state.category, [name]: value };
-      console.log(state.category);
-      console.log(value);
     },
     deleteValue(state) {
       state.category.name = '';
@@ -153,19 +154,19 @@ export default {
       commit('deleteValue');
     },
     editCategory({ commit, rootGetters }, category) {
+      commit('applyRequest');
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${category.id}`,
         data: category,
       }).then(res => {
-        console.log(res.data.category.name);
+        if (res.data.code === 0) throw new Error(res.data.message);
         const editedCategory = {
           id: res.data.category.id,
           name: res.data.category.name,
         };
         commit('doneEditCategory', { editedCategory });
       }).catch(err => {
-        console.log('err');
         commit('failRequest', { message: err.message });
       });
     },
