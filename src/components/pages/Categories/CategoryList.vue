@@ -2,17 +2,17 @@
   <div class="articles">
     <app-category-post
       class="form"
-      :loading="loading"
+      :disabled="loading"
       :access="access"
       :error-message="errorMessage"
-      :category="getCategoryName"
+      :category="category"
+      :done-message="doneMessage"
       @handle-submit="handleSubmit"
     />
     <app-category-list
       class="list"
       :theads="theads"
       :categories="categoryList"
-      :done-message="doneMessage"
       :loading="loading"
       :access="access"
     />
@@ -43,11 +43,11 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
-    getCategoryName() {
-      return this.$store.getters['categories/getCategory'];
-    },
     loading() {
       return this.$store.state.categories.loading;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
   },
   created() {
@@ -55,15 +55,16 @@ export default {
     this.$store.dispatch('categories/clearMessage');
   },
   methods: {
-    handleSubmit() {
-      if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory');
-    },
     clearMessage() {
       this.$store.dispatch('categories/clearMessage');
     },
     updateValue($event) {
-      this.$store.dispatch('categories/editedCategory', $event.target.value);
+      this.category = $event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory', this.category);
+      this.category = '';
     },
   },
 };

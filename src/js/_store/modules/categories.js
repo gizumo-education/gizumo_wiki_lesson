@@ -11,21 +11,16 @@ export default {
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
     },
-    doneGetArticle(state, payload) {
-      state.categoryList = { ...state.categoryList, ...payload.categories };
-    },
     failRequest(state, { message }) {
       state.errorMessage = message;
       state.loading = false;
     },
-    updateArticle(state, { category }) {
-      state.category = { ...state.category, ...category };
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
     },
     toggleLoading(state) {
       state.loading = !state.loading;
-    },
-    updateCategory(state, { article }) {
-      state.targetArticle = { ...state.targetArticle, ...article };
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
