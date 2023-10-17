@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    doneMessage: '',
     errorMessage: '',
     loading: false,
   },

@@ -7,6 +7,7 @@
       :error-message="errorMessage"
       :category="category"
       :done-message="doneMessage"
+      @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
     <app-category-list
