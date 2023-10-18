@@ -10,6 +10,7 @@ import Home from '@Pages/Home/index.vue';
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import CategoryList from '@Pages/Categories/list.vue';
+import CategoryEdit from '@Pages/Categories/Edit.vue';
 
 // 記事
 import Articles from '@Pages/Articles/index.vue';
@@ -112,13 +113,18 @@ const router = new VueRouter({
       ],
     },
     {
-      path: '/category',
+      path: '/categories',
       component: Categories,
       children: [
         {
           name: 'categoryList',
           path: '',
           component: CategoryList,
+        },
+        {
+          name: 'categoryEdit',
+          path: ':id',
+          component: CategoryEdit,
         },
       ],
     },

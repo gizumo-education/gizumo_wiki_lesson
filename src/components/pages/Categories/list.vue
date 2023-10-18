@@ -87,7 +87,7 @@ export default {
 .category {
   &__post {
     float: left;
-    width: 35%;
+    width: 32%;
     padding-right: 20px;
   }
   &__list {
