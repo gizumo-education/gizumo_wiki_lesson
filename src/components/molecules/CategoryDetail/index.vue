@@ -14,7 +14,12 @@
       </app-router-link>
 
       <app-input
+        v-validate="'required'"
+        name="name"
         type="text"
+        placeholder="更新するカテゴリー名を入力してください"
+        data-vv-as="カテゴリー名"
+        :error-messages="errors.collect('name')"
         :value="category.name"
         @update-value="updateValue"
       />
@@ -80,14 +85,14 @@ export default {
   },
   methods: {
     updateValue($event) {
+      this.$emit('update-value', $event.target);
+    },
+    editCategory() {
       if (!this.access.edit) return;
       this.$emit('clear-message');
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('update-value', $event.target);
+        if (valid) this.$emit('edit-category');
       });
-    },
-    editCategory() {
-      this.$emit('edit-category');
     },
   },
 };

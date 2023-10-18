@@ -47,7 +47,7 @@ export default {
     doneEditCategory(state, { name, value }) {
       state.category[name] = value;
       state.loading = false;
-      state.doneMessage = 'ユーザーの更新が完了しました。';
+      state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -99,7 +99,6 @@ export default {
       commit('createCategory', category);
     },
     postCategory({ commit, rootGetters, state }) {
-      commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', state.category.name);
       axios(rootGetters['auth/token'])({
