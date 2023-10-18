@@ -57,7 +57,7 @@ export default {
     editCategory() {
       this.$store.dispatch('categories/editCategory', {
         id: this.category.id,
-        name: this.category.inputName,
+        name: this.category.name,
       });
     },
   },
