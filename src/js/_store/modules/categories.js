@@ -99,6 +99,7 @@ export default {
       commit('createCategory', category);
     },
     postCategory({ commit, rootGetters, state }) {
+      commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', state.category.name);
       axios(rootGetters['auth/token'])({
