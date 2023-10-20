@@ -53,14 +53,14 @@ export default {
           url: '/category',
           data,
         }).then(() => {
-          commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
           dispatch('getAllCategories');
           resolve();
         }).catch(err => {
-          commit('toggleLoading');
           commit('failRequest', { message: err.message });
           reject();
+        }).finally(() => {
+          commit('toggleLoading');
         });
       });
     },

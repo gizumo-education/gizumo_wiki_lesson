@@ -57,14 +57,22 @@ export default {
   },
   methods: {
     clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
+      this.store.dispatch('categories/clearMessage');
     },
     updateValue($event) {
       this.category = $event.target.value;
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/postCategory', this.category);
+      // this.$store.dispatch('categories/postCategory').then(() => {
+      //   this.$router.push({
+      //     path: '/categories',
+      //     query: { redirect: '/category/post' },
+      //   });
+      // });
+      const Promise = new Promise((resolve, reject) => {
+        
+      })
       this.category = '';
     },
   },
