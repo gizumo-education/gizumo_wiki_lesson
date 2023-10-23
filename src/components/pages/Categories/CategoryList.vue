@@ -39,9 +39,9 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
-    doneMessage() {
-      return this.$store.state.categories.doneMessage;
-    },
+    // doneMessage() {
+    //   return this.$store.state.categories.doneMessage;
+    // },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -67,22 +67,13 @@ export default {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory', this.category).then(() => {
         this.category = '';
-        
+        this.doneMessage = 'カテゴリーを追加しました。';
       }).catch(() => {
-
       });
     },
   },
 };
 </script>
-
-
-<!-- this.$store.dispatch('articles/postArticle').then(() => {
-  this.$router.push({
-    path: '/articles',
-    query: { redirect: '/article/post' },
-  });
-}); -->
 
 <style lang="scss" scoped>
   .articles {
