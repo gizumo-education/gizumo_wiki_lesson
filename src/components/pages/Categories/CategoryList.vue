@@ -32,6 +32,7 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
+      doneMessage: '',
     };
   },
   computed: {
@@ -64,20 +65,24 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      // this.$store.dispatch('categories/postCategory').then(() => {
-      //   this.$router.push({
-      //     path: '/categories',
-      //     query: { redirect: '/category/post' },
-      //   });
-      // });
-      const Promise = new Promise((resolve, reject) => {
+      this.$store.dispatch('categories/postCategory', this.category).then(() => {
+        this.category = '';
         
-      })
-      this.category = '';
+      }).catch(() => {
+
+      });
     },
   },
 };
 </script>
+
+
+<!-- this.$store.dispatch('articles/postArticle').then(() => {
+  this.$router.push({
+    path: '/articles',
+    query: { redirect: '/article/post' },
+  });
+}); -->
 
 <style lang="scss" scoped>
   .articles {
