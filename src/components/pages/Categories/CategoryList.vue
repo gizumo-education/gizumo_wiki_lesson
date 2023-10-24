@@ -63,6 +63,7 @@ export default {
       this.category = event.target.value;
     },
     handleSubmit() {
+      if (this.loading) return;
       this.$store.dispatch('categories/postCategory', this.category).then(() => {
         this.category = '';
         this.doneMessage = 'カテゴリーを追加しました。';
