@@ -32,16 +32,15 @@ export default {
     return {
       theads: ['カテゴリー名'],
       category: '',
-      doneMessage: '',
     };
   },
   computed: {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
-    // doneMessage() {
-    //   return this.$store.state.categories.doneMessage;
-    // },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -60,15 +59,13 @@ export default {
     clearMessage() {
       this.store.dispatch('categories/clearMessage');
     },
-    updateValue($event) {
-      this.category = $event.target.value;
+    updateValue(event) {
+      this.category = event.target.value;
     },
     handleSubmit() {
-      if (this.loading) return;
       this.$store.dispatch('categories/postCategory', this.category).then(() => {
         this.category = '';
         this.doneMessage = 'カテゴリーを追加しました。';
-      }).catch(() => {
       });
     },
   },
