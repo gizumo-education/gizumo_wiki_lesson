@@ -60,7 +60,7 @@ export default {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          })
+          });
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }
@@ -74,7 +74,7 @@ export default {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          })
+          });
       } else {
         this.$store.dispatch('articles/getAllArticles');
       }

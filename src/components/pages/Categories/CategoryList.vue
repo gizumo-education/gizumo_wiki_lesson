@@ -64,8 +64,8 @@ export default {
     },
     handleSubmit() {
       this.$store.dispatch('categories/postCategory', this.category).then(() => {
-      this.category = '';
-      this.doneMessage = 'カテゴリーを追加しました。';
+        this.category = '';
+        this.doneMessage = 'カテゴリーを追加しました。';
       });
     },
   },
