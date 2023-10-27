@@ -60,8 +60,6 @@ export default {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          }).catch(() => {
-            // console.log(err);
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');
@@ -76,8 +74,6 @@ export default {
             if (this.$store.state.articles.articleList.length === 0) {
               this.$router.push({ path: '/notfound' });
             }
-          }).catch(() => {
-            // console.log(err);
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');

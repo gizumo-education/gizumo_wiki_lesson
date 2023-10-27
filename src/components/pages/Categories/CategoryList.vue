@@ -2,14 +2,18 @@
   <div class="articles">
     <app-category-post
       class="form"
-      :loading="loading"
+      :disabled="loading"
       :access="access"
+      :error-message="errorMessage"
+      :category="category"
+      :done-message="doneMessage"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="list"
       :theads="theads"
       :categories="categoryList"
-      :done-message="doneMessage"
       :loading="loading"
       :access="access"
     />
@@ -27,6 +31,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      category: '',
     };
   },
   computed: {
@@ -42,11 +47,27 @@ export default {
     loading() {
       return this.$store.state.categories.loading;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/clearMessage');
   },
   methods: {
+    clearMessage() {
+      this.store.dispatch('categories/clearMessage');
+    },
+    updateValue(event) {
+      this.category = event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory', this.category).then(() => {
+        this.category = '';
+      });
+    },
   },
 };
 </script>

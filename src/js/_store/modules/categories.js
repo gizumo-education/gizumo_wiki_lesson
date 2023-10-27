@@ -4,7 +4,9 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    doneMessage: '',
     errorMessage: '',
+    loading: false,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -13,6 +15,16 @@ export default {
     failRequest(state, { message }) {
       state.errorMessage = message;
       state.loading = false;
+    },
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
+    },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
+    displayDoneMessage(state, payload = { message: '成功しました' }) {
+      state.doneMessage = payload.message;
     },
   },
   actions: {
@@ -29,6 +41,31 @@ export default {
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
+    },
+    postCategory({ commit, rootGetters, dispatch }, categoryName) {
+      return new Promise((resolve, reject) => {
+        commit('clearMessage');
+        commit('toggleLoading');
+        const data = new URLSearchParams();
+        data.append('name', categoryName);
+        axios(rootGetters['auth/token'])({
+          method: 'POST',
+          url: '/category',
+          data,
+        }).then(() => {
+          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          dispatch('getAllCategories');
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        }).finally(() => {
+          commit('toggleLoading');
+        });
+      });
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };
