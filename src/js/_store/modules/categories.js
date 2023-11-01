@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    deleteCategoryId: null,
     doneMessage: '',
     errorMessage: '',
     loading: false,
@@ -25,6 +26,9 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    confirmDeleteCategory(state, { categoryId }) {
+      state.deleteCategoryId = categoryId;
     },
   },
   actions: {
@@ -62,6 +66,24 @@ export default {
         }).finally(() => {
           commit('toggleLoading');
         });
+      });
+    },
+    confirmDeleteCategory({ commit }, categoryId) {
+      commit('confirmDeleteCategory', { categoryId });
+    },
+    deleteCategories({ commit, rootGetters }) {
+      commit('clearMessage');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['category/deleteCategoryId']);
+      axios(rootGetters['auth/token'])({
+        method: 'DELETE',
+        url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        data,
+      }).then(() => {
+        commit('doneDeleteCategory');
+        commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
       });
     },
     clearMessage({ commit }) {

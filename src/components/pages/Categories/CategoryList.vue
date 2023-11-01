@@ -16,18 +16,22 @@
       :categories="categoryList"
       :loading="loading"
       :access="access"
+      @open-modal="openModal"
+      @handle-click="handleClick"
     />
   </div>
 </template>
 
 <script>
 import { CategoryList, CategoryPost } from '@Components/molecules';
+import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryList: CategoryList,
     appCategoryPost: CategoryPost,
   },
+  mixins: [Mixins],
   data() {
     return {
       theads: ['カテゴリー名'],
@@ -67,6 +71,26 @@ export default {
       this.$store.dispatch('categories/postCategory', this.category).then(() => {
         this.category = '';
       });
+    },
+    openModal(categoryId) {
+      this.$store.dispatch('categories/confirmDeleteCategory', categoryId);
+      this.toggleModal();
+    },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategories');
+      this.toggleModal();
+      if (this.$route.query.category) {
+        const { category } = this.$route.query;
+        this.title = category;
+        this.$store.dispatch('categories/filteredCategories', category)
+          .then(() => {
+            if (this.$store.state.categories.categoryList.length === 0) {
+              this.$router.push({ path: '/notfound' });
+            }
+          });
+      } else {
+        this.$store.dispatch('categories/getAllCategories');
+      }
     },
   },
 };
