@@ -30,6 +30,9 @@ export default {
     confirmDeleteCategory(state, { categoryId }) {
       state.deleteCategoryId = categoryId;
     },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
