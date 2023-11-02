@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    deleteCategoryName: null,
     deleteCategoryId: null,
     doneMessage: '',
     errorMessage: '',
@@ -27,11 +28,15 @@ export default {
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
-    confirmDeleteCategory(state, { categoryId }) {
+    confirmDeleteCategoryId(state, { categoryId }) {
       state.deleteCategoryId = categoryId;
+    },
+    confirmDeleteCategoryName(state, { categoryName }) {
+      state.deleteCategoryName = categoryName;
     },
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
+      state.deleteCategoryName = null;
     },
   },
   actions: {
@@ -71,8 +76,11 @@ export default {
         });
       });
     },
-    confirmDeleteCategory({ commit }, categoryId) {
-      commit('confirmDeleteCategory', { categoryId });
+    confirmDeleteCategoryId({ commit }, categoryId) {
+      commit('confirmDeleteCategoryId', { categoryId });
+    },
+    confirmDeleteCategoryName({ commit }, categoryName) {
+      commit('confirmDeleteCategoryName', { categoryName });
     },
     deleteCategories({ commit, rootGetters }) {
       commit('clearMessage');
