@@ -72,26 +72,14 @@ export default {
         this.category = '';
       });
     },
+    handleClick() {
+      this.$store.dispatch('categories/deleteCategory');
+      this.toggleModal();
+    },
     openModal(categoryId, categoryName) {
       this.$store.dispatch('categories/confirmDeleteCategoryId', categoryId);
       this.$store.dispatch('categories/confirmDeleteCategoryName', categoryName);
       this.toggleModal();
-    },
-    handleClick() {
-      this.$store.dispatch('categories/deleteCategories');
-      this.toggleModal();
-      if (this.$route.query.category) {
-        const { category } = this.$route.query;
-        this.title = category;
-        this.$store.dispatch('categories/filteredCategories', category)
-          .then(() => {
-            if (this.$store.state.categories.categoryList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          });
-      } else {
-        this.$store.dispatch('categories/getAllCategories');
-      }
     },
   },
 };
