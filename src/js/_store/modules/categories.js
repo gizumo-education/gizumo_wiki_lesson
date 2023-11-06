@@ -5,7 +5,7 @@ export default {
   state: {
     categoryList: [],
     deleteCategory: {
-      Name: '',
+      Name: null,
       Id: null,
     },
     doneMessage: '',
@@ -41,7 +41,8 @@ export default {
       state.deleteCategory.Name = categoryName;
     },
     doneDeleteCategory(state) {
-      state.deleteCategory = null;
+      state.deleteCategory.Id = null;
+      state.deleteCategory.Name = null;
     },
   },
   actions: {
