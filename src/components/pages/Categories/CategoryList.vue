@@ -14,6 +14,7 @@
       class="list"
       :theads="theads"
       :categories="categoryList"
+      :delete-category-name="deleteCategoryName"
       :loading="loading"
       :access="access"
       @open-modal="openModal"
@@ -44,6 +45,9 @@ export default {
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
+    },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategory.Name;
     },
     access() {
       return this.$store.getters['auth/access'];

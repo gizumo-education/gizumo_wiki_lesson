@@ -4,15 +4,17 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
-    deleteCategoryName: null,
-    deleteCategoryId: null,
+    deleteCategory: {
+      Name: '',
+      Id: null,
+    },
     doneMessage: '',
     errorMessage: '',
     loading: false,
   },
   getters: {
-    deleteCategoryId: state => state.deleteCategoryId,
-    deleteCategoryName: state => state.deleteCategoryName,
+    deleteCategoryId: state => state.deleteCategory.Id,
+    deleteCategoryName: state => state.deleteCategory.Name,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -33,14 +35,13 @@ export default {
       state.doneMessage = payload.message;
     },
     confirmDeleteCategoryId(state, { categoryId }) {
-      state.deleteCategoryId = categoryId;
+      state.deleteCategory.Id = categoryId;
     },
     confirmDeleteCategoryName(state, { categoryName }) {
-      state.deleteCategoryName = categoryName;
+      state.deleteCategory.Name = categoryName;
     },
     doneDeleteCategory(state) {
-      state.deleteCategoryId = null;
-      state.deleteCategoryName = null;
+      state.deleteCategory = null;
     },
   },
   actions: {
@@ -88,12 +89,9 @@ export default {
     },
     deleteCategory({ commit, rootGetters }) {
       commit('clearMessage');
-      const data = new URLSearchParams();
-      data.append('id', rootGetters['category/deleteCategoryId']);
       axios(rootGetters['auth/token'])({
         method: 'DELETE',
         url: `/category/${rootGetters['categories/deleteCategoryId']}`,
-        data,
       }).then(() => {
         commit('doneDeleteCategory');
         this.dispatch('categories/getAllCategories');
