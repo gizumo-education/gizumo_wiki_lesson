@@ -5,16 +5,16 @@ export default {
   state: {
     categoryList: [],
     deleteCategory: {
-      Name: null,
-      Id: null,
+      name: null,
+      id: null,
     },
     doneMessage: '',
     errorMessage: '',
     loading: false,
   },
   getters: {
-    deleteCategoryId: state => state.deleteCategory.Id,
-    deleteCategoryName: state => state.deleteCategory.Name,
+    deleteCategoryId: state => state.deleteCategory.id,
+    deleteCategoryName: state => state.deleteCategory.name,
   },
   mutations: {
     doneGetAllCategories(state, payload) {
@@ -35,14 +35,14 @@ export default {
       state.doneMessage = payload.message;
     },
     confirmDeleteCategoryId(state, { categoryId }) {
-      state.deleteCategory.Id = categoryId;
+      state.deleteCategory.id = categoryId;
     },
     confirmDeleteCategoryName(state, { categoryName }) {
-      state.deleteCategory.Name = categoryName;
+      state.deleteCategory.name = categoryName;
     },
     doneDeleteCategory(state) {
-      state.deleteCategory.Id = null;
-      state.deleteCategory.Name = null;
+      state.deleteCategory.id = null;
+      state.deleteCategory.name = null;
     },
   },
   actions: {
