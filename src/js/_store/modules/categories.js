@@ -31,6 +31,9 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
+    // updateCategory(state, { category }) {
+    //   state.targetCategory = { ...state.targetCategory, ...category };
+    // },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
@@ -82,6 +85,41 @@ export default {
         });
       });
     },
+    // updateCategory({ commit, rootGetters }) {
+    //   commit('toggleLoading');
+    //   const data = new URLSearchParams();
+    //   data.append('name', rootGetters['categories/targetCategory'].name);
+    //   data.append('id', rootGetters['categories/targetCategory'].id);
+    //   data.append('title', rootGetters['categories/targetCategory'].title);
+    //   data.append('content', rootGetters['categories/targetCategory'].content);
+    //   data.append('user_id', rootGetters['categories/targetCategory'].user.id);
+    //   data.append('category_id', rootGetters['categories/targetCategory'].category.id);
+    //   axios(rootGetters['auth/token'])({
+    //     method: 'PUT',
+    //     url: `/category/${rootGetters['categories/targetCategory'].id}`,
+    //     data,
+    //   }).then(res => {
+    //     const payload = {
+    //       category: {
+    //         name: res.data.category.name,
+    //       },
+    //       article: {
+    //         id: res.data.article.id,
+    //         title: res.data.article.title,
+    //         content: res.data.article.content,
+    //         updated_at: res.data.article.updated_at,
+    //         created_at: res.data.article.created_at,
+    //         user: res.data.article.user,
+    //         category: res.data.article.category,
+    //       },
+    //     };
+    //     commit('updateCategory', payload);
+    //     commit('toggleLoading');
+    //     commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+    //   }).catch(() => {
+    //     commit('toggleLoading');
+    //   });
+    // },
     confirmDeleteCategoryId({ commit }, categoryId) {
       commit('confirmDeleteCategoryId', { categoryId });
     },

@@ -17,6 +17,7 @@ import ArticlePost from '@Pages/Articles/Post.vue';
 // カテゴリー
 import Categories from '@Pages/Categories/index.vue';
 import CategoryList from '@Pages/Categories/CategoryList.vue';
+import CategoryUpdate from '@Pages/Categories/CategoryUpdate.vue';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile/index.vue';
@@ -32,6 +33,7 @@ import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
 import Store from '../_store';
+//import { component } from 'vue/types/umd';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -79,6 +81,11 @@ const router = new VueRouter({
           name: 'CategoryList',
           path: '/categories',
           component: CategoryList,
+        },
+        {
+          name: 'CategoryUpdate',
+          path: ':id',
+          component: CategoryUpdate,
         },
       ],
     },
