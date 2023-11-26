@@ -4,6 +4,14 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    targetCategory: {
+      id: null,
+      name: '',
+    },
+    updateCategory: {
+      id: null,
+      name: '',
+    },
     deleteCategory: {
       name: null,
       id: null,
@@ -13,10 +21,21 @@ export default {
     loading: false,
   },
   getters: {
+    targetCategory: state => state.targetCategory,
     deleteCategoryId: state => state.deleteCategory.id,
     deleteCategoryName: state => state.deleteCategory.name,
   },
   mutations: {
+    initPostCategory(state) {
+      state.targetCategory = {
+        id: null,
+        title: '',
+      };
+      state.updateCategory = {
+        id: null,
+        title: '',
+      };
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories];
     },
@@ -31,9 +50,9 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
-    // updateCategory(state, { category }) {
-    //   state.targetCategory = { ...state.targetCategory, ...category };
-    // },
+    updateCategory(state, { category }) {
+      state.targetCategory = { ...state.targetCategory, ...category };
+    },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
@@ -85,41 +104,52 @@ export default {
         });
       });
     },
-    // updateCategory({ commit, rootGetters }) {
-    //   commit('toggleLoading');
-    //   const data = new URLSearchParams();
-    //   data.append('name', rootGetters['categories/targetCategory'].name);
-    //   data.append('id', rootGetters['categories/targetCategory'].id);
-    //   data.append('title', rootGetters['categories/targetCategory'].title);
-    //   data.append('content', rootGetters['categories/targetCategory'].content);
-    //   data.append('user_id', rootGetters['categories/targetCategory'].user.id);
-    //   data.append('category_id', rootGetters['categories/targetCategory'].category.id);
-    //   axios(rootGetters['auth/token'])({
-    //     method: 'PUT',
-    //     url: `/category/${rootGetters['categories/targetCategory'].id}`,
-    //     data,
-    //   }).then(res => {
-    //     const payload = {
-    //       category: {
-    //         name: res.data.category.name,
-    //       },
-    //       article: {
-    //         id: res.data.article.id,
-    //         title: res.data.article.title,
-    //         content: res.data.article.content,
-    //         updated_at: res.data.article.updated_at,
-    //         created_at: res.data.article.created_at,
-    //         user: res.data.article.user,
-    //         category: res.data.article.category,
-    //       },
-    //     };
-    //     commit('updateCategory', payload);
-    //     commit('toggleLoading');
-    //     commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
-    //   }).catch(() => {
-    //     commit('toggleLoading');
-    //   });
-    // },
+
+    //ここから更新に関する記述
+    getUpdateCategory({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const payload = {
+          updateCategory: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneUpdateCategory', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editName({ commit }, name) {
+      commit({
+        type: 'editName',
+        name,
+      });
+    },
+    updateCategory({ commit, rootGetters }, updateCategory) {
+      commit('toggleDisabled');
+      commit('clearMessage');
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${updateCategory.id}`,
+        data: updateCategory,
+      }).then(res => {
+        const editCategory = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('toggleDisabled');
+        commit('doneEditCategory', { editCategory });
+      }).catch(err => {
+        commit('toggleDisabled');
+        commit('failRequest', { message: err.message });
+      });
+    },
+    // ここまで
+
+
     confirmDeleteCategoryId({ commit }, categoryId) {
       commit('confirmDeleteCategoryId', { categoryId });
     },

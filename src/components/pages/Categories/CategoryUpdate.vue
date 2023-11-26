@@ -2,14 +2,11 @@
   <div class="articles">
     <app-category-update
       class="list"
-      :category-id="categoryId"
-      :category-title="categoryTitle"
-      :category-content="categoryContent"
-      :disabled="loading"
       :access="access"
       :error-message="errorMessage"
-      :category="category"
+      :category-name="categoryName"
       :done-message="doneMessage"
+      :disabled="disabled"
       @update-value="updateValue"
       @handle-submit="handleSubmit"
     />
@@ -25,6 +22,37 @@ export default {
     appCategoryUpdate: CategoryUpdate,
   },
   mixins: [Mixins],
+  data() {
+    return {
+      categoryName: '',
+    };
+  },
+  computed: {
+    access() {
+      return this.$store.getters['auth/access'];
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+  },
+  methods: {
+    updateValue(event) {
+      this.category = event.target.value;
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('category/updateCategory');
+    },
+  },
 };
 </script>
 

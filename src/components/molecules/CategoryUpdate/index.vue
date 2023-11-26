@@ -22,7 +22,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.update"
+      :disabled="disabled || !access.edit"
       @click="handleSubmit"
     >
       {{ buttonText }}
@@ -62,31 +62,36 @@ export default {
       type: String,
       default: '',
     },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
     doneMessage: {
       type: String,
       default: '',
+    },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     access: {
       type: Object,
       default: () => ({}),
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     buttonText() {
-      if (!this.access.update) return '更新権限がありません';
+      if (!this.access.edit) return '更新権限がありません';
       return this.disabled ? '更新中...' : '更新';
-    },
-    disabled() {
-      return this.access.update && !this.loading;
     },
   },
   methods: {
     handleSubmit() {
-      if (!this.access.update) return;
+      if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
