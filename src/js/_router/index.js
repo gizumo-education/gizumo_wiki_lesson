@@ -33,7 +33,6 @@ import PasswordInit from '@Pages/Password/init.vue';
 import PasswordUpdate from '@Pages/Password/update.vue';
 
 import Store from '../_store';
-//import { component } from 'vue/types/umd';
 
 Vue.use(VueRouter);
 const router = new VueRouter({

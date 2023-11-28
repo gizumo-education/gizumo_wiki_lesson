@@ -106,6 +106,7 @@ export default {
     },
 
     //ここから更新に関する記述
+    //情報取得側の記述
     getUpdateCategory({ commit, rootGetters }, categoryId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -122,12 +123,13 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    editName({ commit }, name) {
+    updateName({ commit }, name) {
       commit({
-        type: 'editName',
+        type: 'updateName',
         name,
       });
     },
+    //更新側の記述
     updateCategory({ commit, rootGetters }, updateCategory) {
       commit('toggleDisabled');
       commit('clearMessage');
@@ -136,12 +138,12 @@ export default {
         url: `/category/${updateCategory.id}`,
         data: updateCategory,
       }).then(res => {
-        const editCategory = {
+        const updateCategory = {
           id: res.data.category.id,
           name: res.data.category.name,
         };
         commit('toggleDisabled');
-        commit('doneEditCategory', { editCategory });
+        commit('doneUpdateCategory', { updateCategory });
       }).catch(err => {
         commit('toggleDisabled');
         commit('failRequest', { message: err.message });
