@@ -15,9 +15,11 @@
       </thead>
       <transition-group name="fade" tag="tbody" class="category-list__table__body">
         <tr v-for="category in categories" :key="category.id">
+          <!-- categoriesのなかにはcategoryというオブジェクトが入っている -->
           <td>
             <app-text tag="span">
               {{ category.name }}
+              <!-- category = category.name -->
             </app-text>
           </td>
           <td>
@@ -80,12 +82,18 @@
         </app-button>
       </div>
     </app-modal>
+    <!-- ③エラーメッセージがpropsに渡されていたら、そのエラーメッセージを表示 -->
+    <div v-if="doneMessage" class="category-list-message">
+      <app-text bg-success>{{ doneMessage }}</app-text>
+    </div>
   </div>
 </template>
 
 <script>
 import {
-  RouterLink, Button, Text,
+  RouterLink,
+  Button,
+  Text,
 } from '@Components/atoms';
 
 export default {
@@ -115,6 +123,11 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    // ②エラーメッセージを受け取れるようにする
+    doneMessage: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     openModal(categoryId, categoryName) {
@@ -131,7 +144,7 @@ export default {
 
 <style lang="scss" scoped>
 .category-list {
-  padding: 10px 0 20px;
+  padding: 10px 20px 20px;
   height: 100%;
   overflow: scroll;
   &__table {

@@ -85,6 +85,7 @@ export default {
   line-height: 1.4;
   color: #fff;
   background-color: $theme-color;
+  white-space: nowrap;
   @include hoverOpacity;
 }
 
