@@ -1,6 +1,5 @@
 <template>
   <div class="categories">
-    <!-- ④作成のコンポーネントを左に表示する（app-category-post） -->
     <app-category-post
       :category="category"
     />
@@ -43,7 +42,6 @@ export default {
       return this.$store.state.categories.category;
     },
   },
-  // created を定義して、Vueインスタンスの生成時にactionsを呼ぶ
   created() {
     this.$store.dispatch('categories/getCategories');
   },

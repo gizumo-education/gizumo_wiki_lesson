@@ -15,11 +15,9 @@
       </thead>
       <transition-group name="fade" tag="tbody" class="category-list__table__body">
         <tr v-for="category in categories" :key="category.id">
-          <!-- categoriesのなかにはcategoryというオブジェクトが入っている -->
           <td>
             <app-text tag="span">
               {{ category.name }}
-              <!-- category = category.name -->
             </app-text>
           </td>
           <td>
@@ -82,7 +80,6 @@
         </app-button>
       </div>
     </app-modal>
-    <!-- ③エラーメッセージがpropsに渡されていたら、そのエラーメッセージを表示 -->
     <div v-if="doneMessage" class="category-list-message">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
@@ -123,7 +120,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    // ②エラーメッセージを受け取れるようにする
     doneMessage: {
       type: String,
       default: '',
@@ -147,6 +143,7 @@ export default {
   padding: 10px 20px 20px;
   height: 100%;
   overflow: scroll;
+  width: 100%;;
   &__table {
     width: 100%;
     text-align: left;
