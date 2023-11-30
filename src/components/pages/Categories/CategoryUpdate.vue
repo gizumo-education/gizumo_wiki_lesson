@@ -3,6 +3,7 @@
     <app-category-update
       class="list"
       :access="access"
+      :loading="loading"
       :error-message="errorMessage"
       :category-name="categoryName"
       :done-message="doneMessage"
@@ -22,11 +23,6 @@ export default {
     appCategoryUpdate: CategoryUpdate,
   },
   mixins: [Mixins],
-  data() {
-    return {
-      categoryName: '',
-    };
-  },
   computed: {
     categoryName() {
       return this.$store.state.categories.updateCategory.name;
@@ -52,6 +48,9 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+  },
+  created() {
+    this.$store.dispatch('categories/getAllCategories', this.categoryId);
   },
   methods: {
     buttonText() {

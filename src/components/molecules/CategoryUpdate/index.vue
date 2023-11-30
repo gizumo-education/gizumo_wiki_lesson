@@ -58,6 +58,10 @@ export default {
         return [];
       },
     },
+    updateCategory: {
+      type: String,
+      default: '',
+    },
     categoryName: {
       type: String,
       default: '',

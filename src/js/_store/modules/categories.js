@@ -18,6 +18,7 @@ export default {
     },
     doneMessage: '',
     errorMessage: '',
+    disabled: false,
     loading: false,
   },
   getters: {
@@ -66,6 +67,12 @@ export default {
       state.deleteCategory.id = null;
       state.deleteCategory.name = null;
     },
+    doneUpdateCategory(state, payload) {
+      state.updateCategory = payload.updateCategory;
+    },
+    categoryEdit(state, payload) {
+      state.updateCategory = { ...state.updateCategory, name: payload.name };
+    },
   },
   actions: {
     getAllCategories({ commit, rootGetters }) {
@@ -104,9 +111,6 @@ export default {
         });
       });
     },
-
-    //ここから更新に関する記述
-    //情報取得側の記述
     getUpdateCategory({ commit, rootGetters }, categoryId) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -123,35 +127,6 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    updateName({ commit }, name) {
-      commit({
-        type: 'updateName',
-        name,
-      });
-    },
-    //更新側の記述
-    updateCategory({ commit, rootGetters }, updateCategory) {
-      commit('toggleDisabled');
-      commit('clearMessage');
-      axios(rootGetters['auth/token'])({
-        method: 'PUT',
-        url: `/category/${updateCategory.id}`,
-        data: updateCategory,
-      }).then(res => {
-        const updateCategory = {
-          id: res.data.category.id,
-          name: res.data.category.name,
-        };
-        commit('toggleDisabled');
-        commit('doneUpdateCategory', { updateCategory });
-      }).catch(err => {
-        commit('toggleDisabled');
-        commit('failRequest', { message: err.message });
-      });
-    },
-    // ここまで
-
-
     confirmDeleteCategoryId({ commit }, categoryId) {
       commit('confirmDeleteCategoryId', { categoryId });
     },
