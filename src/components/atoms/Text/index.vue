@@ -66,6 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* Defaultスタイル */
 .text {
   font-size: 16px;
   word-break: break-all;
@@ -104,5 +105,5 @@ export default {
 .text--ex-small {
   font-size: 12px;
 }
-
+/* Unique（For Props）スタイル */
 </style>

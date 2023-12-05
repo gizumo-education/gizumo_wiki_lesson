@@ -15,7 +15,8 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
+      :disabled="!access.create"
+      @click="openModal(category.id, category.name)"
     >
       {{ buttonText }}
     </app-button>
@@ -69,9 +70,7 @@ export default {
       if (!this.access.create) return '作成権限がありません';
       return this.disabled ? '作成中...' : '作成';
     },
-    access() {
-      return this.$store.getters['auth/access'];
-    },
+
   },
   methods: {
     addCategory() {
@@ -80,6 +79,10 @@ export default {
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
+    },
+    openModal(categoryId, categoryName) {
+      if (!this.access.delete) return;
+      this.$emit('open-modal', categoryId, categoryName);
     },
   },
 };

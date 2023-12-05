@@ -61,6 +61,7 @@ export default {
               this.$router.push({ path: '/notfound' });
             }
           }).catch(() => {
+            // console.log(err);
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');
@@ -76,6 +77,7 @@ export default {
               this.$router.push({ path: '/notfound' });
             }
           }).catch(() => {
+            // console.log(err);
           });
       } else {
         this.$store.dispatch('articles/getAllArticles');

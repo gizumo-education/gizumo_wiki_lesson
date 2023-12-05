@@ -2,6 +2,7 @@
   <div class="categories">
     <app-category-post
       :category="category"
+      :access="access"
     />
     <app-category-list
       :categories="categoryList"
