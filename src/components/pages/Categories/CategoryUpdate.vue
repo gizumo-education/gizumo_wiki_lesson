@@ -2,13 +2,14 @@
   <div class="articles">
     <app-category-update
       class="list"
+      :category-id="categoryId"
+      :category-name="categoryName"
       :access="access"
       :loading="loading"
       :error-message="errorMessage"
-      :category-name="categoryName"
       :done-message="doneMessage"
       :disabled="disabled"
-      @update-value="$emit('update-value', $event)"
+      @edited-name="editedName"
       @handle-submit="handleSubmit"
     />
   </div>
@@ -25,7 +26,7 @@ export default {
   mixins: [Mixins],
   computed: {
     categoryName() {
-      return this.$store.state.categories.updateCategory.name;
+      return this.$store.state.categories.targetCategory.name;
     },
     categoryId() {
       return parseInt(this.$route.params.id, 10);
@@ -50,7 +51,8 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories', this.categoryId);
+    this.$store.dispatch('categories/getAllCategories');
+    this.$store.dispatch('categories/getUpdateCategories', this.categoryId);
   },
   methods: {
     buttonText() {
@@ -62,6 +64,12 @@ export default {
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
+    },
+    editedName($event) {
+      this.$store.dispatch('categories/editedName', $event.target.value);
+    },
+    editValue(event) {
+      this.$store.dispatch('categories/editValue', event.target.value);
     },
   },
 };

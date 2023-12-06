@@ -16,7 +16,7 @@
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('category')"
       :value="categoryName"
-      @update-value="$emit('update-value', $event)"
+      @update-value="$emit('edited-name', $event)"
     />
     <app-button
       class="category-management-post__submit"
@@ -58,11 +58,15 @@ export default {
         return [];
       },
     },
+    categoryName: {
+      type: String,
+      default: '',
+    },
     updateCategory: {
       type: String,
       default: '',
     },
-    categoryName: {
+    editedName: {
       type: String,
       default: '',
     },
@@ -81,6 +85,10 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
+    },
+    categoryList: {
+      type: Array,
+      default: () => [],
     },
     loading: {
       type: Boolean,

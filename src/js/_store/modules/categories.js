@@ -22,6 +22,7 @@ export default {
     loading: false,
   },
   getters: {
+    updateCategory: state => state.updateCategory,
     targetCategory: state => state.targetCategory,
     deleteCategoryId: state => state.deleteCategory.id,
     deleteCategoryName: state => state.deleteCategory.name,
@@ -51,8 +52,11 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
-    updateCategory(state, { category }) {
-      state.targetCategory = { ...state.targetCategory, ...category };
+    updateValue(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
+    },
+    updateCategory(state, payload) {
+      state.categoriesList = [payload.newCategories.category, ...state.categoriesList];
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -69,6 +73,9 @@ export default {
     },
     doneUpdateCategory(state, payload) {
       state.updateCategory = payload.updateCategory;
+    },
+    editedName(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
     categoryEdit(state, payload) {
       state.updateCategory = { ...state.updateCategory, name: payload.name };
@@ -112,19 +119,30 @@ export default {
       });
     },
     getUpdateCategory({ commit, rootGetters }, categoryId) {
-      axios(rootGetters['auth/token'])({
-        method: 'GET',
-        url: `/category/${categoryId}`,
-      }).then(res => {
-        const payload = {
-          updateCategory: {
-            id: res.data.category.id,
-            name: res.data.category.name,
-          },
-        };
-        commit('doneUpdateCategory', payload);
-      }).catch(err => {
-        commit('failRequest', { message: err.message });
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/category/${categoryId}`,
+        }).then(res => {
+          const payload = {
+            updateCategory: {
+              id: res.data.category.id,
+              name: res.data.category.name,
+            },
+          };
+          commit('doneUpdateCategory', payload);
+          resolve();
+          console.log(hoge);
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
+    editedName({ commit }, name) {
+      commit({
+        type: 'editedName',
+        name,
       });
     },
     confirmDeleteCategoryId({ commit }, categoryId) {
