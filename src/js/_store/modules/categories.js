@@ -7,12 +7,6 @@ export default {
     errorMessage: '',
   },
   getters: {
-    transformedCategories(state) {
-      return state.categoryList.map(category => ({
-        id: category.id,
-        name: category.name,
-      }));
-    },
   },
   mutations: {
     doneGetCategories(state, payload) {

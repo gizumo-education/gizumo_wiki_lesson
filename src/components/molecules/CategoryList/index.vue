@@ -80,9 +80,6 @@
         </app-button>
       </div>
     </app-modal>
-    <div v-if="doneMessage" class="category-list-message">
-      <app-text bg-success>{{ doneMessage }}</app-text>
-    </div>
   </div>
 </template>
 
@@ -119,10 +116,6 @@ export default {
     access: {
       type: Object,
       default: () => ({}),
-    },
-    doneMessage: {
-      type: String,
-      default: '',
     },
   },
   methods: {
