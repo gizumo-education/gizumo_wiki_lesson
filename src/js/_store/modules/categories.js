@@ -72,7 +72,7 @@ export default {
       state.deleteCategory.name = null;
     },
     doneUpdateCategory(state, payload) {
-      state.updateCategory = payload.updateCategory;
+      state.targetCategory = payload.targetCategory;
     },
     editedName(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
@@ -119,25 +119,20 @@ export default {
       });
     },
     getUpdateCategory({ commit, rootGetters }, categoryId) {
-      return new Promise((resolve, reject) => {
         axios(rootGetters['auth/token'])({
           method: 'GET',
           url: `/category/${categoryId}`,
         }).then(res => {
           const payload = {
-            updateCategory: {
+            targetCategory: {
               id: res.data.category.id,
               name: res.data.category.name,
             },
           };
           commit('doneUpdateCategory', payload);
-          resolve();
-          console.log(hoge);
         }).catch(err => {
           commit('failRequest', { message: err.message });
-          reject();
         });
-      });
     },
     editedName({ commit }, name) {
       commit({

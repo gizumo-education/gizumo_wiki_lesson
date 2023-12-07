@@ -25,14 +25,11 @@ export default {
   },
   mixins: [Mixins],
   computed: {
-    categoryName() {
-      return this.$store.state.categories.targetCategory.name;
-    },
     categoryId() {
       return parseInt(this.$route.params.id, 10);
     },
-    updateCategory() {
-      return this.$store.state.categories.updateCategory;
+    categoryName() {
+      return this.$store.state.categories.targetCategory.name;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -51,8 +48,8 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
-    this.$store.dispatch('categories/getUpdateCategories', this.categoryId);
+    this.$store.dispatch('categories/getAllCategories', this.categoryName);
+    this.$store.dispatch('categories/getUpdateCategory', this.categoryId);
   },
   methods: {
     buttonText() {
