@@ -16,19 +16,19 @@
       button-type="submit"
       round
       :disabled="disabled || !access.create"
+      @click="openModal(category.id, category.name)"
     >
       {{ buttonText }}
     </app-button>
-
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
-
     <div v-if="doneMessage" class="category-management-post__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
   </form>
 </template>
+
 <script>
 import {
   Heading, Input, Button, Text,
@@ -44,6 +44,7 @@ export default {
   props: {
     category: {
       type: String,
+      default: '',
       required: true,
     },
     errorMessage: {
@@ -68,6 +69,7 @@ export default {
       if (!this.access.create) return '作成権限がありません';
       return this.disabled ? '作成中...' : '作成';
     },
+
   },
   methods: {
     addCategory() {
@@ -76,6 +78,10 @@ export default {
       this.$validator.validate().then(valid => {
         if (valid) this.$emit('handle-submit');
       });
+    },
+    openModal(categoryId, categoryName) {
+      if (!this.access.delete) return;
+      this.$emit('open-modal', categoryId, categoryName);
     },
   },
 };

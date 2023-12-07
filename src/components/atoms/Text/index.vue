@@ -69,6 +69,7 @@ export default {
 /* Defaultスタイル */
 .text {
   font-size: 16px;
+  word-break: break-all;
 }
 
 .text--bold {
@@ -104,7 +105,5 @@ export default {
 .text--ex-small {
   font-size: 12px;
 }
-
 /* Unique（For Props）スタイル */
-
 </style>

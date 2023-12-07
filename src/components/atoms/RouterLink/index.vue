@@ -105,6 +105,7 @@ export default {
   font-size: 16px;
   transition: all .5s;
   line-height: 1.4;
+  white-space: nowrap;
   &.is-active {
     color: $sub-theme-color;
     font-weight: bold;
