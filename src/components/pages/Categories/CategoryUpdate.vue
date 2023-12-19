@@ -6,9 +6,9 @@
       :category-name="categoryName"
       :access="access"
       :loading="loading"
-      :error-message="errorMessage"
+      :update-category="updateCategory"
       :done-message="doneMessage"
-      :disabled="disabled"
+      :error-message="errorMessage"
       @edited-name="editedName"
       @handle-submit="handleSubmit"
     />
@@ -34,6 +34,9 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    updateCategory() {
+      return this.$store.state.categories.updateCategory;
+    },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
@@ -52,22 +55,25 @@ export default {
     this.$store.dispatch('categories/getUpdateCategory', this.categoryId);
   },
   methods: {
-    buttonText() {
-      if (!this.access.edit) return '更新権限がありません';
-      return this.disabled ? '更新中...' : '更新';
-    },
-    handleSubmit() {
-      if (!this.access.edit) return;
-      this.$validator.validate().then(valid => {
-        if (valid) this.$emit('handle-submit');
-      });
-    },
+    // handleSubmit() {
+    //   if (this.loading) return;
+    //   this.$store.dispatch('categories/updateCategory');
+    // },
     editedName($event) {
       this.$store.dispatch('categories/editedName', $event.target.value);
     },
-    editValue(event) {
-      this.$store.dispatch('categories/editValue', event.target.value);
+    handleSubmit() {
+      this.$store.dispatch(
+        'categories/updateCategory',
+        {
+          id: this.updateCategory.id,
+          name: this.updateCategory.name,
+        },
+      );
     },
+    // editValue(event) {
+    //   this.$store.dispatch('categories/editValue', event.target.value);
+    // },
   },
 };
 </script>

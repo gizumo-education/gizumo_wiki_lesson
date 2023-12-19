@@ -22,7 +22,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.edit"
+      :disabled="!disabled"
       @click="handleSubmit"
     >
       {{ buttonText }}
@@ -52,24 +52,24 @@ export default {
     appText: Text,
   },
   props: {
-    categories: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
+    // categories: {
+    //   type: Array,
+    //   default() {
+    //     return [];
+    //   },
+    // },
     categoryName: {
       type: String,
       default: '',
     },
     updateCategory: {
-      type: String,
-      default: '',
+      type: Object,
+      default: () => ({}),
     },
-    editedName: {
-      type: String,
-      default: '',
-    },
+    // editedName: {
+    //   type: String,
+    //   default: '',
+    // },
     doneMessage: {
       type: String,
       default: '',
@@ -78,18 +78,18 @@ export default {
       type: String,
       default: '',
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+    // disabled: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     access: {
       type: Object,
       default: () => ({}),
     },
-    categoryList: {
-      type: Array,
-      default: () => [],
-    },
+    // categoryList: {
+    //   type: Array,
+    //   default: () => [],
+    // },
     loading: {
       type: Boolean,
       default: false,
@@ -100,12 +100,15 @@ export default {
       if (!this.access.edit) return '更新権限がありません';
       return this.disabled ? '更新中...' : '更新';
     },
+    disabled() {
+      return this.access.edit && !this.loading;
+    },
   },
   methods: {
-    handleSubmit() {
+    handleSubmit(updateCategory) {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('handle-submit');
+        if (valid) this.$emit('handle-submit', updateCategory.id);
       });
     },
   },
