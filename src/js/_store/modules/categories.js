@@ -76,6 +76,9 @@ export default {
     editedName(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
+    doneEditCategory(state, { updateCategory }) {
+      state.updateCategory = { ...state.updateCategory, ...updateCategory };
+    },
     updateCategoryName(state, payload) {
       state.categoriesList = [payload.updateCategory.category, ...state.categoriesList];
     },
@@ -133,32 +136,32 @@ export default {
           commit('failRequest', { message: err.message });
         });
     },
-    updateCategory({ commit, rootGetters }, updateCategory) {
-      commit('toggleLoading');
-      axios(rootGetters['auth/token'])({
-        method: 'PUT',
-        url: `/category/${rootGetters['categories/targetCategory'].id}`,
-        data: updateCategory,
-      }).then(res => {
-        const payload = {
-          updateCategory: {
-            id: res.data.category.id,
-            name: res.data.category.name,
-            // content: res.data.category.content,
-            // updated_at: res.data.category.updated_at,
-            // created_at: res.data.category.created_at,
-          },
-        };
-        commit('updateCategory', payload);
+    updateName({ commit, rootGetters }, categoryId) {
+      return new Promise((resolve, reject) => {
         commit('toggleLoading');
-        commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
-      }).catch(() => {
-        commit('toggleLoading');
+        axios(rootGetters['auth/token'])({
+          method: 'PUT',
+          url: `/category/${categoryId}`,
+          //data: updateCategory,
+        }).then(res => {
+          const payload = {
+            editCategory: {
+              id: res.data.category.id,
+              name: res.data.category.name,
+            },
+          };
+          commit('doneEditCategory', payload);
+          commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+          resolve();
+        }).catch(() => {
+          commit('toggleLoading');
+          reject();
+        });
       });
     },
-    editedName({ commit }, name) {
+    editName({ commit }, name) {
       commit({
-        type: 'editedName',
+        type: 'editName',
         name,
       });
     },

@@ -9,7 +9,7 @@
       :update-category="updateCategory"
       :done-message="doneMessage"
       :error-message="errorMessage"
-      @edited-name="editedName"
+      @edit-name="editName"
       @handle-submit="handleSubmit"
     />
   </div>
@@ -59,12 +59,12 @@ export default {
     //   if (this.loading) return;
     //   this.$store.dispatch('categories/updateCategory');
     // },
-    editedName($event) {
-      this.$store.dispatch('categories/editedName', $event.target.value);
+    editName($event) {
+      this.$store.dispatch('categories/editName', $event.target.value);
     },
     handleSubmit() {
       this.$store.dispatch(
-        'categories/updateCategory',
+        'categories/updateName',
         {
           id: this.updateCategory.id,
           name: this.updateCategory.name,
