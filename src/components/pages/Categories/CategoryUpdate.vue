@@ -55,21 +55,12 @@ export default {
     this.$store.dispatch('categories/getUpdateCategory', this.categoryId);
   },
   methods: {
-    // handleSubmit() {
-    //   if (this.loading) return;
-    //   this.$store.dispatch('categories/updateCategory');
-    // },
     editName($event) {
       this.$store.dispatch('categories/editName', $event.target.value);
     },
     handleSubmit() {
-      this.$store.dispatch(
-        'categories/updateName',
-        {
-          id: this.updateCategory.id,
-          name: this.updateCategory.name,
-        },
-      );
+      if (this.loading) return;
+      this.$store.dispatch('categories/updateName', this.categoryId);
     },
     // editValue(event) {
     //   this.$store.dispatch('categories/editValue', event.target.value);

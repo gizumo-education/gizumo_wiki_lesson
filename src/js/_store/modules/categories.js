@@ -137,6 +137,7 @@ export default {
         });
     },
     updateName({ commit, rootGetters }, categoryId) {
+      console.log(categoryName);
       return new Promise((resolve, reject) => {
         commit('toggleLoading');
         axios(rootGetters['auth/token'])({
@@ -145,7 +146,7 @@ export default {
           //data: updateCategory,
         }).then(res => {
           const payload = {
-            editCategory: {
+            updateCategory: {
               id: res.data.category.id,
               name: res.data.category.name,
             },
