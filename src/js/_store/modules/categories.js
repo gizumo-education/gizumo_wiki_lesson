@@ -54,8 +54,8 @@ export default {
     updateValue(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
-    updateCategory(state, payload) {
-      state.categoriesList = [payload.newCategories.category, ...state.categoriesList];
+    updateCategory(state, { category }) {
+      state.categoriesList = [...state.categoriesList, ...category]
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -73,7 +73,7 @@ export default {
     doneUpdateCategory(state, payload) {
       state.targetCategory = payload.targetCategory;
     },
-    editedName(state, payload) {
+    editName(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
     doneEditCategory(state, { updateCategory }) {
@@ -137,13 +137,15 @@ export default {
         });
     },
     updateName({ commit, rootGetters }, categoryId) {
-      console.log(categoryName);
-      return new Promise((resolve, reject) => {
-        commit('toggleLoading');
+      //console.log(categoryId);
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/updateCategory'].id);
+      data.append('name', rootGetters['categories/updateCategory'].name);
         axios(rootGetters['auth/token'])({
           method: 'PUT',
           url: `/category/${categoryId}`,
-          //data: updateCategory,
+          data,
         }).then(res => {
           const payload = {
             updateCategory: {
@@ -151,15 +153,44 @@ export default {
               name: res.data.category.name,
             },
           };
-          commit('doneEditCategory', payload);
+          commit('updateCategory', payload);
+          commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
-          resolve();
         }).catch(() => {
           commit('toggleLoading');
-          reject();
         });
-      });
     },
+    // updateArticle({ commit, rootGetters }) {
+    //   commit('toggleLoading');
+    //   const data = new URLSearchParams();
+    //   data.append('id', rootGetters['articles/targetArticle'].id);
+    //   data.append('title', rootGetters['articles/targetArticle'].title);
+    //   data.append('content', rootGetters['articles/targetArticle'].content);
+    //   data.append('user_id', rootGetters['articles/targetArticle'].user.id);
+    //   data.append('category_id', rootGetters['articles/targetArticle'].category.id);
+    //   axios(rootGetters['auth/token'])({
+    //     method: 'PUT',
+    //     url: `/article/${rootGetters['articles/targetArticle'].id}`,
+    //     data,
+    //   }).then(res => {
+    //     const payload = {
+    //       article: {
+    //         id: res.data.article.id,
+    //         title: res.data.article.title,
+    //         content: res.data.article.content,
+    //         updated_at: res.data.article.updated_at,
+    //         created_at: res.data.article.created_at,
+    //         user: res.data.article.user,
+    //         category: res.data.article.category,
+    //       },
+    //     };
+    //     commit('updateArticle', payload);
+    //     commit('toggleLoading');
+    //     commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+    //   }).catch(() => {
+    //     commit('toggleLoading');
+    //   });
+    // },
     editName({ commit }, name) {
       commit({
         type: 'editName',
