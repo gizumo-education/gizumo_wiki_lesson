@@ -156,6 +156,7 @@ export default {
         };
 
         commit('doneEditUser', { editedUser });
+        console.log(editedUser);
       }).catch(err => {
         commit('failRequest', { message: err.message });
       });
