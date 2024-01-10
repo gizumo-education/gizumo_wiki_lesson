@@ -66,10 +66,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    // editedName: {
-    //   type: String,
-    //   default: '',
-    // },
+    editName: {
+      type: String,
+      default: '',
+    },
     doneMessage: {
       type: String,
       default: '',
@@ -86,10 +86,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    // categoryList: {
-    //   type: Array,
-    //   default: () => [],
-    // },
     loading: {
       type: Boolean,
       default: false,

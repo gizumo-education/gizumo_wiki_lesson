@@ -10,8 +10,7 @@ export default {
     },
     updateCategory: {
       id: null,
-      name: '',
-      editName: '',
+      //name: '',
     },
     deleteCategory: {
       name: null,
@@ -22,14 +21,13 @@ export default {
     disabled: false,
   },
   getters: {
-    transformedCategories(state) {
-      return state.categoryList.map(category => ({
-        id: category.id,
-        name: category.name,
-      }));
-    },
+    // transformedCategories(state) {
+    //   return state.categoryList.map(category => ({
+    //     id: category.id,
+    //     name: category.name,
+    //   }));
+    // },
     updateCategory: state => state.updateCategory,
-    editName: state => state.updateCategory.name,
     targetCategory: state => state.targetCategory,
     deleteCategoryId: state => state.deleteCategory.id,
     deleteCategoryName: state => state.deleteCategory.name,
@@ -38,11 +36,11 @@ export default {
     initPostCategory(state) {
       state.targetCategory = {
         id: null,
-        title: '',
+        name: '',
       };
       state.updateCategory = {
         id: null,
-        title: '',
+        //name: '',
       };
     },
     doneGetAllCategories(state, payload) {
@@ -82,7 +80,7 @@ export default {
       state.targetCategory = payload.targetCategory;
     },
     editName(state, payload) {
-      state.targetCategory = { ...state.targetCategory, name: payload.name };
+      state.updateCategory = { ...state.updateCategory, name: payload.name };
     },
     doneEditCategory(state, { updateCategory }) {
       state.updateCategory = { ...state.updateCategory, ...updateCategory };
@@ -91,11 +89,14 @@ export default {
     //   state.user = { ...state.user, ...user };
     //   state.loading = false;
     // },
-    updateCategoryName(state, payload) {
-      state.categoriesList = [payload.updateCategory.category, ...state.categoriesList];
-    },
+    // updateCategoryName(state, payload) {
+    //   state.categoriesList = [payload.updateCategory.category, ...state.categoriesList];
+    // },
   },
   actions: {
+    initPostCategory({ commit }) {
+      commit('initPostCategory');
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -148,21 +149,20 @@ export default {
           commit('failRequest', { message: err.message });
         });
     },
-    updateName({ commit, rootGetters }, updateCategory) {
+    updateName({ commit, rootGetters }, categoryId) {
       console.log(rootGetters['categories/updateCategory'].name);
       commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('id', rootGetters['categories/updateCategory'].id);
       data.append('name', rootGetters['categories/updateCategory'].name);
-      //data.append('editName', rootGetters['categories/updateCategory'].editName);
         axios(rootGetters['auth/token'])({
           method: 'PUT',
-          url: `/category/${updateCategory.Id}`,
-          data: updateCategory,
+          url: `/category/${categoryId}`,
+          data,
         }).then(res => {
           const detailName = {
             id: res.data.category.id,
-            name: res.data.category.name,
+            //name: res.data.category.name,
           };
           commit('doneEditCategory', { detailName })
           commit('toggleLoading');
@@ -207,7 +207,6 @@ export default {
         type: 'editName',
         name,
       });
-      console.log(name);
     },
     confirmDeleteCategoryId({ commit }, categoryId) {
       commit('confirmDeleteCategoryId', { categoryId });
