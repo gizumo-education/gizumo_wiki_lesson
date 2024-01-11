@@ -35,7 +35,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     updateCategory() {
-      return this.$store.state.categories.updateCategory;
+      return this.$store.state.categories.targetCategory;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;

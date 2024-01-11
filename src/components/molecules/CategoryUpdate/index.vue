@@ -66,6 +66,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    targetCategory: {
+      type: Object,
+      default: () => ({}),
+    },
     editName: {
       type: String,
       default: '',
@@ -78,17 +82,13 @@ export default {
       type: String,
       default: '',
     },
-    // disabled: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    access: {
-      type: Object,
-      default: () => ({}),
-    },
     loading: {
       type: Boolean,
       default: false,
+    },
+    access: {
+      type: Object,
+      default: () => ({}),
     },
   },
   computed: {
@@ -101,10 +101,10 @@ export default {
     },
   },
   methods: {
-    handleSubmit(updateCategory) {
+    handleSubmit(targetCategory) {
       if (!this.access.edit) return;
       this.$validator.validate().then(valid => {
-        if (valid) this.$emit('handle-submit', updateCategory.id);
+        if (valid) this.$emit('handle-submit', targetCategory.id);
       });
     },
   },

@@ -8,10 +8,10 @@ export default {
       id: null,
       name: '',
     },
-    updateCategory: {
-      id: null,
-      //name: '',
-    },
+    // updateCategory: {
+    //   id: null,
+    //   name: '',
+    // },
     deleteCategory: {
       name: null,
       id: null,
@@ -40,7 +40,7 @@ export default {
       };
       state.updateCategory = {
         id: null,
-        //name: '',
+        name: '',
       };
     },
     doneGetAllCategories(state, payload) {
@@ -80,15 +80,16 @@ export default {
       state.targetCategory = payload.targetCategory;
     },
     editName(state, payload) {
-      state.updateCategory = { ...state.updateCategory, name: payload.name };
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
-    doneEditCategory(state, { updateCategory }) {
-      state.updateCategory = { ...state.updateCategory, ...updateCategory };
-    },
-    // doneEditUser(state, { user }) {
-    //   state.user = { ...state.user, ...user };
-    //   state.loading = false;
+    // doneEditCategory(state, { updateCategory }) {
+    //   state.updateCategory = { ...state.updateCategory, ...updateCategory };
     // },
+    doneEditCategory(state, { category }) {
+      state.category = { ...state.targetCategory, ...category };
+      //state.loading = false;
+      //state.doneMessage = 'ユーザーの更新が完了しました。';
+    },
     // updateCategoryName(state, payload) {
     //   state.categoriesList = [payload.updateCategory.category, ...state.categoriesList];
     // },
@@ -150,21 +151,21 @@ export default {
         });
     },
     updateName({ commit, rootGetters }, categoryId) {
-      console.log(rootGetters['categories/updateCategory'].name);
+      console.log(rootGetters['categories/targetCategory'].name);
       commit('toggleLoading');
       const data = new URLSearchParams();
-      data.append('id', rootGetters['categories/updateCategory'].id);
-      data.append('name', rootGetters['categories/updateCategory'].name);
+      data.append('id', rootGetters['categories/targetCategory'].id);
+      data.append('name', rootGetters['categories/targetCategory'].name);
         axios(rootGetters['auth/token'])({
           method: 'PUT',
           url: `/category/${categoryId}`,
           data,
         }).then(res => {
-          const detailName = {
+          const payload = {
             id: res.data.category.id,
-            //name: res.data.category.name,
+            name: res.data.category.name,
           };
-          commit('doneEditCategory', { detailName })
+          commit('doneEditCategory', payload);
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
         }).catch(() => {
