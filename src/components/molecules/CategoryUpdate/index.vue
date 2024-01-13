@@ -90,11 +90,15 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    // disabled: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   computed: {
     buttonText() {
       if (!this.access.edit) return '更新権限がありません';
-      return this.disabled ? '更新中...' : '更新';
+      return this.loading ? '更新中...' : '更新';
     },
     disabled() {
       return this.access.edit && !this.loading;

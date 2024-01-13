@@ -18,7 +18,7 @@ export default {
     },
     doneMessage: '',
     errorMessage: '',
-    disabled: false,
+    loading: false,
   },
   getters: {
     // transformedCategories(state) {
@@ -87,7 +87,7 @@ export default {
     // },
     doneEditCategory(state, { category }) {
       state.category = { ...state.targetCategory, ...category };
-      //state.loading = false;
+      state.loading = false;
       //state.doneMessage = 'ユーザーの更新が完了しました。';
     },
     // updateCategoryName(state, payload) {
@@ -168,6 +168,7 @@ export default {
           commit('doneEditCategory', payload);
           commit('toggleLoading');
           commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+          console.log(disabled);
         }).catch(() => {
           commit('toggleLoading');
         });

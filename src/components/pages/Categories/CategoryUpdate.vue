@@ -7,6 +7,7 @@
       :access="access"
       :loading="loading"
       :update-category="updateCategory"
+      :disabled="loading ? true : false"
       :done-message="doneMessage"
       :error-message="errorMessage"
       @edit-name="editName"
