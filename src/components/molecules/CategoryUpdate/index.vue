@@ -11,6 +11,7 @@
     </app-router-link>
     <app-input
       v-validate="'required'"
+      class="category-management-post__text"
       name="category"
       type="text"
       data-vv-as="カテゴリー名"
@@ -52,19 +53,9 @@ export default {
     appText: Text,
   },
   props: {
-    // categories: {
-    //   type: Array,
-    //   default() {
-    //     return [];
-    //   },
-    // },
     categoryName: {
       type: String,
       default: '',
-    },
-    updateCategory: {
-      type: Object,
-      default: () => ({}),
     },
     targetCategory: {
       type: Object,
@@ -90,10 +81,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    // disabled: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   computed: {
     buttonText() {
@@ -128,7 +115,9 @@ export default {
   }
   &__detail {
     margin-top: 20px;
-    margin-bottom: 20px;
+  }
+  &__text {
+    margin-top: 20px;
   }
 }
 </style>

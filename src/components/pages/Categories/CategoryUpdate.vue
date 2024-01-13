@@ -7,7 +7,6 @@
       :access="access"
       :loading="loading"
       :update-category="updateCategory"
-      :disabled="loading ? true : false"
       :done-message="doneMessage"
       :error-message="errorMessage"
       @edit-name="editName"
@@ -63,9 +62,6 @@ export default {
       if (this.loading) return;
       this.$store.dispatch('categories/updateName', this.categoryId);
     },
-    // editValue(event) {
-    //   this.$store.dispatch('categories/editValue', event.target.value);
-    // },
   },
 };
 </script>
