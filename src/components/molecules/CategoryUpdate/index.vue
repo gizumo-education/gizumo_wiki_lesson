@@ -2,7 +2,7 @@
   <div class="category-update">
     <app-heading :level="1">カテゴリー管理</app-heading>
     <app-router-link
-      class="category-management-post__detail"
+      class="category-management-update__detail"
       :to="`/categories`"
       underline
       hover-opacity
@@ -11,7 +11,7 @@
     </app-router-link>
     <app-input
       v-validate="'required'"
-      class="category-management-post__text"
+      class="category-management-update__text"
       name="category"
       type="text"
       data-vv-as="カテゴリー名"
@@ -20,7 +20,7 @@
       @update-value="$emit('edit-name', $event)"
     />
     <app-button
-      class="category-management-post__submit"
+      class="category-management-update__submit"
       button-type="submit"
       round
       :disabled="!disabled"
@@ -29,11 +29,11 @@
       {{ buttonText }}
     </app-button>
 
-    <div v-if="errorMessage" class="category-management-post__notice">
+    <div v-if="errorMessage" class="category-management-update__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
 
-    <div v-if="doneMessage" class="category-management-post__notice">
+    <div v-if="doneMessage" class="category-management-update__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
   </div>
@@ -56,10 +56,6 @@ export default {
     categoryName: {
       type: String,
       default: '',
-    },
-    targetCategory: {
-      type: Object,
-      default: () => ({}),
     },
     editName: {
       type: String,
@@ -103,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.category-management-post {
+.category-management-update {
   &__input {
     margin-top: 20px;
   }

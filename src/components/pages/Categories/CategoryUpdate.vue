@@ -34,9 +34,6 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
-    updateCategory() {
-      return this.$store.state.categories.targetCategory;
-    },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
     },
@@ -67,11 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .articles {
-    display: flex;
-    writing-mode: lr-tb;
-  }
-  .list {
+   .list {
     flex-basis: 60%;
     padding-left: 2%;
   }
