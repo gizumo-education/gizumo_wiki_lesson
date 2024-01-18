@@ -1,0 +1,119 @@
+<template>
+  <div class="category-update">
+    <app-heading :level="1">カテゴリー管理</app-heading>
+    <app-router-link
+      class="category-management-update__detail"
+      :to="`/categories`"
+      underline
+      hover-opacity
+    >
+      カテゴリー一覧へ戻る
+    </app-router-link>
+    <app-input
+      v-validate="'required'"
+      class="category-management-update__text"
+      name="category"
+      type="text"
+      data-vv-as="カテゴリー名"
+      :error-messages="errors.collect('category')"
+      :value="categoryName"
+      @update-value="$emit('edit-name', $event)"
+    />
+    <app-button
+      class="category-management-update__submit"
+      button-type="submit"
+      round
+      :disabled="!disabled"
+      @click="handleSubmit"
+    >
+      {{ buttonText }}
+    </app-button>
+
+    <div v-if="errorMessage" class="category-management-update__notice">
+      <app-text bg-error>{{ errorMessage }}</app-text>
+    </div>
+
+    <div v-if="doneMessage" class="category-management-update__notice">
+      <app-text bg-success>{{ doneMessage }}</app-text>
+    </div>
+  </div>
+</template>
+
+<script>
+import {
+  Heading, Input, RouterLink, Button, Text,
+} from '@Components/atoms';
+
+export default {
+  components: {
+    appHeading: Heading,
+    appInput: Input,
+    appRouterLink: RouterLink,
+    appButton: Button,
+    appText: Text,
+  },
+  props: {
+    categoryName: {
+      type: String,
+      default: '',
+    },
+    editName: {
+      type: String,
+      default: '',
+    },
+    doneMessage: {
+      type: String,
+      default: '',
+    },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    access: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  computed: {
+    buttonText() {
+      if (!this.access.edit) return '更新権限がありません';
+      return this.loading ? '更新中...' : '更新';
+    },
+    disabled() {
+      return this.access.edit && !this.loading;
+    },
+  },
+  methods: {
+    handleSubmit(targetCategory) {
+      if (!this.access.edit) return;
+      this.$validator.validate().then(valid => {
+        if (valid) this.$emit('handle-submit', targetCategory.id);
+      });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.category-management-update {
+  &__input {
+    margin-top: 20px;
+  }
+  &__submit {
+    margin-top: 20px;
+  }
+  &__notice {
+    margin-top: 20px;
+  }
+  &__detail {
+    margin-top: 20px;
+  }
+  &__text {
+    margin-top: 20px;
+  }
+}
+</style>

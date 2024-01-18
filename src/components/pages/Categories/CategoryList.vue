@@ -1,5 +1,5 @@
 <template>
-  <div class="articles">
+  <div class="category">
     <app-category-post
       class="form"
       :disabled="loading"
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .articles {
+  .category {
     display: flex;
     writing-mode: lr-tb;
   }

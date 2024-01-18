@@ -4,6 +4,10 @@ export default {
   namespaced: true,
   state: {
     categoryList: [],
+    targetCategory: {
+      id: null,
+      name: '',
+    },
     deleteCategory: {
       name: null,
       id: null,
@@ -13,6 +17,7 @@ export default {
     loading: false,
   },
   getters: {
+    targetCategory: state => state.targetCategory,
     deleteCategoryId: state => state.deleteCategory.id,
     deleteCategoryName: state => state.deleteCategory.name,
   },
@@ -31,6 +36,12 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
+    updateValue(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
+    },
+    updateCategory(state, { category }) {
+      state.categoriesList = [...state.categoriesList, ...category];
+    },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
@@ -43,6 +54,15 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategory.id = null;
       state.deleteCategory.name = null;
+    },
+    doneUpdateCategory(state, payload) {
+      state.targetCategory = payload.targetCategory;
+    },
+    editName(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
+    },
+    doneEditCategory(state, { category }) {
+      state.category = { ...state.targetCategory, ...category };
     },
   },
   actions: {
@@ -80,6 +100,48 @@ export default {
         }).finally(() => {
           commit('toggleLoading');
         });
+      });
+    },
+    getUpdateCategory({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(res => {
+        const payload = {
+          targetCategory: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneUpdateCategory', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    updateName({ commit, rootGetters }, categoryId) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', rootGetters['categories/targetCategory'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${categoryId}`,
+        data,
+      }).then(res => {
+        const payload = {
+          id: res.data.category.id,
+          name: res.data.category.name,
+        };
+        commit('doneEditCategory', payload);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
+    },
+    editName({ commit }, name) {
+      commit({
+        type: 'editName',
+        name,
       });
     },
     confirmDeleteCategoryId({ commit }, categoryId) {
