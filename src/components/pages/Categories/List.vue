@@ -3,6 +3,8 @@
     <app-category-post
       :category="category"
       :access="access"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :categories="categoryList"
@@ -40,12 +42,23 @@ export default {
       return this.$store.getters['auth/access'];
     },
     category() {
-      return this.$store.state.categories.category;
+      return this.$store.state.categories.targetCategory.name;
     },
   },
   created() {
     this.$store.dispatch('categories/getCategories');
   },
+  methods: {
+    updateValue($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
+    },
+    // ②handlesubmit
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategories');
+    },
+  },
+
 };
 </script>
 <style lang="scss" scoped>
