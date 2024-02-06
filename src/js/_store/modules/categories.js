@@ -8,6 +8,8 @@ export default {
       id: null,
       name: '',
     },
+    loading: false,
+    doneMessage: '',
     errorMessage: '',
   },
   getters: {
@@ -15,7 +17,7 @@ export default {
   },
   mutations: {
     doneGetCategories(state, payload) {
-      state.categoryList = [...payload.categories];
+      state.categoryList = [...payload.categories].reverse();
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -23,8 +25,21 @@ export default {
     editedCategory(state, payload) {
       state.targetCategory = { ...state.targetCategory, name: payload.name };
     },
+    toggleLoading(state) {
+      state.loading = !state.loading;
+    },
+    displayDoneMessage(state, payload = { message: '成功しました' }) {
+      state.doneMessage = payload.message;
+    },
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
+    },
   },
   actions: {
+    clearMessage({ commit }) {
+      commit('clearMessage');
+    },
     // 一覧取得するアクションを定義する（中身の処理は不要）
     getCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
@@ -33,7 +48,6 @@ export default {
       })
       // 成功したら
         .then(res => {
-          // console.log(res)
           const payload = {
             categories: res.data.categories,
           };
@@ -57,13 +71,18 @@ export default {
       const data = new URLSearchParams();
       data.append('name', rootGetters['categories/targetCategory'].name);
       return new Promise((resolve, reject) => {
+        commit('toggleLoading');
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
         }).then(() => {
           resolve();
+          commit('toggleLoading');
+          commit('editedCategory', { name: '' });
+          commit('displayDoneMessage', { message: 'カテゴリを作成しました' });
         }).catch(err => {
+          commit('toggleLoading');
           commit('failRequest', { message: err.message });
           reject();
         });

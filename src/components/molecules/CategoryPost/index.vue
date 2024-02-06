@@ -15,7 +15,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
+      :disabled="disabled"
       @click="handleSubmit"
     >
       {{ buttonText }}
