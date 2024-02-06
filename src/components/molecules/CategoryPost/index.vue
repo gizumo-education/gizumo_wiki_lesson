@@ -15,8 +15,8 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
-      @click="openModal(category.id, category.name)"
+      :disabled="disabled"
+      @click="handleSubmit"
     >
       {{ buttonText }}
     </app-button>
@@ -82,6 +82,12 @@ export default {
     openModal(categoryId, categoryName) {
       if (!this.access.delete) return;
       this.$emit('open-modal', categoryId, categoryName);
+    },
+    handleSubmit() {
+      if (!this.access.create) return;
+      this.$validator.validate().then(valid => {
+        if (valid) this.$emit('handle-submit');
+      });
     },
   },
 };

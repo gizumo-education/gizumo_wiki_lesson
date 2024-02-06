@@ -3,6 +3,10 @@
     <app-category-post
       :category="category"
       :access="access"
+      :disabled="loading"
+      :done-message="doneMessage"
+      @update-value="updateValue"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       :categories="categoryList"
@@ -40,12 +44,28 @@ export default {
       return this.$store.getters['auth/access'];
     },
     category() {
-      return this.$store.state.categories.category;
+      return this.$store.state.categories.targetCategory.name;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
     },
   },
   created() {
     this.$store.dispatch('categories/getCategories');
+    this.$store.dispatch('categories/clearMessage');
   },
+  methods: {
+    updateValue($event) {
+      this.$store.dispatch('categories/editedCategory', $event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategories').then(() => {
+        this.$store.dispatch('categories/getCategories');
+      });
+    },
+  },
+
 };
 </script>
 <style lang="scss" scoped>
