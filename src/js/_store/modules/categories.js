@@ -11,13 +11,32 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategoryName: null,
+    deleteCategory: {
+      id: null,
+      name: '',
+    },
   },
   getters: {
     targetCategory: state => state.targetCategory,
+    deleteCategoryName: state => state.deleteCategory.name,
+    deleteCategoryId: state => state.deleteCategory.id,
   },
   mutations: {
     doneGetCategories(state, payload) {
       state.categoryList = [...payload.categories].reverse();
+    },
+    doneDeleteCategory(state) {
+      state.deleteCategory = {
+        id: null,
+        name: '',
+      };
+    },
+    confirmDeleteCategory(state, { categoryId, categoryName }) {
+      state.deleteCategory = {
+        id: categoryId,
+        name: categoryName,
+      };
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -65,7 +84,25 @@ export default {
         name,
       });
     },
-
+    confirmDeleteCategory({ commit }, { categoryId, categoryName }) {
+      commit('confirmDeleteCategory', { categoryId, categoryName });
+    },
+    deleteCategory({ commit, rootGetters }) {
+      commit('clearMessage');
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+        }).then(() => {
+          resolve();
+          commit('doneDeleteCategory');
+          commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
+        }).catch(err => {
+          reject();
+          commit('failRequest', { message: err.message });
+        });
+      });
+    },
     // ３作成ボタン押下アクション
     postCategories({ commit, rootGetters }) {
       const data = new URLSearchParams();
