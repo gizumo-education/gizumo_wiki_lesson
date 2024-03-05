@@ -61,6 +61,7 @@ export default {
   created() {
     this.$store.dispatch('categories/getCategories');
     this.$store.dispatch('categories/clearMessage');
+    this.$store.dispatch('categories/clearTargetCategory');
   },
   methods: {
     openModal(categoryId, categoryName) {
@@ -91,7 +92,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .categories {
-  display: flex
+  display: flex;
 };
 
 .categories form {

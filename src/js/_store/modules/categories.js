@@ -54,30 +54,94 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    updateCategory(state, payload) {
+      state.targetCategory = payload.category;
+    },
+    doneGetCategory(state, payload) {
+      state.targetCategory = payload.category;
+    },
+    editedName(state, payload) {
+      state.targetCategory = { ...state.targetCategory, name: payload.name };
+    },
+    clearTargetCategory(state) {
+      state.targetCategory = {
+        id: null,
+        name: '',
+      };
+    },
   },
   actions: {
+    clearTargetCategory({ commit }) {
+      commit('clearTargetCategory');
+    },
     clearMessage({ commit }) {
       commit('clearMessage');
     },
-    // 一覧取得するアクションを定義する（中身の処理は不要）
     getCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
         url: '/category',
-      })
-      // 成功したら
-        .then(res => {
-          const payload = {
-            categories: res.data.categories,
-          };
-          commit('doneGetCategories', payload);
-        })
-      // 失敗したら
-        .catch(err => {
-          commit('failRequest', { message: err.message });
-        });
+      }).then(res => {
+        const payload = {
+          categories: res.data.categories,
+        };
+        commit('doneGetCategories', payload);
+      }).catch(err => {
+        commit('failRequest', { message: err.message });
+      });
     },
-    // カテゴリ名入力のアクション定義
+    getCategoriesDetail({ commit, rootGetters }, categoryId) {
+      return new Promise((resolve, reject) => {
+        axios(rootGetters['auth/token'])({
+          method: 'GET',
+          url: `/category/${categoryId}`,
+        }).then(res => {
+          const category = res.data.category
+            ? res.data.category
+            : { id: null, name: '' };
+          const payload = {
+            category: {
+              id: category.id,
+              name: category.name,
+            },
+          };
+          commit('doneGetCategory', payload);
+          resolve();
+        }).catch(err => {
+          commit('failRequest', { message: err.message });
+          reject();
+        });
+      });
+    },
+    editedName({ commit }, name) {
+      commit({
+        type: 'editedName',
+        name,
+      });
+    },
+    updateCategory({ commit, rootGetters }) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('id', rootGetters['categories/targetCategory'].id);
+      data.append('name', rootGetters['categories/targetCategory'].name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${rootGetters['categories/targetCategory'].id}`,
+        data,
+      }).then(res => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('updateCategory', payload);
+        commit('toggleLoading');
+        commit('displayDoneMessage', { message: 'ドキュメントを更新しました' });
+      }).catch(() => {
+        commit('toggleLoading');
+      });
+    },
     editedCategory({ commit }, name) {
       commit({
         type: 'editedCategory',
@@ -103,7 +167,6 @@ export default {
         });
       });
     },
-    // ３作成ボタン押下アクション
     postCategories({ commit, rootGetters }) {
       const data = new URLSearchParams();
       data.append('name', rootGetters['categories/targetCategory'].name);
